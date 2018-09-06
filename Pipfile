@@ -4,9 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pywikibot = "*"
 mwparserfromhell = "*"
 numpy = "*"
+pandas = "*"
+lxml = "*"
+wikitextparser = "*"
+pywikibot = "*"
 
 [dev-packages]
 pipenv = "*"
