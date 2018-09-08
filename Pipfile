@@ -10,6 +10,8 @@ pandas = "*"
 lxml = "*"
 wikitextparser = "*"
 pywikibot = "*"
+requests = "*"
+"progressbar2" = "*"
 
 [dev-packages]
 pipenv = "*"
