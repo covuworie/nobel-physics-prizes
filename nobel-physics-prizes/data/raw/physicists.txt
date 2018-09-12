@@ -8,54 +8,49 @@ Abraham Bennet
 Abraham H. Taub
 Abraham Pais
 Abram Ioffe
-Abū Rayhān al-Bīrūnī
 Adam Riess
 Adolf Kratzer
 Adolfas Jucys
 Adriaan Fokker
 Adrian Melott
-Aiyalam Parameswaran Balachandran
 Akira Tonomura
-Al Beruni
-Al Farabi
 Alain Aspect
 Alain Haché
 Alan Andrew Watson
 Alan Guth
 Alan Schoen
 Alan Walsh (physicist)
-Albert Abraham Michelson
+Albert A. Michelson
 Albert Einstein
 Albert Fert
+Al-Biruni
 Alejandro Corichi
-Aleksandr Mikhailovich Lyapunov
+Aleksandr Lyapunov
 Aleksandr Stoletov
 Alessandro Volta
 Alexander Animalu
-Alexander Friedman
+Alexander Friedmann
 Alexander Graham Bell
-Alexander M. Polyakov
+Alexander Markovich Polyakov
 Alexander Prokhorov
 Alexander R. Hamilton
 Alexander Zamolodchikov
 Alexei Alexeyevich Abrikosov
 Alexei Kitaev
-Alexei Smirnov (physicist)
 Alexei Yuryevich Smirnov
 Alexei Zamolodchikov
+Al-Farabi
 Alfred Kastler
 Alfred Lee Loomis
 Alfred-Marie Liénard
-Alhazen
 Ali Chamseddine
 Ali Javan
 Ali Moustafa Mosharafa
 Alladi Ramakrishnan
 Allan McLeod Cormack
-Alvin Weinberg
+Alvin M. Weinberg
 Amal Kumar Raychaudhuri
 Amanda Barnard
-Amédée Mouchez
 Amedeo Avogadro
 Amos Dolbear
 Amrom Harry Katz
@@ -88,18 +83,15 @@ Aristotle
 Arno Allan Penzias
 Arnold Sommerfeld
 Arpad Elo
-Arsenij Sokolov
+Arseny Sokolov
 Artem Alikhanian
 Arthur B. McDonald
 Arthur Compton
 Arthur Eddington
-Arthur Holly Compton
 Arthur Iberall
 Arthur Korn
 Arthur Leonard Schawlow
 Arthur Maitland
-Arthur Milne
-Arthur Stanley Eddington
 Arthur Wightman
 Aryabhata
 Ashok Das
@@ -118,11 +110,10 @@ Baien Tomlin
 Balthasar van der Pol
 Barton Zwiebach
 Basilis C. Xanthopoulos
-Behram Kursunoglu
 Behram Kurşunoğlu
 Ben Roy Mottelson
 Benjamin Franklin
-Benjamin Lee (physicist)
+Benjamin W. Lee
 Benoît Paul Émile Clapeyron
 Bent Sørensen (physicist)
 Bernard de Wit
@@ -133,14 +124,13 @@ Bice Sechi-Zorn
 Bimla Buti
 Blaise Pascal
 Boris Chirikov
-Boris Jacobi
 Boris Podolsky
 Boyd Bartlett
 Brandon Carter
 Brendan Scaife
 Brian Cox (physicist)
-Brian David Josephson
 Brian Greene
+Brian Josephson
 Brian May
 Brian Schmidt
 Bruno Pontecorvo
@@ -149,9 +139,11 @@ Bruno Touschek
 Bruno Zumino
 Burchard de Volder
 Burton Richter
+C. F. Powell
+C. H. D. Buys Ballot
 C. R. Hagen
-C.H.D. Buys Ballot
-Carl August Steinheil
+C. V. Raman
+Carl August von Steinheil
 Carl David Anderson
 Carl Eckart
 Carl Friedrich Gauss
@@ -159,31 +151,27 @@ Carl Friedrich von Weizsäcker
 Carl Hermann
 Carl M. Bender
 Carl Ramsauer
-Carl Richard Hagen
 Carl Sagan
 Carl Wieman
-Carl-Gustav Arvid Rossby
+Carl-Gustaf Rossby
 Carlo Beenakker
 Carlo Marangoni
 Carlo Rovelli
 Carlo Rubbia
 Carlos E.M. Wagner
-Carolina Henriette Mac Gillavry
-Cecil Frank Powell
-Cesar Lattes
-Chandrasekhara Venkata Raman
+Carolina Henriette MacGillavry
+César Lattes
 Charles Critchfield
-Charles Edouard Guillaume
+Charles Édouard Guillaume
 Charles Galton Darwin
 Charles Glover Barkla
 Charles H. Henry
+Charles H. Townes
 Charles K. Kao
 Charles Thomson Rees Wilson
 Charles Thorn
-Charles Townes
 Charles-Augustin de Coulomb
 Charlotte Riefenstahl
-Chen Ning Yang
 Chennupati Jagadish
 Chien-Shiung Wu
 Chris Lintott
@@ -198,15 +186,16 @@ Clifford Shull
 Clinton Davisson
 Colin Webb
 Cosmas Zachos
-Craige Schensted
 Cumrun Vafa
 Curtis Callan
-Dam Thanh Son
+Đàm Thanh Sơn
 Daniel Bernoulli
 Daniel C. Tsui
 Daniel Friedan
+Daniel Gabriel Fahrenheit
 Daniel Greenberger
 Daniel Z. Freedman
+David Albert
 David Awschalom
 David Bohm
 David Brewster
@@ -223,24 +212,25 @@ David M. Dennison
 David Merritt
 David Olive
 David Ruelle
-David Z Albert
 Daya Shankar Kulshreshtha
 Deborah S. Jin
 Democritus
 Denis Evans
 Denis Weaire
 Dennis Gabor
-Dennis Sciama
-Dennis William Sciama
+Dennis W. Sciama
 Derek Abbott
 Dimitri Nanopoulos
 Dmitry Shirkov
 Dmitry Zubarev
 Donald A. Glaser
-Dorothy Crowfoot Hodgkin
-Douglas D. Osheroff
+Dorothy Hodgkin
 Douglas Hartree
+Douglas Osheroff
 Durmus A. Demir
+E. C. George Sudarshan
+Ea Ea
+Edward Arthur Milne
 Edward Bouchet
 Edward Condon
 Edward Mills Purcell
@@ -252,7 +242,7 @@ Edward Witten
 Edwin C. Kemble
 Edwin Ernest Salpeter
 Edwin Hall
-Edwin Powell Hubble
+Edwin Hubble
 Edwin Thompson Jaynes
 Egon Orowan
 Elephter Andronikashvili
@@ -260,7 +250,7 @@ Elmer Imes
 Emil Wiechert
 Emil Wolf
 Émile Verdet
-Emilio G. Segre
+Emilio Segrè
 Emmy Noether
 Enrico Fermi
 Erdal İnönü
@@ -271,14 +261,14 @@ Erik Verlinde
 Ernest Courant
 Ernest Esclangon
 Ernest Lawrence
+Ernest Mouchez
 Ernest Rutherford
+Ernest Titterton
 Ernest Walton
-Ernest William Titterton
+Ernst Abbe
 Ernst Brüche
 Ernst Chladni
-Ernst equation
 Ernst Ising
-Ernst Karl Abbe
 Ernst Mach
 Ernst Ruska
 Ernst Stueckelberg
@@ -302,14 +292,13 @@ F. J. Duarte
 Felix Bloch
 Felix Ehrenhaft
 Félix Savart
-Félix Ynduráin
+Félix Ynduráin Muñoz
 Feza Gürsey
 Floyd K. Richtmyer
 Francis G. Slack
-Francisco Jose Yndurain
-Francisco Jose Yndurain Muñoz
+Francisco José Ynduráin
+François Arago
 François Englert
-François Jean Dominique Arago
 Frank J. Tipler
 Frank Wilczek
 Franz Aepinus
@@ -329,28 +318,26 @@ Fritjof Capra
 Frits Zernike
 Fritz Houtermans
 Fulvio Melia
+G. I. Taylor
 G. N. Glasoe
 G. V. Skrotskii
-Gabriel Fahrenheit
-Gabriel Jonas Lippmann
+Gabriel Lippmann
 Gabriele Rabel
 Gabriele Veneziano
 Galileo Galilei
-Gaspard-Gustave Coriolis
+Gaspard-Gustave de Coriolis
 Geoffrey Chew
-Geoffrey Ingram Taylor
+Georg Bednorz
 Georg Ohm
 George B. Pegram
 George E. Smith
-George Eugene Uhlenbeck
 George Francis FitzGerald
-George Gabriel Stokes
 George Gamow
 George Green (mathematician)
 George Paget Thomson
 George Smoot
 George Sterman
-George Sudarshan
+George Uhlenbeck
 George W. Clark
 George William Hill
 George Zweig
@@ -364,18 +351,17 @@ Gerald Feinberg
 Gerald Goertzel
 Gerald Guralnik
 Gerard K. O'Neill
-Gerardus 't Hooft
+Gerard 't Hooft
 Gerd Binnig
 Gersh Budker
-Gian F. Giudice
-Gian-Carlo Wick
+Gian Carlo Wick
+Gian Francesco Giudice
 Gilbert Ronald Bainbridge
 Giorgio Parisi
 Giovanni Battista Venturi
 Giovanni Ciccotti
 Gleb Wataghin
-Goran Senjanovic
-Gottfried Leibniz
+Goran Senjanović
 Gottfried Wilhelm Leibniz
 Gregor Wentzel
 Gregory Jaczko
@@ -392,23 +378,24 @@ H. Dieter Zeh
 H. Pierre Noyes
 Hagen Kleinert
 Haim Harari
-Hannes Olof Gösta Alfvén
+Hannes Alfvén
+Hans Adolf Buchdahl
 Hans Bethe
-Hans Buchdahl
 Hans Christian Ørsted
 Hans Geiger
 Hans Georg Dehmelt
 Hans Henrik Andersen
+Hans Kramers
 Hans Ziegler (physicist)
 Harald Fuchs
-Harald J.W. Mueller-Kirsten
+Harald J. W. Mueller-Kirsten
 Harold E. Puthoff
 Harrie Massey
 Hasan Abdullayev
 Heike Kamerlingh Onnes
+Heinrich Hertz
 Heinrich Kayser
 Heinrich Rohrer
-Heinrich Rudolf Hertz
 Heinrich Welker
 Heinz Barwich
 Heinz Pagels
@@ -416,7 +403,6 @@ Heinz Pose
 Helen Quinn
 Helmut Hönl
 Hendrik Casimir
-Hendrik Kramers
 Hendrik Lorentz
 Henk Dorgelo
 Henri Becquerel
@@ -446,10 +432,9 @@ Hubert Reeves
 Hugh David Politzer
 Ibn al-Haytham
 Igor Klebanov
+Igor Kurchatov
 Igor Tamm
 Igor Ternov
-Igor Vasilyevich Kurchatov
-Igor Yevgenyevich Tamm
 Ilya Frank
 Ilya Prigogine
 Irène Joliot-Curie
@@ -460,16 +445,17 @@ Isaak Markovich Khalatnikov
 Isidor Isaac Rabi
 Isidor Sauers
 İsmail Hakkı Duru
-Ivan Pulyuy
+Ivan Puluj
 Ivar Giaever
 J. Hans D. Jensen
 J. J. Thomson
+J. Robert Oppenheimer
 Jack Kilby
 Jack Steinberger
 Jacques Villain
 Jagadeesh Moodera
 Jagadish Chandra Bose
-Jainendra Jain
+Jainendra K. Jain
 Jamal Nazrul Islam
 James Alfred Ewing
 James Binney
@@ -482,12 +468,13 @@ James Dewar
 James E. Faller
 James Franck
 James Glimm
-James Hopwood Jeans
+James Jeans
 James Prescott Joule
+James R. Wait
 James Rainwater
 James W. LaBelle
-James Wait
 James Watt
+Jan Burgers
 Jan Zaanen
 Jayant Narlikar
 Jean Baptiste Perrin
@@ -517,9 +504,7 @@ Johann Josef Loschmidt
 Johannes Bosscha
 Johannes Diderik van der Waals
 Johannes Fischer
-Johannes Georg Bednorz
 Johannes Kepler
-Johannes Martinus Burgers
 Johannes Rydberg
 Johannes Stark
 John Alexander Simpson
@@ -536,16 +521,16 @@ John G. Cramer
 John Gribbin
 John H. Hubbell
 John Hartnett (physicist)
-John Hasbrouck van Vleck
+John Hasbrouck Van Vleck
 John Henry Poynting
 John Henry Schwarz
 John Herapath
 John Hopkinson
 John Hubbard (physicist)
 John Iliopoulos
-John J. Montgomery
 John J. Turin
 John James Waterston
+John Joseph Montgomery
 John Kerr (physicist)
 John L. Hall
 John Lennard-Jones
@@ -560,27 +545,27 @@ John Sealy Townsend
 John Stewart Bell
 John Tyndall
 John von Neumann
+John William Strutt
 John Zeleny
 Jonathan Dowling
 José Enrique Moyal
 José W. F. Valle
+Josef Stefan
 Joseph Fourier
 Joseph H. Eberly
 Joseph Henry
-Joseph Hooton Taylor, Jr.
+Joseph Hooton Taylor Jr.
+Joseph J. Romm
 Joseph Larmor
 Joseph Louis Gay-Lussac
-Joseph Louis Lagrange
 Joseph Lykken
 Joseph Plateau
 Joseph Polchinski
-Joseph Romm
 Joseph Rotblat
-Joseph Stefan
 Joseph Swan
 Joseph von Fraunhofer
+Joseph-Louis Lagrange
 Josiah Willard Gibbs
-Juan Maldacena
 Juan Martín Maldacena
 Juansher Chkareuli
 Jules Aarons
@@ -589,28 +574,26 @@ Julian Schwinger
 Julius Wess
 Jürg Fröhlich
 Juris Upatnieks
+K. Alex Müller
 K. S. Babu
 Kai Siegbahn
-Kan-Chang Wang
-Karl Alexander Müller
 Karl Bechert
-Karl Compton
 Karl Ferdinand Braun
 Karl Glitscher
 Karl Herzfeld
 Karl L. Littrow
 Karl Schwarzschild
+Karl Taylor Compton
 Karl Wirtz
 Karl Zimmer
 Karl-Heinrich Riewe
 Kathryn Moler
 Kazimierz Fajans
-Kees A. Schouhamer Immink
+Kees Schouhamer Immink
 Kendal Nezan
 Kenneth G. Wilson
 Kenneth Lane (physicist)
 Kenneth Young (physicist)
-Kip Stephen Thorne
 Kip Thorne
 Klaus von Klitzing
 Konstantin Novoselov
@@ -618,29 +601,27 @@ Konstantin Petrzhak
 Kurt Binder
 Kyriakos Tamvakis
 Lars Onsager
-Laura Maria Caterina Bassi
+Laura Bassi
 Laura Mersini-Houghton
-Lawrence Krauss
+Lawrence Bragg
 Lawrence M. Krauss
 Lee Smolin
-Lene Vestergaard Hau
+Lene Hau
 Leo Esaki
 Leo Graetz
 Leo Kadanoff
 Leo Szilard
-Leó Szilárd
 Léon Brillouin
 Leon Cooper
 Léon Foucault
 Leon M. Lederman
 Léon Van Hove
-Leonard Salomon Ornstein
+Leonard Ornstein
 Leonard Susskind
 Leonhard Euler
-Leonid Isaakovich Mandelshtam
+Leonid Mandelstam
 Leopoldo Nobili
 Lev Artsimovich
-Lev Davidovich Landau
 Lev Gor'kov
 Lev Landau
 Lev Okun
@@ -651,15 +632,13 @@ Lincoln Wolfenstein
 Lisa Randall
 Lise Meitner
 Loránd Eötvös
-Lord Rayleigh
 Lorella Jones
-Lothar Nordheim
+Lothar Wolfgang Nordheim
+Louis de Broglie
 Louis Essen
 Louis Néel
 Louis Rendu
 Louis Slotin
-Louis, 7th duc de Broglie
-Louis-Victor de Broglie
 Lowell S. Brown
 Luboš Motl
 Luciano Maiani
@@ -674,10 +653,10 @@ Ludwik Silberstein
 Luigi Galvani
 Luigi Puccianti
 Luis Walter Alvarez
+M. G. K. Menon
 Macedonio Melloni
-Mahmoud Hessaby
+Mahmoud Hessabi
 Makoto Kobayashi (physicist)
-Mambillikalathil Govind Kumar Menon
 Manfred Eigen
 Manfred von Ardenne
 Mani Lal Bhaumik
@@ -686,7 +665,6 @@ Marcel Brillouin
 Marcela Carena
 Marcia Barbosa
 Margrete Heiberg Bose
-Maria Goeppert Mayer
 Maria Goeppert-Mayer
 Maria Spiropulu
 Marian Smoluchowski
@@ -700,12 +678,11 @@ Martin Bojowald
 Martin Gutzwiller
 Martin Knudsen
 Martin Lewis Perl
-Martin Rees, Baron Rees of Ludlow
+Martin Rees
 Martin Ryle
 Martin Schadt
 Martin Tajmar
 Martinus J. G. Veltman
-Martinus J.G. Veltman
 Marvin D. Girardeau
 Marvin Leonard Goldberger
 Mary K. Gaillard
@@ -722,7 +699,7 @@ Max Tegmark
 Max Volmer
 Max von Laue
 Maxim Chernodub
-Megh Nad Saha
+Meghnad Saha
 Mehran Kardar
 Melvin Lax
 Melvin Schwartz
@@ -735,26 +712,26 @@ Michael Woolfson
 Michio Kaku
 Miguel Alcubierre
 Miguel Ángel Virasoro (physicist)
-Mihajlo Idvorski Pupin
+Mihajlo Pupin
 Mikhail Lavrentyev
 Mikhail Lomonosov
+Mikhail Ostrogradsky
 Mikhail Shifman
-Mikhail Vasilievich Ostrogradsky
 Milla Baldo-Ceolin
 Milton S. Plesset
 Mitchell Feigenbaum
+Moritz von Jacobi
 Moses H. W. Chan
-Moustafa Mosharafa
 Murray Gell-Mann
 Naomi Ginsberg
-Nasir al-Din Tusi
+Nasir al-Din al-Tusi
 Nathan Isgur
 Nathan Rosen
 Nathan Seiberg
 Neil Ashby
 Neil deGrasse Tyson
 Neil Turok
-Nevill Mott
+Nevill Francis Mott
 Nicola Cabibbo
 Nicola Spaldin
 Nicolaas Bloembergen
@@ -769,21 +746,21 @@ Nikolaus Riehl
 Nikolay Basov
 Nikolay Bogolyubov
 Nikolay Semyonov
-Nikolay Sergeevich Krylov
+Nikolay Sergeyevich Krylov
 Nikolay Umov
 Nima Arkani-Hamed
 Nina Marković
-Norman Foster Ramsey, Jr.
+Norman Foster Ramsey Jr.
 Oleg Losev
 Oleg Sushkov
 Oliver Heaviside
 Oliver Lodge
-Omar Khayyám
+Omar Khayyam
 Osborne Reynolds
 Oscar Sala
 Oskar Klein
-Otto Frisch
 Otto Hahn
+Otto Robert Frisch
 Otto Scherzer
 Otto Stern
 Owen Chamberlain
@@ -798,13 +775,12 @@ Paul Ehrenfest
 Paul Frampton
 Paul G. Hewitt
 Paul Harteck
-Paul J. Steinhardt
 Paul John Ellis
 Paul Langevin
 Paul Peter Ewald
+Paul Steinhardt
 Paul Werbos
-Pavel Alekseyevich Cherenkov
-Payam Taiebyzadeh
+Pavel Cherenkov
 Percy Williams Bridgman
 Per-Olov Löwdin
 Pervez Hoodbhoy
@@ -823,7 +799,6 @@ Petr Paucek
 Philip Warren Anderson
 Philipp Lenard
 Phyllis S. Freier
-Physicist
 Piara Singh Gill
 Pierre Curie
 Pierre Louis Dulong
@@ -837,7 +812,7 @@ Pran Nath
 Predhiman Krishan Kaw
 Predrag Cvitanović
 Pyotr Kapitsa
-Pyotr Nikolaevich Lebedev
+Pyotr Lebedev
 Pythagoras
 Rafael Sorkin
 Ralph Asher Alpher
@@ -851,9 +826,9 @@ Ratko Janev
 Raúl Rabadán
 Ravi Gomatam
 Ray Mackintosh
-Raymond Davis, Jr.
+Raymond Davis Jr.
 Raymond Seeger
-Raymond T. Birge
+Raymond Thayer Birge
 Reinhard Oehme
 René Antoine Ferchault de Réaumur
 René Descartes
@@ -875,21 +850,20 @@ Richard Keith Ellis
 Richard Makinson
 Robbert Dijkgraaf
 Robert Adler
+Robert Andrews Millikan
 Robert B. Laughlin
 Robert B. Leighton
 Robert Boyle
 Robert Brout
 Robert Coleman Richardson
 Robert D. Richtmyer
-Robert Dicke
 Robert Döpel
 Robert G. Sachs
+Robert H. Dicke
 Robert Hofstadter
 Robert Hooke
 Robert K. Logan
 Robert Marshak
-Robert Millikan
-Robert Oppenheimer
 Robert R. Wilson
 Robert S. Mulliken
 Robert Serber
@@ -897,18 +871,18 @@ Robert von Lieben
 Robert W. Wood
 Robert Woodrow Wilson
 Robert Zwanzig
+Roger Joseph Boscovich
 Roger Penrose
 Rolf Landauer
 Roman Jackiw
-Roman U. Sexl
-Ronald E. McNair
+Roman Ulrich Sexl
 Ronald Ernest Aitchison
+Ronald McNair
 Rosalind Franklin
-Rosalyn Yalow
+Rosalyn Sussman Yalow
 Roy J. Glauber
 Royal Prussia
 Ruby Payne-Scott
-Rudjer Josip Boscovich
 Rudolf Clausius
 Rudolf Haag
 Rudolf Mössbauer
@@ -916,7 +890,6 @@ Rudolf Peierls
 Russell Alan Hulse
 Ryogo Kubo
 Sam Treiman
-Samuel Abraham Goudsmit
 Samuel C. C. Ting
 Samuel Goudsmit
 Samuel King Allison
@@ -932,13 +905,14 @@ Semen Altshuler
 Serge Haroche
 Serge Rudaz
 Sergei Tyablikov
-Sergei Vavilov
+Sergey Ivanovich Vavilov
 Sergio Ferrara
 Serguei Krasnikov
 Seth Lloyd
 Seth Neddermeyer
 Sheldon Lee Glashow
 Shen Kuo
+Shin'ichirō Tomonaga
 Shiraz Minwalla
 Shirley Ann Jackson
 Shoichi Sakata
@@ -948,9 +922,7 @@ Siméon Denis Poisson
 Simon Newcomb
 Simon Stevin
 Simon van der Meer
-Sin-Itiro Tomonaga
-Sir Isaac Newton
-Sir William Crookes
+Sir George Stokes
 Sixto González
 Stanislav Mikheyev
 Stanislaw Ulam
@@ -958,11 +930,11 @@ Stanley Deser
 Stanley Mandelstam
 Stephen Gasiorowicz
 Stephen Hawking
-Stephen Hsu
 Stephen L. Adler
 Stephen Parke
 Stephen Paul (physicist)
 Stephen Wolfram
+Steve Hsu
 Steven Chu
 Steven Frautschi
 Steven Gubser
@@ -980,11 +952,11 @@ Tanya Monro
 Tatyana Afanasyeva
 Tekin Dereli
 Terence James Elkins
-Thales
+Thales of Miletus
 Thanu Padmanabhan
 Theodor Kaluza
 Theodor W. Hänsch
-Theodore Maiman
+Theodore Harold Maiman
 Theodore von Kármán
 Thomas Corwin Mendenhall
 Thomas Curtright
@@ -995,11 +967,10 @@ Thomas Young (scientist)
 Toichiro Kinoshita
 Tom Baehr-Jones
 Tom Banks (physicist)
-Tom W. B. Kibble
+Tom Kibble
 Toshihide Maskawa
 Tsung-Dao Lee
 Tullio Regge
-Twersky
 Tycho Brahe
 Ulrike Diebold
 V. Balakrishnan (physicist)
@@ -1009,19 +980,18 @@ Valerie Gibson
 Valery Pokrovsky
 Vera Rubin
 Viatcheslav Mukhanov
+Victor Ambartsumian
 Victor Francis Hess
-Victor Frederick Weisskopf
 Victor Popov
+Victor Weisskopf
 Vikram Sarabhai
-Viktor Ambartsumian
 Viktor Dilman
-Viktor Hambardzumyan
 Vilhelm Bjerknes
 Vitaly Ginzburg
 Vladimir Fock
 Vladimir Gribov
 Vlatko Vedral
-W.W. Hansen
+W. W. Hansen
 Walter Boas
 Walter Franz
 Walter Gerlach
@@ -1035,28 +1005,28 @@ Walther Bothe
 Walther Kossel
 Walther Ritz
 Wander Johannes de Haas
+Wang Ganchang
 Ward Plummer
 Werner Heisenberg
 Werner Israel
-Werner Karl Heisenberg
-Wernher Von Braun
+Wernher von Braun
 Wilhelm Eduard Weber
 Wilhelm Röntgen
 Wilhelm Wien
 Willard Boyle
-Willebrord Snell
+Willebrord Snellius
 Willem de Sitter
 Willem Hendrik Keesom
 Willem 's Gravesande
 William A. Bardeen
 William Alfred Fowler
 William Allis
+William Crookes
 William Daniel Phillips
 William Eccles
-William Fuller Brown, Jr.
+William Fuller Brown Jr.
 William Gilbert (astronomer)
 William Henry Bragg
-William Lawrence Bragg
 William Markowitz
 William Prout
 William R. Kanne
@@ -1075,16 +1045,17 @@ Wolfgang Ketterle
 Wolfgang Paul
 Wolfgang Pauli
 Xiao-Gang Wen
+Yakov Alpert
 Yakov Borisovich Zel'dovich
 Yakov Frenkel
-Yakov Lvovich Alpert
+Yang Chen-Ning
 Yasha Rosenfeld
 Yasunori Nomura
 Yoichiro Nambu
 Yoji Totsuka
 Yoshinori Tokura
 Yulii Borisovich Khariton
-Yuri Feodorovich Orlov
+Yuri Orlov
 Yuval Ne'eman
-Zhores Ivanovich Alferov
+Zhores Alferov
 Zoltán Lajos Bay

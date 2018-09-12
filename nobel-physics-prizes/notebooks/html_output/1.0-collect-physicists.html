@@ -11784,9 +11784,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setting-up-the-Environment">Setting up the Environment<a class="anchor-link" href="#Setting-up-the-Environment">&#182;</a></h2><p>A few initialization steps are needed to setup the environment:</p>
+<h2 id="Setting-up-the-Environment">Setting up the Environment<a class="anchor-link" href="#Setting-up-the-Environment">&#182;</a></h2><p>An initialization step is needed to setup the environment:</p>
 <ul>
-<li>An environment variable needs to be set to disable loading of <code>user-config.py</code> for <em>pywikibot</em>.</li>
 <li>The locale needs to be set for all categories to the user’s default setting (typically specified in the LANG environment variable) to enable correct sorting of physicists names with accents.  </li>
 </ul>
 
@@ -11798,28 +11797,20 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">env</span> PYWIKIBOT_NO_USER_CONFIG=1 # 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">parse</span>
+
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">bs4.element</span> <span class="k">import</span> <span class="n">NavigableString</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">progressbar</span> <span class="k">as</span> <span class="nn">pb</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>env: PYWIKIBOT_NO_USER_CONFIG=1 #
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -11827,57 +11818,6 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> pycodestyle_magic
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="kn">import</span> <span class="nn">mwparserfromhell</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pywikibot</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>Skipping loading of user-config.py.
-family and mylang are not set.
-Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -11893,7 +11833,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[4]:</div>
+<div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -11912,77 +11852,128 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Scraping-the-Physicists">Scraping the Physicists<a class="anchor-link" href="#Scraping-the-Physicists">&#182;</a></h2><p>I use a combination of <em>pywikibot</em> and <em>mwparserfromhell</em> to scrape the links from the Wikipedia pages. I filter the list of links down to only those containing physicist names.</p>
+<h2 id="Scraping-the-Physicists">Scraping the Physicists<a class="anchor-link" href="#Scraping-the-Physicists">&#182;</a></h2><p>I use a combination of <em>requests</em> and <em>beautifulsoup</em> to scrape the links from the Wikipedia pages. I filter the list of links down to only those containing physicist names. The important point to note is that I actually need to send HTTP requests to fetch the pages associated with these links as some of them are redirected to different URLs. The really tricky part is that the redirects are done via javascript so they are not detected by <em>requests</em>. As a result I have to parse the javascript to find the redirect link.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_notable_physicists</span><span class="p">():</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">WIKI_URL</span> <span class="o">=</span> <span class="s1">&#39;https://en.wikipedia.org/wiki/&#39;</span>
+
+<span class="k">def</span> <span class="nf">get_notable_physicists</span><span class="p">(</span><span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get a list of notable physicists.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        progress_bar (progressbar.ProgressBar): Progress bar.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        list (str): List of names of notable physicists.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">physicists</span> <span class="o">=</span> <span class="n">_get_physicists</span><span class="p">()</span>
-    <span class="n">theoretical_physicists</span> <span class="o">=</span> <span class="n">_get_theoretical_physicists</span><span class="p">()</span>
-    <span class="n">notable_physicists</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">physicists</span> <span class="o">+</span> <span class="n">theoretical_physicists</span><span class="p">))</span>
-    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1090</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
+
+    <span class="c1"># get the theoretical physicists</span>
+    <span class="n">theoretical_physicists</span> <span class="o">=</span> <span class="n">_get_linked_article_titles</span><span class="p">(</span>
+        <span class="n">WIKI_URL</span> <span class="o">+</span> <span class="s1">&#39;List_of_theoretical_physicists&#39;</span><span class="p">,</span>
+        <span class="n">section_titles</span><span class="o">=</span><span class="p">[</span>
+            <span class="s1">&#39;Ancient times&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Middle_Ages&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;15th–16th century&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;16th–17th century&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;17th–18th century&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;18th–19th century&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;19th century&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;19th–20th century&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;20th century&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;20th–21st century&#39;</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theoretical_physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">267</span><span class="p">)</span>
+
+    <span class="c1"># get the physicists</span>
+    <span class="n">physicists</span> <span class="o">=</span> <span class="n">_get_linked_article_titles</span><span class="p">(</span>
+        <span class="n">WIKI_URL</span> <span class="o">+</span> <span class="s1">&#39;List_of_physicists&#39;</span><span class="p">,</span>
+        <span class="n">section_titles</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># remove dead links, institutions and links to foreign languages</span>
+    <span class="n">physicists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span>
+        <span class="s1">&#39;/w/index.php?title=Payam Taiebyzadeh&amp;action=edit&amp;redlink=1&#39;</span><span class="p">)</span>
+    <span class="n">physicists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Newcastle University&#39;</span><span class="p">)</span>
+    <span class="c1"># leads to the physicist at this dead link:</span>
+    <span class="c1"># https://en.wikipedia.org/w/index.php?title=Frederick_J._Ernst&amp;action=edit&amp;redlink=1</span>
+    <span class="n">physicists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Ernst equation&#39;</span><span class="p">)</span>
+    <span class="c1"># leads to the physicist at this foreign language link:</span>
+    <span class="c1"># https://tr.wikipedia.org/wiki/Victor_Twersky_(fizik%C3%A7i)</span>
+    <span class="n">physicists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Twersky#Twersky&#39;</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">976</span><span class="p">)</span>
+
+    <span class="c1"># merge the lists</span>
+    <span class="n">notable_physicists</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">theoretical_physicists</span> <span class="o">+</span> <span class="n">physicists</span><span class="p">))</span>
+
+    <span class="c1"># get the redirect title (if any) from a HTTP request</span>
+    <span class="n">notable_physicists</span> <span class="o">=</span> <span class="n">_get_redirected_titles</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">,</span>
+                                                <span class="n">progress_bar</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1061</span><span class="p">)</span>
+
+    <span class="c1"># sort the list</span>
+    <span class="n">notable_physicists</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">notable_physicists</span>
 
 
-<span class="k">def</span> <span class="nf">_get_physicists</span><span class="p">():</span>
-    <span class="n">wiki_site</span> <span class="o">=</span> <span class="n">pywikibot</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">fam</span><span class="o">=</span><span class="s1">&#39;wikipedia&#39;</span><span class="p">)</span>
-    <span class="n">wiki_page</span> <span class="o">=</span> <span class="n">pywikibot</span><span class="o">.</span><span class="n">Page</span><span class="p">(</span><span class="n">wiki_site</span><span class="p">,</span> <span class="s1">&#39;List of physicists&#39;</span><span class="p">)</span>
-    <span class="c1"># Newcastle University is not a physicist</span>
-    <span class="n">ignore_links</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Newcastle University&#39;</span><span class="p">]</span>
-    <span class="n">physicists</span> <span class="o">=</span> <span class="n">_get_linked_pages</span><span class="p">(</span><span class="n">wiki_site</span><span class="p">,</span> <span class="n">wiki_page</span><span class="p">,</span>
-                                   <span class="n">ignore_links</span><span class="o">=</span><span class="n">ignore_links</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">978</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">physicists</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_get_linked_article_titles</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">section_titles</span><span class="p">):</span>
+    <span class="c1"># fetch the page</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># loop to find links</span>
+    <span class="n">article_titles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">section_title</span> <span class="ow">in</span> <span class="n">section_titles</span><span class="p">:</span>
+        <span class="n">span_id</span> <span class="o">=</span> <span class="n">section_title</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">span_id</span><span class="p">)</span>
+        <span class="n">ul</span> <span class="o">=</span> <span class="n">section</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s1">&#39;ul&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">ul</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="n">article_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">link</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/wiki/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">article_titles</span>
 
 
-<span class="k">def</span> <span class="nf">_get_linked_pages</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">ignore_links</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">linked_pages</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">linked_page</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">linkedPages</span><span class="p">(</span><span class="n">namespaces</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="c1"># category pages are unwanted along with other links not about</span>
-        <span class="c1"># a physicist</span>
-        <span class="k">if</span> <span class="n">linked_page</span><span class="o">.</span><span class="n">is_categorypage</span><span class="p">()</span> <span class="ow">or</span> <span class="n">linked_page</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="ow">in</span> <span class="n">ignore_links</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="n">linked_pages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">linked_page</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">linked_pages</span>
+<span class="k">def</span> <span class="nf">_get_redirected_titles</span><span class="p">(</span><span class="n">titles</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">redirected_titles</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">titles</span><span class="p">)):</span>
+        <span class="c1"># fetch the page</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">WIKI_URL</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># delay to crawl responsibly</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">_get_theoretical_physicists</span><span class="p">():</span>
-    <span class="n">site</span> <span class="o">=</span> <span class="n">pywikibot</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;wikipedia&#39;</span><span class="p">)</span>
-    <span class="n">code</span> <span class="o">=</span> <span class="n">_get_page_wikicode</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="s1">&#39;List of theoretical physicists&#39;</span><span class="p">)</span>
-    <span class="n">era</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ancient times&#39;</span><span class="p">,</span> <span class="s1">&#39;middle ages&#39;</span><span class="p">,</span> <span class="s1">&#39;century&#39;</span><span class="p">]</span>
-    <span class="n">physicists</span> <span class="o">=</span> <span class="n">_get_linked_pages_in_sections</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">era</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">267</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">physicists</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
+        <span class="c1"># parse javascript for redirects</span>
+        <span class="n">redirected</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
+            <span class="n">REDIRECT</span> <span class="o">=</span> <span class="s1">&#39;&quot;wgInternalRedirectTargetUrl&quot;:&#39;</span>
+            <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">script_tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;script&#39;</span><span class="p">):</span>
+                <span class="n">script_code</span> <span class="o">=</span> <span class="n">script_tag</span><span class="o">.</span><span class="n">string</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">script_code</span><span class="p">,</span> <span class="n">NavigableString</span><span class="p">)</span> <span class="ow">and</span>
+                        <span class="n">REDIRECT</span> <span class="ow">in</span> <span class="n">script_code</span><span class="p">):</span>
+                    <span class="n">redirect_code</span> <span class="o">=</span> <span class="n">script_code</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">REDIRECT</span><span class="p">)</span>
+                    <span class="n">redirected_title</span> <span class="o">=</span> <span class="p">(</span><span class="n">redirect_code</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                                        <span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/wiki/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                                        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">))</span>
+                    <span class="c1"># some physicist names contain unicode characters</span>
+                    <span class="c1"># which have been quoted when in a url</span>
+                    <span class="c1"># unquote for sorting</span>
+                    <span class="n">redirected_titles</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span><span class="n">redirected_title</span><span class="p">))</span>
+                    <span class="n">redirected</span> <span class="o">=</span> <span class="kc">True</span>
 
-
-<span class="k">def</span> <span class="nf">_get_page_wikicode</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">page_title</span><span class="p">):</span>
-    <span class="n">page</span> <span class="o">=</span> <span class="n">pywikibot</span><span class="o">.</span><span class="n">Page</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">page_title</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">mwparserfromhell</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">_get_linked_pages_in_sections</span><span class="p">(</span><span class="n">wikicode</span><span class="p">,</span> <span class="n">sections</span><span class="p">):</span>
-    <span class="n">linked_pages</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">matches</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sections</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">wikicode</span><span class="o">.</span><span class="n">get_sections</span><span class="p">(</span><span class="n">matches</span><span class="o">=</span><span class="n">matches</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">linked_page</span> <span class="ow">in</span> <span class="n">section</span><span class="o">.</span><span class="n">filter_wikilinks</span><span class="p">():</span>
-            <span class="c1"># section headings are unwanted</span>
-            <span class="k">if</span> <span class="n">linked_page</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="n">linked_pages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">linked_page</span><span class="o">.</span><span class="n">title</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">linked_pages</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">redirected</span><span class="p">:</span>
+            <span class="n">redirected_titles</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">progress_bar</span><span class="p">:</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">redirected_titles</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11992,13 +11983,43 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">notable_physicists</span> <span class="o">=</span> <span class="n">get_notable_physicists</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">widgets</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Checking: &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Counter</span><span class="p">(),</span>
+    <span class="s1">&#39; / &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1086</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; urls&#39;</span><span class="p">,</span>
+    <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;█&#39;</span><span class="p">),</span>
+    <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Percentage</span><span class="p">(),</span>
+    <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Timer</span><span class="p">(),</span>
+    <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">ETA</span><span class="p">()</span>
+<span class="p">]</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">(</span><span class="n">max_value</span><span class="o">=</span><span class="mi">1086</span><span class="p">,</span> <span class="n">widgets</span><span class="o">=</span><span class="n">widgets</span><span class="p">,</span>
+                     <span class="n">redirect_stdout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">notable_physicists</span> <span class="o">=</span> <span class="n">get_notable_physicists</span><span class="p">(</span><span class="n">bar</span><span class="p">)</span>
+<span class="n">bar</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Checking: 1086 / 1086 urls |████████| 100% Elapsed Time: 0:26:41 Time:  0:26:41
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12014,7 +12035,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">))</span>
@@ -12031,13 +12052,13 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[7]:</div>
+<div class="prompt output_prompt">Out[5]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>1090</pre>
+<pre>1061</pre>
 </div>
 
 </div>
@@ -12057,7 +12078,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">write_list_to_file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">list_to_write</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">):</span>
@@ -12072,7 +12093,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <span class="sd">        list_to_write (list): The list of items.</span>
 <span class="sd">        mode (str): Specifies the mode in which the file is opened. See</span>
 <span class="sd">            `open()` method in the standard library for more details.</span>
-<span class="sd">            </span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">list_file</span><span class="p">:</span>
@@ -12086,7 +12107,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">write_list_to_file</span><span class="p">(</span><span class="s1">&#39;../data/raw/physicists.txt&#39;</span><span class="p">,</span> <span class="n">notable_physicists</span><span class="p">)</span>
@@ -12099,11 +12120,10 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s1">&#39;../data/raw/physicists.txt&#39;</span><span class="p">))</span>
-<span class="o">%</span><span class="k">pycat</span> ../data/raw/physicists.txt
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pycat</span> ../data/raw/physicists.txt
 </pre></div>
 
 </div>
@@ -12132,54 +12152,49 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Abraham H<span class="ansi-yellow-intense-fg ansi-bold">.</span> Taub<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Abraham Pais<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Abram Ioffe<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Abū Rayhān al<span class="ansi-yellow-intense-fg ansi-bold">-</span>Bīrūnī<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Adam Riess<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Adolf Kratzer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Adolfas Jucys<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Adriaan Fokker<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Adrian Melott<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Aiyalam Parameswaran Balachandran<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Akira Tonomura<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Al Beruni<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Al Farabi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alain Aspect<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alain Haché<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alan Andrew Watson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alan Guth<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alan Schoen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alan Walsh <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
-</span>Albert Abraham Michelson<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Albert A<span class="ansi-yellow-intense-fg ansi-bold">.</span> Michelson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Albert Einstein<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Albert Fert<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Al<span class="ansi-yellow-intense-fg ansi-bold">-</span>Biruni<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alejandro Corichi<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Aleksandr Mikhailovich Lyapunov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Aleksandr Lyapunov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Aleksandr Stoletov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alessandro Volta<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexander Animalu<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Alexander Friedman<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Alexander Friedmann<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexander Graham Bell<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Alexander M<span class="ansi-yellow-intense-fg ansi-bold">.</span> Polyakov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Alexander Markovich Polyakov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexander Prokhorov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexander R<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hamilton<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexander Zamolodchikov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexei Alexeyevich Abrikosov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexei Kitaev<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Alexei Smirnov <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexei Yuryevich Smirnov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alexei Zamolodchikov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Al<span class="ansi-yellow-intense-fg ansi-bold">-</span>Farabi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alfred Kastler<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alfred Lee Loomis<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alfred<span class="ansi-yellow-intense-fg ansi-bold">-</span>Marie Liénard<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Alhazen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ali Chamseddine<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ali Javan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ali Moustafa Mosharafa<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Alladi Ramakrishnan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Allan McLeod Cormack<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Alvin Weinberg<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Alvin M<span class="ansi-yellow-intense-fg ansi-bold">.</span> Weinberg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Amal Kumar Raychaudhuri<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Amanda Barnard<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Amédée Mouchez<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Amedeo Avogadro<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Amos Dolbear<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Amrom Harry Katz<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12212,18 +12227,15 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Arno Allan Penzias<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arnold Sommerfeld<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arpad Elo<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Arsenij Sokolov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Arseny Sokolov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Artem Alikhanian<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arthur B<span class="ansi-yellow-intense-fg ansi-bold">.</span> McDonald<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arthur Compton<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arthur Eddington<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Arthur Holly Compton<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arthur Iberall<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arthur Korn<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arthur Leonard Schawlow<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arthur Maitland<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Arthur Milne<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Arthur Stanley Eddington<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Arthur Wightman<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Aryabhata<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ashok Das<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12242,11 +12254,10 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Balthasar van der Pol<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Barton Zwiebach<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Basilis C<span class="ansi-yellow-intense-fg ansi-bold">.</span> Xanthopoulos<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Behram Kursunoglu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Behram Kurşunoğlu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ben Roy Mottelson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Benjamin Franklin<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Benjamin Lee <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
+</span>Benjamin W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Lee<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Benoît Paul Émile Clapeyron<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Bent Sørensen <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>Bernard de Wit<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12257,14 +12268,13 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Bimla Buti<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Blaise Pascal<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Boris Chirikov<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Boris Jacobi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Boris Podolsky<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Boyd Bartlett<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Brandon Carter<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Brendan Scaife<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Brian Cox <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
-</span>Brian David Josephson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Brian Greene<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Brian Josephson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Brian May<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Brian Schmidt<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Bruno Pontecorvo<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12273,9 +12283,11 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Bruno Zumino<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Burchard de Volder<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Burton Richter<span class="ansi-yellow-intense-fg ansi-bold">
+</span>C<span class="ansi-yellow-intense-fg ansi-bold">.</span> F<span class="ansi-yellow-intense-fg ansi-bold">.</span> Powell<span class="ansi-yellow-intense-fg ansi-bold">
+</span>C<span class="ansi-yellow-intense-fg ansi-bold">.</span> H<span class="ansi-yellow-intense-fg ansi-bold">.</span> D<span class="ansi-yellow-intense-fg ansi-bold">.</span> Buys Ballot<span class="ansi-yellow-intense-fg ansi-bold">
 </span>C<span class="ansi-yellow-intense-fg ansi-bold">.</span> R<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hagen<span class="ansi-yellow-intense-fg ansi-bold">
-</span>C<span class="ansi-yellow-intense-fg ansi-bold">.</span>H<span class="ansi-yellow-intense-fg ansi-bold">.</span>D<span class="ansi-yellow-intense-fg ansi-bold">.</span> Buys Ballot<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Carl August Steinheil<span class="ansi-yellow-intense-fg ansi-bold">
+</span>C<span class="ansi-yellow-intense-fg ansi-bold">.</span> V<span class="ansi-yellow-intense-fg ansi-bold">.</span> Raman<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Carl August von Steinheil<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carl David Anderson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carl Eckart<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carl Friedrich Gauss<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12283,31 +12295,27 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Carl Hermann<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carl M<span class="ansi-yellow-intense-fg ansi-bold">.</span> Bender<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carl Ramsauer<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Carl Richard Hagen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carl Sagan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carl Wieman<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Carl<span class="ansi-yellow-intense-fg ansi-bold">-</span>Gustav Arvid Rossby<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Carl<span class="ansi-yellow-intense-fg ansi-bold">-</span>Gustaf Rossby<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carlo Beenakker<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carlo Marangoni<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carlo Rovelli<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carlo Rubbia<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Carlos E<span class="ansi-yellow-intense-fg ansi-bold">.</span>M<span class="ansi-yellow-intense-fg ansi-bold">.</span> Wagner<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Carolina Henriette Mac Gillavry<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Cecil Frank Powell<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Cesar Lattes<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Chandrasekhara Venkata Raman<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Carolina Henriette MacGillavry<span class="ansi-yellow-intense-fg ansi-bold">
+</span>César Lattes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charles Critchfield<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Charles Edouard Guillaume<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Charles Édouard Guillaume<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charles Galton Darwin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charles Glover Barkla<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charles H<span class="ansi-yellow-intense-fg ansi-bold">.</span> Henry<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Charles H<span class="ansi-yellow-intense-fg ansi-bold">.</span> Townes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charles K<span class="ansi-yellow-intense-fg ansi-bold">.</span> Kao<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charles Thomson Rees Wilson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charles Thorn<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Charles Townes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charles<span class="ansi-yellow-intense-fg ansi-bold">-</span>Augustin de Coulomb<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Charlotte Riefenstahl<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Chen Ning Yang<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Chennupati Jagadish<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Chien<span class="ansi-yellow-intense-fg ansi-bold">-</span>Shiung Wu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Chris Lintott<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12322,15 +12330,16 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Clinton Davisson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Colin Webb<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Cosmas Zachos<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Craige Schensted<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Cumrun Vafa<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Curtis Callan<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Dam Thanh Son<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Đàm Thanh Sơn<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Daniel Bernoulli<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Daniel C<span class="ansi-yellow-intense-fg ansi-bold">.</span> Tsui<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Daniel Friedan<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Daniel Gabriel Fahrenheit<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Daniel Greenberger<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Daniel Z<span class="ansi-yellow-intense-fg ansi-bold">.</span> Freedman<span class="ansi-yellow-intense-fg ansi-bold">
+</span>David Albert<span class="ansi-yellow-intense-fg ansi-bold">
 </span>David Awschalom<span class="ansi-yellow-intense-fg ansi-bold">
 </span>David Bohm<span class="ansi-yellow-intense-fg ansi-bold">
 </span>David Brewster<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12347,24 +12356,25 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>David Merritt<span class="ansi-yellow-intense-fg ansi-bold">
 </span>David Olive<span class="ansi-yellow-intense-fg ansi-bold">
 </span>David Ruelle<span class="ansi-yellow-intense-fg ansi-bold">
-</span>David Z Albert<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Daya Shankar Kulshreshtha<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Deborah S<span class="ansi-yellow-intense-fg ansi-bold">.</span> Jin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Democritus<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Denis Evans<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Denis Weaire<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Dennis Gabor<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Dennis Sciama<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Dennis William Sciama<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Dennis W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Sciama<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Derek Abbott<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Dimitri Nanopoulos<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Dmitry Shirkov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Dmitry Zubarev<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Donald A<span class="ansi-yellow-intense-fg ansi-bold">.</span> Glaser<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Dorothy Crowfoot Hodgkin<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Douglas D<span class="ansi-yellow-intense-fg ansi-bold">.</span> Osheroff<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Dorothy Hodgkin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Douglas Hartree<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Douglas Osheroff<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Durmus A<span class="ansi-yellow-intense-fg ansi-bold">.</span> Demir<span class="ansi-yellow-intense-fg ansi-bold">
+</span>E<span class="ansi-yellow-intense-fg ansi-bold">.</span> C<span class="ansi-yellow-intense-fg ansi-bold">.</span> George Sudarshan<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Ea Ea<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Edward Arthur Milne<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edward Bouchet<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edward Condon<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edward Mills Purcell<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12376,7 +12386,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Edwin C<span class="ansi-yellow-intense-fg ansi-bold">.</span> Kemble<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edwin Ernest Salpeter<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edwin Hall<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Edwin Powell Hubble<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Edwin Hubble<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edwin Thompson Jaynes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Egon Orowan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Elephter Andronikashvili<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12384,7 +12394,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Emil Wiechert<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Emil Wolf<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Émile Verdet<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Emilio G<span class="ansi-yellow-intense-fg ansi-bold">.</span> Segre<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Emilio Segrè<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Emmy Noether<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Enrico Fermi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Erdal İnönü<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12395,14 +12405,14 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Ernest Courant<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernest Esclangon<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernest Lawrence<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Ernest Mouchez<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernest Rutherford<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Ernest Titterton<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernest Walton<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Ernest William Titterton<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Ernst Abbe<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernst Brüche<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernst Chladni<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Ernst equation<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernst Ising<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Ernst Karl Abbe<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernst Mach<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernst Ruska<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ernst Stueckelberg<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12426,14 +12436,13 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Felix Bloch<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Felix Ehrenhaft<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Félix Savart<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Félix Ynduráin<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Félix Ynduráin Muñoz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Feza Gürsey<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Floyd K<span class="ansi-yellow-intense-fg ansi-bold">.</span> Richtmyer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Francis G<span class="ansi-yellow-intense-fg ansi-bold">.</span> Slack<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Francisco Jose Yndurain<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Francisco Jose Yndurain Muñoz<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Francisco José Ynduráin<span class="ansi-yellow-intense-fg ansi-bold">
+</span>François Arago<span class="ansi-yellow-intense-fg ansi-bold">
 </span>François Englert<span class="ansi-yellow-intense-fg ansi-bold">
-</span>François Jean Dominique Arago<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Frank J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Tipler<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Frank Wilczek<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Franz Aepinus<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12453,28 +12462,26 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Frits Zernike<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Fritz Houtermans<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Fulvio Melia<span class="ansi-yellow-intense-fg ansi-bold">
+</span>G<span class="ansi-yellow-intense-fg ansi-bold">.</span> I<span class="ansi-yellow-intense-fg ansi-bold">.</span> Taylor<span class="ansi-yellow-intense-fg ansi-bold">
 </span>G<span class="ansi-yellow-intense-fg ansi-bold">.</span> N<span class="ansi-yellow-intense-fg ansi-bold">.</span> Glasoe<span class="ansi-yellow-intense-fg ansi-bold">
 </span>G<span class="ansi-yellow-intense-fg ansi-bold">.</span> V<span class="ansi-yellow-intense-fg ansi-bold">.</span> Skrotskii<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Gabriel Fahrenheit<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Gabriel Jonas Lippmann<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Gabriel Lippmann<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gabriele Rabel<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gabriele Veneziano<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Galileo Galilei<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Gaspard<span class="ansi-yellow-intense-fg ansi-bold">-</span>Gustave Coriolis<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Gaspard<span class="ansi-yellow-intense-fg ansi-bold">-</span>Gustave de Coriolis<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Geoffrey Chew<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Geoffrey Ingram Taylor<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Georg Bednorz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Georg Ohm<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George B<span class="ansi-yellow-intense-fg ansi-bold">.</span> Pegram<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George E<span class="ansi-yellow-intense-fg ansi-bold">.</span> Smith<span class="ansi-yellow-intense-fg ansi-bold">
-</span>George Eugene Uhlenbeck<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George Francis FitzGerald<span class="ansi-yellow-intense-fg ansi-bold">
-</span>George Gabriel Stokes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George Gamow<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George Green <span class="ansi-yellow-intense-fg ansi-bold">(</span>mathematician<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>George Paget Thomson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George Smoot<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George Sterman<span class="ansi-yellow-intense-fg ansi-bold">
-</span>George Sudarshan<span class="ansi-yellow-intense-fg ansi-bold">
+</span>George Uhlenbeck<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Clark<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George William Hill<span class="ansi-yellow-intense-fg ansi-bold">
 </span>George Zweig<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12488,18 +12495,17 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Gerald Goertzel<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gerald Guralnik<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gerard K<span class="ansi-yellow-intense-fg ansi-bold">.</span> O<span class="ansi-red-fg">&#39;</span>Neill<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Gerardus<span class="ansi-red-fg"> </span><span class="ansi-red-fg">&#39;</span>t Hooft<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Gerard<span class="ansi-red-fg"> </span><span class="ansi-red-fg">&#39;</span>t Hooft<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gerd Binnig<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gersh Budker<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Gian F<span class="ansi-yellow-intense-fg ansi-bold">.</span> Giudice<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Gian<span class="ansi-yellow-intense-fg ansi-bold">-</span>Carlo Wick<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Gian Carlo Wick<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Gian Francesco Giudice<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gilbert Ronald Bainbridge<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Giorgio Parisi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Giovanni Battista Venturi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Giovanni Ciccotti<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gleb Wataghin<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Goran Senjanovic<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Gottfried Leibniz<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Goran Senjanović<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gottfried Wilhelm Leibniz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gregor Wentzel<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gregory Jaczko<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12516,23 +12522,24 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>H<span class="ansi-yellow-intense-fg ansi-bold">.</span> Pierre Noyes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hagen Kleinert<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Haim Harari<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Hannes Olof Gösta Alfvén<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Hannes Alfvén<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Hans Adolf Buchdahl<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Bethe<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Hans Buchdahl<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Christian Ørsted<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Geiger<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Georg Dehmelt<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Henrik Andersen<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Hans Kramers<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Ziegler <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>Harald Fuchs<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Harald J<span class="ansi-yellow-intense-fg ansi-bold">.</span>W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Mueller<span class="ansi-yellow-intense-fg ansi-bold">-</span>Kirsten<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Harald J<span class="ansi-yellow-intense-fg ansi-bold">.</span> W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Mueller<span class="ansi-yellow-intense-fg ansi-bold">-</span>Kirsten<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Harold E<span class="ansi-yellow-intense-fg ansi-bold">.</span> Puthoff<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Harrie Massey<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hasan Abdullayev<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Heike Kamerlingh Onnes<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Heinrich Hertz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Heinrich Kayser<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Heinrich Rohrer<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Heinrich Rudolf Hertz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Heinrich Welker<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Heinz Barwich<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Heinz Pagels<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12540,7 +12547,6 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Helen Quinn<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Helmut Hönl<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hendrik Casimir<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Hendrik Kramers<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hendrik Lorentz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Henk Dorgelo<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Henri Becquerel<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12570,10 +12576,9 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Hugh David Politzer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ibn al<span class="ansi-yellow-intense-fg ansi-bold">-</span>Haytham<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Igor Klebanov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Igor Kurchatov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Igor Tamm<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Igor Ternov<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Igor Vasilyevich Kurchatov<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Igor Yevgenyevich Tamm<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ilya Frank<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ilya Prigogine<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Irène Joliot<span class="ansi-yellow-intense-fg ansi-bold">-</span>Curie<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12584,16 +12589,17 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Isidor Isaac Rabi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Isidor Sauers<span class="ansi-yellow-intense-fg ansi-bold">
 </span>İsmail Hakkı Duru<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Ivan Pulyuy<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Ivan Puluj<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ivar Giaever<span class="ansi-yellow-intense-fg ansi-bold">
 </span>J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hans D<span class="ansi-yellow-intense-fg ansi-bold">.</span> Jensen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>J<span class="ansi-yellow-intense-fg ansi-bold">.</span> J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Thomson<span class="ansi-yellow-intense-fg ansi-bold">
+</span>J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Robert Oppenheimer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jack Kilby<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jack Steinberger<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jacques Villain<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jagadeesh Moodera<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jagadish Chandra Bose<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Jainendra Jain<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Jainendra K<span class="ansi-yellow-intense-fg ansi-bold">.</span> Jain<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jamal Nazrul Islam<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Alfred Ewing<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Binney<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12606,12 +12612,13 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>James E<span class="ansi-yellow-intense-fg ansi-bold">.</span> Faller<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Franck<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Glimm<span class="ansi-yellow-intense-fg ansi-bold">
-</span>James Hopwood Jeans<span class="ansi-yellow-intense-fg ansi-bold">
+</span>James Jeans<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Prescott Joule<span class="ansi-yellow-intense-fg ansi-bold">
+</span>James R<span class="ansi-yellow-intense-fg ansi-bold">.</span> Wait<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Rainwater<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James W<span class="ansi-yellow-intense-fg ansi-bold">.</span> LaBelle<span class="ansi-yellow-intense-fg ansi-bold">
-</span>James Wait<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Watt<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Jan Burgers<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jan Zaanen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jayant Narlikar<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jean Baptiste Perrin<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12641,9 +12648,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Johannes Bosscha<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Johannes Diderik van der Waals<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Johannes Fischer<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Johannes Georg Bednorz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Johannes Kepler<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Johannes Martinus Burgers<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Johannes Rydberg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Johannes Stark<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Alexander Simpson<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12660,16 +12665,16 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>John Gribbin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John H<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hubbell<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Hartnett <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
-</span>John Hasbrouck van Vleck<span class="ansi-yellow-intense-fg ansi-bold">
+</span>John Hasbrouck Van Vleck<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Henry Poynting<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Henry Schwarz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Herapath<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Hopkinson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Hubbard <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Iliopoulos<span class="ansi-yellow-intense-fg ansi-bold">
-</span>John J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Montgomery<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Turin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John James Waterston<span class="ansi-yellow-intense-fg ansi-bold">
+</span>John Joseph Montgomery<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Kerr <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>John L<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hall<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Lennard<span class="ansi-yellow-intense-fg ansi-bold">-</span>Jones<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12684,27 +12689,27 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>John Stewart Bell<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Tyndall<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John von Neumann<span class="ansi-yellow-intense-fg ansi-bold">
+</span>John William Strutt<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Zeleny<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jonathan Dowling<span class="ansi-yellow-intense-fg ansi-bold">
 </span>José Enrique Moyal<span class="ansi-yellow-intense-fg ansi-bold">
 </span>José W<span class="ansi-yellow-intense-fg ansi-bold">.</span> F<span class="ansi-yellow-intense-fg ansi-bold">.</span> Valle<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Josef Stefan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Fourier<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph H<span class="ansi-yellow-intense-fg ansi-bold">.</span> Eberly<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Henry<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Joseph Hooton Taylor<span class="ansi-yellow-intense-fg ansi-bold">,</span> Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
+</span>Joseph Hooton Taylor Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
+</span>Joseph J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Romm<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Larmor<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Louis Gay<span class="ansi-yellow-intense-fg ansi-bold">-</span>Lussac<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Joseph Louis Lagrange<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Lykken<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Plateau<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Polchinski<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Joseph Romm<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Rotblat<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Joseph Stefan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph Swan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Joseph von Fraunhofer<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Joseph<span class="ansi-yellow-intense-fg ansi-bold">-</span>Louis Lagrange<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Josiah Willard Gibbs<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Juan Maldacena<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Juan Martín Maldacena<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Juansher Chkareuli<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jules Aarons<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12713,28 +12718,26 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Julius Wess<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jürg Fröhlich<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Juris Upatnieks<span class="ansi-yellow-intense-fg ansi-bold">
+</span>K<span class="ansi-yellow-intense-fg ansi-bold">.</span> Alex Müller<span class="ansi-yellow-intense-fg ansi-bold">
 </span>K<span class="ansi-yellow-intense-fg ansi-bold">.</span> S<span class="ansi-yellow-intense-fg ansi-bold">.</span> Babu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kai Siegbahn<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Kan<span class="ansi-yellow-intense-fg ansi-bold">-</span>Chang Wang<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Karl Alexander Müller<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl Bechert<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Karl Compton<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl Ferdinand Braun<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl Glitscher<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl Herzfeld<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl L<span class="ansi-yellow-intense-fg ansi-bold">.</span> Littrow<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl Schwarzschild<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Karl Taylor Compton<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl Wirtz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl Zimmer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Karl<span class="ansi-yellow-intense-fg ansi-bold">-</span>Heinrich Riewe<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kathryn Moler<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kazimierz Fajans<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Kees A<span class="ansi-yellow-intense-fg ansi-bold">.</span> Schouhamer Immink<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Kees Schouhamer Immink<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kendal Nezan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kenneth G<span class="ansi-yellow-intense-fg ansi-bold">.</span> Wilson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kenneth Lane <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kenneth Young <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
-</span>Kip Stephen Thorne<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kip Thorne<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Klaus von Klitzing<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Konstantin Novoselov<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12742,29 +12745,27 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Kurt Binder<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Kyriakos Tamvakis<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lars Onsager<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Laura Maria Caterina Bassi<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Laura Bassi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Laura Mersini<span class="ansi-yellow-intense-fg ansi-bold">-</span>Houghton<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Lawrence Krauss<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Lawrence Bragg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lawrence M<span class="ansi-yellow-intense-fg ansi-bold">.</span> Krauss<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lee Smolin<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Lene Vestergaard Hau<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Lene Hau<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leo Esaki<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leo Graetz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leo Kadanoff<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leo Szilard<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Leó Szilárd<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Léon Brillouin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leon Cooper<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Léon Foucault<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leon M<span class="ansi-yellow-intense-fg ansi-bold">.</span> Lederman<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Léon Van Hove<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Leonard Salomon Ornstein<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Leonard Ornstein<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leonard Susskind<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leonhard Euler<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Leonid Isaakovich Mandelshtam<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Leonid Mandelstam<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Leopoldo Nobili<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lev Artsimovich<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Lev Davidovich Landau<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lev Gor<span class="ansi-red-fg">&#39;</span>kov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lev Landau<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lev Okun<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12775,15 +12776,13 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Lisa Randall<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lise Meitner<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Loránd Eötvös<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Lord Rayleigh<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lorella Jones<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Lothar Nordheim<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Lothar Wolfgang Nordheim<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Louis de Broglie<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Louis Essen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Louis Néel<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Louis Rendu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Louis Slotin<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Louis<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-cyan-intense-fg ansi-bold">7</span>th duc de Broglie<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Louis<span class="ansi-yellow-intense-fg ansi-bold">-</span>Victor de Broglie<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lowell S<span class="ansi-yellow-intense-fg ansi-bold">.</span> Brown<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Luboš Motl<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Luciano Maiani<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12798,10 +12797,10 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Luigi Galvani<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Luigi Puccianti<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Luis Walter Alvarez<span class="ansi-yellow-intense-fg ansi-bold">
+</span>M<span class="ansi-yellow-intense-fg ansi-bold">.</span> G<span class="ansi-yellow-intense-fg ansi-bold">.</span> K<span class="ansi-yellow-intense-fg ansi-bold">.</span> Menon<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Macedonio Melloni<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Mahmoud Hessaby<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Mahmoud Hessabi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Makoto Kobayashi <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
-</span>Mambillikalathil Govind Kumar Menon<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Manfred Eigen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Manfred von Ardenne<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Mani Lal Bhaumik<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12810,7 +12809,6 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Marcela Carena<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Marcia Barbosa<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Margrete Heiberg Bose<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Maria Goeppert Mayer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Maria Goeppert<span class="ansi-yellow-intense-fg ansi-bold">-</span>Mayer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Maria Spiropulu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Marian Smoluchowski<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12824,12 +12822,11 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Martin Gutzwiller<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Martin Knudsen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Martin Lewis Perl<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Martin Rees<span class="ansi-yellow-intense-fg ansi-bold">,</span> Baron Rees of Ludlow<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Martin Rees<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Martin Ryle<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Martin Schadt<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Martin Tajmar<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Martinus J<span class="ansi-yellow-intense-fg ansi-bold">.</span> G<span class="ansi-yellow-intense-fg ansi-bold">.</span> Veltman<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Martinus J<span class="ansi-yellow-intense-fg ansi-bold">.</span>G<span class="ansi-yellow-intense-fg ansi-bold">.</span> Veltman<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Marvin D<span class="ansi-yellow-intense-fg ansi-bold">.</span> Girardeau<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Marvin Leonard Goldberger<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Mary K<span class="ansi-yellow-intense-fg ansi-bold">.</span> Gaillard<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12846,7 +12843,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Max Volmer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Max von Laue<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Maxim Chernodub<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Megh Nad Saha<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Meghnad Saha<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Mehran Kardar<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Melvin Lax<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Melvin Schwartz<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12859,26 +12856,26 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Michio Kaku<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Miguel Alcubierre<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Miguel Ángel Virasoro <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
-</span>Mihajlo Idvorski Pupin<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Mihajlo Pupin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Mikhail Lavrentyev<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Mikhail Lomonosov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Mikhail Ostrogradsky<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Mikhail Shifman<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Mikhail Vasilievich Ostrogradsky<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Milla Baldo<span class="ansi-yellow-intense-fg ansi-bold">-</span>Ceolin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Milton S<span class="ansi-yellow-intense-fg ansi-bold">.</span> Plesset<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Mitchell Feigenbaum<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Moritz von Jacobi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Moses H<span class="ansi-yellow-intense-fg ansi-bold">.</span> W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Chan<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Moustafa Mosharafa<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Murray Gell<span class="ansi-yellow-intense-fg ansi-bold">-</span>Mann<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Naomi Ginsberg<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Nasir al<span class="ansi-yellow-intense-fg ansi-bold">-</span>Din Tusi<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Nasir al<span class="ansi-yellow-intense-fg ansi-bold">-</span>Din al<span class="ansi-yellow-intense-fg ansi-bold">-</span>Tusi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nathan Isgur<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nathan Rosen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nathan Seiberg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Neil Ashby<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Neil deGrasse Tyson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Neil Turok<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Nevill Mott<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Nevill Francis Mott<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nicola Cabibbo<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nicola Spaldin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nicolaas Bloembergen<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12893,21 +12890,21 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Nikolay Basov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nikolay Bogolyubov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nikolay Semyonov<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Nikolay Sergeevich Krylov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Nikolay Sergeyevich Krylov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nikolay Umov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nima Arkani<span class="ansi-yellow-intense-fg ansi-bold">-</span>Hamed<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Nina Marković<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Norman Foster Ramsey<span class="ansi-yellow-intense-fg ansi-bold">,</span> Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
+</span>Norman Foster Ramsey Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>Oleg Losev<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Oleg Sushkov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Oliver Heaviside<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Oliver Lodge<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Omar Khayyám<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Omar Khayyam<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Osborne Reynolds<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Oscar Sala<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Oskar Klein<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Otto Frisch<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Otto Hahn<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Otto Robert Frisch<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Otto Scherzer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Otto Stern<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Owen Chamberlain<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12922,13 +12919,12 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Paul Frampton<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Paul G<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hewitt<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Paul Harteck<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Paul J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Steinhardt<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Paul John Ellis<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Paul Langevin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Paul Peter Ewald<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Paul Steinhardt<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Paul Werbos<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Pavel Alekseyevich Cherenkov<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Payam Taiebyzadeh<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Pavel Cherenkov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Percy Williams Bridgman<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Per<span class="ansi-yellow-intense-fg ansi-bold">-</span>Olov Löwdin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Pervez Hoodbhoy<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12947,7 +12943,6 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Philip Warren Anderson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Philipp Lenard<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Phyllis S<span class="ansi-yellow-intense-fg ansi-bold">.</span> Freier<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Physicist<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Piara Singh Gill<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Pierre Curie<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Pierre Louis Dulong<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12961,7 +12956,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Predhiman Krishan Kaw<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Predrag Cvitanović<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Pyotr Kapitsa<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Pyotr Nikolaevich Lebedev<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Pyotr Lebedev<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Pythagoras<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Rafael Sorkin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ralph Asher Alpher<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12975,9 +12970,9 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Raúl Rabadán<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ravi Gomatam<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ray Mackintosh<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Raymond Davis<span class="ansi-yellow-intense-fg ansi-bold">,</span> Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
+</span>Raymond Davis Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>Raymond Seeger<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Raymond T<span class="ansi-yellow-intense-fg ansi-bold">.</span> Birge<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Raymond Thayer Birge<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Reinhard Oehme<span class="ansi-yellow-intense-fg ansi-bold">
 </span>René Antoine Ferchault de Réaumur<span class="ansi-yellow-intense-fg ansi-bold">
 </span>René Descartes<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12999,21 +12994,20 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Richard Makinson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robbert Dijkgraaf<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Adler<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Robert Andrews Millikan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert B<span class="ansi-yellow-intense-fg ansi-bold">.</span> Laughlin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert B<span class="ansi-yellow-intense-fg ansi-bold">.</span> Leighton<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Boyle<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Brout<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Coleman Richardson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert D<span class="ansi-yellow-intense-fg ansi-bold">.</span> Richtmyer<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Robert Dicke<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Döpel<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert G<span class="ansi-yellow-intense-fg ansi-bold">.</span> Sachs<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Robert H<span class="ansi-yellow-intense-fg ansi-bold">.</span> Dicke<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Hofstadter<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Hooke<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert K<span class="ansi-yellow-intense-fg ansi-bold">.</span> Logan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Marshak<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Robert Millikan<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Robert Oppenheimer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert R<span class="ansi-yellow-intense-fg ansi-bold">.</span> Wilson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert S<span class="ansi-yellow-intense-fg ansi-bold">.</span> Mulliken<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Serber<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13021,18 +13015,18 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Robert W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Wood<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Woodrow Wilson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Robert Zwanzig<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Roger Joseph Boscovich<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Roger Penrose<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Rolf Landauer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Roman Jackiw<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Roman U<span class="ansi-yellow-intense-fg ansi-bold">.</span> Sexl<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Ronald E<span class="ansi-yellow-intense-fg ansi-bold">.</span> McNair<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Roman Ulrich Sexl<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ronald Ernest Aitchison<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Ronald McNair<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Rosalind Franklin<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Rosalyn Yalow<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Rosalyn Sussman Yalow<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Roy J<span class="ansi-yellow-intense-fg ansi-bold">.</span> Glauber<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Royal Prussia<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ruby Payne<span class="ansi-yellow-intense-fg ansi-bold">-</span>Scott<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Rudjer Josip Boscovich<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Rudolf Clausius<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Rudolf Haag<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Rudolf Mössbauer<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13040,7 +13034,6 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Russell Alan Hulse<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ryogo Kubo<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Sam Treiman<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Samuel Abraham Goudsmit<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Samuel C<span class="ansi-yellow-intense-fg ansi-bold">.</span> C<span class="ansi-yellow-intense-fg ansi-bold">.</span> Ting<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Samuel Goudsmit<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Samuel King Allison<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13056,13 +13049,14 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Serge Haroche<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Serge Rudaz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Sergei Tyablikov<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Sergei Vavilov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Sergey Ivanovich Vavilov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Sergio Ferrara<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Serguei Krasnikov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Seth Lloyd<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Seth Neddermeyer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Sheldon Lee Glashow<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Shen Kuo<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Shin<span class="ansi-red-fg">&#39;</span>ichirō Tomonaga<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Shiraz Minwalla<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Shirley Ann Jackson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Shoichi Sakata<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13072,9 +13066,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Simon Newcomb<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Simon Stevin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Simon van der Meer<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Sin<span class="ansi-yellow-intense-fg ansi-bold">-</span>Itiro Tomonaga<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Sir Isaac Newton<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Sir William Crookes<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Sir George Stokes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Sixto González<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stanislav Mikheyev<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stanislaw Ulam<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13082,11 +13074,11 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Stanley Mandelstam<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stephen Gasiorowicz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stephen Hawking<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Stephen Hsu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stephen L<span class="ansi-yellow-intense-fg ansi-bold">.</span> Adler<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stephen Parke<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stephen Paul <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stephen Wolfram<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Steve Hsu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Steven Chu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Steven Frautschi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Steven Gubser<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13104,11 +13096,11 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Tatyana Afanasyeva<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Tekin Dereli<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Terence James Elkins<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Thales<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Thales of Miletus<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Thanu Padmanabhan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Theodor Kaluza<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Theodor W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hänsch<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Theodore Maiman<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Theodore Harold Maiman<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Theodore von Kármán<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Thomas Corwin Mendenhall<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Thomas Curtright<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13119,11 +13111,10 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Toichiro Kinoshita<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Tom Baehr<span class="ansi-yellow-intense-fg ansi-bold">-</span>Jones<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Tom Banks <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
-</span>Tom W<span class="ansi-yellow-intense-fg ansi-bold">.</span> B<span class="ansi-yellow-intense-fg ansi-bold">.</span> Kibble<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Tom Kibble<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Toshihide Maskawa<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Tsung<span class="ansi-yellow-intense-fg ansi-bold">-</span>Dao Lee<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Tullio Regge<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Twersky<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Tycho Brahe<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ulrike Diebold<span class="ansi-yellow-intense-fg ansi-bold">
 </span>V<span class="ansi-yellow-intense-fg ansi-bold">.</span> Balakrishnan <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
@@ -13133,19 +13124,18 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Valery Pokrovsky<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Vera Rubin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Viatcheslav Mukhanov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Victor Ambartsumian<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Victor Francis Hess<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Victor Frederick Weisskopf<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Victor Popov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Victor Weisskopf<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Vikram Sarabhai<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Viktor Ambartsumian<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Viktor Dilman<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Viktor Hambardzumyan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Vilhelm Bjerknes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Vitaly Ginzburg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Vladimir Fock<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Vladimir Gribov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Vlatko Vedral<span class="ansi-yellow-intense-fg ansi-bold">
-</span>W<span class="ansi-yellow-intense-fg ansi-bold">.</span>W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hansen<span class="ansi-yellow-intense-fg ansi-bold">
+</span>W<span class="ansi-yellow-intense-fg ansi-bold">.</span> W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hansen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Walter Boas<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Walter Franz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Walter Gerlach<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13159,28 +13149,28 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Walther Kossel<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Walther Ritz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Wander Johannes de Haas<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Wang Ganchang<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Ward Plummer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Werner Heisenberg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Werner Israel<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Werner Karl Heisenberg<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Wernher Von Braun<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Wernher von Braun<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Wilhelm Eduard Weber<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Wilhelm Röntgen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Wilhelm Wien<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Willard Boyle<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Willebrord Snell<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Willebrord Snellius<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Willem de Sitter<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Willem Hendrik Keesom<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Willem<span class="ansi-red-fg"> </span><span class="ansi-red-fg">&#39;</span>s Gravesande<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William A<span class="ansi-yellow-intense-fg ansi-bold">.</span> Bardeen<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Alfred Fowler<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Allis<span class="ansi-yellow-intense-fg ansi-bold">
+</span>William Crookes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Daniel Phillips<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Eccles<span class="ansi-yellow-intense-fg ansi-bold">
-</span>William Fuller Brown<span class="ansi-yellow-intense-fg ansi-bold">,</span> Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
+</span>William Fuller Brown Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Gilbert <span class="ansi-yellow-intense-fg ansi-bold">(</span>astronomer<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Henry Bragg<span class="ansi-yellow-intense-fg ansi-bold">
-</span>William Lawrence Bragg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Markowitz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Prout<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William R<span class="ansi-yellow-intense-fg ansi-bold">.</span> Kanne<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13199,18 +13189,19 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </span>Wolfgang Paul<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Wolfgang Pauli<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Xiao<span class="ansi-yellow-intense-fg ansi-bold">-</span>Gang Wen<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Yakov Alpert<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yakov Borisovich Zel<span class="ansi-red-fg">&#39;</span>dovich<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yakov Frenkel<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Yakov Lvovich Alpert<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Yang Chen<span class="ansi-yellow-intense-fg ansi-bold">-</span>Ning<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yasha Rosenfeld<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yasunori Nomura<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yoichiro Nambu<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yoji Totsuka<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yoshinori Tokura<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yulii Borisovich Khariton<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Yuri Feodorovich Orlov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Yuri Orlov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Yuval Ne<span class="ansi-red-fg">&#39;</span>eman<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Zhores Ivanovich Alferov<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Zhores Alferov<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Zoltán Lajos Bay
 </pre>
 </div>
@@ -13227,7 +13218,6 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Cleaning-Up">Cleaning Up<a class="anchor-link" href="#Cleaning-Up">&#182;</a></h2><p>A few clean up steps are needed:</p>
 <ul>
-<li>Unset the environment variable that was set above.</li>
 <li>Convert the notebook to a HTML file with all the output.</li>
 <li>Convert the notebook to another notebook with the output removed.</li>
 </ul>
@@ -13237,20 +13227,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYWIKIBOT_NO_USER_CONFIG&#39;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>False --output-dir html_output --to html <span class="m">1</span>.0-collect-physicists.ipynb
@@ -13271,7 +13248,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 1.0-collect-physicists.ipynb to html
-[NbConvertApp] Writing 363607 bytes to html_output\1.0-collect-physicists.html
+[NbConvertApp] Writing 301274 bytes to html_output\1.0-collect-physicists.html
 </pre>
 </div>
 </div>
@@ -13282,7 +13259,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook <span class="m">1</span>.0-collect-physicists.ipynb
@@ -13303,7 +13280,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 1.0-collect-physicists.ipynb to notebook
-[NbConvertApp] Writing 8910 bytes to 1.0-collect-physicists.nbconvert.ipynb
+[NbConvertApp] Writing 11452 bytes to 1.0-collect-physicists.nbconvert.ipynb
 </pre>
 </div>
 </div>
