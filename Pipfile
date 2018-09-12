@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-mwparserfromhell = "*"
 numpy = "*"
 pandas = "*"
 lxml = "*"
@@ -13,6 +12,7 @@ pywikibot = "*"
 requests = "*"
 "progressbar2" = "*"
 "beautifulsoup4" = "*"
+jsonlines = "*"
 
 [dev-packages]
 pipenv = "*"
