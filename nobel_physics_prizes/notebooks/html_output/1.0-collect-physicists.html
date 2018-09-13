@@ -11798,7 +11798,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">string</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">parse</span>
@@ -11853,6 +11852,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Scraping-the-Physicists">Scraping the Physicists<a class="anchor-link" href="#Scraping-the-Physicists">&#182;</a></h2><p>I use a combination of <em>requests</em> and <em>beautifulsoup</em> to scrape the links from the Wikipedia pages. I filter the list of links down to only those containing physicist names. The important point to note is that I actually need to send HTTP requests to fetch the pages associated with these links as some of them are redirected to different URLs. The really tricky part is that the redirects are done via javascript so they are not detected by <em>requests</em>. As a result I have to parse the javascript to find the redirect link.</p>
+<p>Even after all of this, some of the redirected Wikipedia links are not in sync with the DBpedia links. This means that when I later try to fetch the data from DBpedia, the links resolve the the wrong resource. So I force these redirects manually here.</p>
 
 </div>
 </div>
@@ -11893,37 +11893,54 @@ div#notebook {
     <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theoretical_physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">267</span><span class="p">)</span>
 
     <span class="c1"># get the physicists</span>
+    <span class="n">blacklist_links</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;Newcastle University&#39;</span><span class="p">,</span>  <span class="c1"># university</span>
+            <span class="c1"># leads to the physicist at this foreign language link:</span>
+            <span class="c1"># https://tr.wikipedia.org/wiki/Victor_Twersky_(fizik%C3%A7i)</span>
+            <span class="s1">&#39;Ernst equation&#39;</span><span class="p">,</span>  <span class="c1"># equation</span>
+            <span class="s1">&#39;Matthew Sanders&#39;</span><span class="p">,</span>  <span class="c1"># not a physicist</span>
+            <span class="s1">&#39;Ricardo Carezani&#39;</span><span class="p">,</span>  <span class="c1"># not found in DBpedia (misspelt there?)</span>
+            <span class="s1">&#39;Twersky#Twersky&#39;</span>  <span class="c1"># a group of people of this name</span>
+        <span class="p">]</span>
     <span class="n">physicists</span> <span class="o">=</span> <span class="n">_get_linked_article_titles</span><span class="p">(</span>
         <span class="n">WIKI_URL</span> <span class="o">+</span> <span class="s1">&#39;List_of_physicists&#39;</span><span class="p">,</span>
-        <span class="n">section_titles</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
+        <span class="n">section_titles</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">),</span>
+        <span class="n">blacklist_links</span><span class="o">=</span><span class="n">blacklist_links</span>
     <span class="p">)</span>
-
-    <span class="c1"># remove dead links, institutions and links to foreign languages</span>
-    <span class="n">physicists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span>
-        <span class="s1">&#39;/w/index.php?title=Payam Taiebyzadeh&amp;action=edit&amp;redlink=1&#39;</span><span class="p">)</span>
-    <span class="n">physicists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Newcastle University&#39;</span><span class="p">)</span>
-    <span class="c1"># leads to the physicist at this dead link:</span>
-    <span class="c1"># https://en.wikipedia.org/w/index.php?title=Frederick_J._Ernst&amp;action=edit&amp;redlink=1</span>
-    <span class="n">physicists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Ernst equation&#39;</span><span class="p">)</span>
-    <span class="c1"># leads to the physicist at this foreign language link:</span>
-    <span class="c1"># https://tr.wikipedia.org/wiki/Victor_Twersky_(fizik%C3%A7i)</span>
-    <span class="n">physicists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;Twersky#Twersky&#39;</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">976</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">974</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">blacklist_links</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">physicists</span><span class="p">)))</span>
 
     <span class="c1"># merge the lists</span>
     <span class="n">notable_physicists</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">theoretical_physicists</span> <span class="o">+</span> <span class="n">physicists</span><span class="p">))</span>
 
     <span class="c1"># get the redirect title (if any) from a HTTP request</span>
+    <span class="n">forced_redirects</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># DBpedia not in sync with Wikipedia for these names</span>
+        <span class="c1"># so force these redirects</span>
+        <span class="s1">&#39;Ea Ea&#39;</span><span class="p">:</span> <span class="s1">&#39;Craige Schensted&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Gian Carlo Wick&#39;</span><span class="p">:</span> <span class="s1">&#39;Gian-Carlo Wick&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Hans Adolf Buchdahl&#39;</span><span class="p">:</span> <span class="s1">&#39;Hans Adolph Buchdahl&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;James Jeans&#39;</span><span class="p">:</span> <span class="s1">&#39;James Hopwood Jeans&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Lawrence Bragg&#39;</span> <span class="p">:</span> <span class="s1">&#39;William Lawrence Bragg&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;Shin&#39;ichirō Tomonaga&quot;</span><span class="p">:</span> <span class="s2">&quot;Sin&#39;ichirō_Tomonaga&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Thales of Miletus&#39;</span><span class="p">:</span> <span class="s1">&#39;Thales&#39;</span>
+    <span class="p">}</span>
     <span class="n">notable_physicists</span> <span class="o">=</span> <span class="n">_get_redirected_titles</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">,</span>
+                                                <span class="n">forced_redirects</span><span class="p">,</span>
                                                 <span class="n">progress_bar</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1061</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1059</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">forced_redirects</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
+        <span class="nb">set</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">forced_redirects</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
+        <span class="nb">set</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)))</span>
 
     <span class="c1"># sort the list</span>
     <span class="n">notable_physicists</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">notable_physicists</span>
 
 
-<span class="k">def</span> <span class="nf">_get_linked_article_titles</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">section_titles</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_get_linked_article_titles</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">section_titles</span><span class="p">,</span>
+                               <span class="n">blacklist_links</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="c1"># fetch the page</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -11935,12 +11952,20 @@ div#notebook {
         <span class="n">section</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">span_id</span><span class="p">)</span>
         <span class="n">ul</span> <span class="o">=</span> <span class="n">section</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s1">&#39;ul&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">ul</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-            <span class="n">article_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">link</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/wiki/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">link</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/wiki/&#39;</span><span class="p">):</span>
+                <span class="c1"># skip external and dead (redlink=1) links</span>
+                <span class="k">continue</span>
+            <span class="n">article_title</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">link</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/wiki/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">blacklist_links</span> <span class="ow">or</span> 
+                <span class="n">article_title</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">blacklist_links</span><span class="p">):</span>
+                <span class="n">article_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">article_title</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">article_titles</span>
 
 
-<span class="k">def</span> <span class="nf">_get_redirected_titles</span><span class="p">(</span><span class="n">titles</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_get_redirected_titles</span><span class="p">(</span><span class="n">titles</span><span class="p">,</span> <span class="n">forced_redirects</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">redirected_titles</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">titles</span><span class="p">)):</span>
@@ -11959,21 +11984,29 @@ div#notebook {
                 <span class="n">script_code</span> <span class="o">=</span> <span class="n">script_tag</span><span class="o">.</span><span class="n">string</span>
                 <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">script_code</span><span class="p">,</span> <span class="n">NavigableString</span><span class="p">)</span> <span class="ow">and</span>
                         <span class="n">REDIRECT</span> <span class="ow">in</span> <span class="n">script_code</span><span class="p">):</span>
-                    <span class="n">redirect_code</span> <span class="o">=</span> <span class="n">script_code</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">REDIRECT</span><span class="p">)</span>
-                    <span class="n">redirected_title</span> <span class="o">=</span> <span class="p">(</span><span class="n">redirect_code</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                                        <span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/wiki/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                                        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">))</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="n">script_code</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">REDIRECT</span><span class="p">)</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">script_code</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="n">start</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">REDIRECT</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">redirected_title</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">script_code</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">REDIRECT</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+                        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/wiki/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+                    <span class="p">)</span>
                     <span class="c1"># some physicist names contain unicode characters</span>
                     <span class="c1"># which have been quoted when in a url</span>
                     <span class="c1"># unquote for sorting</span>
                     <span class="n">redirected_titles</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span><span class="n">redirected_title</span><span class="p">))</span>
                     <span class="n">redirected</span> <span class="o">=</span> <span class="kc">True</span>
-
         <span class="k">if</span> <span class="ow">not</span> <span class="n">redirected</span><span class="p">:</span>
             <span class="n">redirected_titles</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        
         <span class="k">if</span> <span class="n">progress_bar</span><span class="p">:</span>
             <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">redirected_titles</span><span class="p">)</span>
+            
+    <span class="c1"># force redirects</span>
+    <span class="n">redirected_titles</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">redirected_titles</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">forced_redirects</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">redirected_titles</span><span class="p">[</span><span class="n">redirected_titles</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span>
+            
+    <span class="k">return</span> <span class="n">redirected_titles</span>
 </pre></div>
 
 </div>
@@ -11988,13 +12021,13 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">widgets</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;Checking: &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Counter</span><span class="p">(),</span>
-    <span class="s1">&#39; / &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1086</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; urls&#39;</span><span class="p">,</span>
+    <span class="s1">&#39; / &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1084</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; urls&#39;</span><span class="p">,</span>
     <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;█&#39;</span><span class="p">),</span>
     <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Percentage</span><span class="p">(),</span>
     <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Timer</span><span class="p">(),</span>
     <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">ETA</span><span class="p">()</span>
 <span class="p">]</span>
-<span class="n">bar</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">(</span><span class="n">max_value</span><span class="o">=</span><span class="mi">1086</span><span class="p">,</span> <span class="n">widgets</span><span class="o">=</span><span class="n">widgets</span><span class="p">,</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">(</span><span class="n">max_value</span><span class="o">=</span><span class="mi">1084</span><span class="p">,</span> <span class="n">widgets</span><span class="o">=</span><span class="n">widgets</span><span class="p">,</span>
                      <span class="n">redirect_stdout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
 <span class="n">notable_physicists</span> <span class="o">=</span> <span class="n">get_notable_physicists</span><span class="p">(</span><span class="n">bar</span><span class="p">)</span>
@@ -12015,7 +12048,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Checking: 1086 / 1086 urls |████████| 100% Elapsed Time: 0:26:41 Time:  0:26:41
+<pre>Checking: 1084 / 1084 urls |████████| 100% Elapsed Time: 0:24:59 Time:  0:24:59
 </pre>
 </div>
 </div>
@@ -12058,7 +12091,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>1061</pre>
+<pre>1059</pre>
 </div>
 
 </div>
@@ -12081,23 +12114,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">write_list_to_file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">list_to_write</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Write a list line-by-line to a file on disk.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        file (str): A text or byte string giving the name (and the path</span>
-<span class="sd">            if the file isn&#39;t in the current working directory) of the</span>
-<span class="sd">            file to be opened or an integer file descriptor of the file</span>
-<span class="sd">            to be wrapped. See `open()` method in the standard library for</span>
-<span class="sd">            more details.</span>
-<span class="sd">        list_to_write (list): The list of items.</span>
-<span class="sd">        mode (str): Specifies the mode in which the file is opened. See</span>
-<span class="sd">            `open()` method in the standard library for more details.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">list_file</span><span class="p">:</span>
-        <span class="n">list_file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_to_write</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../data/raw/physicists.txt&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12108,19 +12126,6 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">write_list_to_file</span><span class="p">(</span><span class="s1">&#39;../data/raw/physicists.txt&#39;</span><span class="p">,</span> <span class="n">notable_physicists</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pycat</span> ../data/raw/physicists.txt
@@ -12330,6 +12335,7 @@ div#notebook {
 </span>Clinton Davisson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Colin Webb<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Cosmas Zachos<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Craige Schensted<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Cumrun Vafa<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Curtis Callan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Đàm Thanh Sơn<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12373,7 +12379,6 @@ div#notebook {
 </span>Douglas Osheroff<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Durmus A<span class="ansi-yellow-intense-fg ansi-bold">.</span> Demir<span class="ansi-yellow-intense-fg ansi-bold">
 </span>E<span class="ansi-yellow-intense-fg ansi-bold">.</span> C<span class="ansi-yellow-intense-fg ansi-bold">.</span> George Sudarshan<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Ea Ea<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edward Arthur Milne<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edward Bouchet<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Edward Condon<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12498,8 +12503,8 @@ div#notebook {
 </span>Gerard<span class="ansi-red-fg"> </span><span class="ansi-red-fg">&#39;</span>t Hooft<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gerd Binnig<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gersh Budker<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Gian Carlo Wick<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gian Francesco Giudice<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Gian<span class="ansi-yellow-intense-fg ansi-bold">-</span>Carlo Wick<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Gilbert Ronald Bainbridge<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Giorgio Parisi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Giovanni Battista Venturi<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12523,7 +12528,7 @@ div#notebook {
 </span>Hagen Kleinert<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Haim Harari<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hannes Alfvén<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Hans Adolf Buchdahl<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Hans Adolph Buchdahl<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Bethe<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Christian Ørsted<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Hans Geiger<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12612,7 +12617,7 @@ div#notebook {
 </span>James E<span class="ansi-yellow-intense-fg ansi-bold">.</span> Faller<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Franck<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Glimm<span class="ansi-yellow-intense-fg ansi-bold">
-</span>James Jeans<span class="ansi-yellow-intense-fg ansi-bold">
+</span>James Hopwood Jeans<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Prescott Joule<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James R<span class="ansi-yellow-intense-fg ansi-bold">.</span> Wait<span class="ansi-yellow-intense-fg ansi-bold">
 </span>James Rainwater<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12689,7 +12694,7 @@ div#notebook {
 </span>John Stewart Bell<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Tyndall<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John von Neumann<span class="ansi-yellow-intense-fg ansi-bold">
-</span>John William Strutt<span class="ansi-yellow-intense-fg ansi-bold">
+</span>John William Strutt<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-cyan-intense-fg ansi-bold">3</span>rd Baron Rayleigh<span class="ansi-yellow-intense-fg ansi-bold">
 </span>John Zeleny<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Jonathan Dowling<span class="ansi-yellow-intense-fg ansi-bold">
 </span>José Enrique Moyal<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12747,7 +12752,6 @@ div#notebook {
 </span>Lars Onsager<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Laura Bassi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Laura Mersini<span class="ansi-yellow-intense-fg ansi-bold">-</span>Houghton<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Lawrence Bragg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lawrence M<span class="ansi-yellow-intense-fg ansi-bold">.</span> Krauss<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lee Smolin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Lene Hau<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12832,7 +12836,6 @@ div#notebook {
 </span>Mary K<span class="ansi-yellow-intense-fg ansi-bold">.</span> Gaillard<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Masatoshi Koshiba<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Matthew Koss<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Matthew Sanders<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Maurice Goldhaber<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Maurice Loewy<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Max Born<span class="ansi-yellow-intense-fg ansi-bold">
@@ -12978,7 +12981,6 @@ div#notebook {
 </span>René Descartes<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Revaz Dogonadze<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Riazuddin <span class="ansi-yellow-intense-fg ansi-bold">(</span>physicist<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
-</span>Ricardo Carezani<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Riccardo Barbieri<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Riccardo Giacconi<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Riccardo Rattazzi<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13056,7 +13058,6 @@ div#notebook {
 </span>Seth Neddermeyer<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Sheldon Lee Glashow<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Shen Kuo<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Shin<span class="ansi-red-fg">&#39;</span>ichirō Tomonaga<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Shiraz Minwalla<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Shirley Ann Jackson<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Shoichi Sakata<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13066,7 +13067,8 @@ div#notebook {
 </span>Simon Newcomb<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Simon Stevin<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Simon van der Meer<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Sir George Stokes<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Sin<span class="ansi-red-fg">&#39;</span>ichirō_Tomonaga<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Sir George Stokes<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-cyan-intense-fg ansi-bold">1</span>st Baronet<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Sixto González<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stanislav Mikheyev<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Stanislaw Ulam<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13096,7 +13098,7 @@ div#notebook {
 </span>Tatyana Afanasyeva<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Tekin Dereli<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Terence James Elkins<span class="ansi-yellow-intense-fg ansi-bold">
-</span>Thales of Miletus<span class="ansi-yellow-intense-fg ansi-bold">
+</span>Thales<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Thanu Padmanabhan<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Theodor Kaluza<span class="ansi-yellow-intense-fg ansi-bold">
 </span>Theodor W<span class="ansi-yellow-intense-fg ansi-bold">.</span> Hänsch<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13171,6 +13173,7 @@ div#notebook {
 </span>William Fuller Brown Jr<span class="ansi-yellow-intense-fg ansi-bold">.</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Gilbert <span class="ansi-yellow-intense-fg ansi-bold">(</span>astronomer<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Henry Bragg<span class="ansi-yellow-intense-fg ansi-bold">
+</span>William Lawrence Bragg<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Markowitz<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William Prout<span class="ansi-yellow-intense-fg ansi-bold">
 </span>William R<span class="ansi-yellow-intense-fg ansi-bold">.</span> Kanne<span class="ansi-yellow-intense-fg ansi-bold">
@@ -13227,7 +13230,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>False --output-dir html_output --to html <span class="m">1</span>.0-collect-physicists.ipynb
@@ -13248,7 +13251,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 1.0-collect-physicists.ipynb to html
-[NbConvertApp] Writing 301274 bytes to html_output\1.0-collect-physicists.html
+[NbConvertApp] Writing 305253 bytes to html_output\1.0-collect-physicists.html
 </pre>
 </div>
 </div>
@@ -13259,7 +13262,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook <span class="m">1</span>.0-collect-physicists.ipynb
@@ -13280,7 +13283,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 1.0-collect-physicists.ipynb to notebook
-[NbConvertApp] Writing 11452 bytes to 1.0-collect-physicists.nbconvert.ipynb
+[NbConvertApp] Writing 12414 bytes to 1.0-collect-physicists.nbconvert.ipynb
 </pre>
 </div>
 </div>

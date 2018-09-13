@@ -186,6 +186,7 @@ Clifford Shull
 Clinton Davisson
 Colin Webb
 Cosmas Zachos
+Craige Schensted
 Cumrun Vafa
 Curtis Callan
 Đàm Thanh Sơn
@@ -229,7 +230,6 @@ Douglas Hartree
 Douglas Osheroff
 Durmus A. Demir
 E. C. George Sudarshan
-Ea Ea
 Edward Arthur Milne
 Edward Bouchet
 Edward Condon
@@ -354,8 +354,8 @@ Gerard K. O'Neill
 Gerard 't Hooft
 Gerd Binnig
 Gersh Budker
-Gian Carlo Wick
 Gian Francesco Giudice
+Gian-Carlo Wick
 Gilbert Ronald Bainbridge
 Giorgio Parisi
 Giovanni Battista Venturi
@@ -379,7 +379,7 @@ H. Pierre Noyes
 Hagen Kleinert
 Haim Harari
 Hannes Alfvén
-Hans Adolf Buchdahl
+Hans Adolph Buchdahl
 Hans Bethe
 Hans Christian Ørsted
 Hans Geiger
@@ -468,7 +468,7 @@ James Dewar
 James E. Faller
 James Franck
 James Glimm
-James Jeans
+James Hopwood Jeans
 James Prescott Joule
 James R. Wait
 James Rainwater
@@ -545,7 +545,7 @@ John Sealy Townsend
 John Stewart Bell
 John Tyndall
 John von Neumann
-John William Strutt
+John William Strutt, 3rd Baron Rayleigh
 John Zeleny
 Jonathan Dowling
 José Enrique Moyal
@@ -603,7 +603,6 @@ Kyriakos Tamvakis
 Lars Onsager
 Laura Bassi
 Laura Mersini-Houghton
-Lawrence Bragg
 Lawrence M. Krauss
 Lee Smolin
 Lene Hau
@@ -688,7 +687,6 @@ Marvin Leonard Goldberger
 Mary K. Gaillard
 Masatoshi Koshiba
 Matthew Koss
-Matthew Sanders
 Maurice Goldhaber
 Maurice Loewy
 Max Born
@@ -834,7 +832,6 @@ René Antoine Ferchault de Réaumur
 René Descartes
 Revaz Dogonadze
 Riazuddin (physicist)
-Ricardo Carezani
 Riccardo Barbieri
 Riccardo Giacconi
 Riccardo Rattazzi
@@ -912,7 +909,6 @@ Seth Lloyd
 Seth Neddermeyer
 Sheldon Lee Glashow
 Shen Kuo
-Shin'ichirō Tomonaga
 Shiraz Minwalla
 Shirley Ann Jackson
 Shoichi Sakata
@@ -922,7 +918,8 @@ Siméon Denis Poisson
 Simon Newcomb
 Simon Stevin
 Simon van der Meer
-Sir George Stokes
+Sin'ichirō_Tomonaga
+Sir George Stokes, 1st Baronet
 Sixto González
 Stanislav Mikheyev
 Stanislaw Ulam
@@ -952,7 +949,7 @@ Tanya Monro
 Tatyana Afanasyeva
 Tekin Dereli
 Terence James Elkins
-Thales of Miletus
+Thales
 Thanu Padmanabhan
 Theodor Kaluza
 Theodor W. Hänsch
@@ -1027,6 +1024,7 @@ William Eccles
 William Fuller Brown Jr.
 William Gilbert (astronomer)
 William Henry Bragg
+William Lawrence Bragg
 William Markowitz
 William Prout
 William R. Kanne
