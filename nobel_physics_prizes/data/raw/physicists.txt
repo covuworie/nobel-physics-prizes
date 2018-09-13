@@ -51,6 +51,7 @@ Allan McLeod Cormack
 Alvin M. Weinberg
 Amal Kumar Raychaudhuri
 Amanda Barnard
+Amédée Mouchez
 Amedeo Avogadro
 Amos Dolbear
 Amrom Harry Katz
@@ -172,6 +173,7 @@ Charles Thomson Rees Wilson
 Charles Thorn
 Charles-Augustin de Coulomb
 Charlotte Riefenstahl
+Chen-Ning Yang
 Chennupati Jagadish
 Chien-Shiung Wu
 Chris Lintott
@@ -261,7 +263,6 @@ Erik Verlinde
 Ernest Courant
 Ernest Esclangon
 Ernest Lawrence
-Ernest Mouchez
 Ernest Rutherford
 Ernest Titterton
 Ernest Walton
@@ -386,7 +387,7 @@ Hans Geiger
 Hans Georg Dehmelt
 Hans Henrik Andersen
 Hans Kramers
-Hans Ziegler (physicist)
+Hans Ziegler
 Harald Fuchs
 Harald J. W. Mueller-Kirsten
 Harold E. Puthoff
@@ -593,7 +594,7 @@ Kees Schouhamer Immink
 Kendal Nezan
 Kenneth G. Wilson
 Kenneth Lane (physicist)
-Kenneth Young (physicist)
+Kenneth Young
 Kip Thorne
 Klaus von Klitzing
 Konstantin Novoselov
@@ -821,7 +822,7 @@ Ramón E. López
 Ranjan Roy Daniel
 Rashid Sunyaev
 Ratko Janev
-Raúl Rabadán
+Raúl Rabadan
 Ravi Gomatam
 Ray Mackintosh
 Raymond Davis Jr.
@@ -918,7 +919,7 @@ Siméon Denis Poisson
 Simon Newcomb
 Simon Stevin
 Simon van der Meer
-Sin'ichirō_Tomonaga
+Sin'ichirō Tomonaga
 Sir George Stokes, 1st Baronet
 Sixto González
 Stanislav Mikheyev
@@ -1021,7 +1022,7 @@ William Allis
 William Crookes
 William Daniel Phillips
 William Eccles
-William Fuller Brown Jr.
+William Fuller Brown, Jr.
 William Gilbert (astronomer)
 William Henry Bragg
 William Lawrence Bragg
@@ -1043,10 +1044,9 @@ Wolfgang Ketterle
 Wolfgang Paul
 Wolfgang Pauli
 Xiao-Gang Wen
-Yakov Alpert
 Yakov Borisovich Zel'dovich
 Yakov Frenkel
-Yang Chen-Ning
+Yakov Lvovich Alpert
 Yasha Rosenfeld
 Yasunori Nomura
 Yoichiro Nambu
