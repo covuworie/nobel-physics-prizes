@@ -11775,13 +11775,10 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Collect-Physicists-Raw-Data">Collect Physicists Raw Data<a class="anchor-link" href="#Collect-Physicists-Raw-Data">&#182;</a></h1><p>Here I collect biographical data on the list of <a href="../data/raw/physicists.txt">physicists notable for their achievements</a>. Wikipedia contains this data in an <em>Infobox</em> on the top right side of the page for each physicist. However, similar data is available in a more structured, machine readable, <em>JSON</em> format from <a href="https://wiki.dbpedia.org/about">DBpedia</a>. For an example, compare <a href="https://en.wikipedia.org/wiki/Albert_Einstein">Albert Einstein's Wikipedia infobox</a> to <a href="http://dbpedia.org/data/Albert_Einstein.json">Albert Einstein's DBPedia JSON</a>. It is important to note that the data is similar but not identical. DBpedia contains many extra fields which are not present in the Wikipedia infobox. I choose DBpedia as the data source since it has the following advantages over Wikipedia:</p>
-<ul>
-<li>The data is structured in a machine readable JSON format</li>
-<li>The data is richer</li>
-</ul>
-<p>However, dBpedia does have the disadvantage that its content is roughly 6-18 months behind updates applied to Wikipedia content. This is because its data is generated from a <a href="https://wiki.dbpedia.org/online-access/DBpediaLive">static dump of Wikipedia content</a> in a process that takes approximately 6 months. The fact that the data is not in sync with the latest Wikipedia content is not so significant for this project as the data is edited infrequetly and when it is there are only minor changes.</p>
-<p>I will need to send HTTP requests to DBpedia to get the biographical data on each of the physicists.</p>
+<h1 id="Collect-Physicists-Raw-Data">Collect Physicists Raw Data<a class="anchor-link" href="#Collect-Physicists-Raw-Data">&#182;</a></h1><p>Here I collect biographical data on the list of <a href="../data/raw/physicists.txt">physicists notable for their achievements</a>. Wikipedia contains this structured data in an <em>Infobox</em> on the top right side of the article for each physicist. However, similar data is available in a more machine readable, <em>JSON</em> format from <a href="https://wiki.dbpedia.org/about">DBpedia</a>. For an example, compare <a href="https://en.wikipedia.org/wiki/Albert_Einstein">Albert Einstein's Wikipedia infobox</a> to <a href="http://dbpedia.org/data/Albert_Einstein.json">Albert Einstein's DBPedia JSON</a>. It is important to note that the data is similar but not identical.</p>
+<p>The shortcomings of Wikipedia infoboxes and the advantages of DBpedia datasets are explained in [DBpedia datasets (section 4.3)]. (<a href="https://wiki.dbpedia.org/services-resources/datasets/dbpedia-datasets">https://wiki.dbpedia.org/services-resources/datasets/dbpedia-datasets</a>). But basically the DBpedia data is much cleaner and better structured Wikipedia Infoboxes since it is based on hand-generated mappings of Wikipedia infoboxes/templates to a <a href="https://wiki.dbpedia.org/services-resources/ontology">DBpedia ontology</a>. As a result I choose DBpedia as the data source for this project.</p>
+<p>However, dBpedia does have the disadvantage that its content is roughly 6-18 months behind updates applied to Wikipedia content. This is because its data is generated from a <a href="https://wiki.dbpedia.org/online-access/DBpediaLive">static dump of Wikipedia content</a> in a process that takes approximately 6 months. The fact that the data is not in sync with the latest Wikipedia content is not so significant for this project as the data is edited infrequently and when it is there are only minor changes.</p>
+<p>I will need to send HTTP requests to DBpedia to get the biographical JSON data on each of the physicists.</p>
 
 </div>
 </div>
@@ -11801,7 +11798,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gzip</span>
-<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -11860,7 +11856,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls</span> <span class="o">=</span> <span class="n">construct_urls</span><span class="p">()</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1061</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1059</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11872,7 +11868,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Fetching-the-Data">Fetching the Data<a class="anchor-link" href="#Fetching-the-Data">&#182;</a></h2><p>Now I have the list of URLs, it's time to make the HTTP requests to acquire the data. This will take a bit of time as there are 1061 urls and I want to crawl responsibly so that I don't bombard the site. Time to get a coffee.</p>
+<h2 id="Fetching-the-Data">Fetching the Data<a class="anchor-link" href="#Fetching-the-Data">&#182;</a></h2><p>Now I have the list of URLs, it's time to make the HTTP requests to acquire the data. This will take a bit of time as there are 1059 urls and I want to crawl responsibly so that I don't bombard the site. Time to get a coffee.</p>
 
 </div>
 </div>
@@ -11944,7 +11940,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 1061 / 1061 urls |████████| 100% Elapsed Time: 0:30:22 Time:  0:30:22
+<pre>Fetching: 1059 / 1059 urls |████████| 100% Elapsed Time: 0:25:12 Time:  0:25:12
 </pre>
 </div>
 </div>
@@ -11967,7 +11963,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1061</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1059</span><span class="p">)</span>
 <span class="n">json_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
@@ -12162,7 +12158,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It is clear that every request successfully received a response. However, I see that some responses came back empty from the server. Basically, although there are Wikipedia pages for these physicists they do not have a corresponding page in DBpedia. Not to worry, there are only 17 and they are not so famous, so I'll just exlude these physicists from the analysis.</p>
+<p>It is clear that every request successfully received a response. However, I see that some responses came back empty from the server. Basically, although there are Wikipedia pages for these physicists they do not have a corresponding page in DBpedia (or the page in DBpedia has a different name). Not to worry, there are only 10 and they are not so famous, so I'll just exlude these physicists from the analysis.</p>
 
 </div>
 </div>
@@ -12174,7 +12170,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dropped_urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">urls</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="p">]</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dropped_urls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">17</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dropped_urls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dropped_urls</span><span class="p">))</span>
 <span class="n">dropped_urls</span>
 </pre></div>
@@ -12193,7 +12189,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>17
+<pre>10
 </pre>
 </div>
 </div>
@@ -12208,21 +12204,14 @@ div#notebook {
 <div class="output_text output_subarea output_execute_result">
 <pre>[&#39;http://dbpedia.org/data/Alan_Schoen.json&#39;,
  &#39;http://dbpedia.org/data/Daya_Shankar_Kulshreshtha.json&#39;,
- &#39;http://dbpedia.org/data/Ernest_Mouchez.json&#39;,
- &#39;http://dbpedia.org/data/Hans_Ziegler_(physicist).json&#39;,
  &#39;http://dbpedia.org/data/Harald_J._W._Mueller-Kirsten.json&#39;,
  &#39;http://dbpedia.org/data/Jeff_Forshaw.json&#39;,
  &#39;http://dbpedia.org/data/Juansher_Chkareuli.json&#39;,
  &#39;http://dbpedia.org/data/K._S._Babu.json&#39;,
- &#39;http://dbpedia.org/data/Kenneth_Young_(physicist).json&#39;,
  &#39;http://dbpedia.org/data/Nina_Markovi%C4%87.json&#39;,
- &#39;http://dbpedia.org/data/Ra%C3%BAl_Rabad%C3%A1n.json&#39;,
  &#39;http://dbpedia.org/data/Sanja_Damjanovi%C4%87.json&#39;,
  &#39;http://dbpedia.org/data/Ulrike_Diebold.json&#39;,
- &#39;http://dbpedia.org/data/Valerie_Gibson.json&#39;,
- &#39;http://dbpedia.org/data/William_Fuller_Brown_Jr..json&#39;,
- &#39;http://dbpedia.org/data/Yakov_Alpert.json&#39;,
- &#39;http://dbpedia.org/data/Yang_Chen-Ning.json&#39;]</pre>
+ &#39;http://dbpedia.org/data/Valerie_Gibson.json&#39;]</pre>
 </div>
 
 </div>
@@ -12273,7 +12262,7 @@ div#notebook {
 <span class="k">with</span> <span class="n">jsonlines</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">json_line</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
         <span class="n">json_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json_line</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1044</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1049</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12341,7 +12330,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 1.1-collect-physicists-raw-data.ipynb to html
-[NbConvertApp] Writing 295763 bytes to html_output\1.1-collect-physicists-raw-data.html
+[NbConvertApp] Writing 296096 bytes to html_output\1.1-collect-physicists-raw-data.html
 </pre>
 </div>
 </div>
@@ -12373,7 +12362,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 1.1-collect-physicists-raw-data.ipynb to notebook
-[NbConvertApp] Writing 9547 bytes to 1.1-collect-physicists-raw-data.nbconvert.ipynb
+[NbConvertApp] Writing 9833 bytes to 1.1-collect-physicists-raw-data.nbconvert.ipynb
 </pre>
 </div>
 </div>
