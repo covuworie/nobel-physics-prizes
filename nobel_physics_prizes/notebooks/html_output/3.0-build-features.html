@@ -13126,7 +13126,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="k">import</span> <span class="n">relativedelta</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -13344,18 +13343,56 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">build_features</span><span class="p">(</span><span class="n">physicists</span><span class="p">):</span>
     <span class="n">features</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">copy</span><span class="p">()[[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]]</span>    
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_gender</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">gender</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_physics_subfield</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> 
+        <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+        <span class="n">search_terms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">})</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;experimental_physicist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_physics_subfield</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> 
+        <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+        <span class="n">search_terms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Experimental physicists&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;experimental physic&#39;</span><span class="p">})</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;astronomer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_physics_subfield</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> 
+        <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
+        <span class="n">search_terms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;astronomers&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;astronom&#39;</span><span class="p">})</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;years_lived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_years_lived</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="p">,</span>
                                                  <span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="p">)</span>
+    
     <span class="k">return</span> <span class="n">features</span>
+
 
 <span class="k">def</span> <span class="nf">_build_gender</span><span class="p">(</span><span class="n">gender</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">gender</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;male&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
 
+
 <span class="k">def</span> <span class="nf">_build_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">):</span>
     <span class="n">death_date_no_nan</span> <span class="o">=</span> <span class="n">death_date</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_date_no_nan</span><span class="p">)</span>
     <span class="n">birth_date_no_nan</span> <span class="o">=</span> <span class="n">birth_date</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_date_no_nan</span><span class="p">)</span>
-    <span class="n">rdelta</span> <span class="o">=</span> <span class="p">((</span><span class="n">death_date_no_nan</span> <span class="o">-</span> <span class="n">birth_date_no_nan</span><span class="p">)</span> <span class="o">/</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">rdelta</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">years_lived</span> <span class="o">=</span> <span class="p">((</span><span class="n">death_date_no_nan</span> <span class="o">-</span> <span class="n">birth_date_no_nan</span><span class="p">)</span> <span class="o">/</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">years_lived</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_build_physics_subfield</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">search_terms</span><span class="p">):</span>
+    <span class="n">cat_theoretical_physicist</span> <span class="o">=</span> <span class="n">categories</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">cat</span><span class="p">:</span> <span class="n">search_terms</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">cat</span><span class="p">)</span>
+    <span class="n">field_theoretical_physicist</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">fld</span><span class="p">:</span> <span class="n">search_terms</span><span class="p">[</span><span class="s1">&#39;others&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">fld</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fld</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">else</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">desc_theoretical_physicist</span> <span class="o">=</span> <span class="n">description</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">desc</span><span class="p">:</span> <span class="n">search_terms</span><span class="p">[</span><span class="s1">&#39;others&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">desc</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">else</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">comm_theoretical_physicist</span> <span class="o">=</span> <span class="n">description</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">comm</span><span class="p">:</span> <span class="n">search_terms</span><span class="p">[</span><span class="s1">&#39;others&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">comm</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">else</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cat_theoretical_physicist</span> <span class="o">|</span>
+            <span class="n">field_theoretical_physicist</span> <span class="o">|</span>
+            <span class="n">desc_theoretical_physicist</span> <span class="o">|</span>
+            <span class="n">comm_theoretical_physicist</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+            
+
 
 <span class="k">def</span> <span class="nf">_date_no_nan</span><span class="p">(</span><span class="n">date</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -13374,19 +13411,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">train_physicists_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13399,7 +13424,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13425,6 +13450,9 @@ div#notebook {
       <th>fullName</th>
       <th>name</th>
       <th>gender</th>
+      <th>theoretical_physicist</th>
+      <th>experimental_physicist</th>
+      <th>astronomer</th>
       <th>years_lived</th>
     </tr>
   </thead>
@@ -13434,6 +13462,9 @@ div#notebook {
       <td>Aage Bohr</td>
       <td>Aage Niels Bohr</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>87</td>
     </tr>
     <tr>
@@ -13441,6 +13472,9 @@ div#notebook {
       <td>Aaldert Wapstra</td>
       <td>Aaldert Hendrik Wapstra|Aaldert Wapstra</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>84</td>
     </tr>
     <tr>
@@ -13448,6 +13482,9 @@ div#notebook {
       <td>Abdus Salam</td>
       <td>Mohammad Abdus Salam|Abdus Salam</td>
       <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>70</td>
     </tr>
     <tr>
@@ -13455,6 +13492,9 @@ div#notebook {
       <td>Abraham Alikhanov</td>
       <td>Abraham Alikhanov</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>66</td>
     </tr>
     <tr>
@@ -13462,6 +13502,9 @@ div#notebook {
       <td>Abraham H. Taub</td>
       <td>Abraham Taub|Abraham H. Taub</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>88</td>
     </tr>
   </tbody>
@@ -13489,7 +13532,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --output-dir html_output --to html <span class="m">3</span>.0-build-features.ipynb
@@ -13510,7 +13553,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 3.0-build-features.ipynb to html
-[NbConvertApp] Writing 281456 bytes to html_output\3.0-build-features.html
+[NbConvertApp] Writing 288196 bytes to html_output\3.0-build-features.html
 </pre>
 </div>
 </div>
@@ -13521,7 +13564,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook <span class="m">3</span>.0-build-features.ipynb
@@ -13542,7 +13585,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 3.0-build-features.ipynb to notebook
-[NbConvertApp] Writing 3253 bytes to 3.0-build-features.nbconvert.ipynb
+[NbConvertApp] Writing 5109 bytes to 3.0-build-features.nbconvert.ipynb
 </pre>
 </div>
 </div>

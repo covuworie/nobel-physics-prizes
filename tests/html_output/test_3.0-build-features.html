@@ -13115,7 +13115,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ipytest</span>
@@ -13132,7 +13132,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">PYTEST_OPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--color=yes&#39;</span><span class="p">]</span>
@@ -13145,29 +13145,67 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <span class="k">def</span> <span class="nf">expected_gender</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
-        <span class="s1">&#39;1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="mi">0</span>
     <span class="p">],</span>
-    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">,</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span>
+
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <span class="k">def</span> <span class="nf">expected_years_lived_dead</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;87&#39;</span><span class="p">,</span>
-    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">,</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">87</span><span class="p">,</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;years_lived&#39;</span><span class="p">)</span>
+
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <span class="k">def</span> <span class="nf">expected_years_lived_alive</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;55&#39;</span><span class="p">,</span>
-    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">,</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">55</span><span class="p">,</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;years_lived&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">expected_theoretical_physicist_categories</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">expected_theoretical_physicist_field</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="mi">0</span>
+    <span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">expected_experimental_physicist_description</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="mi">0</span>
+    <span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">expected_astronomer_comment</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="mi">0</span>
+    <span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13177,7 +13215,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_build_features*&quot;</span><span class="p">)</span>
@@ -13200,7 +13238,66 @@ div#notebook {
     <span class="n">death_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">_build_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
         <span class="n">expected_years_lived_alive</span><span class="p">))</span>
+    
+
+<span class="k">def</span> <span class="nf">test_build_features_physics_subfield_categories</span><span class="p">(</span>
+    <span class="n">expected_theoretical_physicist_categories</span><span class="p">):</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Nuclear Physicist|Theoretical physicists&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;1932 deaths|American physicists&#39;</span><span class="p">])</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
+        <span class="n">categories</span><span class="p">,</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">),</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">),</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">),</span>
+        <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_theoretical_physicist_categories</span><span class="p">))</span>
+    
+    
+<span class="k">def</span> <span class="nf">test_build_features_physics_subfield_field</span><span class="p">(</span>
+    <span class="n">expected_theoretical_physicist_field</span><span class="p">):</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;physics|Theoretical physics&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;Philosophy|Mathematics|Quantum field theory&#39;</span><span class="p">,</span>
+                       <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">field</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+        <span class="n">field</span><span class="p">,</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_theoretical_physicist_field</span><span class="p">))</span>
                      
+
+<span class="k">def</span> <span class="nf">test_build_features_physics_subfield_description</span><span class="p">(</span>
+    <span class="n">expected_experimental_physicist_description</span><span class="p">):</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Marie Curie was chair of experimental physics&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;Lise Meitner was a nuclear physicist&#39;</span><span class="p">,</span>
+                             <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">description</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">description</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="n">description</span><span class="p">,</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">description</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Experimental physicists&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;experimental physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_experimental_physicist_description</span><span class="p">))</span>
+    
+
+<span class="k">def</span> <span class="nf">test_build_features_physics_subfield_comment</span><span class="p">(</span>
+    <span class="n">expected_astronomer_comment</span><span class="p">):</span>
+    <span class="n">comment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Antony Hewish was an astronomer&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;Jocelyn Bell Burnell is an Astrophysicist&#39;</span><span class="p">,</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">comment</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">comment</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="n">comment</span><span class="p">,</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">comment</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+        <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;astronomers&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;astronom&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_astronomer_comment</span><span class="p">))</span> 
+
 
 <span class="n">ipytest</span><span class="o">.</span><span class="n">run_pytest</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../../tests/test_3.0-build-features.ipynb&#39;</span><span class="p">,</span>
@@ -13225,20 +13322,24 @@ div#notebook {
 platform win32 -- Python 3.6.5, pytest-3.8.0, py-1.6.0, pluggy-0.7.1 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
 cachedir: .pytest_cache
 rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
-<span class="ansi-bold">collecting ... </span>collected 3 items
+<span class="ansi-bold">collecting ... </span>collected 7 items
 
-..\..\tests\test_3.0-build-features.py::test_build_features_gender &lt;- &lt;ipython-input-18-a14f028b5a3d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 33%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead &lt;- &lt;ipython-input-18-a14f028b5a3d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 66%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive &lt;- &lt;ipython-input-18-a14f028b5a3d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [100%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_gender &lt;- &lt;ipython-input-22-9aec09119df0&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 14%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead &lt;- &lt;ipython-input-22-9aec09119df0&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 28%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive &lt;- &lt;ipython-input-22-9aec09119df0&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 42%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories &lt;- &lt;ipython-input-22-9aec09119df0&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 57%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field &lt;- &lt;ipython-input-22-9aec09119df0&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 71%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description &lt;- &lt;ipython-input-22-9aec09119df0&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 85%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment &lt;- &lt;ipython-input-22-9aec09119df0&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [100%]</span>
 
-<span class="ansi-green-intense-fg ansi-bold">========================== 3 passed in 0.06 seconds ===========================</span>
+<span class="ansi-green-intense-fg ansi-bold">========================== 7 passed in 0.08 seconds ===========================</span>
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[22]:</div>
 
 
 
@@ -13255,7 +13356,7 @@ rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --output-dir ../../tests/html_output --to html ../../tests/test_3.0-build-features.ipynb
@@ -13276,7 +13377,7 @@ rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook ../../tests/test_3.0-build-features.ipynb to html
-[NbConvertApp] Writing 281107 bytes to ../../tests/html_output\test_3.0-build-features.html
+[NbConvertApp] Writing 293108 bytes to ../../tests/html_output\test_3.0-build-features.html
 </pre>
 </div>
 </div>
@@ -13287,7 +13388,7 @@ rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook ../../tests/test_3.0-build-features.ipynb
@@ -13308,7 +13409,7 @@ rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook ../../tests/test_3.0-build-features.ipynb to notebook
-[NbConvertApp] Writing 3156 bytes to ../../tests\test_3.0-build-features.nbconvert.ipynb
+[NbConvertApp] Writing 6970 bytes to ../../tests\test_3.0-build-features.nbconvert.ipynb
 </pre>
 </div>
 </div>
