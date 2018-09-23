@@ -325,6 +325,7 @@ G. V. Skrotskii
 Gabriel Lippmann
 Gabriele Rabel
 Gabriele Veneziano
+Gaetano Vignola
 Galileo Galilei
 Gaspard-Gustave de Coriolis
 Geoffrey Chew
@@ -767,6 +768,7 @@ Owen Willans Richardson
 Pamela L. Gay
 Pascual Jordan
 Patrick Blackett
+Paul Crowell
 Paul Davies
 Paul Dirac
 Paul Drude
@@ -879,7 +881,6 @@ Ronald McNair
 Rosalind Franklin
 Rosalyn Sussman Yalow
 Roy J. Glauber
-Royal Prussia
 Ruby Payne-Scott
 Rudolf Clausius
 Rudolf Haag
