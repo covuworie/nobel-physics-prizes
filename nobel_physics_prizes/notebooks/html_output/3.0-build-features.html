@@ -13556,17 +13556,17 @@ div#notebook {
                       <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;astronom&#39;</span><span class="p">})</span>
 
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_academic_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_academic_advisors_laureate</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">academicAdvisor</span><span class="p">,</span>
-                                              <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">academicAdvisor</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_academic_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_academic_advisors_laureate</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">academicAdvisor</span><span class="p">,</span>
-                                              <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">academicAdvisor</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_doctoral_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_academic_advisors_laureate</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralAdvisor</span><span class="p">,</span>
-                                              <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralAdvisor</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_doctoral_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_academic_advisors_laureate</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralAdvisor</span><span class="p">,</span>
-                                              <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralAdvisor</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_doctoral_students&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralStudent</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_doctoral_students&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralStudent</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
     
     <span class="k">return</span> <span class="n">features</span>
 
@@ -13601,8 +13601,8 @@ div#notebook {
 
 
 
-<span class="k">def</span> <span class="nf">_build_num_academic_advisors_laureate</span><span class="p">(</span><span class="n">academic_advisors</span><span class="p">,</span> <span class="n">laureates</span><span class="p">):</span>
-    <span class="n">laureates</span> <span class="o">=</span> <span class="n">academic_advisors</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_get_nobel_laureates</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">laureates</span><span class="p">,))</span>
+<span class="k">def</span> <span class="nf">_build_num_laureates</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">laureates</span><span class="p">):</span>
+    <span class="n">laureates</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_get_nobel_laureates</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">laureates</span><span class="p">,))</span>
     <span class="k">return</span> <span class="n">laureates</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
 
 
@@ -13682,6 +13682,8 @@ div#notebook {
       <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>num_chemistry_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_chemistry_laureate_doctoral_students</th>
     </tr>
   </thead>
   <tbody>
@@ -13691,6 +13693,8 @@ div#notebook {
       <td>Aage Niels Bohr</td>
       <td>1</td>
       <td>87</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -13712,6 +13716,8 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -13720,6 +13726,8 @@ div#notebook {
       <td>1</td>
       <td>70</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -13740,6 +13748,8 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
@@ -13747,6 +13757,8 @@ div#notebook {
       <td>Abraham H. Taub|Abraham Taub</td>
       <td>1</td>
       <td>88</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -13801,7 +13813,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 3.0-build-features.ipynb to html
-[NbConvertApp] Writing 304576 bytes to html_output\3.0-build-features.html
+[NbConvertApp] Writing 294788 bytes to html_output\3.0-build-features.html
 </pre>
 </div>
 </div>
@@ -13833,7 +13845,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 3.0-build-features.ipynb to notebook
-[NbConvertApp] Writing 7196 bytes to 3.0-build-features.nbconvert.ipynb
+[NbConvertApp] Writing 7193 bytes to 3.0-build-features.nbconvert.ipynb
 </pre>
 </div>
 </div>
