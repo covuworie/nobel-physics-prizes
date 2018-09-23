@@ -13122,7 +13122,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
@@ -13138,7 +13138,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
@@ -13156,7 +13156,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[2]:</div>
+    <div class="prompt output_prompt">Out[42]:</div>
 
 
 
@@ -13208,11 +13208,11 @@ div#notebook {
       <td>Aage Niels Bohr (Danish: [ˈɔːʊ̯ə ˌnels ˈboɐ̯ˀ]...</td>
       <td>NaN</td>
       <td>University of Copenhagen</td>
-      <td>H.C. Ørsted Medal|Atoms for Peace Award|Nobel ...</td>
+      <td>Atoms for Peace Award|Dannie Heineman Prize fo...</td>
       <td>1922-06-19</td>
       <td>NaN</td>
       <td>Copenhagen|Copenhagen, Denmark</td>
-      <td>Institute for Advanced Study visiting scholars...</td>
+      <td>1922 births|2009 deaths|Atoms for Peace Award ...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>...</td>
@@ -13225,7 +13225,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Aage_Bohr?oldid=7...</td>
       <td>2201</td>
       <td>727860526</td>
-      <td>University of Copenhagen|Institute for Advance...</td>
+      <td>Columbia University|Institute for Advanced Stu...</td>
     </tr>
     <tr>
       <th>1</th>
@@ -13236,7 +13236,7 @@ div#notebook {
       <td>1922-04-24</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>Dutch nuclear physicists|Utrecht University al...</td>
+      <td>1922 births|2006 deaths|Delft University of Te...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>...</td>
@@ -13255,13 +13255,13 @@ div#notebook {
       <th>2</th>
       <td>Mohammad Abdus Salam NI, SPk, KBE (Punjabi, Ur...</td>
       <td>Paul Taunton Matthews</td>
-      <td>St John's College, Cambridge|University of the...</td>
-      <td>Copley Medal|Fellow of the Royal Society|Atoms...</td>
+      <td>Government College University, Lahore|St John'...</td>
+      <td>Adams Prize|Atoms for Peace Prize|Copley Medal...</td>
       <td>1926-01-29</td>
       <td>NaN</td>
-      <td>British India|Punjab Province (British India)|...</td>
-      <td>Theoretical physicists|Foreign Members of the ...</td>
-      <td>Aziza Rahman|Anisa Bushra Salam Bajwa</td>
+      <td>British India|Jhang|Punjab Province (British I...</td>
+      <td>1926 births|1996 deaths|Academics of Imperial ...</td>
+      <td>Anisa Bushra Salam Bajwa|Aziza Rahman</td>
       <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
@@ -13280,11 +13280,11 @@ div#notebook {
       <td>Abraham Isahakovich Alikhanov (Alikhanian, Arm...</td>
       <td>NaN</td>
       <td>Leningrad Polytechnic Institute</td>
-      <td>Stalin Prize|Hero of Socialist Labor</td>
+      <td>Hero of Socialist Labor|Stalin Prize</td>
       <td>1904-02-20</td>
       <td>NaN</td>
-      <td>Russian Empire|Elisabethpol|Tbilisi|Elisabethp...</td>
-      <td>Recipients of the USSR State Prize|Armenian in...</td>
+      <td>Elisabethpol|Elisabethpol Governorate|Russian ...</td>
+      <td>1904 births|1970 deaths|20th-century physicist...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>...</td>
@@ -13308,7 +13308,7 @@ div#notebook {
       <td>1911-02-01</td>
       <td>NaN</td>
       <td>Chicago</td>
-      <td>1999 deaths|Differential geometers|1911 births...</td>
+      <td>1911 births|1999 deaths|20th-century American ...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>...</td>
@@ -13337,12 +13337,208 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../data/raw/nobel-physics-prize-laureates.csv&#39;</span><span class="p">)</span>
+<span class="n">nobel_physicists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[43]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Laureate</th>
+      <th>Country</th>
+      <th>Rationale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1901</td>
+      <td>Wilhelm Röntgen</td>
+      <td>German Empire</td>
+      <td>"in recognition of the extraordinary services ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1902</td>
+      <td>Hendrik Lorentz</td>
+      <td>Netherlands</td>
+      <td>"in recognition of the extraordinary service t...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1902</td>
+      <td>Pieter Zeeman</td>
+      <td>Netherlands</td>
+      <td>"in recognition of the extraordinary service t...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1903</td>
+      <td>Henri Becquerel</td>
+      <td>France</td>
+      <td>"for his discovery of spontaneous radioactivity"</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1903</td>
+      <td>Pierre Curie</td>
+      <td>France</td>
+      <td>"for their joint researches on the radiation p...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../data/raw/nobel-chemistry-prize-laureates.csv&#39;</span><span class="p">)</span>
+<span class="n">nobel_chemists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[44]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Laureate</th>
+      <th>Country</th>
+      <th>Rationale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1901</td>
+      <td>Jacobus Henricus van 't Hoff</td>
+      <td>Netherlands</td>
+      <td>"[for his] discovery of the laws of chemical d...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1902</td>
+      <td>Emil Fischer</td>
+      <td>German Empire</td>
+      <td>"[for] his work on sugar and purine syntheses"</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1903</td>
+      <td>Svante Arrhenius</td>
+      <td>Sweden</td>
+      <td>"[for] his electrolytic theory of dissociation"</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1904</td>
+      <td>William Ramsay</td>
+      <td>United Kingdom</td>
+      <td>"[for his] discovery of the inert gaseous elem...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1905</td>
+      <td>Adolf von Baeyer</td>
+      <td>German Empire</td>
+      <td>"[for] the advancement of organic chemistry an...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">build_features</span><span class="p">(</span><span class="n">physicists</span><span class="p">):</span>
     <span class="n">features</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">copy</span><span class="p">()[[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]]</span>    
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_gender</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">gender</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;years_lived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_years_lived</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="p">,</span>
+                                                 <span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="p">)</span>
+    
+    
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_physics_subfield</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> 
         <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
@@ -13358,8 +13554,13 @@ div#notebook {
         <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
         <span class="n">search_terms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;astronomers&#39;</span><span class="p">,</span>
                       <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;astronom&#39;</span><span class="p">})</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;years_lived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_years_lived</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="p">,</span>
-                                                 <span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="p">)</span>
+
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_academic_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_build_num_academic_advisors_laureate</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">academicAdvisor</span><span class="p">,</span>
+                                              <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_academic_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_build_num_academic_advisors_laureate</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">academicAdvisor</span><span class="p">,</span>
+                                              <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">))</span>
     
     <span class="k">return</span> <span class="n">features</span>
 
@@ -13391,9 +13592,26 @@ div#notebook {
             <span class="n">field_theoretical_physicist</span> <span class="o">|</span>
             <span class="n">desc_theoretical_physicist</span> <span class="o">|</span>
             <span class="n">comm_theoretical_physicist</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
-            
 
 
+
+<span class="k">def</span> <span class="nf">_build_num_academic_advisors_laureate</span><span class="p">(</span><span class="n">academic_advisors</span><span class="p">,</span> <span class="n">laureates</span><span class="p">):</span>
+    <span class="n">laureates</span> <span class="o">=</span> <span class="n">academic_advisors</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_get_nobel_laureates</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">laureates</span><span class="p">,))</span>
+    <span class="k">return</span> <span class="n">laureates</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+
+
+
+<span class="k">def</span> <span class="nf">_get_nobel_laureates</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">laureates</span><span class="p">):</span>
+    <span class="n">laureates_in_cell</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">laureates</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+                <span class="n">laureates_in_cell</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">laureates_in_cell</span>
+
+
+    
 <span class="k">def</span> <span class="nf">_date_no_nan</span><span class="p">(</span><span class="n">date</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
@@ -13407,7 +13625,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)</span>
@@ -13424,7 +13642,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[46]:</div>
 
 
 
@@ -13450,10 +13668,12 @@ div#notebook {
       <th>fullName</th>
       <th>name</th>
       <th>gender</th>
+      <th>years_lived</th>
       <th>theoretical_physicist</th>
       <th>experimental_physicist</th>
       <th>astronomer</th>
-      <th>years_lived</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_chemistry_laureate_academic_advisors</th>
     </tr>
   </thead>
   <tbody>
@@ -13462,50 +13682,60 @@ div#notebook {
       <td>Aage Bohr</td>
       <td>Aage Niels Bohr</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>87</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Aaldert Wapstra</td>
       <td>Aaldert Hendrik Wapstra|Aaldert Wapstra</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>84</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Abdus Salam</td>
-      <td>Mohammad Abdus Salam|Abdus Salam</td>
+      <td>Abdus Salam|Mohammad Abdus Salam</td>
       <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
       <td>70</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Abraham Alikhanov</td>
       <td>Abraham Alikhanov</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>66</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Abraham H. Taub</td>
-      <td>Abraham Taub|Abraham H. Taub</td>
+      <td>Abraham H. Taub|Abraham Taub</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>88</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -13532,7 +13762,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --output-dir html_output --to html <span class="m">3</span>.0-build-features.ipynb
@@ -13553,7 +13783,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 3.0-build-features.ipynb to html
-[NbConvertApp] Writing 288196 bytes to html_output\3.0-build-features.html
+[NbConvertApp] Writing 303862 bytes to html_output\3.0-build-features.html
 </pre>
 </div>
 </div>
@@ -13564,7 +13794,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook <span class="m">3</span>.0-build-features.ipynb
@@ -13585,7 +13815,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 3.0-build-features.ipynb to notebook
-[NbConvertApp] Writing 5109 bytes to 3.0-build-features.nbconvert.ipynb
+[NbConvertApp] Writing 6728 bytes to 3.0-build-features.nbconvert.ipynb
 </pre>
 </div>
 </div>
