@@ -13793,6 +13793,13 @@ div#notebook {
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_notable_students&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">notableStudent</span><span class="p">,</span>
                              <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">children</span><span class="p">,</span>
+                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">children</span><span class="p">,</span>
+                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>  <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">_impute_num_laureate_children_parents</span><span class="p">(</span><span class="n">features</span><span class="p">)</span> <span class="c1"># impute missing values</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_spouses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">spouse</span><span class="p">,</span>
                              <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
@@ -13845,8 +13852,32 @@ div#notebook {
 
 
 <span class="k">def</span> <span class="nf">_build_num_laureates</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">laureates</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-    <span class="n">laureates</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_get_nobel_laureates</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">laureates</span><span class="p">,</span> <span class="n">names</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">laureates</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+    <span class="n">laureate_names</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_get_nobel_laureates</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">laureates</span><span class="p">,</span> <span class="n">names</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">laureate_names</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_impute_num_laureate_children_parents</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
+    
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># none for chemistry</span>
+    
+    <span class="c1"># https://www.nobelprize.org/prizes/facts/facts-on-the-nobel-prize-in-physics/</span>
+    <span class="c1"># William Bragg and Lawrence Bragg, 1915</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;William Henry Bragg&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;num_physics_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;William Lawrence Bragg&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># Niels Bohr, 1922 and Aage N. Bohr, 1975</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Aage Bohr&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># Manne Siegbahn, 1924 and Kai M. Siegbahn, 1981</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Kai Siegbahn&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># J. J. Thomson, 1906 and George Paget Thomson, 1937</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;J. J. Thomson&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;num_physics_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;George Paget Thomson&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
 
 
@@ -13937,10 +13968,10 @@ div#notebook {
       <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>num_physics_laureate_doctoral_students</th>
-      <th>num_chemistry_laureate_doctoral_students</th>
-      <th>num_physics_laureate_notable_students</th>
-      <th>num_chemistry_laureate_notable_students</th>
+      <th>num_physics_laureate_children</th>
+      <th>num_chemistry_laureate_children</th>
+      <th>num_physics_laureate_parents</th>
+      <th>num_chemistry_laureate_parents</th>
       <th>num_physics_laureate_spouses</th>
       <th>num_chemistry_laureate_spouses</th>
       <th>num_physics_laureate_influenced</th>
@@ -13965,7 +13996,7 @@ div#notebook {
       <td>...</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14072,7 +14103,7 @@ div#notebook {
     </tr>
   </tbody>
 </table>
-<p>5 rows × 21 columns</p>
+<p>5 rows × 25 columns</p>
 </div>
 </div>
 
@@ -14096,7 +14127,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --output-dir html_output --to html <span class="m">3</span>.0-build-features.ipynb
@@ -14117,7 +14148,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 3.0-build-features.ipynb to html
-[NbConvertApp] Writing 306965 bytes to html_output\3.0-build-features.html
+[NbConvertApp] Writing 313132 bytes to html_output\3.0-build-features.html
 </pre>
 </div>
 </div>
@@ -14128,7 +14159,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook <span class="m">3</span>.0-build-features.ipynb
@@ -14149,7 +14180,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 3.0-build-features.ipynb to notebook
-[NbConvertApp] Writing 11119 bytes to 3.0-build-features.nbconvert.ipynb
+[NbConvertApp] Writing 13282 bytes to 3.0-build-features.nbconvert.ipynb
 </pre>
 </div>
 </div>
