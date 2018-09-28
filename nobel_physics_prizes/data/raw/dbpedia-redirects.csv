@@ -52,6 +52,7 @@ http://dbpedia.org/resource/Adaptive_optics,http://dbpedia.org/page/Adaptive_opt
 http://dbpedia.org/resource/Adelaide,http://dbpedia.org/page/Adelaide
 http://dbpedia.org/resource/Adi_Bulsara,http://dbpedia.org/page/Adi_Bulsara
 http://dbpedia.org/resource/Adinkra_symbols_(physics),http://dbpedia.org/page/Adinkra_symbols_(physics)
+http://dbpedia.org/resource/Adler_Planetarium_&_Astronomy_Museum,http://dbpedia.org/page/Adler_Planetarium
 http://dbpedia.org/resource/Adler–Bardeen_theorem,http://dbpedia.org/page/Adler–Bardeen_theorem
 http://dbpedia.org/resource/ADM_formalism,http://dbpedia.org/page/ADM_formalism
 http://dbpedia.org/resource/Adolf_Busemann,http://dbpedia.org/page/Adolf_Busemann
@@ -2339,6 +2340,7 @@ http://dbpedia.org/resource/Category:Climate_change_environmentalists,http://dbp
 http://dbpedia.org/resource/Category:Cold_fusion,http://dbpedia.org/page/Category:Cold_fusion
 http://dbpedia.org/resource/Category:Cold_War_history_of_the_United_States,http://dbpedia.org/page/Category:Cold_War_history_of_the_United_States
 http://dbpedia.org/resource/Category:Collège_de_France_faculty,http://dbpedia.org/page/Category:Collège_de_France_faculty
+http://dbpedia.org/resource/Category:College_of_William_&_Mary_faculty,http://dbpedia.org/page/Category:College_of_William_&_Mary_faculty
 http://dbpedia.org/resource/Category:College_of_Wooster,http://dbpedia.org/page/Category:College_of_Wooster
 http://dbpedia.org/resource/Category:College_of_Wooster_alumni,http://dbpedia.org/page/Category:College_of_Wooster_alumni
 http://dbpedia.org/resource/Category:Collier_Trophy_recipients,http://dbpedia.org/page/Category:Collier_Trophy_recipients
@@ -3367,6 +3369,7 @@ http://dbpedia.org/resource/Category:Lenin_Prize_winners,http://dbpedia.org/page
 http://dbpedia.org/resource/Category:Lens_designers,http://dbpedia.org/page/Category:Lens_designers
 http://dbpedia.org/resource/Category:Leonhard_Euler,http://dbpedia.org/page/Category:Leonhard_Euler
 http://dbpedia.org/resource/Category:Les_Neuf_Sœurs,http://dbpedia.org/page/Category:Les_Neuf_Sœurs
+http://dbpedia.org/resource/Category:Lewis_&_Clark_College_alumni,http://dbpedia.org/page/Category:Lewis_&_Clark_College_alumni
 http://dbpedia.org/resource/Category:Liberal_Unionist_Party_MPs,http://dbpedia.org/page/Category:Liberal_Unionist_Party_MPs
 http://dbpedia.org/resource/Category:Life_peers,http://dbpedia.org/page/Category:Life_peers
 http://dbpedia.org/resource/Category:Light-emitting_diode_pioneers,http://dbpedia.org/page/Category:Light-emitting_diode_pioneers
@@ -3715,6 +3718,7 @@ http://dbpedia.org/resource/Category:Optical_physicists,http://dbpedia.org/page/
 http://dbpedia.org/resource/Category:Opticians,http://dbpedia.org/page/Category:Opticians
 http://dbpedia.org/resource/Category:Ordained_peers,http://dbpedia.org/page/Category:Ordained_peers
 http://dbpedia.org/resource/Category:Order_of_Saint_Louis_recipients,http://dbpedia.org/page/Category:Order_of_Saint_Louis_recipients
+http://dbpedia.org/resource/Category:Oregon_Health_&_Science_University_alumni,http://dbpedia.org/page/Category:Oregon_Health_&_Science_University_alumni
 http://dbpedia.org/resource/Category:Original_Fellows_of_the_Royal_Society,http://dbpedia.org/page/Category:Original_Fellows_of_the_Royal_Society
 http://dbpedia.org/resource/Category:Osaka_University_alumni,http://dbpedia.org/page/Category:Osaka_University_alumni
 http://dbpedia.org/resource/Category:Osaka_University_faculty,http://dbpedia.org/page/Category:Osaka_University_faculty
@@ -4644,12 +4648,17 @@ http://dbpedia.org/resource/Category:Recipients_of_the_Langley_Medal,http://dbpe
 http://dbpedia.org/resource/Category:Recipients_of_the_Legion_of_Merit,http://dbpedia.org/page/Category:Recipients_of_the_Legion_of_Merit
 http://dbpedia.org/resource/Category:Recipients_of_the_Lomonosov_Gold_Medal,http://dbpedia.org/page/Category:Recipients_of_the_Lomonosov_Gold_Medal
 http://dbpedia.org/resource/Category:Recipients_of_the_Maharashtra_Bhushan_Award,http://dbpedia.org/page/Category:Recipients_of_the_Maharashtra_Bhushan_Award
+http://dbpedia.org/resource/Category:Recipients_of_the_Medal_%22For_Courage%22_(Russia),http://dbpedia.org/page/Category:Recipients_of_the_Medal_%22For_Courage%22_(Russia)
 http://dbpedia.org/resource/Category:Recipients_of_the_Medal_of_Freedom,http://dbpedia.org/page/Category:Recipients_of_the_Medal_of_Freedom
 http://dbpedia.org/resource/Category:Recipients_of_the_Military_Cross,http://dbpedia.org/page/Category:Recipients_of_the_Military_Cross
 http://dbpedia.org/resource/Category:Recipients_of_the_NASA_Distinguished_Service_Medal,http://dbpedia.org/page/Category:Recipients_of_the_NASA_Distinguished_Service_Medal
 http://dbpedia.org/resource/Category:Recipients_of_the_National_Order_of_Scientific_Merit_(Brazil),http://dbpedia.org/page/Category:Recipients_of_the_National_Order_of_Scientific_Merit_(Brazil)
 http://dbpedia.org/resource/Category:Recipients_of_the_National_Prize_of_East_Germany,http://dbpedia.org/page/Category:Recipients_of_the_National_Prize_of_East_Germany
 http://dbpedia.org/resource/Category:Recipients_of_the_Navy_Distinguished_Public_Service_Award,http://dbpedia.org/page/Category:Recipients_of_the_Navy_Distinguished_Public_Service_Award
+"http://dbpedia.org/resource/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_1st_class","http://dbpedia.org/page/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_1st_class"
+"http://dbpedia.org/resource/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_2nd_class","http://dbpedia.org/page/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_2nd_class"
+"http://dbpedia.org/resource/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_3rd_class","http://dbpedia.org/page/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_3rd_class"
+"http://dbpedia.org/resource/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_4th_class","http://dbpedia.org/page/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_4th_class"
 http://dbpedia.org/resource/Category:Recipients_of_the_Order_of_Civil_Merit_(Korea),http://dbpedia.org/page/Category:Recipients_of_the_Order_of_Civil_Merit_(Korea)
 http://dbpedia.org/resource/Category:Recipients_of_the_Order_of_Courage,http://dbpedia.org/page/Category:Recipients_of_the_Order_of_Courage
 http://dbpedia.org/resource/Category:Recipients_of_the_Order_of_Culture,http://dbpedia.org/page/Category:Recipients_of_the_Order_of_Culture
@@ -4673,8 +4682,13 @@ http://dbpedia.org/resource/Category:Recipients_of_the_Order_of_the_Rising_Sun,h
 http://dbpedia.org/resource/Category:Recipients_of_the_Order_of_the_Rose,http://dbpedia.org/page/Category:Recipients_of_the_Order_of_the_Rose
 "http://dbpedia.org/resource/Category:Recipients_of_the_Order_of_the_Sacred_Treasure,_1st_class","http://dbpedia.org/page/Category:Recipients_of_the_Order_of_the_Sacred_Treasure,_1st_class"
 http://dbpedia.org/resource/Category:Recipients_of_the_Order_of_the_Yugoslav_Crown,http://dbpedia.org/page/Category:Recipients_of_the_Order_of_the_Yugoslav_Crown
+http://dbpedia.org/resource/Category:Recipients_of_the_Padma_Bhushan_in_literature_&_education,http://dbpedia.org/page/Category:Recipients_of_the_Padma_Bhushan_in_literature_&_education
 http://dbpedia.org/resource/Category:Recipients_of_the_Padma_Bhushan_in_medicine,http://dbpedia.org/page/Category:Recipients_of_the_Padma_Bhushan_in_medicine
+http://dbpedia.org/resource/Category:Recipients_of_the_Padma_Bhushan_in_science_&_engineering,http://dbpedia.org/page/Category:Recipients_of_the_Padma_Bhushan_in_science_&_engineering
+http://dbpedia.org/resource/Category:Recipients_of_the_Padma_Shri_in_science_&_engineering,http://dbpedia.org/page/Category:Recipients_of_the_Padma_Shri_in_science_&_engineering
 http://dbpedia.org/resource/Category:Recipients_of_the_Padma_Vibhushan_in_civil_service,http://dbpedia.org/page/Category:Recipients_of_the_Padma_Vibhushan_in_civil_service
+http://dbpedia.org/resource/Category:Recipients_of_the_Padma_Vibhushan_in_literature_&_education,http://dbpedia.org/page/Category:Recipients_of_the_Padma_Vibhushan_in_literature_&_education
+http://dbpedia.org/resource/Category:Recipients_of_the_Padma_Vibhushan_in_science_&_engineering,http://dbpedia.org/page/Category:Recipients_of_the_Padma_Vibhushan_in_science_&_engineering
 http://dbpedia.org/resource/Category:Recipients_of_the_Pour_le_Mérite_(civil_class),http://dbpedia.org/page/Category:Recipients_of_the_Pour_le_Mérite_(civil_class)
 http://dbpedia.org/resource/Category:Recipients_of_the_Pour_le_Mérite_for_Arts_and_Sciences,http://dbpedia.org/page/Category:Recipients_of_the_Pour_le_Mérite_for_Arts_and_Sciences
 http://dbpedia.org/resource/Category:Recipients_of_the_Pride_of_Performance,http://dbpedia.org/page/Category:Recipients_of_the_Pride_of_Performance
@@ -5076,6 +5090,7 @@ http://dbpedia.org/resource/Category:Telegraphy,http://dbpedia.org/page/Category
 http://dbpedia.org/resource/Category:Television_pioneers,http://dbpedia.org/page/Category:Television_pioneers
 http://dbpedia.org/resource/Category:Tellurium,http://dbpedia.org/page/Category:Tellurium
 http://dbpedia.org/resource/Category:Templeton_Prize_laureates,http://dbpedia.org/page/Category:Templeton_Prize_laureates
+http://dbpedia.org/resource/Category:Texas_A&M_University_faculty,http://dbpedia.org/page/Category:Texas_A&M_University_faculty
 http://dbpedia.org/resource/Category:Texas_Instruments_people,http://dbpedia.org/page/Category:Texas_Instruments_people
 http://dbpedia.org/resource/Category:Textbook_writers,http://dbpedia.org/page/Category:Textbook_writers
 http://dbpedia.org/resource/Category:Thallium,http://dbpedia.org/page/Category:Thallium
@@ -5461,6 +5476,7 @@ http://dbpedia.org/resource/Category:Xavier_University_people,http://dbpedia.org
 http://dbpedia.org/resource/Category:X-ray_computed_tomography,http://dbpedia.org/page/Category:X-ray_computed_tomography
 http://dbpedia.org/resource/Category:X-ray_crystallography,http://dbpedia.org/page/Category:X-ray_crystallography
 http://dbpedia.org/resource/Category:X-ray_pioneers,http://dbpedia.org/page/Category:X-ray_pioneers
+http://dbpedia.org/resource/Category:Yale_School_of_Engineering_&_Applied_Science_alumni,http://dbpedia.org/page/Category:Yale_School_of_Engineering_&_Applied_Science_alumni
 http://dbpedia.org/resource/Category:Yale_University_alumni,http://dbpedia.org/page/Category:Yale_University_alumni
 http://dbpedia.org/resource/Category:Yale_University_faculty,http://dbpedia.org/page/Category:Yale_University_faculty
 http://dbpedia.org/resource/Category:Yale_University_fellows,http://dbpedia.org/page/Category:Yale_University_fellows
@@ -8612,6 +8628,7 @@ http://dbpedia.org/resource/Pakistan,http://dbpedia.org/page/Pakistan
 http://dbpedia.org/resource/Pakistan_and_its_Nuclear_Deterrent_Program,http://dbpedia.org/page/Pakistan_and_weapons_of_mass_destruction
 http://dbpedia.org/resource/Pakistan_and_weapons_of_mass_destruction,http://dbpedia.org/page/Pakistan_and_weapons_of_mass_destruction
 http://dbpedia.org/resource/Pakistan_Atomic_Energy_Commission,http://dbpedia.org/page/Pakistan_Atomic_Energy_Commission
+http://dbpedia.org/resource/Pakistan_Institute_of_Engineering_&_Applied_Sciences,http://dbpedia.org/page/Pakistan_Institute_of_Engineering_and_Applied_Sciences
 http://dbpedia.org/resource/Pakistani,http://dbpedia.org/page/Pakistanis
 http://dbpedia.org/resource/Pakistani_people,http://dbpedia.org/page/Pakistanis
 http://dbpedia.org/resource/Palais_du_Petit-Luxembourg,http://dbpedia.org/page/Petit_Luxembourg
@@ -9590,6 +9607,7 @@ http://dbpedia.org/resource/Standard_map,http://dbpedia.org/page/Standard_map
 http://dbpedia.org/resource/Standard_Model,http://dbpedia.org/page/Standard_Model
 http://dbpedia.org/resource/Standard_Telephones_and_Cables,http://dbpedia.org/page/Standard_Telephones_and_Cables
 http://dbpedia.org/resource/Stanford,http://dbpedia.org/page/Stanford_University
+"http://dbpedia.org/resource/Stanford%5D,_%5BUSA","http://dbpedia.org/page/Stanford%5D,_%5BUSA"
 "http://dbpedia.org/resource/Stanford,_California","http://dbpedia.org/page/Stanford,_California"
 http://dbpedia.org/resource/Stanford_Institute_for_Theoretical_Physics,http://dbpedia.org/page/Stanford_Institute_for_Theoretical_Physics
 http://dbpedia.org/resource/Stanford_Linear_Accelerator_Center,http://dbpedia.org/page/SLAC_National_Accelerator_Laboratory
@@ -9806,6 +9824,7 @@ http://dbpedia.org/resource/Terrell_Ward_Bynum,http://dbpedia.org/page/Terrell_W
 http://dbpedia.org/resource/Tessellation,http://dbpedia.org/page/Tessellation
 http://dbpedia.org/resource/Tetrode,http://dbpedia.org/page/Tetrode
 http://dbpedia.org/resource/Texas,http://dbpedia.org/page/Texas
+http://dbpedia.org/resource/Texas_A&M_University,http://dbpedia.org/page/Texas_A&M_University
 http://dbpedia.org/resource/Texel,http://dbpedia.org/page/Texel
 http://dbpedia.org/resource/Thales,http://dbpedia.org/page/Thales
 http://dbpedia.org/resource/Thallium,http://dbpedia.org/page/Thallium

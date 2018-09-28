@@ -13451,9 +13451,11 @@ div#notebook {
 
             <span class="c1"># split such a string into a list of values</span>
             <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">val_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span>
-                    <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                    <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
                 <span class="n">val_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">val_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">* &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">))</span>
+                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">)</span>
+                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">))</span>
+                <span class="n">val_list</span> <span class="o">=</span> <span class="n">val_list</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">val_list</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">dict_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dict_</span><span class="p">:</span>
@@ -13819,45 +13821,17 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">find_redirect_urls</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">url_cache_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_retries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-                       <span class="n">max_backoff</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">show_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Find the redirect urls in the physicists data using a `requests` head request.</span>
-
-<span class="sd">    If a `url_cache_path` is provided and a URL in the `urls_to_check` is</span>
-<span class="sd">    found in the cache, then the request is skipped and the values from</span>
-<span class="sd">    the cache are returned. This function also uses exponential backoff</span>
-<span class="sd">    if a too many requests exception (429) is encountered.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">contruct_urls</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Construct DBpedia resource URLs from physicists data.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        data (list of `dict`): List of dicts containing the physicists data.</span>
-<span class="sd">        url_cache_path (str, optional): Defaults to None. Path of the csv file</span>
-<span class="sd">            where the URL cache of known mappings is located.</span>
-<span class="sd">        max_retries (int, optional): Defaults to 3. Maximum number of retries</span>
-<span class="sd">            for failed request.</span>
-<span class="sd">        max_backoff (int, optional): Defaults to 32. Maximum backoff in seconds</span>
-<span class="sd">            to allow.</span>
-<span class="sd">        timeout (int, optional): Defaults to 10. Maximum timeout to allow for</span>
-<span class="sd">            any request.</span>
-<span class="sd">        show_progess (bool, optional): Defaults to False. Show a progress bar if True.</span>
+<span class="sd">        physicists (dict): Dict containing physicists data.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        dict: Dictionary of URL mappings.</span>
-
-<span class="sd">        The keys are the original URLs and the values are the redirected URLs.</span>
-<span class="sd">        Both the URLs are returned quoted.</span>
+<span class="sd">        list of `str`: List of URLs.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">urls_to_check</span> <span class="o">=</span> <span class="n">_contruct_urls</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">bar</span> <span class="o">=</span> <span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">))</span> <span class="k">if</span> <span class="n">show_progress</span> <span class="k">else</span> <span class="kc">None</span>
-    <span class="n">redirect_urls</span> <span class="o">=</span> <span class="n">get_redirect_urls</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">,</span> <span class="n">url_cache_path</span><span class="o">=</span><span class="n">url_cache_path</span><span class="p">,</span>
-                                      <span class="n">max_retries</span><span class="o">=</span><span class="n">max_retries</span><span class="p">,</span> <span class="n">max_backoff</span><span class="o">=</span><span class="n">max_backoff</span><span class="p">,</span>
-                                      <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">redirect_urls</span>
-
-
-
-<span class="k">def</span> <span class="nf">_contruct_urls</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="n">urls_to_check</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">REDIRECT_KEYS</span><span class="p">:</span>
          <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
@@ -13885,9 +13859,23 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls_to_check</span> <span class="o">=</span> <span class="n">contruct_urls</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">url_cache_path</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/dbpedia-redirects.csv&#39;</span>
-<span class="n">redirects</span> <span class="o">=</span> <span class="n">find_redirect_urls</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">url_cache_path</span><span class="o">=</span><span class="n">url_cache_path</span><span class="p">,</span>
-                               <span class="n">show_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">redirects</span> <span class="o">=</span> <span class="n">get_redirect_urls</span><span class="p">(</span>
+    <span class="n">urls_to_check</span><span class="p">,</span> <span class="n">url_cache_path</span><span class="o">=</span><span class="n">url_cache_path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -13914,7 +13902,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:College_of_William_&amp;_Mary_faculty
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Why_Does_E=mc%C2%B2%3F
 </pre>
 </div>
 </div>
@@ -13925,406 +13913,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_3rd_class
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Padma_Vibhushan_in_science_&amp;_engineering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Lewis_&amp;_Clark_College_alumni
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Texas_A&amp;M_University
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Pakistan_Institute_of_Engineering_&amp;_Applied_Sciences
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Yale_School_of_Engineering_&amp;_Applied_Science_alumni
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Medal_%22For_Courage%22_(Russia)
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Padma_Bhushan_in_literature_&amp;_education
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Padma_Shri_in_science_&amp;_engineering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Why_Does_E=mc2%3F
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Texas_A&amp;M_University_faculty
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_1st_class
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Stanford%5D,_%5BUSA
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_2nd_class
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Padma_Bhushan_in_science_&amp;_engineering
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Oregon_Health_&amp;_Science_University_alumni
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Padma_Vibhushan_in_literature_&amp;_education
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Category:Recipients_of_the_Order_%22For_Merit_to_the_Fatherland%22,_4th_class
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Adler_Planetarium_&amp;_Astronomy_Museum
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 10630 / 10630 urls |██████| 100% Elapsed Time: 0:06:28 Time:  0:06:28
+<pre>Fetching: 10630 / 10630 urls |██████| 100% Elapsed Time: 0:42:05 Time:  0:42:05
 </pre>
 </div>
 </div>
@@ -14335,7 +13924,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">redirects</span><span class="p">)</span>
@@ -14351,13 +13940,13 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>10610</pre>
+<pre>10629</pre>
 </div>
 
 </div>
@@ -14369,15 +13958,15 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You can see that a tiny fraction of the URLs redirect to URLs which are not found. These are a mixture of people, places, awards and other items. Most of them are not relevant to features that I wish to extract from the data. For instance, I am not interested in any of these categories, physical concepts or people as they have not won Nobel Prizes in Physics or Chemistry. The very few URLs that are referring to universities / workplaces are so few that I think it is safe to ignore and proceed.</p>
-<p>Here, I sort and persist the URL cache to disk in case any new URLs are found.</p>
+<p>You can see that only one of the redirected URLs was not found. It is safe to ignore and proceed as this is not important for feature extraction.</p>
+<p>Now I sort and persist the URL cache to disk in case any new URLs are found.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dbpedia_redirects</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -14397,7 +13986,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -14471,7 +14060,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">impute_redirects</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">redirects</span><span class="p">):</span>
@@ -14526,7 +14115,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">impute_redirects</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">redirects</span><span class="p">)</span>
@@ -14543,7 +14132,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -14591,7 +14180,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists_dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
@@ -18927,7 +18516,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Chris_Lintott?old...</td>
       <td>8140121</td>
       <td>740135084</td>
-      <td>Adler Planetarium &amp; Astronomy Museum|Universit...</td>
+      <td>Adler Planetarium|University College London|Un...</td>
     </tr>
     <tr>
       <th>178</th>
@@ -19533,7 +19122,7 @@ div#notebook {
       <th>203</th>
       <td>David Carroll (born January 13, 1963) is a U.S...</td>
       <td>NaN</td>
-      <td>North Carolina State University \nWesleyan Uni...</td>
+      <td>Max-Planck-Insitut für Metallforschung|North C...</td>
       <td>NaN</td>
       <td>1963-01-13</td>
       <td>NaN</td>
@@ -19551,7 +19140,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/David_Carroll_(ph...</td>
       <td>16738797</td>
       <td>740253932</td>
-      <td>Clemson University \nWake Forest University</td>
+      <td>Clemson University|Wake Forest University</td>
     </tr>
     <tr>
       <th>204</th>
@@ -23323,7 +22912,7 @@ div#notebook {
     </tr>
     <tr>
       <th>361</th>
-      <td>"Molecular Dynamics Simulation of Statistical...</td>
+      <td>* "Molecular Dynamics Simulation of Statistica...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -28699,7 +28288,7 @@ div#notebook {
     </tr>
     <tr>
       <th>585</th>
-      <td>Mesoscopic superconductors and currents in no...</td>
+      <td>Single vortex dynamics in classical and high ...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29395,7 +28984,7 @@ div#notebook {
     </tr>
     <tr>
       <th>614</th>
-      <td>From a page move: This is a redirect from a pa...</td>
+      <td>*From a page move: This is a redirect from a p...</td>
       <td>NaN</td>
       <td>City College of New York|Cornell University</td>
       <td>American Institute of Physics' Science Writing...</td>
@@ -30451,7 +30040,7 @@ div#notebook {
     </tr>
     <tr>
       <th>658</th>
-      <td>built a new model of the Eötvös balance,|Louis...</td>
+      <td>*worked on a theory of the tides. Brillouin di...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39879,7 +39468,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists_dataframe</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/notable_physicists.csv&#39;</span><span class="p">,</span>
@@ -39906,7 +39495,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">repo_dir</span><span class="p">)</span>
@@ -39919,7 +39508,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --output-dir html_output --to html <span class="m">2</span>.0-process-physicists-raw-data.ipynb
@@ -39940,7 +39529,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 2.0-process-physicists-raw-data.ipynb to html
-[NbConvertApp] Writing 371545 bytes to html_output\2.0-process-physicists-raw-data.html
+[NbConvertApp] Writing 368788 bytes to html_output\2.0-process-physicists-raw-data.html
 </pre>
 </div>
 </div>
@@ -39951,7 +39540,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook <span class="m">2</span>.0-process-physicists-raw-data.ipynb
@@ -39972,7 +39561,7 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[NbConvertApp] Converting notebook 2.0-process-physicists-raw-data.ipynb to notebook
-[NbConvertApp] Writing 37192 bytes to 2.0-process-physicists-raw-data.nbconvert.ipynb
+[NbConvertApp] Writing 35382 bytes to 2.0-process-physicists-raw-data.nbconvert.ipynb
 </pre>
 </div>
 </div>

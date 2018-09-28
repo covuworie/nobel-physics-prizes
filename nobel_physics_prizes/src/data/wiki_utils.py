@@ -1,5 +1,4 @@
 import time
-from urllib import parse
 
 import numpy as np
 import progressbar
@@ -141,12 +140,8 @@ def get_redirected_titles(titles, forced_redirects=None,
                         )
                         redirected = True
 
-        # Some physicist names contain unicode characters which have been quoted
-        # when in a url. Unquote for sorting.
         if redirected:
-            redirected_titles.append(parse.unquote(redirected_title))
-        elif isinstance(titles[i], str):
-            redirected_titles.append(parse.unquote(titles[i]))
+            redirected_titles.append(redirected_title)
         else:
             redirected_titles.append(titles[i])
 
