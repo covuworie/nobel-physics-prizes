@@ -1,12 +1,20 @@
-import time
+import sys
+from concurrent.futures import as_completed
+from random import random
+from urllib import parse
 
-import numpy as np
 import progressbar
 import requests
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
+from requests_futures.sessions import FuturesSession
 
-# Blacklist links in Wikipedia List of Physicists article
+from src.data.url_utils import get_filename_from_url
+
+"""list of `str`: Blacklist of links.
+
+Blacklist links in Wikipedia `List of Physicists` article
+"""
 BLACKLIST_LINKS = [
     'Newcastle University',  # university
     # leads to the physicist at this foreign language link:
@@ -18,8 +26,11 @@ BLACKLIST_LINKS = [
     'Twersky#Twersky'  # a group of people of this name
 ]
 
-# Force the following redirects as DBpedia is not in sync with
-# Wikipedia for these names
+"""dict: Forced redirects.
+
+Force the following redirects as DBpedia is not in sync with
+Wikipedia for these names.
+"""
 FORCED_REDIRECTS = {
     'Ea Ea': 'Craige Schensted',
     'Ernest Mouchez': 'Amédée Mouchez',
@@ -37,7 +48,10 @@ FORCED_REDIRECTS = {
     'Yang Chen-Ning': 'Chen-Ning Yang'
 }
 
-# Section titles in Wikipedia List of Physicists article
+"""list of `str`: Section titles.
+
+Section titles in Wikipedia `List of Physicists` article.
+"""
 SECTION_TITLES = [
     'Ancient times',
     'Middle_Ages',
@@ -51,7 +65,19 @@ SECTION_TITLES = [
     '20th–21st century'
 ]
 
-# Wikipedia English URL
+"""str: Wikipedia English URL for old pages on Wikipedia.
+
+The URL path that all old English Wikipedia articles are contained in.
+Every article update in Wikipedia has an associated `oldid` so that the 
+version can be reovered. This is important for reproducibility.
+"""
+WIKI_OLD_URL = 'https://en.wikipedia.org/w/index.php?title='
+
+
+"""str: Wikipedia English URL.
+
+The URL path that all English Wikipedia articles are contained in.
+"""
 WIKI_URL = 'https://en.wikipedia.org/wiki/'
 
 
@@ -92,69 +118,96 @@ def get_linked_article_titles(url, section_titles, blacklist_links=None):
     return article_titles
 
 
-def get_redirected_titles(titles, forced_redirects=None,
-                          remove_duplicates=False, progress_bar=None):
+def get_redirected_titles(
+        titles, forced_redirects=None, max_workers=2, timeout=10,
+        progress_bar=None):
     """Get a list of redirected links from a list of Wikipedia articles.
+
     Args:
-        titles (list(str)): A list of titles to fetch.
-        forced_redirects (dict): A mapping of titles to force. The key is
-            the retrieved title from Wikipedia and the value is the known
-            title in DBpedia.
-        remove_duplicates (bool): If True, remove duplicates from the list.
-            False, otherwise
-        progress_bar (progressbar.ProgressBar): Progress bar.
+        titles (list of `str`): List of titles to fetch.
+        forced_redirects (dict, optional): Defaults to None. A mapping
+            of titles to force. The key is the retrieved Wikipedia title
+            and the value is its know DBpedia title.
+        max_workers (int, optional): Defaults to 2. Number of workers to
+            use in the thread pool.
+        timeout (int, optional): Defaults to 10. Maximum timeout to allow
+            for any request.
+        progress_bar (progressbar.ProgressBar, optional): Defaults to None.
+            Progress bar.
 
-    Returns:
-        list(str): List of redirected article titles.
+        Returns:
+            dict: Dictionary of redirected page titles.
 
-    """
+            The keys are the original page titles and the values are the
+            redirected titles.
 
-    redirected_titles = []
+        """
 
-    for i in range(len(titles)):
-        redirected = False
+    futures = {}
+    with FuturesSession(max_workers=max_workers) as session:
+        if progress_bar:
+            progress_bar.start()
 
-        if isinstance(titles[i], str):
-            # fetch the page
-            url = WIKI_URL + titles[i].replace(' ', '_')
-            time.sleep(1)  # delay to crawl responsibly
+        for title in titles:
+            if isinstance(title, str):
+                # fetch the page
+                url = WIKI_URL + title.replace(' ', '_')
+                future = session.get(url, timeout=timeout)
+                futures[future] = title
+
+        redirected_titles = {}
+        num_iters = 0
+        for future in as_completed(futures):
             try:
-                response = requests.get(url, timeout=10)
+                response = future.result()
                 response.raise_for_status()
             except requests.exceptions.RequestException as err:
                 print(err)
 
             # parse javascript for redirects
-            if response.status_code == requests.codes.ok:
-                REDIRECT = '"wgInternalRedirectTargetUrl":'
-                soup = BeautifulSoup(response.text, 'lxml')
-                for script_tag in soup.find_all(name='script'):
-                    script_code = script_tag.string
-                    if (isinstance(script_code, NavigableString) and
-                            REDIRECT in script_code):
-                        start = script_code.find(REDIRECT)
-                        end = script_code.find('"', start + len(REDIRECT) + 1)
-                        redirected_title = (
-                            script_code[start + len(REDIRECT) + 1:end]
-                            .replace('/wiki/', '').replace('_', ' ')
-                        )
-                        redirected = True
+            redirected_title = _parse_javascript(response)
+            title = parse.unquote(futures[future])
+            if redirected_title:
+                redirected_titles[title] = parse.unquote(redirected_title)
+            else:
+                redirected_titles[title] = title
 
-        if redirected:
-            redirected_titles.append(redirected_title)
-        else:
-            redirected_titles.append(titles[i])
+            num_iters += 1
+            if progress_bar:
+                progress_bar.update(num_iters)
 
         if progress_bar:
-            progress_bar.update(i)
+            progress_bar.finish()
 
-    # remove duplicates
-    if remove_duplicates:
-        redirected_titles = list(set(redirected_titles))
-
-    # force redirects
-    for key, value in forced_redirects.items():
-        if key in redirected_titles:
-            redirected_titles[redirected_titles.index(key)] = value
-
+    redirected_titles = _force_redirects(redirected_titles, forced_redirects)
     return redirected_titles
+
+
+def _parse_javascript(response):
+    if response.status_code == requests.codes.ok:
+        REDIRECT = '"wgInternalRedirectTargetUrl":'
+        soup = BeautifulSoup(response.text, 'lxml')
+
+        for script_tag in soup.find_all(name='script'):
+            script_code = script_tag.string
+            if (isinstance(script_code, NavigableString) and
+                    REDIRECT in script_code):
+                start = script_code.find(REDIRECT)
+                end = script_code.find(
+                    '"', start + len(REDIRECT) + 1)
+                redirected_title = (
+                    script_code[start + len(REDIRECT) + 1:end]
+                    .replace('/wiki/', '').replace('_', ' '))
+                return redirected_title
+
+    return None
+
+
+def _force_redirects(redirected_titles, forced_redirects):
+    redirects = redirected_titles.copy()
+
+    for key, value in redirected_titles.items():
+        if value in forced_redirects:
+            redirects[key] = forced_redirects[value]
+
+    return redirects

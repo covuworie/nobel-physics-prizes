@@ -1,10 +1,12 @@
 import time
+from concurrent.futures import as_completed
 from random import random
 from urllib import parse
 
 import pandas as pd
 import progressbar
 import requests
+from requests_futures.sessions import FuturesSession
 
 DBPEDIA_RESOURCE_URL = 'http://dbpedia.org/resource/'
 """str: DBpedia resource URL.
@@ -21,8 +23,8 @@ These do not redirect.
 """
 
 
-def get_redirect_urls(urls_to_check, url_cache_path=None, max_retries=3,
-                      max_backoff=32, timeout=10, progress_bar=None):
+def get_redirect_urls(urls_to_check, url_cache_path=None, max_workers=2,
+                      timeout=10, progress_bar=None):
     """Get redirect urls using a `requests` head request.
 
     If a `url_cache_path` is provided and a URL in the `urls_to_check` is
@@ -34,10 +36,8 @@ def get_redirect_urls(urls_to_check, url_cache_path=None, max_retries=3,
         urls_to_check (list of `str`): List of urls to request.
         url_cache_path (str, optional): Defaults to None. Path of the csv file
             where the URL cache of known mappings is located.
-        max_retries (int, optional): Defaults to 3. Maximum number of retries
-            for failed request.
-        max_backoff (int, optional): Defaults to 32. Maximum backoff in seconds
-            to allow.
+        max_workers (int, optional): Defaults to 2. Number of workers to
+            use in the thread pool.
         timeout (int, optional): Defaults to 10. Maximum timeout to allow for
             any request.
         progress_bar (progressbar.ProgressBar, optional): Defaults to None.
@@ -51,106 +51,98 @@ def get_redirect_urls(urls_to_check, url_cache_path=None, max_retries=3,
 
     """
 
+    urls = urls_to_check.copy()
     redirect_urls = {}
-    if url_cache_path and isinstance(url_cache_path, str):
-        try:
-            cache = pd.read_csv(url_cache_path)
-            redirect_urls = dict(zip(cache.url, cache.redirect_url))
-        except FileNotFoundError:
-            pass
+    if url_cache_path:
+        cache = pd.read_csv(url_cache_path)
+        redirect_urls = dict(zip(cache.url, cache.redirect_url))
+        redirect_urls_quoted = [quote_url(url) for url in redirect_urls.keys()]
+        urls = list(set(urls_to_check) - set(redirect_urls_quoted))
 
-    with requests.Session() as session:
+    futures = {}
+    with FuturesSession(max_workers=max_workers) as session:
         if progress_bar:
             progress_bar.start()
 
-        for i in range(len(urls_to_check)):
-            url = urls_to_check[i]
+        for url in urls:
+            future = session.head(url, timeout=timeout, allow_redirects=True)
+            futures[future] = url
 
-            if url in redirect_urls:
-                continue
+        num_iters = 0
+        for future in as_completed(futures):
+            try:
+                response = future.result()
+                response.raise_for_status()
+                if response.status_code == requests.codes.ok:
+                    url = parse.unquote(futures[future])
+                    redirect_urls[url] = parse.unquote(response.url)
+            except requests.exceptions.RequestException as err:
+                print(err)
 
-            tries = 0
-            while tries < max_retries:
-                try:
-                    response = session.head(
-                        url, timeout=timeout, allow_redirects=True)
-                    response.raise_for_status()
-                    if response.status_code == requests.codes.ok:
-                        redirect_urls[parse.unquote(
-                            url)] = parse.unquote(response.url)
-                        break
-                except requests.exceptions.RequestException as err:
-                    print(err)
-                    if response.status_code == requests.codes.not_found:
-                        break
-                    if response.status_code == requests.codes.bad_request:
-                        break
-                    if response.status_code == requests.codes.too_many_requests:
-                        # exponential backoff to crawl responsibly
-                        time.sleep(min(2**tries + random(), max_backoff))
-                tries += 1
-
+            num_iters += 1
             if progress_bar:
-                progress_bar.update(i)
+                progress_bar.update(num_iters)
+
         if progress_bar:
             progress_bar.finish()
 
     return redirect_urls
 
 
-def fetch_json_data(urls_to_fetch, max_retries=3, max_backoff=32,
-                    timeout=10, progress_bar=None):
+def fetch_json_data(urls_to_fetch, max_workers=2, timeout=10,
+                    progress_bar=None):
     """Fetch JSON data from a list of URLs.
 
     Args:
         urls_to_fetch (list of `str`): List of URLs to request.
-        max_retries (int, optional): Defaults to 3. Maximum number of retries
-            for failed request.
-        max_backoff (int, optional): Defaults to 32. Maximum backoff in seconds
-            to allow.
+        max_workers (int, optional): Defaults to 2. Number of workers to
+            use in the thread pool.
         timeout (int, optional): Defaults to 10. Maximum timeout to allow for
             any request.
         progress_bar (progressbar.ProgressBar, optional): Defaults to None.
             Progress bar.
 
     Returns:
-        list of `dict`: List of JSON dictionaries.
+        dict: A dictionary of JSON data.
+
+        The key is the URL for the JSON data and the second value is the JSON
+        dict.
+
     """
 
-    json_data = []
-
-    with requests.Session() as session:
+    futures = {}
+    with FuturesSession(max_workers=max_workers) as session:
         if progress_bar:
             progress_bar.start()
 
-        for i in range(len(urls_to_fetch)):
-            url = urls_to_fetch[i]
+        for url in urls_to_fetch:
+            future = session.get(url, timeout=timeout,
+                                 background_callback=_parse_json)
+            futures[future] = url
 
-            tries = 0
-            while tries < max_retries:
-                try:
-                    response = session.get(url, timeout=timeout)
-                    response.raise_for_status()
-                    if response.status_code == requests.codes.ok:
-                        json_data.append(response.json())
-                        break
-                except requests.exceptions.RequestException as err:
-                    print(err)
-                    if response.status_code == requests.codes.not_found:
-                        break
-                    if response.status_code == requests.codes.bad_request:
-                        break
-                    if response.status_code == requests.codes.too_many_requests:
-                        # exponential backoff to crawl responsibly
-                        time.sleep(min(2**tries + random(), max_backoff))
-                tries += 1
+        data = {}
+        num_iters = 0
+        for future in as_completed(futures):
+            try:
+                response = future.result()
+                response.raise_for_status()
+                data[futures[future]] = response.data
+            except requests.exceptions.RequestException as err:
+                print(err)
 
+            num_iters += 1
             if progress_bar:
-                progress_bar.update(i)
+                progress_bar.update(num_iters)
+
         if progress_bar:
             progress_bar.finish()
 
-    return json_data
+    return data
+
+
+def _parse_json(session, response):
+    if response.status_code == requests.codes.ok:
+        response.data = response.json()
 
 
 def urls_progress_bar(num_urls_to_check, banner_text='Fetching: ', marker='█'):
@@ -188,7 +180,7 @@ def quote_url(url):
         url (str): URL.
 
     Returns:
-        str: Quoted URL. 
+        str: Quoted URL.
 
     """
 
@@ -197,6 +189,24 @@ def quote_url(url):
     filename = parse.quote(filename)
     quoted_url = pathname + filename
     return quoted_url
+
+
+def unquote_url(url):
+    """Unquote a url.
+
+    Args:
+        url (str): URL.
+
+    Returns:
+        str: Unquoted URL.
+
+    """
+
+    pathname = get_pathname_from_url(url)
+    filename = get_filename_from_url(url)
+    filename = parse.unquote(filename)
+    unquoted_url = pathname + filename
+    return unquoted_url
 
 
 def get_pathname_from_url(url):

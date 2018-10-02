@@ -13117,7 +13117,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Collect-Physicists-Raw-Data">Collect Physicists Raw Data<a class="anchor-link" href="#Collect-Physicists-Raw-Data">&#182;</a></h1><p>Here I collect biographical data on the list of <a href="../data/raw/physicists.txt">physicists notable for their achievements</a>. Wikipedia contains this structured data in an <em>Infobox</em> on the top right side of the article for each physicist. However, similar data is available in a more machine readable, <em>JSON</em> format from <a href="https://wiki.dbpedia.org/about">DBpedia</a>. For an example, compare <a href="https://en.wikipedia.org/wiki/Albert_Einstein">Albert Einstein's Wikipedia infobox</a> to <a href="http://dbpedia.org/data/Albert_Einstein.json">Albert Einstein's DBPedia JSON</a>. It is important to note that the data is similar but not identical.</p>
-<p>The shortcomings of Wikipedia infoboxes and the advantages of DBpedia datasets are explained in [DBpedia datasets (section 4.3)]. (<a href="https://wiki.dbpedia.org/services-resources/datasets/dbpedia-datasets">https://wiki.dbpedia.org/services-resources/datasets/dbpedia-datasets</a>). But basically the DBpedia data is much cleaner and better structured Wikipedia Infoboxes since it is based on hand-generated mappings of Wikipedia infoboxes/templates to a <a href="https://wiki.dbpedia.org/services-resources/ontology">DBpedia ontology</a>. As a result I choose DBpedia as the data source for this project.</p>
+<p>The shortcomings of Wikipedia infoboxes and the advantages of DBpedia datasets are explained in <a href="https://wiki.dbpedia.org/services-resources/datasets/dbpedia-datasets">DBpedia datasets (section 4.3)</a>. But basically the DBpedia data is much cleaner and better structured Wikipedia Infoboxes since it is based on hand-generated mappings of Wikipedia infoboxes/templates to a <a href="https://wiki.dbpedia.org/services-resources/ontology">DBpedia ontology</a>. As a result I choose DBpedia as the data source for this project.</p>
 <p>However, dBpedia does have the disadvantage that its content is roughly 6-18 months behind updates applied to Wikipedia content. This is because its data is generated from a <a href="https://wiki.dbpedia.org/online-access/DBpediaLive">static dump of Wikipedia content</a> in a process that takes approximately 6 months. The fact that the data is not in sync with the latest Wikipedia content is not so significant for this project as the data is edited infrequently and when it is there are only minor changes.</p>
 <p>I will need to send HTTP requests to DBpedia to get the biographical JSON data on each of the physicists.</p>
 
@@ -13127,9 +13127,10 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setting-up-the-Environment">Setting up the Environment<a class="anchor-link" href="#Setting-up-the-Environment">&#182;</a></h2><p>An initialization step is needed to setup the environment:</p>
+<h2 id="Setting-the-Environment">Setting the Environment<a class="anchor-link" href="#Setting-the-Environment">&#182;</a></h2><p>A few initialization steps are needed to setup the environment:</p>
 <ul>
 <li>The top-level module directory of the repository needs to be added to the system path to enable the loading of python modules.</li>
+<li>The locale needs to be set for all categories to the user’s default setting (typically specified in the LANG environment variable) to enable correct sorting of physicists names with accents.</li>
 </ul>
 
 </div>
@@ -13140,14 +13141,37 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="n">repo_dir</span> <span class="o">=</span> <span class="s1">&#39;../&#39;</span>
 <span class="k">if</span> <span class="n">repo_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo_dir</span><span class="p">)</span>
+    
+<span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[1]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;English_United States.1252&#39;</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13168,16 +13192,13 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gzip</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 
 <span class="kn">import</span> <span class="nn">jsonlines</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">progressbar</span> <span class="k">as</span> <span class="nn">pb</span>
-<span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">DBPEDIA_DATA_URL</span>
 <span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">fetch_json_data</span>
-<span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">quote_url</span>
 <span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">urls_progress_bar</span>
 </pre></div>
 
@@ -13242,8 +13263,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_data</span> <span class="o">=</span> <span class="n">fetch_json_data</span><span class="p">(</span>
-    <span class="n">urls_to_fetch</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_fetch</span><span class="p">)))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_data</span> <span class="o">=</span> <span class="n">fetch_json_data</span><span class="p">(</span><span class="n">urls_to_fetch</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                            <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_fetch</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -13260,7 +13281,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 1060 / 1060 urls |████████| 100% Elapsed Time: 0:04:23 Time:  0:04:23
+<pre>Fetching: 1060 / 1060 urls |████████| 100% Elapsed Time: 0:00:19 Time:  0:00:19
 </pre>
 </div>
 </div>
@@ -13272,7 +13293,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's confirm that all the data was fetched and take a look at the first JSON response.</p>
+<p>Let's sort the data alphabetically by URL, confirm that all the data was fetched and take a look at the first JSON response.</p>
 
 </div>
 </div>
@@ -13282,8 +13303,11 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1060</span><span class="p">)</span>
-<span class="n">json_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_data</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+                               <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1060</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13296,75 +13320,82 @@ div#notebook {
 
 <div class="output_area">
 
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>http://dbpedia.org/data/A._P._Balachandran.json
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
     <div class="prompt output_prompt">Out[6]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;http://dbpedia.org/resource/Aiyalam_Parameswaran_Balachandran&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+<pre>{&#39;http://dbpedia.org/resource/Pierre_Ramond&#39;: {&#39;http://dbpedia.org/ontology/doctoralAdvisor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
- &#39;http://dbpedia.org/resource/Balachandran&#39;: {&#39;http://dbpedia.org/ontology/wikiPageDisambiguates&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
- &#39;http://dbpedia.org/resource/Alladi_Ramakrishnan&#39;: {&#39;http://dbpedia.org/ontology/doctoralStudent&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+ &#39;http://dbpedia.org/resource/Aiyalam_Parameswaran_Balachandran&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
  &#39;http://en.wikipedia.org/wiki/A._P._Balachandran&#39;: {&#39;http://xmlns.com/foaf/0.1/primaryTopic&#39;: [{&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
- &#39;http://dbpedia.org/resource/Pierre_Ramond&#39;: {&#39;http://dbpedia.org/ontology/doctoralAdvisor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
  &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;: {&#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://www.w3.org/2002/07/owl#Thing&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q5&#39;},
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Peer109626238&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Colleague109935990&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q901&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatMadrasChristianCollegeAlumni&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Physicist110428004&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/PhysicalEntity100001930&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoLegalActor&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoLegalActorGeo&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Person100007846&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Object100002684&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson&#39;},
    {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://xmlns.com/foaf/0.1/Person&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Organism100004475&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Person&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q215627&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q24229398&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatLivingPeople&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Agent&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Scholar110557854&#39;},
    {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Whole100003553&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/class/yago/LivingThing100004258&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatTheoreticalPhysicists&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatLivingPeople&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/class/yago/CausalAgent100007347&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Intellectual109621545&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Scientist&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Alumnus109786338&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Agent&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatMadrasChristianCollegeAlumni&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatIndianPhysicists&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Scholar110557854&#39;},
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatTheoreticalPhysicists&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q5&#39;},
    {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://schema.org/Person&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Scientist110560637&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoLegalActor&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoLegalActorGeo&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatFellowsOfTheAmericanPhysicalSociety&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Person100007846&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Object100002684&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/PhysicalEntity100001930&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q901&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Peer109626238&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q24229398&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Colleague109935990&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Associate109816771&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q215627&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Agent&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Scientist&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Organism100004475&#39;},
    {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://umbel.org/umbel/rc/Scientist&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Person&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.w3.org/2002/07/owl#Thing&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Scientist110560637&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Alumnus109786338&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Intellectual109621545&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatAmericanPhysicists&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Physicist110428004&#39;}],
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatFellowsOfTheAmericanPhysicalSociety&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatIndianPhysicists&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Agent&#39;}],
   &#39;http://www.w3.org/2000/01/rdf-schema#label&#39;: [{&#39;type&#39;: &#39;literal&#39;,
     &#39;value&#39;: &#39;A. P. Balachandran&#39;,
     &#39;lang&#39;: &#39;en&#39;}],
@@ -13372,30 +13403,30 @@ div#notebook {
     &#39;value&#39;: &#34;Aiyalam Parameswaran Balachandran (Malayalam: ഐയ്ലം പരമേശ്വരന്\u200d ബാലചന്ദ്രന്\u200d; born January 25, 1938) is an Indian theoretical physicist well known for his extensive contributions to the role of classical topology in quantum physics. He has been the Joel Dorman Steele Professor of Physics in Syracuse University since 2000. He has also been a Fellow of the American Physical Society and awarded a prize by the U.S. Chapter of the Indian Physics Association in recognition of his outstanding scientific contributions. In 1990, Syracuse University honored him with a Chancellor&#39;s Citation for Exceptional Academic Achievement, and in 1991 he was qualified for the university&#39;s William Wasserstrom Prize for Outstanding Graduate Teaching.&#34;,
     &#39;lang&#39;: &#39;en&#39;}],
   &#39;http://www.w3.org/2002/07/owl#sameAs&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://wikidata.dbpedia.org/resource/Q4648223&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://rdf.freebase.com/ns/m.03mdp78&#39;},
+    &#39;value&#39;: &#39;http://rdf.freebase.com/ns/m.03mdp78&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q4648223&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://yago-knowledge.org/resource/A._P._Balachandran&#39;},
    {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q4648223&#39;}],
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://wikidata.dbpedia.org/resource/Q4648223&#39;}],
   &#39;http://purl.org/dc/terms/subject&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Fellows_of_the_American_Physical_Society&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Theoretical_physicists&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Madras_Christian_College_alumni&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:1938_births&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Syracuse_University_faculty&#39;},
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Fellows_of_the_American_Physical_Society&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:University_of_Madras_alumni&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Living_people&#39;},
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Syracuse_University_faculty&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:1938_births&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Madras_Christian_College_alumni&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:American_physicists&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Indian_physicists&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:American_physicists&#39;}],
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Living_people&#39;}],
   &#39;http://xmlns.com/foaf/0.1/name&#39;: [{&#39;type&#39;: &#39;literal&#39;,
     &#39;value&#39;: &#39;A. P. Balachandran&#39;,
     &#39;lang&#39;: &#39;en&#39;}],
@@ -13412,59 +13443,64 @@ div#notebook {
     &#39;lang&#39;: &#39;en&#39;}],
   &#39;http://xmlns.com/foaf/0.1/isPrimaryTopicOf&#39;: [{&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://en.wikipedia.org/wiki/A._P._Balachandran&#39;}],
-  &#39;http://dbpedia.org/ontology/field&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Physicist&#39;}],
-  &#39;http://dbpedia.org/ontology/doctoralAdvisor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Alladi_Ramakrishnan&#39;}],
+  &#39;http://dbpedia.org/ontology/almaMater&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Madras&#39;}],
   &#39;http://www.w3.org/ns/prov#wasDerivedFrom&#39;: [{&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://en.wikipedia.org/wiki/A._P._Balachandran?oldid=744689666&#39;}],
-  &#39;http://dbpedia.org/ontology/knownFor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Noncommutative_geometry&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Topology&#39;}],
-  &#39;http://dbpedia.org/ontology/doctoralStudent&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Pierre_Ramond&#39;}],
   &#39;http://dbpedia.org/ontology/wikiPageExternalLink&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://www.imsc.res.in/xmlui/handle/123456789/20&#39;},
+    &#39;value&#39;: &#39;https://web.archive.org/web/20080119012831/http:/physics.syr.edu:80/~bal/&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://inspirehep.net/search?p=author%3AA.P.Balachandran.1+&#39;},
    {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;https://web.archive.org/web/20080119012831/http:/physics.syr.edu:80/~bal/&#39;}],
+    &#39;value&#39;: &#39;http://www.imsc.res.in/xmlui/handle/123456789/20&#39;}],
+  &#39;http://dbpedia.org/property/imageSize&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: 250,
+    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
+  &#39;http://dbpedia.org/ontology/residence&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/India&#39;}],
+  &#39;http://dbpedia.org/ontology/knownFor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Topology&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Noncommutative_geometry&#39;}],
+  &#39;http://dbpedia.org/property/citizenship&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;Indian&#39;,
+    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
   &#39;http://dbpedia.org/ontology/abstract&#39;: [{&#39;type&#39;: &#39;literal&#39;,
     &#39;value&#39;: &#34;Aiyalam Parameswaran Balachandran (Malayalam: ഐയ്ലം പരമേശ്വരന്\u200d ബാലചന്ദ്രന്\u200d; born January 25, 1938) is an Indian theoretical physicist well known for his extensive contributions to the role of classical topology in quantum physics. He has been the Joel Dorman Steele Professor of Physics in Syracuse University since 2000. He has also been a Fellow of the American Physical Society and awarded a prize by the U.S. Chapter of the Indian Physics Association in recognition of his outstanding scientific contributions. In 1990, Syracuse University honored him with a Chancellor&#39;s Citation for Exceptional Academic Achievement, and in 1991 he was qualified for the university&#39;s William Wasserstrom Prize for Outstanding Graduate Teaching. Prof. Balachandran&#39;s key scientific works to date include the revival of the Skyrme model which successfully describes baryons as topological solitons of meson fields and extensive applications and popularisation of mathematical concepts such as homotopy groups and fibre bundles to problems in quantum physics. Lately Prof. Balachandran&#39;s research has been focused on the formulation of quantum field theories on noncommutative spacetimes and investigating the emergent significance of Hopf algebras in quantum physics as generalisations of symmetry groups.&#34;,
     &#39;lang&#39;: &#39;en&#39;}],
   &#39;http://dbpedia.org/ontology/thumbnail&#39;: [{&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://commons.wikimedia.org/wiki/Special:FilePath/A._P._Balachandran.jpg?width=300&#39;}],
   &#39;http://dbpedia.org/ontology/birthDate&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;1938-1-25&#39;,
+    &#39;value&#39;: &#39;1938-01-25&#39;,
     &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#date&#39;},
    {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;1938-01-25&#39;,
+    &#39;value&#39;: &#39;1938-1-25&#39;,
     &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#date&#39;}],
   &#39;http://dbpedia.org/ontology/wikiPageRevisionID&#39;: [{&#39;type&#39;: &#39;literal&#39;,
     &#39;value&#39;: 744689666,
     &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
   &#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/British_India&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Salem,_Tamil_Nadu&#39;}],
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Salem,_Tamil_Nadu&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/British_India&#39;}],
   &#39;http://dbpedia.org/ontology/wikiPageID&#39;: [{&#39;type&#39;: &#39;literal&#39;,
     &#39;value&#39;: 15542924,
     &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
   &#39;http://dbpedia.org/property/wordnet_type&#39;: [{&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://www.w3.org/2006/03/wn/wn20/instances/synset-scientist-noun-1&#39;}],
-  &#39;http://dbpedia.org/ontology/almaMater&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Madras&#39;}],
-  &#39;http://dbpedia.org/ontology/residence&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/India&#39;}],
-  &#39;http://dbpedia.org/property/citizenship&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Indian&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/property/imageSize&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 250,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
+  &#39;http://dbpedia.org/ontology/doctoralStudent&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Pierre_Ramond&#39;}],
+  &#39;http://dbpedia.org/ontology/doctoralAdvisor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Alladi_Ramakrishnan&#39;}],
   &#39;http://purl.org/linguistics/gold/hypernym&#39;: [{&#39;type&#39;: &#39;uri&#39;,
     &#39;value&#39;: &#39;http://dbpedia.org/resource/Physicist&#39;}],
   &#39;http://dbpedia.org/property/workInstitution&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Syracuse_University&#39;}]}}</pre>
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Syracuse_University&#39;}],
+  &#39;http://dbpedia.org/ontology/field&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Physicist&#39;}]},
+ &#39;http://dbpedia.org/resource/Alladi_Ramakrishnan&#39;: {&#39;http://dbpedia.org/ontology/doctoralStudent&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
+ &#39;http://dbpedia.org/resource/Balachandran&#39;: {&#39;http://dbpedia.org/ontology/wikiPageDisambiguates&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]}}</pre>
 </div>
 
 </div>
@@ -13483,14 +13519,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dropped_urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">urls_to_fetch</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="p">]</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dropped_urls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dropped_urls</span><span class="p">))</span>
-<span class="n">dropped_urls</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls_to_drop</span> <span class="o">=</span> <span class="p">[</span><span class="n">url</span> <span class="k">for</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="ow">in</span> <span class="n">json_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">]</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_drop</span><span class="p">)</span> <span class="o">==</span> <span class="mi">11</span><span class="p">)</span>
+<span class="n">urls_to_drop</span>
 </pre></div>
 
     </div>
@@ -13503,24 +13538,14 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>10
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>[&#39;http://dbpedia.org/data/Alan_Schoen.json&#39;,
+ &#39;http://dbpedia.org/data/Céline_Bœhm.json&#39;,
  &#39;http://dbpedia.org/data/Daya_Shankar_Kulshreshtha.json&#39;,
  &#39;http://dbpedia.org/data/Harald_J._W._Mueller-Kirsten.json&#39;,
  &#39;http://dbpedia.org/data/Jeff_Forshaw.json&#39;,
@@ -13534,6 +13559,20 @@ div#notebook {
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">json_data</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">data</span><span class="p">]</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1049</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -13553,7 +13592,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">jsonl_file</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/notable_physicists.jsonl&#39;</span>
 <span class="k">with</span> <span class="n">jsonlines</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">write_all</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">json_data</span><span class="p">))</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">write_all</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13578,7 +13617,7 @@ div#notebook {
 <span class="k">with</span> <span class="n">jsonlines</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">json_line</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
         <span class="n">json_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json_line</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1050</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1049</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13605,82 +13644,6 @@ div#notebook {
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Cleaning-Up">Cleaning Up<a class="anchor-link" href="#Cleaning-Up">&#182;</a></h2><p>A few clean up steps are needed:</p>
-<ul>
-<li>Convert the notebook to a HTML file with all the output.</li>
-<li>Convert the notebook to another notebook with the output removed.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --output-dir html_output --to html <span class="m">1</span>.1-collect-physicists-raw-data.ipynb
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>[NbConvertApp] Converting notebook 1.1-collect-physicists-raw-data.ipynb to html
-[NbConvertApp] Writing 292105 bytes to html_output\1.1-collect-physicists-raw-data.html
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook <span class="m">1</span>.1-collect-physicists-raw-data.ipynb
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>[NbConvertApp] Converting notebook 1.1-collect-physicists-raw-data.ipynb to notebook
-[NbConvertApp] Writing 8979 bytes to 1.1-collect-physicists-raw-data.nbconvert.ipynb
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 

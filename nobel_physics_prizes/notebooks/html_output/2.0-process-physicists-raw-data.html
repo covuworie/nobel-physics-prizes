@@ -13449,13 +13449,6 @@ div#notebook {
                         <span class="k">continue</span>
                 <span class="n">val_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-            <span class="c1"># split such a string into a list of values</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">val_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span>
-                    <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-                <span class="n">val_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">val_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">* &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">))</span>
-                <span class="n">val_list</span> <span class="o">=</span> <span class="n">val_list</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">val_list</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">dict_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dict_</span><span class="p">:</span>
@@ -13860,9 +13853,30 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls_to_check</span> <span class="o">=</span> <span class="n">contruct_urls</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[9]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10622</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13874,8 +13888,8 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">url_cache_path</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/dbpedia-redirects.csv&#39;</span>
 <span class="n">redirects</span> <span class="o">=</span> <span class="n">get_redirect_urls</span><span class="p">(</span>
-    <span class="n">urls_to_check</span><span class="p">,</span> <span class="n">url_cache_path</span><span class="o">=</span><span class="n">url_cache_path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)))</span>
+    <span class="n">urls_to_check</span><span class="p">,</span> <span class="n">url_cache_path</span><span class="o">=</span><span class="n">url_cache_path</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -13913,7 +13927,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 10630 / 10630 urls |██████| 100% Elapsed Time: 0:42:05 Time:  0:42:05
+<pre>Fetching: 10622 / 10622 urls |██████| 100% Elapsed Time: 0:00:01 Time:  0:00:01
 </pre>
 </div>
 </div>
@@ -13927,7 +13941,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">redirects</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">redirects</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13946,7 +13960,7 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>10629</pre>
+<pre>1</pre>
 </div>
 
 </div>
@@ -14184,7 +14198,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists_dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists_dataframe</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1050</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists_dataframe</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1049</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">option_context</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">1100</span><span class="p">):</span>
     <span class="n">display</span><span class="p">(</span><span class="n">physicists_dataframe</span><span class="p">)</span>
 </pre></div>
@@ -19122,7 +19136,7 @@ div#notebook {
       <th>203</th>
       <td>David Carroll (born January 13, 1963) is a U.S...</td>
       <td>NaN</td>
-      <td>Max-Planck-Insitut für Metallforschung|North C...</td>
+      <td>North Carolina State University \nWesleyan Uni...</td>
       <td>NaN</td>
       <td>1963-01-13</td>
       <td>NaN</td>
@@ -19140,7 +19154,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/David_Carroll_(ph...</td>
       <td>16738797</td>
       <td>740253932</td>
-      <td>Clemson University|Wake Forest University</td>
+      <td>Clemson University \nWake Forest University</td>
     </tr>
     <tr>
       <th>204</th>
@@ -21184,7 +21198,7 @@ div#notebook {
     </tr>
     <tr>
       <th>289</th>
-      <td>atomic vapor laser isotope separation,| laser...</td>
+      <td>Francisco Javier "Frank" Duarte (born c. 1954)...</td>
       <td>John Clive Ward|Ronald Ernest Aitchison</td>
       <td>Macquarie University</td>
       <td>NaN</td>
@@ -22912,7 +22926,7 @@ div#notebook {
     </tr>
     <tr>
       <th>361</th>
-      <td>* "Molecular Dynamics Simulation of Statistica...</td>
+      <td>Giovanni Ciccotti (born 1943, in Rome Italy) i...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -28288,7 +28302,7 @@ div#notebook {
     </tr>
     <tr>
       <th>585</th>
-      <td>Single vortex dynamics in classical and high ...</td>
+      <td>Kathryn Ann Moler is an American physicist. Sh...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -28984,7 +28998,7 @@ div#notebook {
     </tr>
     <tr>
       <th>614</th>
-      <td>*From a page move: This is a redirect from a p...</td>
+      <td>Leonard Susskind (born 1940) is the professor ...</td>
       <td>NaN</td>
       <td>City College of New York|Cornell University</td>
       <td>American Institute of Physics' Science Writing...</td>
@@ -29464,7 +29478,7 @@ div#notebook {
     </tr>
     <tr>
       <th>634</th>
-      <td>De l'influence des Moeurs sur les Lois, et de...</td>
+      <td>Louis Rendu (December 9, 1789 in Meyrin – Augu...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29536,30 +29550,6 @@ div#notebook {
     </tr>
     <tr>
       <th>637</th>
-      <td>Luboš Motl (born December 5, 1973) is a Czech ...</td>
-      <td>NaN</td>
-      <td>Charles University|Rutgers University</td>
-      <td>NaN</td>
-      <td>1973-12-05</td>
-      <td>NaN</td>
-      <td>Czechoslovakia|Plzeň</td>
-      <td>1973 births|Charles University in Prague alumn...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>Motl</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>http://en.wikipedia.org/wiki/Special:FilePath/...</td>
-      <td>http://en.wikipedia.org/wiki/Luboš_Motl?oldid=...</td>
-      <td>12999995</td>
-      <td>725125072</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>638</th>
       <td>Luciano Maiani (born 16 July 1941 in Rome) is ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29583,7 +29573,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>639</th>
+      <th>638</th>
       <td>Titus Lucretius Carus (/ˈtaɪtəs lʊˈkriːʃəs/; c...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29607,7 +29597,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>640</th>
+      <th>639</th>
       <td>Ludvig Dmitrievich Faddeev (also Ludwig Dmitri...</td>
       <td>NaN</td>
       <td>Saint Petersburg State University</td>
@@ -29631,7 +29621,7 @@ div#notebook {
       <td>Steklov Institute of Mathematics</td>
     </tr>
     <tr>
-      <th>641</th>
+      <th>640</th>
       <td>Ludvig Valentin Lorenz (January 18, 1829 – Jun...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29655,7 +29645,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>642</th>
+      <th>641</th>
       <td>Ludwig Eduard Boltzmann (February 20, 1844 – S...</td>
       <td>NaN</td>
       <td>University of Vienna</td>
@@ -29679,7 +29669,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>643</th>
+      <th>642</th>
       <td>Ludwig Prandtl (4 February 1875 – 15 August 19...</td>
       <td>NaN</td>
       <td>RWTH Aachen University|Technical University of...</td>
@@ -29703,7 +29693,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>644</th>
+      <th>643</th>
       <td>Ludwig Waldmann (June 8, 1913 in Fürth – Febru...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29727,7 +29717,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>645</th>
+      <th>644</th>
       <td>Ludwig Louis Albert Zehnder (4 May 1854 in Ill...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29751,7 +29741,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>646</th>
+      <th>645</th>
       <td>Ludwik Silberstein (1872 – 1948) was a Polish-...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29775,7 +29765,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>647</th>
+      <th>646</th>
       <td>Luigi Aloisio Galvani (Latin: Aloysius Galvanu...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29799,7 +29789,7 @@ div#notebook {
       <td>University of Bologna</td>
     </tr>
     <tr>
-      <th>648</th>
+      <th>647</th>
       <td>Luigi Puccianti (11 June 1875 – 9 June 1952) w...</td>
       <td>NaN</td>
       <td>University of Pisa</td>
@@ -29823,7 +29813,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>649</th>
+      <th>648</th>
       <td>Luis Walter Alvarez (June 13, 1911 – September...</td>
       <td>NaN</td>
       <td>University of Chicago</td>
@@ -29847,7 +29837,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>650</th>
+      <th>649</th>
       <td>Mambillikalathil Govind Kumar Menon, FRS (born...</td>
       <td>NaN</td>
       <td>University of Bristol|University of Mumbai</td>
@@ -29871,7 +29861,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>651</th>
+      <th>650</th>
       <td>Macedonio Melloni (11 April 1798 – 11 August 1...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29895,7 +29885,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>652</th>
+      <th>651</th>
       <td>Mahmoud Hessabi (Persian: سید محمود حسابی‎‎, F...</td>
       <td>NaN</td>
       <td>American University of Beirut|Supélec|Universi...</td>
@@ -29919,7 +29909,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>653</th>
+      <th>652</th>
       <td>Makoto Kobayashi (小林 誠 Kobayashi Makoto) (born...</td>
       <td>NaN</td>
       <td>Nagoya University</td>
@@ -29943,7 +29933,7 @@ div#notebook {
       <td>KEK|Kyoto University</td>
     </tr>
     <tr>
-      <th>654</th>
+      <th>653</th>
       <td>Manfred Eigen (born May 9, 1927) is a German b...</td>
       <td>NaN</td>
       <td>University of Göttingen</td>
@@ -29967,7 +29957,7 @@ div#notebook {
       <td>Braunschweig University of Technology|Max Plan...</td>
     </tr>
     <tr>
-      <th>655</th>
+      <th>654</th>
       <td>Manfred von Ardenne (20 January 1907 – 26 May ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29991,7 +29981,7 @@ div#notebook {
       <td>Dresden University of Technology|Soviet atomic...</td>
     </tr>
     <tr>
-      <th>656</th>
+      <th>655</th>
       <td>Mani Lal Bhaumik is an Indian-born American ph...</td>
       <td>Satyendra Nath Bose</td>
       <td>Indian Institute of Technology Kharagpur|Unive...</td>
@@ -30015,7 +30005,7 @@ div#notebook {
       <td>California State University, Long Beach|Univer...</td>
     </tr>
     <tr>
-      <th>657</th>
+      <th>656</th>
       <td>Karl Manne Georg Siegbahn ForMemRS (3 December...</td>
       <td>NaN</td>
       <td>Lund University</td>
@@ -30039,8 +30029,8 @@ div#notebook {
       <td>Lund University|University of Stockholm|Uppsal...</td>
     </tr>
     <tr>
-      <th>658</th>
-      <td>*worked on a theory of the tides. Brillouin di...</td>
+      <th>657</th>
+      <td>Louis Marcel Brillouin (French: [bʁilwɛ̃]; 19 ...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30063,7 +30053,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>659</th>
+      <th>658</th>
       <td>Marcela Carena (born 22 March 22, 1962 in Buen...</td>
       <td>NaN</td>
       <td>University of Hamburg</td>
@@ -30087,7 +30077,7 @@ div#notebook {
       <td>Enrico Fermi Institute|Fermilab|University of ...</td>
     </tr>
     <tr>
-      <th>660</th>
+      <th>659</th>
       <td>Márcia Cristina Bernardes Barbosa is a Brazili...</td>
       <td>NaN</td>
       <td>Federal University of Rio Grande do Sul</td>
@@ -30111,7 +30101,7 @@ div#notebook {
       <td>UFRGS Physics Institute</td>
     </tr>
     <tr>
-      <th>661</th>
+      <th>660</th>
       <td>Margrete Heiberg Bose (1865–1952) was an Argen...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30135,7 +30125,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>662</th>
+      <th>661</th>
       <td>Maria Goeppert Mayer (June 28, 1906 – February...</td>
       <td>NaN</td>
       <td>University of Göttingen</td>
@@ -30159,7 +30149,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>663</th>
+      <th>662</th>
       <td>Maria Spiropulu (Greek: Μαρία Σπυροπούλου) is ...</td>
       <td>NaN</td>
       <td>Harvard University</td>
@@ -30183,7 +30173,7 @@ div#notebook {
       <td>California Institute of Technology</td>
     </tr>
     <tr>
-      <th>664</th>
+      <th>663</th>
       <td>Marian von Smoluchowski (Polish: [ˈmarjan smɔl...</td>
       <td>NaN</td>
       <td>University of Vienna</td>
@@ -30207,7 +30197,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>665</th>
+      <th>664</th>
       <td>Marie Alfred Cornu (March 6, 1841 – April 12, ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30231,7 +30221,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>666</th>
+      <th>665</th>
       <td>Marie Skłodowska Curie (/ˈkjʊri, kjʊˈriː/; Fre...</td>
       <td>NaN</td>
       <td>ESPCI ParisTech</td>
@@ -30241,7 +30231,7 @@ div#notebook {
       <td>Congress Poland|Russian Empire|Warsaw</td>
       <td>1867 births|1934 deaths|19th-century physicist...</td>
       <td>Ève Curie|Irène Joliot-Curie</td>
-      <td>France|Poland</td>
+      <td>Poland * France</td>
       <td>...</td>
       <td>Curie</td>
       <td>NaN</td>
@@ -30252,10 +30242,10 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Marie_Curie?oldid...</td>
       <td>20408</td>
       <td>745192875</td>
-      <td>Curie Institute (Paris)|École Normale Supérieu...</td>
+      <td>University of Paris\n* École Normale Supérieur...</td>
     </tr>
     <tr>
-      <th>667</th>
+      <th>666</th>
       <td>Mark Brian Wise (born November 9, 1953, Montre...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30279,7 +30269,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>668</th>
+      <th>667</th>
       <td>Mark George Raizen is a physicist who conducts...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30303,7 +30293,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>669</th>
+      <th>668</th>
       <td>Sir Marcus "Mark" Laurence Elwin Oliphant, AC,...</td>
       <td>NaN</td>
       <td>University of Adelaide|University of Cambridge</td>
@@ -30327,7 +30317,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>670</th>
+      <th>669</th>
       <td>Marshall Nicholas Rosenbluth (5 February 1927 ...</td>
       <td>NaN</td>
       <td>Harvard University|Stuyvesant High School|Univ...</td>
@@ -30351,7 +30341,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>671</th>
+      <th>670</th>
       <td>Martin Bojowald (born February 18, 1973, in Jü...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30375,7 +30365,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>672</th>
+      <th>671</th>
       <td>Martin Charles Gutzwiller (12 October 1925 – 3...</td>
       <td>NaN</td>
       <td>ETH Zurich|University of Kansas</td>
@@ -30399,7 +30389,7 @@ div#notebook {
       <td>Columbia University|IBM|Yale University</td>
     </tr>
     <tr>
-      <th>673</th>
+      <th>672</th>
       <td>Martin Hans Christian Knudsen (February 15, 18...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30423,7 +30413,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>674</th>
+      <th>673</th>
       <td>Martin Lewis Perl (June 24, 1927 – September 3...</td>
       <td>NaN</td>
       <td>Columbia University|New York University Tandon...</td>
@@ -30447,7 +30437,7 @@ div#notebook {
       <td>Stanford Linear Accelerator Center|University ...</td>
     </tr>
     <tr>
-      <th>675</th>
+      <th>674</th>
       <td>Martin John Rees, Baron Rees of Ludlow, OM, FR...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30471,7 +30461,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>676</th>
+      <th>675</th>
       <td>Sir Martin Ryle FRS (27 September 1918 – 14 Oc...</td>
       <td>NaN</td>
       <td>University of Oxford</td>
@@ -30495,7 +30485,7 @@ div#notebook {
       <td>Gresham College|University of Cambridge</td>
     </tr>
     <tr>
-      <th>677</th>
+      <th>676</th>
       <td>Martin Schadt (born 1938) is a Swiss physicist...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30519,7 +30509,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>678</th>
+      <th>677</th>
       <td>Tajmar completed his PhD in Numerical Plasmaph...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30543,7 +30533,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>679</th>
+      <th>678</th>
       <td>Martinus Justinus Godefriedus "Tini" Veltman (...</td>
       <td>NaN</td>
       <td>Utrecht University</td>
@@ -30567,7 +30557,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>680</th>
+      <th>679</th>
       <td>Marvin D. Girardeau (--13 January 2015) was a ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30591,7 +30581,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>681</th>
+      <th>680</th>
       <td>Marvin Leonard "Murph" Goldberger (October 22,...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30615,7 +30605,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>682</th>
+      <th>681</th>
       <td>Mary Katharine Gaillard (born April 1, 1939) i...</td>
       <td>NaN</td>
       <td>University of Paris</td>
@@ -30639,7 +30629,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>683</th>
+      <th>682</th>
       <td>Masatoshi Koshiba (小柴 昌俊 Koshiba Masatoshi, bo...</td>
       <td>Takahiko Yamanouchi</td>
       <td>University of Rochester|University of Tokyo</td>
@@ -30663,7 +30653,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>684</th>
+      <th>683</th>
       <td>Matthew B. Koss (born September 16, 1961 in Bo...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30687,7 +30677,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>685</th>
+      <th>684</th>
       <td>Maurice Goldhaber (April 18, 1911 – May 11, 20...</td>
       <td>NaN</td>
       <td>Humboldt University of Berlin|University of Ca...</td>
@@ -30711,7 +30701,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>686</th>
+      <th>685</th>
       <td>Maurice (Moritz) Loewy (15 April 1833 – 15 Oct...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30735,7 +30725,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>687</th>
+      <th>686</th>
       <td>Max Born (German: [bɔɐ̯n]; 11 December 1882 – ...</td>
       <td>J. J. Thomson|Joseph Larmor|Karl Schwarzschild...</td>
       <td>University of Göttingen</td>
@@ -30759,7 +30749,7 @@ div#notebook {
       <td>Goethe University Frankfurt|University of Edin...</td>
     </tr>
     <tr>
-      <th>688</th>
+      <th>687</th>
       <td>Max Ludwig Henning Delbrück, ForMemRS (Septemb...</td>
       <td>NaN</td>
       <td>University of Göttingen</td>
@@ -30783,7 +30773,7 @@ div#notebook {
       <td>California Institute of Technology|Kaiser Wilh...</td>
     </tr>
     <tr>
-      <th>689</th>
+      <th>688</th>
       <td>Max Karl Ernst Ludwig Planck, FRS (/plɑːŋk/; 2...</td>
       <td>NaN</td>
       <td>Ludwig Maximilian University of Munich</td>
@@ -30807,7 +30797,7 @@ div#notebook {
       <td>Kaiser Wilhelm Society|University of Göttingen...</td>
     </tr>
     <tr>
-      <th>690</th>
+      <th>689</th>
       <td>Max Christian Theodor Steenbeck (21 March 1904...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30831,7 +30821,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>691</th>
+      <th>690</th>
       <td>Max Erik Tegmark (born 5 May 1967) is a Swedis...</td>
       <td>NaN</td>
       <td>Royal Institute of Technology|University of Ca...</td>
@@ -30855,7 +30845,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>692</th>
+      <th>691</th>
       <td>Max Volmer (German: [ˈfɔlmɐ]; 3 May 1885 – 3 J...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30879,7 +30869,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>693</th>
+      <th>692</th>
       <td>Max Theodor Felix von Laue (9 October 1879 – 2...</td>
       <td>NaN</td>
       <td>Humboldt University of Berlin|Ludwig Maximilia...</td>
@@ -30903,7 +30893,7 @@ div#notebook {
       <td>Goethe University Frankfurt|Humboldt Universit...</td>
     </tr>
     <tr>
-      <th>694</th>
+      <th>693</th>
       <td>Maxim Nikolaevich Chernodub (born June 7, 1973...</td>
       <td>NaN</td>
       <td>Institute for Theoretical and Experimental Phy...</td>
@@ -30927,7 +30917,7 @@ div#notebook {
       <td>Laboratoire de mathématiques et physique théor...</td>
     </tr>
     <tr>
-      <th>695</th>
+      <th>694</th>
       <td>Meghnad Saha FRS (6 October 1893 – 16 February...</td>
       <td>Jagadish Chandra Bose|Prafulla Chandra Ray</td>
       <td>Dhaka College|University of Calcutta</td>
@@ -30951,7 +30941,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>696</th>
+      <th>695</th>
       <td>Mehran Kardar (Persian: مهران کاردار‎‎) is a p...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30975,7 +30965,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>697</th>
+      <th>696</th>
       <td>Melvin Lax (March 8, 1922 – December 8, 2002) ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30999,7 +30989,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>698</th>
+      <th>697</th>
       <td>Melvin Schwartz (November 2, 1932 – August 28,...</td>
       <td>NaN</td>
       <td>Columbia University</td>
@@ -31023,7 +31013,7 @@ div#notebook {
       <td>Brookhaven National Laboratory|Columbia Univer...</td>
     </tr>
     <tr>
-      <th>699</th>
+      <th>698</th>
       <td>Menas C. Kafatos (Greek: Μηνάς Καφάτος; born 2...</td>
       <td>NaN</td>
       <td>Cornell University|Massachusetts Institute of ...</td>
@@ -31047,7 +31037,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>700</th>
+      <th>699</th>
       <td>Mendel Sachs (April 13, 1927 in Portland, Oreg...</td>
       <td>NaN</td>
       <td>University of California, Los Angeles</td>
@@ -31071,7 +31061,7 @@ div#notebook {
       <td>University at Buffalo</td>
     </tr>
     <tr>
-      <th>701</th>
+      <th>700</th>
       <td>Michael Faraday FRS (/ˈfæ.rəˌdeɪ/; 22 Septembe...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31095,7 +31085,7 @@ div#notebook {
       <td>Royal Institution</td>
     </tr>
     <tr>
-      <th>702</th>
+      <th>701</th>
       <td>Michael Boris Green FRS (born 22 May 1946) is ...</td>
       <td>NaN</td>
       <td>Churchill College, Cambridge</td>
@@ -31119,7 +31109,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>703</th>
+      <th>702</th>
       <td>Michael R. Douglas (born November 19, 1961) is...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31143,7 +31133,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>704</th>
+      <th>703</th>
       <td>Michael Mark Woolfson (born 9 January 1927) is...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31167,7 +31157,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>705</th>
+      <th>704</th>
       <td>Michio Kaku (/ˈmiːtʃioʊ ˈkɑːkuː/; born January...</td>
       <td>NaN</td>
       <td>Harvard University|University of California, B...</td>
@@ -31191,7 +31181,7 @@ div#notebook {
       <td>City University of New York|Institute for Adva...</td>
     </tr>
     <tr>
-      <th>706</th>
+      <th>705</th>
       <td>Miguel Alcubierre Moya (born March 28, 1964 in...</td>
       <td>NaN</td>
       <td>Cardiff University|National Autonomous Univers...</td>
@@ -31215,7 +31205,7 @@ div#notebook {
       <td>Max Planck Institute for Gravitational Physics...</td>
     </tr>
     <tr>
-      <th>707</th>
+      <th>706</th>
       <td>Miguel Ángel Virasoro (Spanish: [miˈɣel ˈaŋxel...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31239,7 +31229,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>708</th>
+      <th>707</th>
       <td>Mihajlo Idvorski Pupin, Ph.D., LL.D. (Serbian ...</td>
       <td>NaN</td>
       <td>Columbia College, Columbia University</td>
@@ -31263,7 +31253,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>709</th>
+      <th>708</th>
       <td>Mikhail Alekseevich Lavrentyev or Lavrentiev (...</td>
       <td>NaN</td>
       <td>Moscow State University</td>
@@ -31287,7 +31277,7 @@ div#notebook {
       <td>Moscow State University|Steklov Institute of M...</td>
     </tr>
     <tr>
-      <th>710</th>
+      <th>709</th>
       <td>Mikhail Vasilyevich Lomonosov (/ˌlɒməˈnɔːsɔːf,...</td>
       <td>Christian Wolff (philosopher)</td>
       <td>Saint Petersburg State University|Slavic Greek...</td>
@@ -31311,7 +31301,7 @@ div#notebook {
       <td>Saint Petersburg State University</td>
     </tr>
     <tr>
-      <th>711</th>
+      <th>710</th>
       <td>Mikhail Vasilyevich Ostrogradsky (transcribed ...</td>
       <td>NaN</td>
       <td>National University of Kharkiv|University of P...</td>
@@ -31335,7 +31325,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>712</th>
+      <th>711</th>
       <td>Mikhail "Misha" Arkadyevich Shifman (Russian: ...</td>
       <td>Boris L. Ioffe</td>
       <td>Moscow Institute of Physics and Technology</td>
@@ -31359,7 +31349,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>713</th>
+      <th>712</th>
       <td>Massimilla "Milla" Baldo-Ceolin (12 August 192...</td>
       <td>NaN</td>
       <td>University of Padua</td>
@@ -31383,7 +31373,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>714</th>
+      <th>713</th>
       <td>Milton Spinoza Plesset (7 February 1908 – 19 F...</td>
       <td>NaN</td>
       <td>University of Pittsburgh|Yale University</td>
@@ -31407,7 +31397,7 @@ div#notebook {
       <td>California Institute of Technology|University ...</td>
     </tr>
     <tr>
-      <th>715</th>
+      <th>714</th>
       <td>Mitchell Jay Feigenbaum (born December 19, 194...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31431,7 +31421,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>716</th>
+      <th>715</th>
       <td>Moritz Hermann (Boris Semyonovich) von Jacobi ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31455,7 +31445,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>717</th>
+      <th>716</th>
       <td>Moses Hung-Wai Chan (陳鴻渭) is a physics profess...</td>
       <td>NaN</td>
       <td>Bridgewater College|Cornell University</td>
@@ -31479,7 +31469,7 @@ div#notebook {
       <td>Pennsylvania State University</td>
     </tr>
     <tr>
-      <th>718</th>
+      <th>717</th>
       <td>Murray Gell-Mann (/ˈmʌri ˈɡɛl ˈmæn/; born Sept...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology|Yale Uni...</td>
@@ -31503,7 +31493,7 @@ div#notebook {
       <td>California Institute of Technology|Santa Fe In...</td>
     </tr>
     <tr>
-      <th>719</th>
+      <th>718</th>
       <td>Naomi Shauna Ginsberg (born 1979 in Halifax, N...</td>
       <td>NaN</td>
       <td>Harvard University</td>
@@ -31527,7 +31517,7 @@ div#notebook {
       <td>University of California, Berkeley</td>
     </tr>
     <tr>
-      <th>720</th>
+      <th>719</th>
       <td>Khawaja Muhammad ibn Muhammad ibn Hasan Tūsī (...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31551,7 +31541,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>721</th>
+      <th>720</th>
       <td>Nathan Isgur (May 25, 1947 – July 24, 2001) wa...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31575,7 +31565,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>722</th>
+      <th>721</th>
       <td>Nathan Rosen (Hebrew: נתן רוזן; March 22, 1909...</td>
       <td>Albert Einstein</td>
       <td>Massachusetts Institute of Technology</td>
@@ -31599,7 +31589,7 @@ div#notebook {
       <td>Ben-Gurion University of the Negev|Institute f...</td>
     </tr>
     <tr>
-      <th>723</th>
+      <th>722</th>
       <td>Nathan "Nati" Seiberg (/ˈsaɪbərɡ/; born Septem...</td>
       <td>NaN</td>
       <td>Tel Aviv University|Weizmann Institute of Science</td>
@@ -31623,8 +31613,8 @@ div#notebook {
       <td>Institute for Advanced Study</td>
     </tr>
     <tr>
-      <th>724</th>
-      <td>Earth-centered inertial co-ordinates| Einstei...</td>
+      <th>723</th>
+      <td>Neil Ashby (born March 5, 1934 in Dalhart, Tex...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31647,7 +31637,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>725</th>
+      <th>724</th>
       <td>Neil deGrasse Tyson (/ˈniːl dəˈɡræs ˈtaɪsən/; ...</td>
       <td>NaN</td>
       <td>Columbia University|Harvard College|University...</td>
@@ -31671,7 +31661,7 @@ div#notebook {
       <td>University of Maryland, College ParkPrinceton ...</td>
     </tr>
     <tr>
-      <th>726</th>
+      <th>725</th>
       <td>Neil Geoffrey Turok (born 16 November 1958) is...</td>
       <td>NaN</td>
       <td>Churchill College, Cambridge|Imperial College ...</td>
@@ -31695,7 +31685,7 @@ div#notebook {
       <td>Perimeter Institute for Theoretical Physics|Un...</td>
     </tr>
     <tr>
-      <th>727</th>
+      <th>726</th>
       <td>Sir Nevill Francis Mott CH FRS (30 September 1...</td>
       <td>NaN</td>
       <td>University of Cambridge</td>
@@ -31719,7 +31709,7 @@ div#notebook {
       <td>University of Bristol|University of Cambridge|...</td>
     </tr>
     <tr>
-      <th>728</th>
+      <th>727</th>
       <td>Nicola Cabibbo (10 April 1935 – 16 August 2010...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31743,7 +31733,7 @@ div#notebook {
       <td>Istituto Nazionale di Fisica Nucleare|Pontific...</td>
     </tr>
     <tr>
-      <th>729</th>
+      <th>728</th>
       <td>Nicola A. Spaldin is a professor of materials ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31767,7 +31757,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>730</th>
+      <th>729</th>
       <td>Nicolaas Bloembergen (born March 11, 1920) is ...</td>
       <td>Edward Mills Purcell</td>
       <td>Leiden University|Utrecht University</td>
@@ -31791,7 +31781,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>731</th>
+      <th>730</th>
       <td>Nicolás Cabrera (1913 – 1989), was a Spanish p...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31815,7 +31805,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>732</th>
+      <th>731</th>
       <td>Nicolas Léonard Sadi Carnot (French: [kaʁno]; ...</td>
       <td>André-Marie Ampère|François Arago|Siméon Denis...</td>
       <td>Collège de France|École Polytechnique|Universi...</td>
@@ -31839,7 +31829,7 @@ div#notebook {
       <td>French Army</td>
     </tr>
     <tr>
-      <th>733</th>
+      <th>732</th>
       <td>Nicolaus Copernicus (/koʊˈpɜːrnɪkəs, kə-/; Pol...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31863,7 +31853,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>734</th>
+      <th>733</th>
       <td>Nicole Oresme (French: [nikɔl ɔʁɛm]; c. 1320–1...</td>
       <td>NaN</td>
       <td>College of Navarre|University of Paris</td>
@@ -31887,7 +31877,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>735</th>
+      <th>734</th>
       <td>Niels Henrik David Bohr (Danish: [nels ˈb̥oɐ̯ˀ...</td>
       <td>Ernest Rutherford|J. J. Thomson</td>
       <td>Trinity College, Cambridge|University of Copen...</td>
@@ -31911,7 +31901,7 @@ div#notebook {
       <td>University of Cambridge|University of Copenhag...</td>
     </tr>
     <tr>
-      <th>736</th>
+      <th>735</th>
       <td>Ahmet Nihat Berker (born 20 September 1949 in ...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology</td>
@@ -31935,7 +31925,7 @@ div#notebook {
       <td>Boğaziçi Üniversitesi|Koç University|Massachus...</td>
     </tr>
     <tr>
-      <th>737</th>
+      <th>736</th>
       <td>(For other uses, see Nikola Tesla (disambiguat...</td>
       <td>NaN</td>
       <td>Graz University of Technology</td>
@@ -31959,7 +31949,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>738</th>
+      <th>737</th>
       <td>Nikolaus Riehl (24 May 1901 – 2 August 1990) w...</td>
       <td>NaN</td>
       <td>Humboldt University of Berlin|Peter the Great ...</td>
@@ -31983,7 +31973,7 @@ div#notebook {
       <td>Auergesellschaft|Technical University of Munich</td>
     </tr>
     <tr>
-      <th>739</th>
+      <th>738</th>
       <td>Nikolay Gennadiyevich Basov (Russian: Никола́й...</td>
       <td>NaN</td>
       <td>National Research Nuclear University MEPhI</td>
@@ -32007,7 +31997,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>740</th>
+      <th>739</th>
       <td>Nikolay Nikolayevich Bogolyubov (Russian: Нико...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32031,7 +32021,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>741</th>
+      <th>740</th>
       <td>Nikolay Nikolayevich Semyonov (or Semenov), Fo...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32055,7 +32045,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>742</th>
+      <th>741</th>
       <td>Nikolay Sergeevich Krylov (Russian: Никола́й С...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32079,7 +32069,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>743</th>
+      <th>742</th>
       <td>Nikolay Alekseevich Umov (Russian: Никола́й Ал...</td>
       <td>NaN</td>
       <td>Moscow State University</td>
@@ -32103,7 +32093,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>744</th>
+      <th>743</th>
       <td>Nima Arkani-Hamed (Persian: نیما ارکانی-حامد‎‎...</td>
       <td>NaN</td>
       <td>University of California, Berkeley|University ...</td>
@@ -32127,7 +32117,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>745</th>
+      <th>744</th>
       <td>Norman Foster Ramsey Jr. (August 27, 1915 – No...</td>
       <td>NaN</td>
       <td>Columbia University|University of Cambridge</td>
@@ -32151,7 +32141,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>746</th>
+      <th>745</th>
       <td>Oleg Vladimirovich Losev (Russian: Оле́г Влади...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32175,7 +32165,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>747</th>
+      <th>746</th>
       <td>Oleg Sushkov is a professor at the University ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32199,7 +32189,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>748</th>
+      <th>747</th>
       <td>Oliver Heaviside FRS (/ˈɒlɪvər ˈhɛvisaɪd/; 18 ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32223,7 +32213,7 @@ div#notebook {
       <td>Great Northern Telegraph Company</td>
     </tr>
     <tr>
-      <th>749</th>
+      <th>748</th>
       <td>Sir Oliver Joseph Lodge, FRS (12 June 1851 – 2...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32247,7 +32237,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>750</th>
+      <th>749</th>
       <td>Omar Khayyám ; born Ghiyāth ad-Dīn Abu'l-Fatḥ ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32271,7 +32261,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>751</th>
+      <th>750</th>
       <td>Osborne Reynolds FRS (/ˈrɛnəldz/; 23 August 18...</td>
       <td>NaN</td>
       <td>Queens' College, Cambridge|Victoria University...</td>
@@ -32295,7 +32285,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>752</th>
+      <th>751</th>
       <td>Oscar Sala (born March 26, 1922 in Milan, Ital...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32319,7 +32309,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>753</th>
+      <th>752</th>
       <td>Oskar Benjamin Klein (September 15, 1894 – Feb...</td>
       <td>NaN</td>
       <td>Norwegian Nobel Institute|Stockholm University</td>
@@ -32343,7 +32333,7 @@ div#notebook {
       <td>Lund University|Stockholm University|Universit...</td>
     </tr>
     <tr>
-      <th>754</th>
+      <th>753</th>
       <td>Otto Hahn, OBE, ForMemRS (8 March 1879 – 28 Ju...</td>
       <td>Adolf von Baeyer|Ernest Rutherford|Hermann Emi...</td>
       <td>University of Marburg</td>
@@ -32367,7 +32357,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>755</th>
+      <th>754</th>
       <td>Otto Robert Frisch FRS (1 October 1904 – 22 Se...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32391,7 +32381,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>756</th>
+      <th>755</th>
       <td>Otto Scherzer (9 March 1909 – 15 November 1982...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32415,7 +32405,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>757</th>
+      <th>756</th>
       <td>Otto Stern was also the penname of German wome...</td>
       <td>NaN</td>
       <td>Goethe University Frankfurt|University of Wrocław</td>
@@ -32439,7 +32429,7 @@ div#notebook {
       <td>Carnegie Institute of Technology|University of...</td>
     </tr>
     <tr>
-      <th>758</th>
+      <th>757</th>
       <td>Owen Chamberlain (July 10, 1920 – February 28,...</td>
       <td>NaN</td>
       <td>Dartmouth College|University of California, Be...</td>
@@ -32463,7 +32453,7 @@ div#notebook {
       <td>Los Alamos National Laboratory</td>
     </tr>
     <tr>
-      <th>759</th>
+      <th>758</th>
       <td>Sir Owen Willans Richardson, FRS (26 April 187...</td>
       <td>NaN</td>
       <td>Trinity College, Cambridge|University College ...</td>
@@ -32487,7 +32477,7 @@ div#notebook {
       <td>King's College London|Princeton University|Uni...</td>
     </tr>
     <tr>
-      <th>760</th>
+      <th>759</th>
       <td>Pamela L. Gay (born December 12, 1973) is an A...</td>
       <td>NaN</td>
       <td>University of Texas at Austin</td>
@@ -32511,7 +32501,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>761</th>
+      <th>760</th>
       <td>Ernst Pascual Jordan (18 October 1902 – 31 Jul...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32535,7 +32525,7 @@ div#notebook {
       <td>University of Hanover</td>
     </tr>
     <tr>
-      <th>762</th>
+      <th>761</th>
       <td>Patrick Maynard Stuart Blackett, Baron Blacket...</td>
       <td>Ernest Rutherford</td>
       <td>Osborne House|University of Cambridge</td>
@@ -32559,7 +32549,7 @@ div#notebook {
       <td>Birkbeck, University of London|Imperial Colleg...</td>
     </tr>
     <tr>
-      <th>763</th>
+      <th>762</th>
       <td>Paul A. Crowell is a Professor of Physics at t...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32583,7 +32573,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>764</th>
+      <th>763</th>
       <td>Paul Charles William Davies, AM (born 22 April...</td>
       <td>Fred Hoyle</td>
       <td>University College London</td>
@@ -32607,7 +32597,7 @@ div#notebook {
       <td>Arizona State University|Macquarie University|...</td>
     </tr>
     <tr>
-      <th>765</th>
+      <th>764</th>
       <td>Paul Adrien Maurice Dirac OM FRS (/dɪˈræk/; 8 ...</td>
       <td>NaN</td>
       <td>St John's College, Cambridge|University of Bri...</td>
@@ -32631,7 +32621,7 @@ div#notebook {
       <td>Florida State University|University of Cambrid...</td>
     </tr>
     <tr>
-      <th>766</th>
+      <th>765</th>
       <td>Paul Karl Ludwig Drude (German: [ˈdʀuːdə]; Jul...</td>
       <td>NaN</td>
       <td>University of Göttingen</td>
@@ -32655,7 +32645,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>767</th>
+      <th>766</th>
       <td>Paul Ehrenfest (January 18, 1880 – September 2...</td>
       <td>NaN</td>
       <td>TU Wien|University of Göttingen|University of ...</td>
@@ -32679,7 +32669,7 @@ div#notebook {
       <td>Leiden University</td>
     </tr>
     <tr>
-      <th>768</th>
+      <th>767</th>
       <td>Paul Howard Frampton (born 31 October 1943) is...</td>
       <td>NaN</td>
       <td>University of Oxford</td>
@@ -32703,7 +32693,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>769</th>
+      <th>768</th>
       <td>(For the George Mason basketball coach, see Pa...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32727,7 +32717,7 @@ div#notebook {
       <td>City College of San Francisco|University of Ca...</td>
     </tr>
     <tr>
-      <th>770</th>
+      <th>769</th>
       <td>Paul Karl Maria Harteck (20 July 1902 – 22 Jan...</td>
       <td>NaN</td>
       <td>Humboldt University of Berlin</td>
@@ -32751,7 +32741,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>771</th>
+      <th>770</th>
       <td>Paul John Ellis (25 May 1941 – 20 February 200...</td>
       <td>NaN</td>
       <td>University of Bristol|University of Manchester</td>
@@ -32775,7 +32765,7 @@ div#notebook {
       <td>University of Minnesota</td>
     </tr>
     <tr>
-      <th>772</th>
+      <th>771</th>
       <td>Paul Langevin ForMemRS (/lænʒˈveɪn/; French: [...</td>
       <td>NaN</td>
       <td>Collège de France|ESPCI ParisTech|University o...</td>
@@ -32799,7 +32789,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>773</th>
+      <th>772</th>
       <td>Paul Peter Ewald, FRS (January 23, 1888 in Ber...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32823,7 +32813,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>774</th>
+      <th>773</th>
       <td>Paul Joseph Steinhardt (born December 25, 1952...</td>
       <td>Barry Barish|Praveen Chaudhari|Richard Feynman</td>
       <td>California Institute of Technology|Harvard Uni...</td>
@@ -32847,7 +32837,7 @@ div#notebook {
       <td>California Institute of Technology|Harvard Uni...</td>
     </tr>
     <tr>
-      <th>775</th>
+      <th>774</th>
       <td>Paul J. Werbos (born 1947) is a scientist best...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32871,7 +32861,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>776</th>
+      <th>775</th>
       <td>Pavel Alekseyevich Cherenkov (Russian: Па́вел ...</td>
       <td>NaN</td>
       <td>Voronezh State University</td>
@@ -32895,7 +32885,7 @@ div#notebook {
       <td>Lebedev Physical Institute</td>
     </tr>
     <tr>
-      <th>777</th>
+      <th>776</th>
       <td>Percy Williams Bridgman (21 April 1882 – 20 Au...</td>
       <td>NaN</td>
       <td>Harvard University</td>
@@ -32919,7 +32909,7 @@ div#notebook {
       <td>Harvard University</td>
     </tr>
     <tr>
-      <th>778</th>
+      <th>777</th>
       <td>Per-Olov Löwdin (October 28, 1916 – October 6,...</td>
       <td>NaN</td>
       <td>Uppsala University</td>
@@ -32943,7 +32933,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>779</th>
+      <th>778</th>
       <td>Pervez Amirali Hoodbhoy PhD (Urdu: پرویز ہودبھ...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology</td>
@@ -32967,7 +32957,7 @@ div#notebook {
       <td>Forman Christian College|National Centre for P...</td>
     </tr>
     <tr>
-      <th>780</th>
+      <th>779</th>
       <td>Peter Adolf Thiessen (6 April 1899 – 5 March 1...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32991,7 +32981,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>781</th>
+      <th>780</th>
       <td>Peter Andreas Hansen (born December 8, 1795  T...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33015,7 +33005,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>782</th>
+      <th>781</th>
       <td>Peter Joseph William Debye ForMemRS (/dɛˈbaɪ/;...</td>
       <td>NaN</td>
       <td>Ludwig Maximilian University of Munich|RWTH Aa...</td>
@@ -33039,7 +33029,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>783</th>
+      <th>782</th>
       <td>Peter George Oliver Freund (born 7 September 1...</td>
       <td>NaN</td>
       <td>University of Vienna</td>
@@ -33063,7 +33053,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>784</th>
+      <th>783</th>
       <td>Peter Goddard (born 3 September 1945) is a mat...</td>
       <td>NaN</td>
       <td>Emanuel School|University of Cambridge</td>
@@ -33087,7 +33077,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>785</th>
+      <th>784</th>
       <td>Peter Andreas Grünberg (born 18 May 1939) is a...</td>
       <td>NaN</td>
       <td>Technische Universität Darmstadt</td>
@@ -33111,7 +33101,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>786</th>
+      <th>785</th>
       <td>Peter Ware Higgs CH FRS FRSE (born 29 May 1929...</td>
       <td>NaN</td>
       <td>King's College London</td>
@@ -33135,7 +33125,7 @@ div#notebook {
       <td>Imperial College London|King's College London|...</td>
     </tr>
     <tr>
-      <th>787</th>
+      <th>786</th>
       <td>Sir Peter Mansfield FRS, (born 9 October 1933)...</td>
       <td>NaN</td>
       <td>Queen Mary University of London</td>
@@ -33159,7 +33149,7 @@ div#notebook {
       <td>University of Illinois at Urbana–Champaign|Uni...</td>
     </tr>
     <tr>
-      <th>788</th>
+      <th>787</th>
       <td>Peter van Nieuwenhuizen (Dutch: [vɑn ˈniu̯əˌɦœ...</td>
       <td>NaN</td>
       <td>Utrecht University</td>
@@ -33183,7 +33173,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>789</th>
+      <th>788</th>
       <td>Peter Westervelt (December 16, 1919 – January ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33207,7 +33197,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>790</th>
+      <th>789</th>
       <td>Peter Zoller (born 16 September 1952) is a the...</td>
       <td>NaN</td>
       <td>University of Innsbruck</td>
@@ -33231,7 +33221,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>791</th>
+      <th>790</th>
       <td>Petr Paucek is a Czech-born biophysicist and b...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33255,7 +33245,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>792</th>
+      <th>791</th>
       <td>Philip Warren Anderson (born December 13, 1923...</td>
       <td>NaN</td>
       <td>Harvard University|United States Naval Researc...</td>
@@ -33279,7 +33269,7 @@ div#notebook {
       <td>Bell Labs|Princeton University|University of C...</td>
     </tr>
     <tr>
-      <th>793</th>
+      <th>792</th>
       <td>Philipp Eduard Anton von Lenard (7 June 1862 –...</td>
       <td>NaN</td>
       <td>Heidelberg University</td>
@@ -33303,7 +33293,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>794</th>
+      <th>793</th>
       <td>Phyllis S. Freier (1921–1992) was an American ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33327,7 +33317,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>795</th>
+      <th>794</th>
       <td>Piara Singh Gill (28 October 1911 – 23 March 2...</td>
       <td>NaN</td>
       <td>University of Chicago|University of Southern C...</td>
@@ -33351,7 +33341,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>796</th>
+      <th>795</th>
       <td>Pierre Curie (/ˈkjʊri, kjʊˈriː/; French: [kyʁi...</td>
       <td>NaN</td>
       <td>University of Paris</td>
@@ -33375,7 +33365,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>797</th>
+      <th>796</th>
       <td>Pierre Louis Dulong FRS FRSE IOF (12 February ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33399,7 +33389,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>798</th>
+      <th>797</th>
       <td>Pierre Ramond (French: [ʁamɔ̃]; born 31 Januar...</td>
       <td>NaN</td>
       <td>Syracuse University</td>
@@ -33423,7 +33413,7 @@ div#notebook {
       <td>University of Florida</td>
     </tr>
     <tr>
-      <th>799</th>
+      <th>798</th>
       <td>Pierre-Gilles de Gennes (French: [ʒɛn]; Octobe...</td>
       <td>NaN</td>
       <td>École Normale Supérieure|University of Paris</td>
@@ -33447,7 +33437,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>800</th>
+      <th>799</th>
       <td>Pierre-Simon, marquis de Laplace (/ləˈplɑːs/; ...</td>
       <td>Christophe Gadbled|Jean le Rond d'Alembert</td>
       <td>University of Caen Normandy</td>
@@ -33471,7 +33461,7 @@ div#notebook {
       <td>École Militaire</td>
     </tr>
     <tr>
-      <th>801</th>
+      <th>800</th>
       <td>Pieter van Musschenbroek (14 March 1692 – 19 S...</td>
       <td>NaN</td>
       <td>Leiden University</td>
@@ -33495,7 +33485,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>802</th>
+      <th>801</th>
       <td>Pieter Zeeman (Dutch: [ˈzeːmɑn]; 25 May 1865 –...</td>
       <td>NaN</td>
       <td>Leiden University</td>
@@ -33519,7 +33509,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>803</th>
+      <th>802</th>
       <td>Polykarp Kusch (January 26, 1911 – March 20, 1...</td>
       <td>NaN</td>
       <td>Case Western Reserve University|University of ...</td>
@@ -33543,7 +33533,7 @@ div#notebook {
       <td>Columbia University|University of Texas at Dallas</td>
     </tr>
     <tr>
-      <th>804</th>
+      <th>803</th>
       <td>Pran Nath is a theoretical physicist working a...</td>
       <td>NaN</td>
       <td>Stanford University|University of Delhi</td>
@@ -33567,7 +33557,7 @@ div#notebook {
       <td>Northeastern University</td>
     </tr>
     <tr>
-      <th>805</th>
+      <th>804</th>
       <td>Predhiman Krishan Kaw is an Indian plasma phys...</td>
       <td>NaN</td>
       <td>Indian Institute of Technology Delhi|Physical ...</td>
@@ -33591,7 +33581,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>806</th>
+      <th>805</th>
       <td>Predrag Cvitanović (born April 1, 1946) is a t...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33615,7 +33605,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>807</th>
+      <th>806</th>
       <td>(This name uses Eastern Slavic naming customs;...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33639,7 +33629,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>808</th>
+      <th>807</th>
       <td>Pyotr Nikolaevich Lebedev (Russian: Пётр Никол...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33663,7 +33653,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>809</th>
+      <th>808</th>
       <td>Pythagoras of Samos (US /pɪˈθæɡərəs/; UK /paɪˈ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33687,7 +33677,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>810</th>
+      <th>809</th>
       <td>Rafael Dolnick Sorkin (born c. 1945) is an Ame...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33711,7 +33701,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>811</th>
+      <th>810</th>
       <td>Ralph Asher Alpher (February 3, 1921 – August ...</td>
       <td>NaN</td>
       <td>George Washington University</td>
@@ -33735,7 +33725,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>812</th>
+      <th>811</th>
       <td>Sir Ralph Howard Fowler OBE FRS (17 January 18...</td>
       <td>Archibald Hill</td>
       <td>University of Cambridge</td>
@@ -33759,7 +33749,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>813</th>
+      <th>812</th>
       <td>Ralph Kronig (March 10, 1904 – November 16, 19...</td>
       <td>Wolfgang Pauli</td>
       <td>Columbia University</td>
@@ -33783,7 +33773,7 @@ div#notebook {
       <td>Columbia University|Delft University of Techno...</td>
     </tr>
     <tr>
-      <th>814</th>
+      <th>813</th>
       <td>Raman Sundrum is an American theoretical parti...</td>
       <td>NaN</td>
       <td>University of Sydney|Yale University</td>
@@ -33807,7 +33797,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>815</th>
+      <th>814</th>
       <td>Dr. Ramón E. López (born c. 1959) is a Space P...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33831,7 +33821,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>816</th>
+      <th>815</th>
       <td>Ranjan Roy Daniel (also referred to as R. R. D...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33855,7 +33845,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>817</th>
+      <th>816</th>
       <td>Rashid Alievich Sunyaev (Cyrillic: Раши́д Али́...</td>
       <td>NaN</td>
       <td>Moscow Institute of Physics and Technology|Mos...</td>
@@ -33879,7 +33869,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>818</th>
+      <th>817</th>
       <td>Ratko Janev (Macedonian: Ратко Jанев; born 30 ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33903,7 +33893,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>819</th>
+      <th>818</th>
       <td>Raul Rabadàn is an Associate Professor in the ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33927,7 +33917,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>820</th>
+      <th>819</th>
       <td>Ravi Veeraraghavan Gomatam (born 1950, in Chen...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33951,7 +33941,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>821</th>
+      <th>820</th>
       <td>Ray Mackintosh is an emeritus professor of nuc...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33975,7 +33965,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>822</th>
+      <th>821</th>
       <td>Raymond (Ray) Davis Jr. (October 14, 1914 – Ma...</td>
       <td>NaN</td>
       <td>University of Maryland, College Park|Yale Univ...</td>
@@ -33999,7 +33989,7 @@ div#notebook {
       <td>Monsanto|University of Pennsylvania</td>
     </tr>
     <tr>
-      <th>823</th>
+      <th>822</th>
       <td>Raymond John Seeger (September 20, 1906 – Febr...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34023,8 +34013,8 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>824</th>
-      <td>Honorary degree of LLD from the University of...</td>
+      <th>823</th>
+      <td>Raymond Thayer Birge (March 13, 1887 – March 2...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34047,7 +34037,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>825</th>
+      <th>824</th>
       <td>Reinhard Oehme (German: [ˈøːmə]; born 26 Janua...</td>
       <td>Erwin Madelung</td>
       <td>Goethe University Frankfurt|University of Gött...</td>
@@ -34071,7 +34061,7 @@ div#notebook {
       <td>Enrico Fermi Institute</td>
     </tr>
     <tr>
-      <th>826</th>
+      <th>825</th>
       <td>René Antoine Ferchault de Réaumur (French: [ʁe...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34095,7 +34085,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>827</th>
+      <th>826</th>
       <td>René Descartes (/ˈdeɪˌkɑːrt/; French: [ʁəne de...</td>
       <td>NaN</td>
       <td>Leiden University|University of Franeker|Unive...</td>
@@ -34119,7 +34109,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>828</th>
+      <th>827</th>
       <td>Revaz Dogonadze (November 21, 1931, Tbilisi – ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34143,7 +34133,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>829</th>
+      <th>828</th>
       <td>Riazuddin, also spelled as Riaz-Uddin (Urdu: ر...</td>
       <td>NaN</td>
       <td>University of the Punjab</td>
@@ -34167,7 +34157,7 @@ div#notebook {
       <td>CERN|Daresbury Laboratory|International Centre...</td>
     </tr>
     <tr>
-      <th>830</th>
+      <th>829</th>
       <td>Riccardo Barbieri (born 1944) is an Italian th...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34191,7 +34181,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>831</th>
+      <th>830</th>
       <td>Riccardo Giacconi (born October 6, 1931) is an...</td>
       <td>NaN</td>
       <td>University of Milan</td>
@@ -34215,7 +34205,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>832</th>
+      <th>831</th>
       <td>Riccardo Rattazzi (born 1964) is an Italian th...</td>
       <td>NaN</td>
       <td>Scuola Normale Superiore di Pisa</td>
@@ -34239,7 +34229,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>833</th>
+      <th>832</th>
       <td>Richard A. Muller (born January 6, 1944) is an...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34263,7 +34253,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>834</th>
+      <th>833</th>
       <td>Richard Lewis Arnowitt (May 3, 1928 – June 12,...</td>
       <td>NaN</td>
       <td>Harvard University</td>
@@ -34287,7 +34277,7 @@ div#notebook {
       <td>Northeastern University|Texas A&amp;M University</td>
     </tr>
     <tr>
-      <th>835</th>
+      <th>834</th>
       <td>Richard Chace Tolman (March 4, 1881 – Septembe...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34311,7 +34301,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>836</th>
+      <th>835</th>
       <td>Professor Richard Clegg is Managing Director o...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34335,7 +34325,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>837</th>
+      <th>836</th>
       <td>Richard Henry Dalitz, FRS (28 February 1925 – ...</td>
       <td>NaN</td>
       <td>University of Cambridge|University of Melbourne</td>
@@ -34359,7 +34349,7 @@ div#notebook {
       <td>Cornell University|Enrico Fermi Institute|Univ...</td>
     </tr>
     <tr>
-      <th>838</th>
+      <th>837</th>
       <td>Richard Edward Taylor, CC FRS FRSC (born Novem...</td>
       <td>NaN</td>
       <td>Stanford University|University of Alberta</td>
@@ -34383,7 +34373,7 @@ div#notebook {
       <td>École Normale Supérieure|Lawrence Berkeley Nat...</td>
     </tr>
     <tr>
-      <th>839</th>
+      <th>838</th>
       <td>("Feynman" redirects here. For other uses, see...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology|Princeto...</td>
@@ -34407,7 +34397,7 @@ div#notebook {
       <td>California Institute of Technology|Cornell Uni...</td>
     </tr>
     <tr>
-      <th>840</th>
+      <th>839</th>
       <td>Richard H. Price (born March 1, 1943) is an Am...</td>
       <td>NaN</td>
       <td>California Institute of Technology|Cornell Uni...</td>
@@ -34431,7 +34421,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>841</th>
+      <th>840</th>
       <td>Richard Keith Ellis (born November 17, 1949) i...</td>
       <td>NaN</td>
       <td>New College, Oxford|University of Oxford|Wadha...</td>
@@ -34455,7 +34445,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>842</th>
+      <th>841</th>
       <td>Richard Elliss Bodenham Makinson (5 May 1913 –...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34479,7 +34469,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>843</th>
+      <th>842</th>
       <td>Robertus Henricus "Robbert" Dijkgraaf (Dutch p...</td>
       <td>NaN</td>
       <td>Utrecht University</td>
@@ -34503,7 +34493,7 @@ div#notebook {
       <td>Institute for Advanced Study|University of Ams...</td>
     </tr>
     <tr>
-      <th>844</th>
+      <th>843</th>
       <td>Robert Adler (December 4, 1913 – February 15, ...</td>
       <td>NaN</td>
       <td>University of Vienna</td>
@@ -34527,7 +34517,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>845</th>
+      <th>844</th>
       <td>Robert A. Millikan (March 22, 1868 – December ...</td>
       <td>Albert A. Michelson|Mihajlo Pupin|Walther Nernst</td>
       <td>Columbia University|Oberlin College</td>
@@ -34551,7 +34541,7 @@ div#notebook {
       <td>California Institute of Technology|University ...</td>
     </tr>
     <tr>
-      <th>846</th>
+      <th>845</th>
       <td>Robert Betts Laughlin (born November 1, 1950) ...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology|Universi...</td>
@@ -34575,7 +34565,7 @@ div#notebook {
       <td>Stanford University</td>
     </tr>
     <tr>
-      <th>847</th>
+      <th>846</th>
       <td>Robert Benjamin Leighton (September 10, 1919 –...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34599,7 +34589,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>848</th>
+      <th>847</th>
       <td>Robert William Boyle FRS (25 January 1627 – 31...</td>
       <td>NaN</td>
       <td>Eton College</td>
@@ -34623,7 +34613,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>849</th>
+      <th>848</th>
       <td>Robert Brout (/braʊt/; June 14, 1928 – May 3, ...</td>
       <td>NaN</td>
       <td>Columbia University|New York University</td>
@@ -34647,7 +34637,7 @@ div#notebook {
       <td>Cornell University|Université libre de Bruxell...</td>
     </tr>
     <tr>
-      <th>850</th>
+      <th>849</th>
       <td>Robert Coleman Richardson (June 26, 1937 – Feb...</td>
       <td>NaN</td>
       <td>Duke University|Virginia Tech</td>
@@ -34671,7 +34661,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>851</th>
+      <th>850</th>
       <td>Robert Davis Richtmyer (October 10, 1910 – Sep...</td>
       <td>NaN</td>
       <td>Cornell University|Massachusetts Institute of ...</td>
@@ -34695,7 +34685,7 @@ div#notebook {
       <td>Stanford University|University of Colorado Bou...</td>
     </tr>
     <tr>
-      <th>852</th>
+      <th>851</th>
       <td>Georg Robert Döpel (3 December 1895 in Neustad...</td>
       <td>Werner Heisenberg</td>
       <td>Leipzig University|Ludwig Maximilian Universit...</td>
@@ -34719,7 +34709,7 @@ div#notebook {
       <td>Leipzig University|Technische Universität Ilme...</td>
     </tr>
     <tr>
-      <th>853</th>
+      <th>852</th>
       <td>Robert G. Sachs (May 4, 1916 – April 14, 1999)...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34743,7 +34733,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>854</th>
+      <th>853</th>
       <td>Robert Henry Dicke (/dɪk/; May 6, 1916 – March...</td>
       <td>NaN</td>
       <td>Princeton University|University of Rochester</td>
@@ -34767,7 +34757,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>855</th>
+      <th>854</th>
       <td>Robert Hofstadter (February 5, 1915 – November...</td>
       <td>NaN</td>
       <td>City College of New York|Princeton University</td>
@@ -34791,7 +34781,7 @@ div#notebook {
       <td>Stanford University|University of Pennsylvania</td>
     </tr>
     <tr>
-      <th>856</th>
+      <th>855</th>
       <td>Robert Hooke FRS (/hʊk/; 28 July [O.S. 18 July...</td>
       <td>Robert Boyle</td>
       <td>Wadham College, Oxford</td>
@@ -34815,7 +34805,7 @@ div#notebook {
       <td>University of Oxford</td>
     </tr>
     <tr>
-      <th>857</th>
+      <th>856</th>
       <td>Robert K. Logan (born August 31, 1939), origin...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology</td>
@@ -34839,7 +34829,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>858</th>
+      <th>857</th>
       <td>Robert Eugene Marshak (October 11, 1916 – Dece...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34863,7 +34853,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>859</th>
+      <th>858</th>
       <td>Robert Rathbun Wilson (March 4, 1914 – January...</td>
       <td>NaN</td>
       <td>University of California, Berkeley</td>
@@ -34887,7 +34877,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>860</th>
+      <th>859</th>
       <td>Robert Sanderson Mulliken ForMemRS (June 7, 18...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology|Universi...</td>
@@ -34911,7 +34901,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>861</th>
+      <th>860</th>
       <td>Robert Serber (March 14, 1909 – June 1, 1997) ...</td>
       <td>NaN</td>
       <td>Lehigh University|University of Wisconsin–Madison</td>
@@ -34935,7 +34925,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>862</th>
+      <th>861</th>
       <td>Robert von Lieben (September 5, 1878 in Vienna...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34959,7 +34949,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>863</th>
+      <th>862</th>
       <td>Born in Concord, Massachusetts, Wood attended ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34983,7 +34973,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>864</th>
+      <th>863</th>
       <td>Robert Woodrow Wilson (born January 10, 1936) ...</td>
       <td>NaN</td>
       <td>California Institute of Technology|Rice Univer...</td>
@@ -35007,7 +34997,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>865</th>
+      <th>864</th>
       <td>Robert Walter Zwanzig (born Brooklyn, New York...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35031,7 +35021,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>866</th>
+      <th>865</th>
       <td>Roger Joseph Boscovich (Croatian: Ruđer Josip ...</td>
       <td>NaN</td>
       <td>Roman College</td>
@@ -35055,7 +35045,7 @@ div#notebook {
       <td>Brera Astronomical Observatory|University of P...</td>
     </tr>
     <tr>
-      <th>867</th>
+      <th>866</th>
       <td>Sir Roger Penrose OM FRS (born 8 August 1931) ...</td>
       <td>W. V. D. Hodge</td>
       <td>St John's College, Cambridge|University Colleg...</td>
@@ -35079,7 +35069,7 @@ div#notebook {
       <td>Bedford College, London|Birkbeck, University o...</td>
     </tr>
     <tr>
-      <th>868</th>
+      <th>867</th>
       <td>Rolf William Landauer (February 4, 1927 – Apri...</td>
       <td>NaN</td>
       <td>Harvard University|Stuyvesant High School</td>
@@ -35103,7 +35093,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>869</th>
+      <th>868</th>
       <td>Roman Wladimir Jackiw (/roʊˈmæn dʒæˈkiːv/; bor...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35127,7 +35117,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>870</th>
+      <th>869</th>
       <td>His most cited work is "On the gravitational f...</td>
       <td>NaN</td>
       <td>University of Vienna</td>
@@ -35151,7 +35141,7 @@ div#notebook {
       <td>Miami University|University of Vienna</td>
     </tr>
     <tr>
-      <th>871</th>
+      <th>870</th>
       <td>Ronald Ernest Aitchison (1921–1996), was born ...</td>
       <td>Victor Albert Bailey</td>
       <td>University of Sydney</td>
@@ -35175,7 +35165,7 @@ div#notebook {
       <td>Macquarie University</td>
     </tr>
     <tr>
-      <th>872</th>
+      <th>871</th>
       <td>Ronald Erwin McNair (October 21, 1950 – Januar...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35199,7 +35189,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>873</th>
+      <th>872</th>
       <td>Rosalind Elsie Franklin (25 July 1920 – 16 Apr...</td>
       <td>NaN</td>
       <td>Newnham College, Cambridge</td>
@@ -35223,7 +35213,7 @@ div#notebook {
       <td>Birkbeck, University of London|British Coal Ut...</td>
     </tr>
     <tr>
-      <th>874</th>
+      <th>873</th>
       <td>Rosalyn Sussman Yalow (July 19, 1921 – May 30,...</td>
       <td>NaN</td>
       <td>Hunter College|University of Illinois at Urban...</td>
@@ -35247,7 +35237,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>875</th>
+      <th>874</th>
       <td>Roy Jay Glauber (born September 1, 1925) is an...</td>
       <td>NaN</td>
       <td>Harvard University</td>
@@ -35271,7 +35261,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>876</th>
+      <th>875</th>
       <td>Ruby Violet Payne-Scott, BSc(Phys) MSc DipEd(S...</td>
       <td>NaN</td>
       <td>University of Sydney</td>
@@ -35295,7 +35285,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>877</th>
+      <th>876</th>
       <td>Rudolf Julius Emanuel Clausius (born Rudolf Go...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35319,7 +35309,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>878</th>
+      <th>877</th>
       <td>Rudolf Haag (17 August 1922 – 5 January 2016) ...</td>
       <td>NaN</td>
       <td>University of Stuttgart</td>
@@ -35343,7 +35333,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>879</th>
+      <th>878</th>
       <td>Rudolf Ludwig Mössbauer (German spelling: Mößb...</td>
       <td>NaN</td>
       <td>Technical University of Munich</td>
@@ -35367,7 +35357,7 @@ div#notebook {
       <td>California Institute of Technology|Technical U...</td>
     </tr>
     <tr>
-      <th>880</th>
+      <th>879</th>
       <td>Sir Rudolf Ernst Peierls, CBE (5 June 1907 – 1...</td>
       <td>Wolfgang Pauli</td>
       <td>Humboldt University of Berlin|Leipzig Universi...</td>
@@ -35391,7 +35381,7 @@ div#notebook {
       <td>Manhattan Project|University of Birmingham|Uni...</td>
     </tr>
     <tr>
-      <th>881</th>
+      <th>880</th>
       <td>Russell Alan Hulse (born November 28, 1950) is...</td>
       <td>NaN</td>
       <td>Cooper Union|University of Massachusetts Amherst</td>
@@ -35415,7 +35405,7 @@ div#notebook {
       <td>National Radio Astronomy Observatory|Princeton...</td>
     </tr>
     <tr>
-      <th>882</th>
+      <th>881</th>
       <td>Ryogo Kubo (久保 亮五 Kubo Ryōgo, February 15, 192...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35439,7 +35429,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>883</th>
+      <th>882</th>
       <td>Sam Bard Treiman (May 27, 1925 – November 30, ...</td>
       <td>NaN</td>
       <td>Northwestern University|University of Chicago</td>
@@ -35463,7 +35453,7 @@ div#notebook {
       <td>Princeton University</td>
     </tr>
     <tr>
-      <th>884</th>
+      <th>883</th>
       <td>Samuel Chao Chung Ting (Chinese: 丁肇中; pinyin: ...</td>
       <td>NaN</td>
       <td>University of Michigan</td>
@@ -35487,7 +35477,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>885</th>
+      <th>884</th>
       <td>Samuel Goudsmit (July 11, 1902 – December 4, 1...</td>
       <td>NaN</td>
       <td>Leiden University</td>
@@ -35511,7 +35501,7 @@ div#notebook {
       <td>University of Michigan</td>
     </tr>
     <tr>
-      <th>886</th>
+      <th>885</th>
       <td>Samuel King Allison (November 13, 1900 – Septe...</td>
       <td>NaN</td>
       <td>University of Chicago</td>
@@ -35535,7 +35525,7 @@ div#notebook {
       <td>Los Alamos National Laboratory|University of C...</td>
     </tr>
     <tr>
-      <th>887</th>
+      <th>886</th>
       <td>Samuel Thornton Durrance (Ph.D.) is an America...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35559,7 +35549,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>888</th>
+      <th>887</th>
       <td>Samuel Tolansky born Turlausky, DThPT PhD (Dun...</td>
       <td>NaN</td>
       <td>Colleges of Durham University|Durham University</td>
@@ -35583,7 +35573,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>889</th>
+      <th>888</th>
       <td>Sankar Das Sarma /ˈʃæŋkɑːr dæʃ ˈʃɑːrmə/ is an ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35607,7 +35597,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>890</th>
+      <th>889</th>
       <td>Satyendra Nath Bose (Bengali: সত্যেন্দ্রনাথ বস...</td>
       <td>Jagadish Chandra Bose|Prafulla Chandra Ray</td>
       <td>Hindu School, Kolkata|University of Calcutta</td>
@@ -35631,7 +35621,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>891</th>
+      <th>890</th>
       <td>Saul Perlmutter (born September 22, 1959) is a...</td>
       <td>NaN</td>
       <td>Harvard University|University of California, B...</td>
@@ -35655,7 +35645,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>892</th>
+      <th>891</th>
       <td>Savas Dimopoulos (Greek: Σάββας Δημόπουλος; bo...</td>
       <td>NaN</td>
       <td>University of Chicago|University of Houston</td>
@@ -35679,7 +35669,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>893</th>
+      <th>892</th>
       <td>Scott Diddams is the head of a team of scienti...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35703,7 +35693,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>894</th>
+      <th>893</th>
       <td>Semen Alexandrovich Altshuler (also Altshuller...</td>
       <td>NaN</td>
       <td>Kazan (Volga region) Federal University</td>
@@ -35727,7 +35717,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>895</th>
+      <th>894</th>
       <td>Serge Haroche (born 11 September 1944) is a Fr...</td>
       <td>NaN</td>
       <td>École Normale Supérieure</td>
@@ -35751,7 +35741,7 @@ div#notebook {
       <td>Collège de France|Pierre and Marie Curie Unive...</td>
     </tr>
     <tr>
-      <th>896</th>
+      <th>895</th>
       <td>Serge Rudaz (born August 19, 1954, pronounced ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35775,7 +35765,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>897</th>
+      <th>896</th>
       <td>Sergei Vladimirovich Tyablikov (Russian: Серге...</td>
       <td>NaN</td>
       <td>Moscow State University</td>
@@ -35799,7 +35789,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>898</th>
+      <th>897</th>
       <td>Sergey Ivanovich Vavilov (Russian: Серге́й Ива...</td>
       <td>NaN</td>
       <td>Moscow State University</td>
@@ -35823,7 +35813,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>899</th>
+      <th>898</th>
       <td>Sergio Ferrara (born May 2, 1945) is an Italia...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35847,7 +35837,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>900</th>
+      <th>899</th>
       <td>Serguei Vladilenovich Krasnikov (Russian: Серг...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35871,7 +35861,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>901</th>
+      <th>900</th>
       <td>Seth Lloyd (born August 2, 1960) is a professo...</td>
       <td>NaN</td>
       <td>Harvard College|Phillips Academy|Rockefeller U...</td>
@@ -35895,7 +35885,7 @@ div#notebook {
       <td>California Institute of Technology|Los Alamos ...</td>
     </tr>
     <tr>
-      <th>902</th>
+      <th>901</th>
       <td>Seth Henry Neddermeyer (September 16, 1907 – J...</td>
       <td>NaN</td>
       <td>California Institute of Technology|Stanford Un...</td>
@@ -35919,7 +35909,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>903</th>
+      <th>902</th>
       <td>Sheldon Lee Glashow (/ˈɡlæʃoʊ/; born December ...</td>
       <td>NaN</td>
       <td>Cornell University|Harvard University</td>
@@ -35943,7 +35933,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>904</th>
+      <th>903</th>
       <td>Shen Kuo (Chinese: 沈括; 1031–1095), courtesy na...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35967,7 +35957,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>905</th>
+      <th>904</th>
       <td>Shiraz Naval Minwalla (Marathi: शिराझ मिन्वाल्...</td>
       <td>NaN</td>
       <td>Indian Institute of Technology Kanpur|Princeto...</td>
@@ -35991,7 +35981,7 @@ div#notebook {
       <td>Harvard University|Tata Institute of Fundament...</td>
     </tr>
     <tr>
-      <th>906</th>
+      <th>905</th>
       <td>Shirley Ann Jackson FREng (born August 5, 1946...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology</td>
@@ -36015,7 +36005,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>907</th>
+      <th>906</th>
       <td>Dr. Shoichi Sakata (坂田 昌一 Sakata Shōichi, 18 J...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36039,7 +36029,7 @@ div#notebook {
       <td>Kyoto University|Nagoya University|Osaka Unive...</td>
     </tr>
     <tr>
-      <th>908</th>
+      <th>907</th>
       <td>Sidney David Drell (born September 13, 1926) i...</td>
       <td>NaN</td>
       <td>University of Illinois at Urbana–Champaign</td>
@@ -36063,7 +36053,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>909</th>
+      <th>908</th>
       <td>Sidney Redner (born 1951) is a Canadian-born p...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36087,7 +36077,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>910</th>
+      <th>909</th>
       <td>Siméon Denis Poisson (French: [si.me.ɔ̃ də.ni ...</td>
       <td>Joseph-Louis Lagrange|Pierre-Simon Laplace</td>
       <td>École Polytechnique</td>
@@ -36111,7 +36101,7 @@ div#notebook {
       <td>Bureau des Longitudes|École Polytechnique|Écol...</td>
     </tr>
     <tr>
-      <th>911</th>
+      <th>910</th>
       <td>Simon Newcomb (March 12, 1835 – July 11, 1909)...</td>
       <td>Benjamin Peirce</td>
       <td>Harvard University</td>
@@ -36135,7 +36125,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>912</th>
+      <th>911</th>
       <td>Simon Stevin (Dutch: [ˈsimɔn ˈsteːvɪn]; 1548–1...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36159,7 +36149,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>913</th>
+      <th>912</th>
       <td>(This is a Dutch name; the family name is van ...</td>
       <td>NaN</td>
       <td>Delft University of Technology</td>
@@ -36183,7 +36173,7 @@ div#notebook {
       <td>CERN</td>
     </tr>
     <tr>
-      <th>914</th>
+      <th>913</th>
       <td>Sin'ichirō Tomonaga (朝永 振一郎 Tomonaga Shin'ichi...</td>
       <td>NaN</td>
       <td>Kyoto University</td>
@@ -36207,7 +36197,7 @@ div#notebook {
       <td>Institute for Advanced Study|RIKEN|University ...</td>
     </tr>
     <tr>
-      <th>915</th>
+      <th>914</th>
       <td>Sir George Gabriel Stokes, 1st Baronet, PRS (/...</td>
       <td>William Hopkins</td>
       <td>Pembroke College, Cambridge</td>
@@ -36231,7 +36221,7 @@ div#notebook {
       <td>Pembroke College, Cambridge</td>
     </tr>
     <tr>
-      <th>916</th>
+      <th>915</th>
       <td>Sixto González (born 1965) is the first Puerto...</td>
       <td>NaN</td>
       <td>Utah State University</td>
@@ -36255,7 +36245,7 @@ div#notebook {
       <td>SRI International</td>
     </tr>
     <tr>
-      <th>917</th>
+      <th>916</th>
       <td>Stanislav Pavlovich Mikheyev (Russian: Станисл...</td>
       <td>NaN</td>
       <td>Moscow State University</td>
@@ -36279,7 +36269,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>918</th>
+      <th>917</th>
       <td>Stanisław Marcin Ulam (pronounced ['staɲiswaf ...</td>
       <td>NaN</td>
       <td>Lviv Polytechnic</td>
@@ -36303,7 +36293,7 @@ div#notebook {
       <td>Harvard University|Institute for Advanced Stud...</td>
     </tr>
     <tr>
-      <th>919</th>
+      <th>918</th>
       <td>Stanley Deser is an American physicist known f...</td>
       <td>NaN</td>
       <td>Harvard University</td>
@@ -36327,7 +36317,7 @@ div#notebook {
       <td>Brandeis University|California Institute of Te...</td>
     </tr>
     <tr>
-      <th>920</th>
+      <th>919</th>
       <td>Stanley Mandelstam (12 December 1928 – 23 June...</td>
       <td>Paul Taunton Matthews</td>
       <td>Trinity College, Cambridge|University of Birmi...</td>
@@ -36351,7 +36341,7 @@ div#notebook {
       <td>University of Birmingham|University of Califor...</td>
     </tr>
     <tr>
-      <th>921</th>
+      <th>920</th>
       <td>Stephen George Gasiorowicz (May 10, 1928 – Jun...</td>
       <td>NaN</td>
       <td>University of California, Los Angeles</td>
@@ -36375,7 +36365,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>922</th>
+      <th>921</th>
       <td>Stephen William Hawking, CH, CBE, FRS, FRSA (/...</td>
       <td>NaN</td>
       <td>Trinity Hall, Cambridge|University College, Ox...</td>
@@ -36399,7 +36389,7 @@ div#notebook {
       <td>California Institute of Technology|Gonville an...</td>
     </tr>
     <tr>
-      <th>923</th>
+      <th>922</th>
       <td>Stephen Louis Adler (born November 30, 1939) i...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36423,7 +36413,7 @@ div#notebook {
       <td>Institute for Advanced Study</td>
     </tr>
     <tr>
-      <th>924</th>
+      <th>923</th>
       <td>Stephen Parke (born 1950) is a New Zealand phy...</td>
       <td>NaN</td>
       <td>Harvard University|St Peter's College, Aucklan...</td>
@@ -36447,7 +36437,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>925</th>
+      <th>924</th>
       <td>Stephen F. Paul (November 13, 1953 – September...</td>
       <td>NaN</td>
       <td>Columbia University|Cornell University</td>
@@ -36471,7 +36461,7 @@ div#notebook {
       <td>Princeton Plasma Physics Laboratory|Princeton ...</td>
     </tr>
     <tr>
-      <th>926</th>
+      <th>925</th>
       <td>Stephen Wolfram (born 29 August 1959) is a Bri...</td>
       <td>NaN</td>
       <td>California Institute of Technology|St John's C...</td>
@@ -36495,7 +36485,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>927</th>
+      <th>926</th>
       <td>Stephen D. H. Hsu (born 1966) is an American p...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36519,7 +36509,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>928</th>
+      <th>927</th>
       <td>Steven Chu (Chinese: 朱棣文; pinyin: Zhū Dìwén, b...</td>
       <td>NaN</td>
       <td>University of California, Berkeley|University ...</td>
@@ -36543,7 +36533,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>929</th>
+      <th>928</th>
       <td>Steven C. Frautschi (born December 6, 1933) is...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36567,7 +36557,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>930</th>
+      <th>929</th>
       <td>Steven Scott Gubser (born 4 May 1972) is a pro...</td>
       <td>NaN</td>
       <td>Princeton University</td>
@@ -36591,7 +36581,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>931</th>
+      <th>930</th>
       <td>Steven Weinberg (born May 3, 1933) is an Ameri...</td>
       <td>NaN</td>
       <td>Cornell University|Princeton University</td>
@@ -36615,7 +36605,7 @@ div#notebook {
       <td>Harvard University|Massachusetts Institute of ...</td>
     </tr>
     <tr>
-      <th>932</th>
+      <th>931</th>
       <td>Subrahmanyan Chandrasekhar, FRS (/ˌtʃʌndrəˈʃeɪ...</td>
       <td>NaN</td>
       <td>University of Cambridge|University of Madras</td>
@@ -36639,7 +36629,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>933</th>
+      <th>932</th>
       <td>Sudhansu Datta Majumdar (1915–1997) was an Ind...</td>
       <td>NaN</td>
       <td>Presidency University, Kolkata</td>
@@ -36663,7 +36653,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>934</th>
+      <th>933</th>
       <td>Sumio Iijima (飯島 澄男 Iijima Sumio, born May 2, ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36687,7 +36677,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>935</th>
+      <th>934</th>
       <td>Susumu Okubo (大久保 進 Ōkubo Susumu, 1930 – July ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36711,7 +36701,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>936</th>
+      <th>935</th>
       <td>Swapan Chattopadhyay (born December 26, 1951) ...</td>
       <td>NaN</td>
       <td>Indian Institutes of Technology|List of school...</td>
@@ -36735,7 +36725,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>937</th>
+      <th>936</th>
       <td>Sylvester James Gates Jr. (born December 15, 1...</td>
       <td>NaN</td>
       <td>Massachusetts Institute of Technology</td>
@@ -36759,7 +36749,7 @@ div#notebook {
       <td>University of Maryland, College Park</td>
     </tr>
     <tr>
-      <th>938</th>
+      <th>937</th>
       <td>Thomas Howell Laby FRS (3 May 1880 – 21 June 1...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36783,7 +36773,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>939</th>
+      <th>938</th>
       <td>Not to be confused with director and actor Tah...</td>
       <td>Rafi Muhammad Chaudhry</td>
       <td>Aligarh Muslim University|Government College U...</td>
@@ -36807,7 +36797,7 @@ div#notebook {
       <td>Centre for Advanced Studies in Physics|Governm...</td>
     </tr>
     <tr>
-      <th>940</th>
+      <th>939</th>
       <td>Takaaki Kajita (梶田 隆章 Kajita Takaaki, born 9 M...</td>
       <td>Yoji Totsuka</td>
       <td>Saitama University|University of Tokyo</td>
@@ -36831,7 +36821,7 @@ div#notebook {
       <td>Institute for Cosmic Ray Research|University o...</td>
     </tr>
     <tr>
-      <th>941</th>
+      <th>940</th>
       <td>Professor Tanya Mary Monro FAA FTSE FOSA FAIP ...</td>
       <td>NaN</td>
       <td>University of Sydney</td>
@@ -36855,7 +36845,7 @@ div#notebook {
       <td>University of Adelaide|University of South Aus...</td>
     </tr>
     <tr>
-      <th>942</th>
+      <th>941</th>
       <td>Tatyana Alexeyevna Afanasyeva (Russian: Татья́...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36879,7 +36869,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>943</th>
+      <th>942</th>
       <td>Tekin Dereli (November 30, 1949) is a Turkish ...</td>
       <td>NaN</td>
       <td>Middle East Technical University|Theoretical p...</td>
@@ -36903,7 +36893,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>944</th>
+      <th>943</th>
       <td>Terence James Elkins (born 8 March 1936) is an...</td>
       <td>NaN</td>
       <td>Boston University|University of Melbourne</td>
@@ -36927,7 +36917,7 @@ div#notebook {
       <td>Air Force Research Laboratory|Mitre Corporatio...</td>
     </tr>
     <tr>
-      <th>945</th>
+      <th>944</th>
       <td>Thales of Miletus (/ˈθeɪliːz/; Greek: Θαλῆς (ὁ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36951,7 +36941,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>946</th>
+      <th>945</th>
       <td>Thanu Padmanabhan (born 10 March 1957) is an I...</td>
       <td>NaN</td>
       <td>Tata Institute of Fundamental Research|Univers...</td>
@@ -36975,7 +36965,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>947</th>
+      <th>946</th>
       <td>Theodor Franz Eduard Kaluza (9 November 1885, ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36999,7 +36989,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>948</th>
+      <th>947</th>
       <td>Theodor Wolfgang Hänsch (born 30 October 1941)...</td>
       <td>NaN</td>
       <td>Heidelberg University</td>
@@ -37023,7 +37013,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>949</th>
+      <th>948</th>
       <td>Theodore Harold "Ted" Maiman (July 11, 1927 – ...</td>
       <td>NaN</td>
       <td>Stanford University|University of Colorado Bou...</td>
@@ -37047,7 +37037,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>950</th>
+      <th>949</th>
       <td>Theodore von Kármán (Hungarian: Szőllőskislaki...</td>
       <td>NaN</td>
       <td>Budapest University of Technology and Economics</td>
@@ -37071,7 +37061,7 @@ div#notebook {
       <td>California Institute of Technology|RWTH Aachen...</td>
     </tr>
     <tr>
-      <th>951</th>
+      <th>950</th>
       <td>He taught at a number of schools in Ohio inclu...</td>
       <td>NaN</td>
       <td>Ohio State University</td>
@@ -37095,7 +37085,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>952</th>
+      <th>951</th>
       <td>Thomas L. Curtright (born 1948, near Paris, Mi...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37119,7 +37109,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>953</th>
+      <th>952</th>
       <td>Thomas Alva Edison (February 11, 1847 – Octobe...</td>
       <td>NaN</td>
       <td>Autodidacticism</td>
@@ -37143,7 +37133,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>954</th>
+      <th>953</th>
       <td>Thomas Howard Stix (July 12, 1924 – April 16, ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37167,7 +37157,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>955</th>
+      <th>954</th>
       <td>Thomas Johann Seebeck (German: [ˈtoːmas ˈjoːha...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37191,7 +37181,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>956</th>
+      <th>955</th>
       <td>Thomas Young (13 June 1773 – 10 May 1829) was ...</td>
       <td>NaN</td>
       <td>Emmanuel College, Cambridge|University of Edin...</td>
@@ -37215,7 +37205,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>957</th>
+      <th>956</th>
       <td>Tōichirō Kinoshita  (木下東一郎,  Kinoshita Tōichir...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37239,7 +37229,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>958</th>
+      <th>957</th>
       <td>Tom Baehr-Jones (born January 15, 1980 in Broo...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37263,7 +37253,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>959</th>
+      <th>958</th>
       <td>Tom Banks (born April 19, 1949 in New York Cit...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37287,7 +37277,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>960</th>
+      <th>959</th>
       <td>Sir Thomas Walter Bannerman Kibble, CBE FRS (2...</td>
       <td>NaN</td>
       <td>University of Edinburgh</td>
@@ -37311,7 +37301,7 @@ div#notebook {
       <td>Imperial College London</td>
     </tr>
     <tr>
-      <th>961</th>
+      <th>960</th>
       <td>Toshihide Maskawa (or Masukawa) (益川 敏英 Masukaw...</td>
       <td>NaN</td>
       <td>Nagoya University</td>
@@ -37335,7 +37325,7 @@ div#notebook {
       <td>Kyoto Sangyo University|Kyoto University|Nagoy...</td>
     </tr>
     <tr>
-      <th>962</th>
+      <th>961</th>
       <td>Tsung-Dao Lee (T. D. Lee; Chinese: 李政道; pinyin...</td>
       <td>NaN</td>
       <td>Guizhou|National Southwestern Associated Unive...</td>
@@ -37359,7 +37349,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>963</th>
+      <th>962</th>
       <td>Tullio Eugenio Regge (Italian: [ˈtulljo ˈrɛddʒ...</td>
       <td>NaN</td>
       <td>University of Turin</td>
@@ -37383,7 +37373,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>964</th>
+      <th>963</th>
       <td>Tycho Brahe (/ˌtaɪkoʊ ˈbrɑːhi, ˈbrɑːᵊ/), born ...</td>
       <td>NaN</td>
       <td>Leipzig University|University of Copenhagen|Un...</td>
@@ -37407,7 +37397,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>965</th>
+      <th>964</th>
       <td>V. Balakrishnan (born 1943 as Venkataraman Bal...</td>
       <td>NaN</td>
       <td>Brandeis University|St. Stephen's College, Del...</td>
@@ -37431,7 +37421,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>966</th>
+      <th>965</th>
       <td>Val Logsdon Fitch (March 10, 1923 – February 5...</td>
       <td>NaN</td>
       <td>Columbia University|McGill University</td>
@@ -37452,10 +37442,10 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Val_Logsdon_Fitch...</td>
       <td>396733</td>
       <td>736394778</td>
-      <td>Manhattan Project|Princeton University</td>
+      <td>Manhattan Project\n* Princeton University</td>
     </tr>
     <tr>
-      <th>967</th>
+      <th>966</th>
       <td>Valentine Louis Telegdi (Hungarian: Telegdi Bá...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37479,7 +37469,7 @@ div#notebook {
       <td>California Institute of Technology|CERN|ETH Zu...</td>
     </tr>
     <tr>
-      <th>968</th>
+      <th>967</th>
       <td>Valery Leonidovich Pokrovsky (Russian: Валери ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37503,7 +37493,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>969</th>
+      <th>968</th>
       <td>Vera Rubin (née Cooper; born July 23, 1928) is...</td>
       <td>Hans Bethe|Philip Morrison|Richard Feynman</td>
       <td>Cornell University|Georgetown University|Vassa...</td>
@@ -37527,7 +37517,7 @@ div#notebook {
       <td>Carnegie Institution for Science|Georgetown Un...</td>
     </tr>
     <tr>
-      <th>970</th>
+      <th>969</th>
       <td>Viatcheslav Fyodorovich Mukhanov (Russian: Вяч...</td>
       <td>NaN</td>
       <td>Moscow Institute of Physics and Technology</td>
@@ -37551,7 +37541,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>971</th>
+      <th>970</th>
       <td>Victor Amazaspovich Ambartsumian (Russian: Ви́...</td>
       <td>NaN</td>
       <td>Herzen University|Saint Petersburg State Unive...</td>
@@ -37575,7 +37565,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>972</th>
+      <th>971</th>
       <td>Victor Franz Hess (24 June 1883 – 17 December ...</td>
       <td>NaN</td>
       <td>University of Graz</td>
@@ -37599,7 +37589,7 @@ div#notebook {
       <td>Austrian Academy of Sciences|Fordham Universit...</td>
     </tr>
     <tr>
-      <th>973</th>
+      <th>972</th>
       <td>Victor Nikolaevich Popov (Russian: Ви́ктор Ник...</td>
       <td>NaN</td>
       <td>Saint Petersburg State University</td>
@@ -37623,7 +37613,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>974</th>
+      <th>973</th>
       <td>Victor Frederick "Viki" Weisskopf (September 1...</td>
       <td>NaN</td>
       <td>University of Göttingen</td>
@@ -37647,7 +37637,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>975</th>
+      <th>974</th>
       <td>Vikram Ambalal Sarabhai (12 August 1919 – 30 D...</td>
       <td>NaN</td>
       <td>Gujarat College|University of Cambridge</td>
@@ -37671,7 +37661,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>976</th>
+      <th>975</th>
       <td>Viktor Vasilyevich Dilman, also spelled Dil'ma...</td>
       <td>NaN</td>
       <td>All-Union Research Institute of Oxygen Enginee...</td>
@@ -37695,7 +37685,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>977</th>
+      <th>976</th>
       <td>Vilhelm Friman Koren Bjerknes ForMemRS (/ˈvɪlˌ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37719,7 +37709,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>978</th>
+      <th>977</th>
       <td>Vitaly Lazarevich Ginzburg, ForMemRS (Russian:...</td>
       <td>NaN</td>
       <td>Moscow State University</td>
@@ -37743,7 +37733,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>979</th>
+      <th>978</th>
       <td>Vladimir Aleksandrovich Fock (or Fok; Russian:...</td>
       <td>NaN</td>
       <td>Saint Petersburg State University</td>
@@ -37767,7 +37757,7 @@ div#notebook {
       <td>Ioffe Institute|Lebedev Physical Institute|Sai...</td>
     </tr>
     <tr>
-      <th>980</th>
+      <th>979</th>
       <td>Vladimir Naumovich Gribov (Russian Влади́мир Н...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37791,7 +37781,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>981</th>
+      <th>980</th>
       <td>Vlatko Vedral is a Serbian-born (and naturalis...</td>
       <td>NaN</td>
       <td>Imperial College London</td>
@@ -37815,7 +37805,7 @@ div#notebook {
       <td>National University of Singapore|University of...</td>
     </tr>
     <tr>
-      <th>982</th>
+      <th>981</th>
       <td>William Webster Hansen (May 27, 1909 – May 23,...</td>
       <td>NaN</td>
       <td>Stanford University</td>
@@ -37839,7 +37829,7 @@ div#notebook {
       <td>Hansen Laboratories</td>
     </tr>
     <tr>
-      <th>983</th>
+      <th>982</th>
       <td>Walter Moritz Boas (10 February 1904 – 12 May ...</td>
       <td>NaN</td>
       <td>Technical University of Berlin</td>
@@ -37863,7 +37853,7 @@ div#notebook {
       <td>University of Melbourne</td>
     </tr>
     <tr>
-      <th>984</th>
+      <th>983</th>
       <td>Walter Franz (8 April 1911 in Munich – 16 Febr...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37887,7 +37877,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>985</th>
+      <th>984</th>
       <td>Walther Gerlach (1 August 1889 Biebrich, Hesse...</td>
       <td>Friedrich Paschen</td>
       <td>University of Tübingen</td>
@@ -37911,7 +37901,7 @@ div#notebook {
       <td>Goethe University Frankfurt|University of Tübi...</td>
     </tr>
     <tr>
-      <th>986</th>
+      <th>985</th>
       <td>Walter Hermann Schottky (23 July 1886 – 4 Marc...</td>
       <td>NaN</td>
       <td>Humboldt University of Berlin</td>
@@ -37935,7 +37925,7 @@ div#notebook {
       <td>Siemens|University of Jena|University of Rosto...</td>
     </tr>
     <tr>
-      <th>987</th>
+      <th>986</th>
       <td>Walter Heinrich Heitler (German: [ˈhaɪtlɐ]; 2 ...</td>
       <td>Arnold Sommerfeld</td>
       <td>Ludwig Maximilian University of Munich</td>
@@ -37959,7 +37949,7 @@ div#notebook {
       <td>Dublin Institute for Advanced Studies|Universi...</td>
     </tr>
     <tr>
-      <th>988</th>
+      <th>987</th>
       <td>Walter Houser Brattain (February 10, 1902 – Oc...</td>
       <td>NaN</td>
       <td>University of Minnesota|University of Oregon|W...</td>
@@ -37983,7 +37973,7 @@ div#notebook {
       <td>Bell Labs|Whitman College</td>
     </tr>
     <tr>
-      <th>989</th>
+      <th>988</th>
       <td>Walter Hendrik Gustav Lewin (born January 29, ...</td>
       <td>NaN</td>
       <td>Delft University of Technology</td>
@@ -38007,7 +37997,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>990</th>
+      <th>989</th>
       <td>Walter Charles Marshall, Baron Marshall of Gor...</td>
       <td>NaN</td>
       <td>University of Birmingham</td>
@@ -38031,7 +38021,7 @@ div#notebook {
       <td>Central Electricity Generating Board</td>
     </tr>
     <tr>
-      <th>991</th>
+      <th>990</th>
       <td>Walter Selke (born 1947) is a German retired p...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38055,7 +38045,7 @@ div#notebook {
       <td>RWTH Aachen University</td>
     </tr>
     <tr>
-      <th>992</th>
+      <th>991</th>
       <td>Walther Wilhelm Georg Bothe (8 January 1891 – ...</td>
       <td>NaN</td>
       <td>Humboldt University of Berlin</td>
@@ -38079,7 +38069,7 @@ div#notebook {
       <td>Heidelberg University|Humboldt University of B...</td>
     </tr>
     <tr>
-      <th>993</th>
+      <th>992</th>
       <td>Walther Ludwig Julius Kossel (4 January 1888 i...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38103,7 +38093,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>994</th>
+      <th>993</th>
       <td>Walther Ritz (22 February 1878 – 7 July 1909) ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38127,7 +38117,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>995</th>
+      <th>994</th>
       <td>Wander Johannes de Haas (2 March 1878 – 26 Apr...</td>
       <td>Johannes Kuenen</td>
       <td>Leiden University</td>
@@ -38151,7 +38141,7 @@ div#notebook {
       <td>Delft University of Technology|Leiden University</td>
     </tr>
     <tr>
-      <th>996</th>
+      <th>995</th>
       <td>Wang Ganchang (Chinese: 王淦昌; pinyin: Wáng Gànc...</td>
       <td>NaN</td>
       <td>Humboldt University of Berlin|Tsinghua University</td>
@@ -38175,7 +38165,7 @@ div#notebook {
       <td>China and weapons of mass destruction|China As...</td>
     </tr>
     <tr>
-      <th>997</th>
+      <th>996</th>
       <td>E. Ward Plummer is an American physicist. His ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38199,7 +38189,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>998</th>
+      <th>997</th>
       <td>Werner Karl Heisenberg (German: [ˈhaɪzənbɛɐ̯k]...</td>
       <td>Max Born|Niels Bohr</td>
       <td>Ludwig Maximilian University of Munich</td>
@@ -38223,7 +38213,7 @@ div#notebook {
       <td>Humboldt University of Berlin|Leipzig Universi...</td>
     </tr>
     <tr>
-      <th>999</th>
+      <th>998</th>
       <td>Werner Israel, OC FRSC FRS (born October 4, 19...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38247,7 +38237,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1000</th>
+      <th>999</th>
       <td>Wernher Magnus Maximilian Freiherr von Braun (...</td>
       <td>NaN</td>
       <td>Technical University of Berlin</td>
@@ -38271,7 +38261,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1001</th>
+      <th>1000</th>
       <td>Wilhelm Eduard Weber (German: [ˈveːbɐ]; 24 Oct...</td>
       <td>NaN</td>
       <td>Martin Luther University of Halle-Wittenberg|U...</td>
@@ -38295,7 +38285,7 @@ div#notebook {
       <td>Leipzig University|Martin Luther University of...</td>
     </tr>
     <tr>
-      <th>1002</th>
+      <th>1001</th>
       <td>Wilhelm Conrad Röntgen (/ˈrɛntɡən, -dʒən, ˈrʌn...</td>
       <td>NaN</td>
       <td>ETH Zurich|University of Zurich</td>
@@ -38316,10 +38306,10 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Wilhelm_Röntgen?o...</td>
       <td>61325</td>
       <td>745154304</td>
-      <td>University of Giessen|University of Hohenheim|...</td>
+      <td>University of Strassburg\n* University of Hohe...</td>
     </tr>
     <tr>
-      <th>1003</th>
+      <th>1002</th>
       <td>Wilhelm Carl Werner Otto Fritz Franz Wien (Ger...</td>
       <td>NaN</td>
       <td>Humboldt University of Berlin|University of Gö...</td>
@@ -38343,7 +38333,7 @@ div#notebook {
       <td>Columbia University|Ludwig Maximilian Universi...</td>
     </tr>
     <tr>
-      <th>1004</th>
+      <th>1003</th>
       <td>Willard Sterling Boyle, CC (August 19, 1924 – ...</td>
       <td>NaN</td>
       <td>Lower Canada College|McGill University</td>
@@ -38367,7 +38357,7 @@ div#notebook {
       <td>Bell Labs</td>
     </tr>
     <tr>
-      <th>1005</th>
+      <th>1004</th>
       <td>Willebrord Snellius (born Willebrord Snel van ...</td>
       <td>Ludolph van Ceulen|Rudolph Snellius</td>
       <td>Leiden University</td>
@@ -38391,7 +38381,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1006</th>
+      <th>1005</th>
       <td>Willem de Sitter (6 May 1872 – 20 November 193...</td>
       <td>NaN</td>
       <td>University of Groningen</td>
@@ -38415,7 +38405,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1007</th>
+      <th>1006</th>
       <td>Willem Hendrik Keesom (/ˈkeɪsoʊm/) (21 June 18...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38439,7 +38429,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1008</th>
+      <th>1007</th>
       <td>Willem Jacob 's Gravesande (26 September 1688 ...</td>
       <td>NaN</td>
       <td>Leiden University</td>
@@ -38463,7 +38453,7 @@ div#notebook {
       <td>Leiden University</td>
     </tr>
     <tr>
-      <th>1009</th>
+      <th>1008</th>
       <td>William Allan Bardeen (born September 15, 1941...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38487,7 +38477,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1010</th>
+      <th>1009</th>
       <td>William Alfred "Willie" Fowler (/ˈfaʊlər/; Aug...</td>
       <td>NaN</td>
       <td>California Institute of Technology</td>
@@ -38511,7 +38501,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1011</th>
+      <th>1010</th>
       <td>William Phelps Allis (November 15, 1901 in Men...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38535,7 +38525,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1012</th>
+      <th>1011</th>
       <td>Sir William Crookes OM PRS (17 June 1832 – 4 A...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38559,7 +38549,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1013</th>
+      <th>1012</th>
       <td>William Daniel Phillips (born November 5, 1948...</td>
       <td>NaN</td>
       <td>Juniata College|Massachusetts Institute of Tec...</td>
@@ -38583,7 +38573,7 @@ div#notebook {
       <td>National Institute of Standards and Technology...</td>
     </tr>
     <tr>
-      <th>1014</th>
+      <th>1013</th>
       <td>William Henry Eccles FRS (23 August 1875 – 29 ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38607,7 +38597,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1015</th>
+      <th>1014</th>
       <td>William Fuller Brown, Jr. (21 October 1904–198...</td>
       <td>NaN</td>
       <td>Columbia University|Cornell University</td>
@@ -38631,7 +38621,7 @@ div#notebook {
       <td>3M|Naval Ordnance Laboratory|Princeton Univers...</td>
     </tr>
     <tr>
-      <th>1016</th>
+      <th>1015</th>
       <td>William Gilbert (/ˈɡɪlbərt/; 24 May 1544 – 30 ...</td>
       <td>NaN</td>
       <td>St John's College, Cambridge</td>
@@ -38655,7 +38645,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1017</th>
+      <th>1016</th>
       <td>Sir William Henry Bragg OM KBE PRS (2 July 186...</td>
       <td>J. J. Thomson</td>
       <td>Trinity College, Cambridge</td>
@@ -38679,7 +38669,7 @@ div#notebook {
       <td>Royal Institution|University College London|Un...</td>
     </tr>
     <tr>
-      <th>1018</th>
+      <th>1017</th>
       <td>Sir William Lawrence Bragg CH, OBE, MC, FRS (3...</td>
       <td>J. J. Thomson|William Henry Bragg</td>
       <td>Trinity College, Cambridge|University of Adelaide</td>
@@ -38703,7 +38693,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1019</th>
+      <th>1018</th>
       <td>William Markowitz (February 8, 1907 in Vítkov,...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38727,7 +38717,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1020</th>
+      <th>1019</th>
       <td>William Prout FRS (15 January 1785 – 9 April 1...</td>
       <td>NaN</td>
       <td>University of Edinburgh</td>
@@ -38751,7 +38741,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1021</th>
+      <th>1020</th>
       <td>William R. Kanne worked on Chicago Pile One al...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38775,7 +38765,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1022</th>
+      <th>1021</th>
       <td>Sir William Rowan Hamilton PRIA FRSE (midnight...</td>
       <td>John Brinkley (astronomer)</td>
       <td>Trinity College, Dublin</td>
@@ -38799,7 +38789,7 @@ div#notebook {
       <td>Trinity College, Dublin</td>
     </tr>
     <tr>
-      <th>1023</th>
+      <th>1022</th>
       <td>William Bradford Shockley Jr. (February 13, 19...</td>
       <td>NaN</td>
       <td>California Institute of Technology|Massachuset...</td>
@@ -38823,7 +38813,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1024</th>
+      <th>1023</th>
       <td>William Thomson, 1st Baron Kelvin OM GCVO PC F...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38847,7 +38837,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1025</th>
+      <th>1024</th>
       <td>William Vermillion Houston (January 19, 1900 –...</td>
       <td>NaN</td>
       <td>Ohio State University</td>
@@ -38871,7 +38861,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1026</th>
+      <th>1025</th>
       <td>Willibald Peter Prasthofer (17 May 1917 – 30 J...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38895,7 +38885,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1027</th>
+      <th>1026</th>
       <td>Willis Eugene Lamb Jr. (July 12, 1913 – May 15...</td>
       <td>NaN</td>
       <td>University of California, Berkeley</td>
@@ -38919,8 +38909,8 @@ div#notebook {
       <td>Columbia University|Stanford University|Univer...</td>
     </tr>
     <tr>
-      <th>1028</th>
-      <td>Black Hole production in colliders (with Tom ...</td>
+      <th>1027</th>
+      <td>Willy Fischler (born in 1949 in Antwerpen, Bel...</td>
       <td>NaN</td>
       <td>Université libre de Bruxelles</td>
       <td>NaN</td>
@@ -38943,7 +38933,7 @@ div#notebook {
       <td>CERN|Los Alamos National Laboratory|University...</td>
     </tr>
     <tr>
-      <th>1029</th>
+      <th>1028</th>
       <td>Wojciech Hubert Żurek (born 1951) is a Polish-...</td>
       <td>NaN</td>
       <td>Jagiellonian University</td>
@@ -38967,7 +38957,7 @@ div#notebook {
       <td>California Institute of Technology|Los Alamos ...</td>
     </tr>
     <tr>
-      <th>1030</th>
+      <th>1029</th>
       <td>Woldemar Voigt (German: [foːkt]; 2 September 1...</td>
       <td>NaN</td>
       <td>University of Königsberg</td>
@@ -38991,7 +38981,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1031</th>
+      <th>1030</th>
       <td>Wolfgang Karl Ernst Finkelnburg (5 June 1905 –...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39015,7 +39005,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1032</th>
+      <th>1031</th>
       <td>Wolfgang Kurt Hermann "Pief" Panofsky (April 2...</td>
       <td>NaN</td>
       <td>California Institute of Technology</td>
@@ -39039,7 +39029,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1033</th>
+      <th>1032</th>
       <td>Wolfgang Ketterle (born 21 October 1957) is a ...</td>
       <td>NaN</td>
       <td>Heidelberg University|Ludwig Maximilian Univer...</td>
@@ -39063,7 +39053,7 @@ div#notebook {
       <td>Heidelberg University|Massachusetts Institute ...</td>
     </tr>
     <tr>
-      <th>1034</th>
+      <th>1033</th>
       <td>Wolfgang Paul (10 August 1913 – 7 December 199...</td>
       <td>NaN</td>
       <td>Technical University of Berlin|Technical Unive...</td>
@@ -39087,7 +39077,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1035</th>
+      <th>1034</th>
       <td>Pauli was born in Vienna to a chemist Wolfgang...</td>
       <td>Max Born</td>
       <td>Ludwig Maximilian University of Munich</td>
@@ -39111,7 +39101,7 @@ div#notebook {
       <td>ETH Zurich|Institute for Advanced Study|Univer...</td>
     </tr>
     <tr>
-      <th>1036</th>
+      <th>1035</th>
       <td>Xiao-Gang Wen (simplified Chinese: 文小刚; tradit...</td>
       <td>NaN</td>
       <td>Princeton University|University of Science and...</td>
@@ -39135,7 +39125,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1037</th>
+      <th>1036</th>
       <td>Yakov Borisovich Zel'dovich ForMemRS (Belarusi...</td>
       <td>NaN</td>
       <td>Saint Petersburg State University</td>
@@ -39159,7 +39149,7 @@ div#notebook {
       <td>Institute of Problems of Chemical Physics|Mosc...</td>
     </tr>
     <tr>
-      <th>1038</th>
+      <th>1037</th>
       <td>Yakov Il'ich Frenkel (Russian: Яков Ильич Френ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39183,7 +39173,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1039</th>
+      <th>1038</th>
       <td>Yakov Lvovich Alpert (Russian: Яков Львович Ал...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39207,7 +39197,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1040</th>
+      <th>1039</th>
       <td>Yaakov (Yasha) Rosenfeld (February 16, 1948 – ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39231,7 +39221,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1041</th>
+      <th>1040</th>
       <td>Nomura received his Ph.D. from University of T...</td>
       <td>NaN</td>
       <td>University of Tokyo</td>
@@ -39255,7 +39245,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1042</th>
+      <th>1041</th>
       <td>Yoichiro Nambu (南部 陽一郎 Nanbu Yōichirō, 18 Janu...</td>
       <td>NaN</td>
       <td>University of Tokyo</td>
@@ -39279,7 +39269,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1043</th>
+      <th>1042</th>
       <td>Yoji Totsuka (戸塚 洋二 Totsuka Yōji, March 6, 194...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39303,7 +39293,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1044</th>
+      <th>1043</th>
       <td>Yoshinori Tokura (十倉 好紀 Tokura Yoshinori, born...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39327,7 +39317,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1045</th>
+      <th>1044</th>
       <td>Yulii Borisovich Khariton (Russian: Ю́лий Бори...</td>
       <td>Abram Ioffe</td>
       <td>Peter the Great St. Petersburg Polytechnic Uni...</td>
@@ -39351,7 +39341,7 @@ div#notebook {
       <td>Institute of Problems of Chemical Physics</td>
     </tr>
     <tr>
-      <th>1046</th>
+      <th>1045</th>
       <td>Yuri Fyodorovich Orlov (Russian: Ю́рий Фёдоров...</td>
       <td>NaN</td>
       <td>Institute for Theoretical and Experimental Phy...</td>
@@ -39372,10 +39362,10 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Yuri_Orlov?oldid=...</td>
       <td>848376</td>
       <td>737603901</td>
-      <td>American Academy of Arts and Sciences|Cornell ...</td>
+      <td>Institute for Theoretical and Experimental Phy...</td>
     </tr>
     <tr>
-      <th>1047</th>
+      <th>1046</th>
       <td>Yuval Ne'eman (Hebrew: יובל נאמן‎‎‎, 14 May 19...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39399,7 +39389,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1048</th>
+      <th>1047</th>
       <td>Zhores Ivanovich Alferov (Russian: Жоре́с Ива́...</td>
       <td>NaN</td>
       <td>Saint Petersburg Electrotechnical University</td>
@@ -39423,7 +39413,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1049</th>
+      <th>1048</th>
       <td>Zoltán Lajos Bay (July 24, 1900 in Gyulavári –...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39448,7 +39438,7 @@ div#notebook {
     </tr>
   </tbody>
 </table>
-<p>1050 rows × 43 columns</p>
+<p>1049 rows × 43 columns</p>
 </div>
 </div>
 
@@ -39483,11 +39473,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Cleaning-Up">Cleaning Up<a class="anchor-link" href="#Cleaning-Up">&#182;</a></h2><p>A few clean up steps are needed:</p>
+<h2 id="Cleaning-Up">Cleaning Up<a class="anchor-link" href="#Cleaning-Up">&#182;</a></h2><p>A clean up step is needed:</p>
 <ul>
 <li>Remove the top-level module directory of the repository from the system path.</li>
-<li>Convert the notebook to a HTML file with all the output.</li>
-<li>Convert the notebook to another notebook with the output removed.</li>
 </ul>
 
 </div>
@@ -39502,70 +39490,6 @@ div#notebook {
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --output-dir html_output --to html <span class="m">2</span>.0-process-physicists-raw-data.ipynb
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>[NbConvertApp] Converting notebook 2.0-process-physicists-raw-data.ipynb to html
-[NbConvertApp] Writing 368788 bytes to html_output\2.0-process-physicists-raw-data.html
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --ClearOutputPreprocessor.enabled<span class="o">=</span>True --to notebook <span class="m">2</span>.0-process-physicists-raw-data.ipynb
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>[NbConvertApp] Converting notebook 2.0-process-physicists-raw-data.ipynb to notebook
-[NbConvertApp] Writing 35382 bytes to 2.0-process-physicists-raw-data.nbconvert.ipynb
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 

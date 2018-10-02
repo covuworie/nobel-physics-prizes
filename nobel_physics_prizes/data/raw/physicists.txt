@@ -161,6 +161,7 @@ Carlo Rovelli
 Carlo Rubbia
 Carlos E.M. Wagner
 Carolina Henriette MacGillavry
+Céline Bœhm
 César Lattes
 Charles Critchfield
 Charles Édouard Guillaume
@@ -641,7 +642,6 @@ Louis Néel
 Louis Rendu
 Louis Slotin
 Lowell S. Brown
-Luboš Motl
 Luciano Maiani
 Lucretius
 Ludvig Faddeev
