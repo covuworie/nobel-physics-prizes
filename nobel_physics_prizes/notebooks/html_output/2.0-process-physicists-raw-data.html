@@ -13526,8 +13526,10 @@ div#notebook {
 
     <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_dates</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span> <span class="s1">&#39;birthDate&#39;</span><span class="p">)</span>
     <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_dates</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span> <span class="s1">&#39;deathDate&#39;</span><span class="p">)</span>
-    <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_citizenship_nationality</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span> <span class="s1">&#39;citizenship&#39;</span><span class="p">)</span>
-    <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_citizenship_nationality</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span> <span class="s1">&#39;nationality&#39;</span><span class="p">)</span>
+    <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_citizenship_nationality</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span>
+                                                  <span class="s1">&#39;citizenship&#39;</span><span class="p">)</span>
+    <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_citizenship_nationality</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span>
+                                                  <span class="s1">&#39;nationality&#39;</span><span class="p">)</span>
     <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_spouse_child</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span> <span class="s1">&#39;spouse&#39;</span><span class="p">)</span>
     <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_spouse_child</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span> <span class="s1">&#39;child&#39;</span><span class="p">)</span>
     <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_almaMater</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">)</span>
@@ -13625,7 +13627,7 @@ div#notebook {
     <span class="k">if</span> <span class="p">(</span><span class="n">key_present</span> <span class="ow">and</span> <span class="ow">not</span>
         <span class="n">key_present</span> <span class="o">==</span> <span class="s1">&#39;United Kingdom of Great Britain and Ireland&#39;</span><span class="p">):</span>
         <span class="n">cleaned_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">key_present</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+            <span class="n">key_present</span>
             <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; / &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
             <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; , &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
             <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
@@ -13668,7 +13670,7 @@ div#notebook {
     <span class="n">key_present</span> <span class="o">=</span> <span class="n">cleaned_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">key_present</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key_present</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">cleaned_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">key_present</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+            <span class="n">key_present</span>
             <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;, and &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
             <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; and &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
             <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
@@ -13831,8 +13833,8 @@ div#notebook {
             <span class="n">text</span> <span class="o">=</span> <span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
                 <span class="k">continue</span>
-            <span class="n">text_list</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
-            <span class="n">urls</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">text_list</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
+            <span class="n">texts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+            <span class="n">urls</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">texts</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
                 <span class="n">DBPEDIA_RESOURCE_URL</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
                 <span class="n">quoted_url</span> <span class="o">=</span> <span class="n">quote_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
@@ -14096,14 +14098,19 @@ div#notebook {
     <span class="n">imputed_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">REDIRECT_KEYS</span><span class="p">:</span>
-         <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="n">text</span> <span class="o">=</span> <span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
                 <span class="k">continue</span>
 
-            <span class="n">text_list</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
-            <span class="n">impute_list</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">text_list</span><span class="p">:</span>
+            <span class="c1"># split up fields with these symbols</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">* &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">* &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+            <span class="n">texts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+            
+            <span class="n">impute_texts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">DBPEDIA_RESOURCE_URL</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">redirects</span><span class="p">:</span>
                         <span class="n">name</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span>
@@ -14115,9 +14122,10 @@ div#notebook {
                     <span class="n">name</span> <span class="o">=</span> <span class="n">text</span>
                 <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Category:&#39;</span><span class="p">):</span>
                     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Category:&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">impute_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-            <span class="n">impute_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
-            <span class="n">datum</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">impute_list</span><span class="p">)</span> 
+                <span class="n">impute_texts</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">impute_texts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">impute_texts</span><span class="p">)</span>
+            <span class="n">impute_texts</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
+            <span class="n">datum</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">impute_texts</span><span class="p">)</span> 
    
     <span class="k">return</span> <span class="n">imputed_data</span>
 </pre></div>
@@ -14197,10 +14205,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists_dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists_dataframe</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1049</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1049</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">option_context</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">1100</span><span class="p">):</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">physicists_dataframe</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14292,7 +14300,7 @@ div#notebook {
       <td>Atoms for Peace Award|Dannie Heineman Prize fo...</td>
       <td>1922-06-19</td>
       <td>NaN</td>
-      <td>Copenhagen|Copenhagen</td>
+      <td>Copenhagen</td>
       <td>1922 births|2009 deaths|Atoms for Peace Award ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14580,7 +14588,7 @@ div#notebook {
       <td>NaN</td>
       <td>1887-08-17</td>
       <td>Adriaan Daniël Fokker</td>
-      <td>Bogor|Bogor|Dutch East Indies</td>
+      <td>Bogor|Dutch East Indies</td>
       <td>1887 births|1972 deaths|Delft University of Te...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -15396,7 +15404,7 @@ div#notebook {
       <td>NaN</td>
       <td>1923-08-09</td>
       <td>NaN</td>
-      <td>British Raj|Chennai|Chennai|Madras Presidency</td>
+      <td>British Raj|Chennai|Madras Presidency</td>
       <td>1923 births|2008 deaths|American people of Tam...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16044,7 +16052,7 @@ div#notebook {
       <td>NaN</td>
       <td>1968-01-24</td>
       <td>Antony Garrett Lisi</td>
-      <td>Los Angeles|Los Angeles</td>
+      <td>Los Angeles</td>
       <td>1968 births|American physicists|American surfe...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16452,7 +16460,7 @@ div#notebook {
       <td>NaN</td>
       <td>1870-05-20</td>
       <td>NaN</td>
-      <td>Germany|Wrocław|Wrocław</td>
+      <td>Germany|Wrocław</td>
       <td>1870 births|1945 deaths|German Jews|German phy...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16884,7 +16892,7 @@ div#notebook {
       <td>IEEE Medal of Honor|Valdemar Poulsen Gold Medal</td>
       <td>1889-01-27</td>
       <td>NaN</td>
-      <td>Utrecht|Utrecht</td>
+      <td>Utrecht</td>
       <td>1889 births|1959 deaths|Delft University of Te...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17172,7 +17180,7 @@ div#notebook {
       <td>Duddell Medal and Prize|Fellow of the Royal So...</td>
       <td>1918-07-15</td>
       <td>Bertram Neville Brockhouse</td>
-      <td>Lethbridge|Lethbridge</td>
+      <td>Lethbridge</td>
       <td>1918 births|2003 deaths|Canadian Nobel laureat...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17412,7 +17420,7 @@ div#notebook {
       <td>Andrew Gemant Award</td>
       <td>1963-02-09</td>
       <td>Brian Randolph Greene</td>
-      <td>New York City|New York City</td>
+      <td>New York City</td>
       <td>1963 births|Alumni of Magdalen College, Oxford...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17772,7 +17780,7 @@ div#notebook {
       <td>Elliott Cresson Medal|Nobel Prize in Physics</td>
       <td>1905-09-03</td>
       <td>NaN</td>
-      <td>New York City|New York City|United States</td>
+      <td>New York City|United States</td>
       <td>1905 births|1991 deaths|20th-century American ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18612,7 +18620,7 @@ div#notebook {
       <td>NaN</td>
       <td>1952-04-12</td>
       <td>NaN</td>
-      <td>Freiburg im Breisgau|Freiburg im Breisgau|Germany</td>
+      <td>Freiburg im Breisgau|Germany</td>
       <td>1952 births|German physicists|Living people|Pe...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18708,7 +18716,7 @@ div#notebook {
       <td>Gregori Aminoff Prize|Nobel Prize in Physics|O...</td>
       <td>1915-09-23</td>
       <td>NaN</td>
-      <td>Pittsburgh|Pittsburgh</td>
+      <td>Pittsburgh</td>
       <td>1915 births|2001 deaths|Alexander von Humboldt...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18900,7 +18908,7 @@ div#notebook {
       <td>NaN</td>
       <td>1700-02-08</td>
       <td>NaN</td>
-      <td>Dutch Republic|Groningen|Groningen</td>
+      <td>Dutch Republic|Groningen</td>
       <td>1700 births|1782 deaths|18th-century Latin-lan...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -19136,7 +19144,7 @@ div#notebook {
       <th>203</th>
       <td>David Carroll (born January 13, 1963) is a U.S...</td>
       <td>NaN</td>
-      <td>North Carolina State University \nWesleyan Uni...</td>
+      <td>Max-Planck-Insitut für Metallforschung|North C...</td>
       <td>NaN</td>
       <td>1963-01-13</td>
       <td>NaN</td>
@@ -19154,7 +19162,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/David_Carroll_(ph...</td>
       <td>16738797</td>
       <td>740253932</td>
-      <td>Clemson University \nWake Forest University</td>
+      <td>Clemson University|Wake Forest University</td>
     </tr>
     <tr>
       <th>204</th>
@@ -19692,7 +19700,7 @@ div#notebook {
       <td>Elliott Cresson Medal|Nobel Prize in Physics</td>
       <td>1926-09-21</td>
       <td>Donald Arthur Glaser</td>
-      <td>Cleveland|Cleveland|United States</td>
+      <td>Cleveland|United States</td>
       <td>1926 births|2013 deaths|American neuroscientis...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -19932,7 +19940,7 @@ div#notebook {
       <td>NaN</td>
       <td>1920-10-28</td>
       <td>NaN</td>
-      <td>Minneapolis|Minneapolis</td>
+      <td>Minneapolis</td>
       <td>1920 births|1996 deaths|American physicists|Me...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -20316,7 +20324,7 @@ div#notebook {
       <td>Nobel Prize in Physics</td>
       <td>1905-01-30</td>
       <td>Emilio Gino Segrè</td>
-      <td>Italy|Tivoli, Lazio|Tivoli, Lazio</td>
+      <td>Italy|Tivoli, Lazio</td>
       <td>1905 births|1989 deaths|American people of Ita...</td>
       <td>NaN</td>
       <td>Italy|United States</td>
@@ -20436,7 +20444,7 @@ div#notebook {
       <td>Franklin Institute Awards|King Faisal Internat...</td>
       <td>1961-12-19</td>
       <td>NaN</td>
-      <td>California|Palo Alto, California|Palo Alto, Ca...</td>
+      <td>California|Palo Alto, California|United States</td>
       <td>1961 births|American amputees|American Nobel l...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -20868,7 +20876,7 @@ div#notebook {
       <td>NaN</td>
       <td>1763-06-15</td>
       <td>NaN</td>
-      <td>Liège|Liège|Prince-Bishopric of Liège</td>
+      <td>Liège|Prince-Bishopric of Liège</td>
       <td>1763 births|1837 deaths|Belgian balloonists|Be...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -20892,7 +20900,7 @@ div#notebook {
       <td>Rumford Medal</td>
       <td>1775-07-23</td>
       <td>NaN</td>
-      <td>Paris|Paris</td>
+      <td>Paris</td>
       <td>1775 births|1812 deaths|Burials at Père Lachai...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -22764,7 +22772,7 @@ div#notebook {
       <td>Elliott Cresson Medal|Kavli Prize|Nobel Prize ...</td>
       <td>1947-07-20</td>
       <td>NaN</td>
-      <td>Frankfurt|Frankfurt</td>
+      <td>Frankfurt</td>
       <td>1947 births|Experimental physicists|German inv...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -22956,7 +22964,7 @@ div#notebook {
       <td>NaN</td>
       <td>1899-11-03</td>
       <td>NaN</td>
-      <td>Podilsk|Podilsk|Russian Empire</td>
+      <td>Podilsk|Russian Empire</td>
       <td>1899 births|1986 deaths|Italian physicists|Peo...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -23484,7 +23492,7 @@ div#notebook {
       <td>Duddell Medal and Prize|Hughes Medal</td>
       <td>1882-09-30</td>
       <td>NaN</td>
-      <td>German Empire|Neustadt an der Weinstraße|Neust...</td>
+      <td>German Empire|Neustadt an der Weinstraße|Rhine...</td>
       <td>1882 births|1945 deaths|German inventors|Germa...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -23700,7 +23708,7 @@ div#notebook {
       <td>NaN</td>
       <td>1853-09-21</td>
       <td>Heike Kamerlingh Onnes</td>
-      <td>Groningen|Groningen</td>
+      <td>Groningen</td>
       <td>1853 births|1926 deaths|20th-century physicist...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -24156,7 +24164,7 @@ div#notebook {
       <td>Nobel Prize in Physics</td>
       <td>1926-12-09</td>
       <td>NaN</td>
-      <td>Boston|Boston</td>
+      <td>Boston</td>
       <td>1926 births|1999 deaths|American mountain clim...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -24468,7 +24476,7 @@ div#notebook {
       <td>NaN</td>
       <td>1909-10-30</td>
       <td>NaN</td>
-      <td>Mumbai|Mumbai|Presidencies and provinces of Br...</td>
+      <td>Mumbai|Presidencies and provinces of British I...</td>
       <td>1909 births|1966 deaths|Cathedral and John Con...</td>
       <td>NaN</td>
       <td>India</td>
@@ -24656,7 +24664,7 @@ div#notebook {
       <th>433</th>
       <td>Igor Vasilyevich Kurchatov (Russian: И́горь Ва...</td>
       <td>NaN</td>
-      <td>Ioffe Institute|Ioffe Institute|Tavrida Nation...</td>
+      <td>Ioffe Institute|Tavrida National V.I. Vernadsk...</td>
       <td>USSR State Prize</td>
       <td>1903-01-12</td>
       <td>NaN</td>
@@ -24708,7 +24716,7 @@ div#notebook {
       <td>USSR State Prize</td>
       <td>1921-11-11</td>
       <td>NaN</td>
-      <td>Russian Soviet Federative Socialist Republic|R...</td>
+      <td>Russian Soviet Federative Socialist Republic</td>
       <td>1921 births|1996 deaths|20th-century physicist...</td>
       <td>NaN</td>
       <td>Russia</td>
@@ -24804,7 +24812,7 @@ div#notebook {
       <td>Faraday Medal|Franklin Medal|Hughes Medal|John...</td>
       <td>1881-01-31</td>
       <td>NaN</td>
-      <td>Brooklyn|Brooklyn|New York</td>
+      <td>Brooklyn|New York</td>
       <td>1881 births|1957 deaths|American agnostics|Ame...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -24972,7 +24980,7 @@ div#notebook {
       <td>NaN</td>
       <td>1845-02-02</td>
       <td>NaN</td>
-      <td>Austrian Empire|Hrymailiv|Hrymailiv</td>
+      <td>Austrian Empire|Hrymailiv</td>
       <td>1845 births|1918 deaths|19th-century Austrian ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -25380,7 +25388,7 @@ div#notebook {
       <td>Ernest Orlando Lawrence Award|John Price Wethe...</td>
       <td>1931-09-29</td>
       <td>James Watson Cronin</td>
-      <td>Chicago|Chicago</td>
+      <td>Chicago</td>
       <td>1931 births|2016 deaths|American Nobel laureat...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -25428,7 +25436,7 @@ div#notebook {
       <td>Albert Medal (Royal Society of Arts)|Franklin ...</td>
       <td>1842-09-20</td>
       <td>NaN</td>
-      <td>Kincardine|Kincardine|Scotland</td>
+      <td>Kincardine|Scotland</td>
       <td>1842 births|1923 deaths|Alumni of the Universi...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -26004,7 +26012,7 @@ div#notebook {
       <td>Nobel Prize in Physics</td>
       <td>1930-03-28</td>
       <td>NaN</td>
-      <td>Chicago|Chicago</td>
+      <td>Chicago</td>
       <td>1930 births|20th-century American scientists|2...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -26748,7 +26756,7 @@ div#notebook {
       <td>NaN</td>
       <td>1952-03-24</td>
       <td>NaN</td>
-      <td>Manjimup, Western Australia|Manjimup, Western ...</td>
+      <td>Manjimup, Western Australia</td>
       <td>1952 births|Australian Christians|Australian p...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -27756,7 +27764,7 @@ div#notebook {
       <td>Albert Medal (Royal Society of Arts)|Hughes Medal</td>
       <td>1828-10-31</td>
       <td>Joseph Wilson Swan</td>
-      <td>Bishopwearmouth|Sunderland, Tyne and Wear|Sund...</td>
+      <td>Bishopwearmouth|Sunderland, Tyne and Wear</td>
       <td>1828 births|1914 deaths|19th-century English p...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -27924,7 +27932,7 @@ div#notebook {
       <td>Albert Einstein Award|National Medal of Scienc...</td>
       <td>1918-02-12</td>
       <td>Julian Seymour Schwinger</td>
-      <td>New York City|New York City|United States</td>
+      <td>New York City|United States</td>
       <td>1918 births|1994 deaths|Alexander von Humboldt...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -28188,7 +28196,7 @@ div#notebook {
       <td>NaN</td>
       <td>1873-10-09</td>
       <td>NaN</td>
-      <td>Frankfurt|Frankfurt</td>
+      <td>Frankfurt</td>
       <td>1873 births|1916 deaths|German astronomers|Ger...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -28332,7 +28340,7 @@ div#notebook {
       <td>NaN</td>
       <td>1887-05-27</td>
       <td>NaN</td>
-      <td>Congress Poland|Warsaw|Warsaw</td>
+      <td>Congress Poland|Warsaw</td>
       <td>1887 births|1975 deaths|Corresponding Members ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -28764,7 +28772,7 @@ div#notebook {
       <td>Asahi Prize|Harold Pender Award|IEEE Medal of ...</td>
       <td>1925-03-12</td>
       <td>NaN</td>
-      <td>Osaka|Osaka</td>
+      <td>Osaka</td>
       <td>1925 births|Foreign Members of the Russian Aca...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -28788,7 +28796,7 @@ div#notebook {
       <td>NaN</td>
       <td>1856-09-26</td>
       <td>NaN</td>
-      <td>Wrocław|Wrocław</td>
+      <td>Wrocław</td>
       <td>1856 births|1941 deaths|German Jews|German phy...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29076,7 +29084,7 @@ div#notebook {
       <td>NaN</td>
       <td>1784-07-05</td>
       <td>NaN</td>
-      <td>Gallicano|Gallicano</td>
+      <td>Gallicano</td>
       <td>1784 births|1835 deaths|Italian physicists|Peo...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29412,7 +29420,7 @@ div#notebook {
       <td>Kalinga Prize|Nobel Prize in Physics</td>
       <td>1892-08-15</td>
       <td>NaN</td>
-      <td>Dieppe|Dieppe</td>
+      <td>Dieppe</td>
       <td>1892 births|1987 deaths|20th-century physicist...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29820,7 +29828,7 @@ div#notebook {
       <td>Enrico Fermi Award|Medal for Merit|National Me...</td>
       <td>1911-06-13</td>
       <td>NaN</td>
-      <td>San Francisco|San Francisco|United States</td>
+      <td>San Francisco|United States</td>
       <td>1911 births|1988 deaths|Accelerator physicists...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30231,7 +30239,7 @@ div#notebook {
       <td>Congress Poland|Russian Empire|Warsaw</td>
       <td>1867 births|1934 deaths|19th-century physicist...</td>
       <td>Ève Curie|Irène Joliot-Curie</td>
-      <td>Poland * France</td>
+      <td>France|Poland</td>
       <td>...</td>
       <td>Curie</td>
       <td>NaN</td>
@@ -30242,7 +30250,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Marie_Curie?oldid...</td>
       <td>20408</td>
       <td>745192875</td>
-      <td>University of Paris\n* École Normale Supérieur...</td>
+      <td>Curie Institute (Paris)|École Normale Supérieu...</td>
     </tr>
     <tr>
       <th>666</th>
@@ -30636,7 +30644,7 @@ div#notebook {
       <td>Humboldt Prize|Nobel Prize in Physics|Wolf Pri...</td>
       <td>1926-09-19</td>
       <td>NaN</td>
-      <td>Toyohashi|Toyohashi</td>
+      <td>Toyohashi</td>
       <td>1926 births|Alexander von Humboldt Fellows|Com...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30684,7 +30692,7 @@ div#notebook {
       <td>Enrico Fermi Award|J. Robert Oppenheimer Memor...</td>
       <td>1911-04-18</td>
       <td>NaN</td>
-      <td>Austria-Hungary|Lviv|Lviv|Ukraine</td>
+      <td>Austria-Hungary|Lviv|Ukraine</td>
       <td>1911 births|2011 deaths|Alumni of Magdalene Co...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -30734,7 +30742,7 @@ div#notebook {
       <td>NaN</td>
       <td>German Empire|Wrocław</td>
       <td>1882 births|1970 deaths|Academics of the Unive...</td>
-      <td>eldest was mother of Olivia Newton-John</td>
+      <td>eldest  was mother of Olivia Newton-John</td>
       <td>British|German</td>
       <td>...</td>
       <td>Born</td>
@@ -30900,7 +30908,7 @@ div#notebook {
       <td>NaN</td>
       <td>1973-01-01</td>
       <td>NaN</td>
-      <td>Bohodukhiv|Bohodukhiv|Ukrainian Soviet Sociali...</td>
+      <td>Bohodukhiv|Ukrainian Soviet Socialist Republic</td>
       <td>1973 births|21st-century physicists|Hiroshima ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31380,7 +31388,7 @@ div#notebook {
       <td>NaN</td>
       <td>1908-02-07</td>
       <td>NaN</td>
-      <td>Pittsburgh|Pittsburgh</td>
+      <td>Pittsburgh</td>
       <td>1908 births|1991 deaths|American engineers|Ame...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -31908,7 +31916,7 @@ div#notebook {
       <td>Academia Europaea|Humboldt Prize|Massachusetts...</td>
       <td>1949-09-20</td>
       <td>NaN</td>
-      <td>Istanbul|Istanbul|Turkey</td>
+      <td>Istanbul|Turkey</td>
       <td>1949 births|Boğaziçi University faculty|Istanb...</td>
       <td>NaN</td>
       <td>Turkey</td>
@@ -32076,7 +32084,7 @@ div#notebook {
       <td>NaN</td>
       <td>1846-01-23</td>
       <td>NaN</td>
-      <td>Russian Empire|Ulyanovsk|Ulyanovsk</td>
+      <td>Russian Empire|Ulyanovsk</td>
       <td>1846 births|1915 deaths|Moscow State Universit...</td>
       <td>NaN</td>
       <td>Russia</td>
@@ -32100,7 +32108,7 @@ div#notebook {
       <td>European Physical Society|Fundamental Physics ...</td>
       <td>1972-04-05</td>
       <td>NaN</td>
-      <td>Houston|Houston</td>
+      <td>Houston</td>
       <td>1972 births|American emigrants to Canada|Ameri...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32124,7 +32132,7 @@ div#notebook {
       <td>NaN</td>
       <td>1915-08-27</td>
       <td>NaN</td>
-      <td>Washington, D.C.|Washington, D.C.</td>
+      <td>Washington, D.C.</td>
       <td>1915 births|2011 deaths|American Nobel laureat...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32340,7 +32348,7 @@ div#notebook {
       <td>Enrico Fermi Award|Faraday Lectureship Prize|F...</td>
       <td>1879-03-08</td>
       <td>NaN</td>
-      <td>Frankfurt|Frankfurt|German Empire|Hesse-Nassau...</td>
+      <td>Frankfurt|German Empire|Hesse-Nassau|Kingdom o...</td>
       <td>1879 births|1968 deaths|Cornell University fac...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32412,7 +32420,7 @@ div#notebook {
       <td>Nobel Prize in Physics</td>
       <td>1888-02-17</td>
       <td>NaN</td>
-      <td>Kingdom of Prussia|Poland|Żory|Żory</td>
+      <td>Kingdom of Prussia|Poland|Żory</td>
       <td>1888 births|1969 deaths|20th-century physicist...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32436,7 +32444,7 @@ div#notebook {
       <td>Nobel Prize in Physics</td>
       <td>1920-07-10</td>
       <td>NaN</td>
-      <td>San Francisco|San Francisco|United States</td>
+      <td>San Francisco|United States</td>
       <td>1920 births|2006 deaths|American Nobel laureat...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32700,7 +32708,7 @@ div#notebook {
       <td>NaN</td>
       <td>1931-03-22</td>
       <td>NaN</td>
-      <td>Massachusetts|Saugus, Massachusetts|Saugus, Ma...</td>
+      <td>Massachusetts|Saugus, Massachusetts</td>
       <td>1931 births|American cartoonists|American phys...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -32964,7 +32972,7 @@ div#notebook {
       <td>NaN</td>
       <td>1899-04-06</td>
       <td>NaN</td>
-      <td>Świdnica|Świdnica</td>
+      <td>Świdnica</td>
       <td>1899 births|1990 deaths|East German scientists...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33036,7 +33044,7 @@ div#notebook {
       <td>NaN</td>
       <td>1936-09-07</td>
       <td>NaN</td>
-      <td>Kingdom of Romania|Timișoara|Timișoara</td>
+      <td>Kingdom of Romania|Timișoara</td>
       <td>1936 births|American people of Romanian-Jewish...</td>
       <td>Caroline|Pauline</td>
       <td>NaN</td>
@@ -33156,7 +33164,7 @@ div#notebook {
       <td>Dannie Heineman Prize for Mathematical Physics...</td>
       <td>1938-10-26</td>
       <td>NaN</td>
-      <td>Utrecht|Utrecht</td>
+      <td>Utrecht</td>
       <td>1938 births|Dutch physicists|Living people|Mem...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33252,7 +33260,7 @@ div#notebook {
       <td>Fellow of the Royal Society|National Medal of ...</td>
       <td>1923-12-13</td>
       <td>NaN</td>
-      <td>Indianapolis|Indianapolis|United States</td>
+      <td>Indianapolis|United States</td>
       <td>1923 births|American atheists|American Nobel l...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33612,7 +33620,7 @@ div#notebook {
       <td>Faraday Medal|Fellow of the Royal Society|Fran...</td>
       <td>1894-07-08</td>
       <td>Pyotr Leonidovich Kapitsa</td>
-      <td>Kronstadt|Kronstadt|Russian Empire</td>
+      <td>Kronstadt|Russian Empire</td>
       <td>1894 births|1984 deaths|20th-century physicist...</td>
       <td>NaN</td>
       <td>Russian Empire</td>
@@ -33876,7 +33884,7 @@ div#notebook {
       <td>NaN</td>
       <td>1939-03-30</td>
       <td>NaN</td>
-      <td>Kingdom of Bulgaria|Sandanski|Sandanski</td>
+      <td>Kingdom of Bulgaria|Sandanski</td>
       <td>1939 births|20th-century physicists|21st-centu...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -33972,7 +33980,7 @@ div#notebook {
       <td>NaN</td>
       <td>1914-10-14</td>
       <td>NaN</td>
-      <td>United States|Washington, D.C.|Washington, D.C.</td>
+      <td>United States|Washington, D.C.</td>
       <td>1914 births|2006 deaths|American Nobel laureat...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34356,7 +34364,7 @@ div#notebook {
       <td>Fellow of the Royal Society|Nobel Prize in Phy...</td>
       <td>1929-11-02</td>
       <td>Richard Edward Taylor</td>
-      <td>Alberta|Medicine Hat|Medicine Hat</td>
+      <td>Alberta|Medicine Hat</td>
       <td>1929 births|Canadian Nobel laureates|Canadian ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34404,7 +34412,7 @@ div#notebook {
       <td>NaN</td>
       <td>1943-03-01</td>
       <td>NaN</td>
-      <td>New York City|New York City</td>
+      <td>New York City</td>
       <td>1943 births|American physicists|Cornell Univer...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34740,7 +34748,7 @@ div#notebook {
       <td>NaN</td>
       <td>1916-05-06</td>
       <td>NaN</td>
-      <td>St. Louis|St. Louis</td>
+      <td>St. Louis</td>
       <td>1916 births|1997 deaths|American astronomers|A...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -34980,7 +34988,7 @@ div#notebook {
       <td>Henry Draper Medal|Nobel Prize in Physics</td>
       <td>1936-01-10</td>
       <td>NaN</td>
-      <td>Houston|Houston|United States</td>
+      <td>Houston|United States</td>
       <td>1936 births|American astronomers|American Nobe...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35220,7 +35228,7 @@ div#notebook {
       <td>Albert Lasker Award for Basic Medical Research...</td>
       <td>1921-07-19</td>
       <td>Rosalyn Sussman</td>
-      <td>New York City|New York City</td>
+      <td>New York City</td>
       <td>1921 births|2011 deaths|20th-century American ...</td>
       <td>Benjamin|Elanna</td>
       <td>NaN</td>
@@ -35244,7 +35252,7 @@ div#notebook {
       <td>Dannie Heineman Prize for Mathematical Physics...</td>
       <td>1925-09-01</td>
       <td>Roy Jay Glauber</td>
-      <td>New York City|New York City|United States</td>
+      <td>New York City|United States</td>
       <td>1925 births|Alexander von Humboldt Fellows|Ame...</td>
       <td>2</td>
       <td>NaN</td>
@@ -35556,7 +35564,7 @@ div#notebook {
       <td>C. V. Boys|Fellow of the Royal Society</td>
       <td>1907-11-17</td>
       <td>Samuel Turlausky</td>
-      <td>Newcastle upon Tyne|Newcastle upon Tyne</td>
+      <td>Newcastle upon Tyne</td>
       <td>1907 births|1973 deaths|Academics of Royal Hol...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35604,7 +35612,7 @@ div#notebook {
       <td>Fellow of the Royal Society|Padma Vibhushan</td>
       <td>1894-01-01</td>
       <td>NaN</td>
-      <td>Bengal Presidency|Kolkata|Kolkata|Presidencies...</td>
+      <td>Bengal Presidency|Kolkata|Presidencies and pro...</td>
       <td>1894 births|1974 deaths|20th-century Indian ma...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -35916,7 +35924,7 @@ div#notebook {
       <td>Nobel Prize in Physics</td>
       <td>1932-12-05</td>
       <td>NaN</td>
-      <td>New York City|New York City|United States</td>
+      <td>New York City|United States</td>
       <td>1932 births|American humanists|American Nobel ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36036,7 +36044,7 @@ div#notebook {
       <td>NaN</td>
       <td>1926-09-13</td>
       <td>NaN</td>
-      <td>Atlantic City, New Jersey|Atlantic City, New J...</td>
+      <td>Atlantic City, New Jersey|New Jersey|United St...</td>
       <td>1926 births|American educators|American physic...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -36516,7 +36524,7 @@ div#notebook {
       <td>Nobel Prize in Physics</td>
       <td>1948-02-28</td>
       <td>NaN</td>
-      <td>Missouri|St. Louis|St. Louis</td>
+      <td>Missouri|St. Louis</td>
       <td>1948 births|Alexander von Humboldt Fellows|Ame...</td>
       <td>2</td>
       <td>NaN</td>
@@ -36708,7 +36716,7 @@ div#notebook {
       <td>American Association for the Advancement of Sc...</td>
       <td>1951-12-26</td>
       <td>NaN</td>
-      <td>India|Kolkata|Kolkata|West Bengal</td>
+      <td>India|Kolkata|West Bengal</td>
       <td>1951 births|Accelerator physicists|Indian Inst...</td>
       <td>Katia Chaterji|Tatiana Chaterji</td>
       <td>NaN</td>
@@ -36804,7 +36812,7 @@ div#notebook {
       <td>Asahi Prize|Bruno Rossi Prize|Fundamental Phys...</td>
       <td>1959-03-09</td>
       <td>NaN</td>
-      <td>Higashimatsuyama, Saitama|Higashimatsuyama, Sa...</td>
+      <td>Higashimatsuyama, Saitama|Japan|Saitama Prefec...</td>
       <td>1959 births|Japanese Nobel laureates|Japanese ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37020,7 +37028,7 @@ div#notebook {
       <td>Japan Prize|Oliver E. Buckley Condensed Matter...</td>
       <td>1927-07-11</td>
       <td>Theodore Harold Maiman</td>
-      <td>Los Angeles|Los Angeles</td>
+      <td>Los Angeles</td>
       <td>1927 births|2007 deaths|American physicists|De...</td>
       <td>NaN</td>
       <td>United States</td>
@@ -37164,7 +37172,7 @@ div#notebook {
       <td>NaN</td>
       <td>1770-04-09</td>
       <td>NaN</td>
-      <td>Tallinn|Tallinn</td>
+      <td>Tallinn</td>
       <td>1770 births|1831 deaths|19th-century physicist...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37284,7 +37292,7 @@ div#notebook {
       <td>Albert Einstein Medal|Dirac Medal|Faraday Meda...</td>
       <td>1932-12-23</td>
       <td>Thomas Walter Bannerman Kibble</td>
-      <td>British Raj|Chennai|Chennai|Madras Presidency</td>
+      <td>British Raj|Chennai|Madras Presidency</td>
       <td>1932 births|2016 deaths|Academics of Imperial ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37442,7 +37450,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Val_Logsdon_Fitch...</td>
       <td>396733</td>
       <td>736394778</td>
-      <td>Manhattan Project\n* Princeton University</td>
+      <td>Manhattan Project|Princeton University</td>
     </tr>
     <tr>
       <th>966</th>
@@ -37548,7 +37556,7 @@ div#notebook {
       <td>NaN</td>
       <td>1908-09-18</td>
       <td>NaN</td>
-      <td>Georgia (country)|Russian Empire|Tbilisi|Tbilisi</td>
+      <td>Georgia (country)|Russian Empire|Tbilisi</td>
       <td>1908 births|1996 deaths|20th-century astronome...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -37740,7 +37748,7 @@ div#notebook {
       <td>NaN</td>
       <td>1898-12-10</td>
       <td>NaN</td>
-      <td>Russian Empire|Saint Petersburg|Saint Petersburg</td>
+      <td>Russian Empire|Saint Petersburg</td>
       <td>1898 births|1974 deaths|20th-century physicist...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38306,7 +38314,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Wilhelm_Röntgen?o...</td>
       <td>61325</td>
       <td>745154304</td>
-      <td>University of Strassburg\n* University of Hohe...</td>
+      <td>University of Giessen|University of Hohenheim|...</td>
     </tr>
     <tr>
       <th>1002</th>
@@ -38484,7 +38492,7 @@ div#notebook {
       <td>Barnard Medal for Meritorious Service to Scien...</td>
       <td>1911-08-09</td>
       <td>NaN</td>
-      <td>Pennsylvania|Pittsburgh|Pittsburgh</td>
+      <td>Pennsylvania|Pittsburgh</td>
       <td>1911 births|1995 deaths|American astronomers|A...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -39362,7 +39370,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Yuri_Orlov?oldid=...</td>
       <td>848376</td>
       <td>737603901</td>
-      <td>Institute for Theoretical and Experimental Phy...</td>
+      <td>American Academy of Arts and Sciences|Cornell ...</td>
     </tr>
     <tr>
       <th>1046</th>
@@ -39461,8 +39469,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists_dataframe</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/notable_physicists.csv&#39;</span><span class="p">,</span>
-                            <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/notable_physicists.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
