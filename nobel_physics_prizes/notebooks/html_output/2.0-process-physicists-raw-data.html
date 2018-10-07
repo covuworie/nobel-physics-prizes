@@ -13116,7 +13116,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Process-Physicists-Raw-Data">Process Physicists Raw Data<a class="anchor-link" href="#Process-Physicists-Raw-Data">&#182;</a></h1><p>Now I aim to convert the <em>JSON lines</em> format <a href="../data/raw/notable_physicists.jsonl.gz">notable physicists raw data</a> into an intermediate format <em>pandas dataframe</em> that is more convenient to work with. This intermediate format will be close to the final format of the data that I'll be working with for analysis.</p>
+<h1 id="Process-Physicists-Raw-Data">Process Physicists Raw Data<a class="anchor-link" href="#Process-Physicists-Raw-Data">&#182;</a></h1><p>Now I aim to convert the <em>JSON lines</em> format <a href="../data/raw/physicists.jsonl.gz">physicists raw data</a> into an intermediate format <em>pandas dataframe</em> that is more convenient to work with. This intermediate format will be close to the final format of the data that I'll be working with for analysis.</p>
 <p>My goal is to parse the JSON data in order to extract the interesting fields of information such as <em>name</em>, <em>birth date</em>, <em>death date</em>, <em>citizenships</em>, <em>workplaces</em>, <em>awards</em>, <em>alma mater</em>, <em>academic advisors</em>, <em>doctoral students</em>, <em>DBpedia categories</em>, <em>description</em>, etc. I believe that this information may be useful in helping to predict whether or not a physicist is awarded a Nobel Prize.</p>
 
 </div>
@@ -13125,11 +13125,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setting-up-the-Environment">Setting up the Environment<a class="anchor-link" href="#Setting-up-the-Environment">&#182;</a></h2><p>An few initialization steps are needed to setup the environment:</p>
+<h2 id="Setting-up-the-Environment">Setting up the Environment<a class="anchor-link" href="#Setting-up-the-Environment">&#182;</a></h2><p>An initialization step is needed to setup the environment:</p>
 <ul>
-<li>The top-level module directory of the repository needs to be added to the system path to enable the loading of python modules.</li>
 <li>The locale needs to be set for all categories to the user’s default setting (typically specified in the LANG environment variable) to enable correct sorting of words with accents.</li>
-<li><a href="https://spacy.io/">spacy</a> is a python package that is used for <em>natural language processing</em>. It relies on statistical <a href="https://spacy.io/usage/models">language models</a> which must be loaded before use. So here I load <code>en_core_web_sm</code> which is the default English language model in spacy.  </li>
 </ul>
 
 </div>
@@ -13140,20 +13138,32 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">locale</span>
-<span class="kn">import</span> <span class="nn">spacy</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
 
-<span class="n">repo_dir</span> <span class="o">=</span> <span class="s1">&#39;../&#39;</span>
-<span class="k">if</span> <span class="n">repo_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo_dir</span><span class="p">)</span>
-    
 <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;en_core_web_sm&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[1]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;English_United States.1252&#39;</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13163,25 +13173,23 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
-<span class="kn">import</span> <span class="nn">gzip</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">parse</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 
-<span class="kn">import</span> <span class="nn">jsonlines</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="k">import</span> <span class="n">json_normalize</span>
 
-<span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">DBPEDIA_RESOURCE_URL</span>
+<span class="kn">from</span> <span class="nn">src.data.dbpedia_utils</span> <span class="k">import</span> <span class="n">construct_resource_urls</span>
+<span class="kn">from</span> <span class="nn">src.data.dbpedia_utils</span> <span class="k">import</span> <span class="n">find_resource_url</span>
+<span class="kn">from</span> <span class="nn">src.data.dbpedia_utils</span> <span class="k">import</span> <span class="n">get_source_url</span>
+<span class="kn">from</span> <span class="nn">src.data.dbpedia_utils</span> <span class="k">import</span> <span class="n">impute_redirect_filenames</span>
+<span class="kn">from</span> <span class="nn">src.data.dbpedia_utils</span> <span class="k">import</span> <span class="n">json_categories_to_dict</span>
+<span class="kn">from</span> <span class="nn">src.data.dbpedia_utils</span> <span class="k">import</span> <span class="n">json_keys_to_dict</span>
+<span class="kn">from</span> <span class="nn">src.data.dbpedia_utils</span> <span class="k">import</span> <span class="n">json_values_to_dict</span>
+<span class="kn">from</span> <span class="nn">src.data.dbpedia_utils</span> <span class="k">import</span> <span class="n">PHYSICISTS_IMPUTE_KEYS</span>
+<span class="kn">from</span> <span class="nn">src.data.jsonl_utils</span> <span class="k">import</span> <span class="n">read_jsonl</span>
+<span class="kn">from</span> <span class="nn">src.data.progress_bar</span> <span class="k">import</span> <span class="n">progress_bar</span>
 <span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">get_filename_from_url</span>
-<span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">get_pathname_from_url</span>
 <span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">get_redirect_urls</span>
-<span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">quote_url</span>
-<span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">urls_progress_bar</span>
 </pre></div>
 
     </div>
@@ -13192,7 +13200,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-in-the-JSON-Lines-Data">Reading in the JSON Lines Data<a class="anchor-link" href="#Reading-in-the-JSON-Lines-Data">&#182;</a></h2><p>First let's extract the JSON lines data and read it into a list so that we can parse it later.</p>
+<h2 id="Reading-in-the-JSON-Lines-Data">Reading in the JSON Lines Data<a class="anchor-link" href="#Reading-in-the-JSON-Lines-Data">&#182;</a></h2><p>First let's read the JSON lines data into a list so that we can parse it later and take a look at the first entry.</p>
 
 </div>
 </div>
@@ -13202,19 +13210,194 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gzip_file</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/notable_physicists.jsonl.gz&#39;</span>
-<span class="n">jsonl_file</span> <span class="o">=</span> <span class="n">gzip_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
-<span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">gzip_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dest</span><span class="p">:</span>
-    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
-
-<span class="n">json_lines</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">with</span> <span class="n">jsonlines</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">json_line</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-        <span class="n">json_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json_line</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_lines</span> <span class="o">=</span> <span class="n">read_jsonl</span><span class="p">(</span><span class="s1">&#39;../data/raw/physicists.jsonl.gz&#39;</span><span class="p">)</span>
+<span class="n">json_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[3]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;http://dbpedia.org/resource/Pierre_Ramond&#39;: {&#39;http://dbpedia.org/ontology/doctoralAdvisor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
+ &#39;http://dbpedia.org/resource/Aiyalam_Parameswaran_Balachandran&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
+ &#39;http://en.wikipedia.org/wiki/A._P._Balachandran&#39;: {&#39;http://xmlns.com/foaf/0.1/primaryTopic&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
+ &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;: {&#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Peer109626238&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Colleague109935990&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q901&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatMadrasChristianCollegeAlumni&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Physicist110428004&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/PhysicalEntity100001930&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoLegalActor&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoLegalActorGeo&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Person100007846&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Object100002684&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://xmlns.com/foaf/0.1/Person&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q215627&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q24229398&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatLivingPeople&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Agent&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Scholar110557854&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Whole100003553&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/LivingThing100004258&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/CausalAgent100007347&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatTheoreticalPhysicists&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q5&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://schema.org/Person&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Associate109816771&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Scientist&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Organism100004475&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://umbel.org/umbel/rc/Scientist&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Person&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.w3.org/2002/07/owl#Thing&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Scientist110560637&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Alumnus109786338&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Intellectual109621545&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatAmericanPhysicists&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatFellowsOfTheAmericanPhysicalSociety&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/WikicatIndianPhysicists&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Agent&#39;}],
+  &#39;http://www.w3.org/2000/01/rdf-schema#label&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;A. P. Balachandran&#39;,
+    &#39;lang&#39;: &#39;en&#39;}],
+  &#39;http://www.w3.org/2000/01/rdf-schema#comment&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#34;Aiyalam Parameswaran Balachandran (Malayalam: ഐയ്ലം പരമേശ്വരന്\u200d ബാലചന്ദ്രന്\u200d; born January 25, 1938) is an Indian theoretical physicist well known for his extensive contributions to the role of classical topology in quantum physics. He has been the Joel Dorman Steele Professor of Physics in Syracuse University since 2000. He has also been a Fellow of the American Physical Society and awarded a prize by the U.S. Chapter of the Indian Physics Association in recognition of his outstanding scientific contributions. In 1990, Syracuse University honored him with a Chancellor&#39;s Citation for Exceptional Academic Achievement, and in 1991 he was qualified for the university&#39;s William Wasserstrom Prize for Outstanding Graduate Teaching.&#34;,
+    &#39;lang&#39;: &#39;en&#39;}],
+  &#39;http://www.w3.org/2002/07/owl#sameAs&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://rdf.freebase.com/ns/m.03mdp78&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q4648223&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://yago-knowledge.org/resource/A._P._Balachandran&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://wikidata.dbpedia.org/resource/Q4648223&#39;}],
+  &#39;http://purl.org/dc/terms/subject&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Theoretical_physicists&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Fellows_of_the_American_Physical_Society&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:University_of_Madras_alumni&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Syracuse_University_faculty&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:1938_births&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Madras_Christian_College_alumni&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:American_physicists&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Indian_physicists&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Living_people&#39;}],
+  &#39;http://xmlns.com/foaf/0.1/name&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;A. P. Balachandran&#39;,
+    &#39;lang&#39;: &#39;en&#39;}],
+  &#39;http://xmlns.com/foaf/0.1/depiction&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://commons.wikimedia.org/wiki/Special:FilePath/A._P._Balachandran.jpg&#39;}],
+  &#39;http://purl.org/dc/terms/description&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;Indian Physicist&#39;,
+    &#39;lang&#39;: &#39;en&#39;}],
+  &#39;http://xmlns.com/foaf/0.1/givenName&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;A.&#39;,
+    &#39;lang&#39;: &#39;en&#39;}],
+  &#39;http://xmlns.com/foaf/0.1/gender&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;male&#39;,
+    &#39;lang&#39;: &#39;en&#39;}],
+  &#39;http://xmlns.com/foaf/0.1/isPrimaryTopicOf&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://en.wikipedia.org/wiki/A._P._Balachandran&#39;}],
+  &#39;http://dbpedia.org/ontology/almaMater&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Madras&#39;}],
+  &#39;http://www.w3.org/ns/prov#wasDerivedFrom&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://en.wikipedia.org/wiki/A._P._Balachandran?oldid=744689666&#39;}],
+  &#39;http://dbpedia.org/ontology/wikiPageExternalLink&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;https://web.archive.org/web/20080119012831/http:/physics.syr.edu:80/~bal/&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://inspirehep.net/search?p=author%3AA.P.Balachandran.1+&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://www.imsc.res.in/xmlui/handle/123456789/20&#39;}],
+  &#39;http://dbpedia.org/property/imageSize&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: 250,
+    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
+  &#39;http://dbpedia.org/ontology/residence&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/India&#39;}],
+  &#39;http://dbpedia.org/ontology/knownFor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Topology&#39;},
+   {&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Noncommutative_geometry&#39;}],
+  &#39;http://dbpedia.org/property/citizenship&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;Indian&#39;,
+    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
+  &#39;http://dbpedia.org/ontology/abstract&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#34;Aiyalam Parameswaran Balachandran (Malayalam: ഐയ്ലം പരമേശ്വരന്\u200d ബാലചന്ദ്രന്\u200d; born January 25, 1938) is an Indian theoretical physicist well known for his extensive contributions to the role of classical topology in quantum physics. He has been the Joel Dorman Steele Professor of Physics in Syracuse University since 2000. He has also been a Fellow of the American Physical Society and awarded a prize by the U.S. Chapter of the Indian Physics Association in recognition of his outstanding scientific contributions. In 1990, Syracuse University honored him with a Chancellor&#39;s Citation for Exceptional Academic Achievement, and in 1991 he was qualified for the university&#39;s William Wasserstrom Prize for Outstanding Graduate Teaching. Prof. Balachandran&#39;s key scientific works to date include the revival of the Skyrme model which successfully describes baryons as topological solitons of meson fields and extensive applications and popularisation of mathematical concepts such as homotopy groups and fibre bundles to problems in quantum physics. Lately Prof. Balachandran&#39;s research has been focused on the formulation of quantum field theories on noncommutative spacetimes and investigating the emergent significance of Hopf algebras in quantum physics as generalisations of symmetry groups.&#34;,
+    &#39;lang&#39;: &#39;en&#39;}],
+  &#39;http://dbpedia.org/ontology/thumbnail&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://commons.wikimedia.org/wiki/Special:FilePath/A._P._Balachandran.jpg?width=300&#39;}],
+  &#39;http://dbpedia.org/ontology/birthDate&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;1938-01-25&#39;,
+    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#date&#39;},
+   {&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: &#39;1938-1-25&#39;,
+    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#date&#39;}],
+  &#39;http://dbpedia.org/ontology/wikiPageRevisionID&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: 744689666,
+    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
+  &#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Salem,_Tamil_Nadu&#39;},
+   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/British_India&#39;}],
+  &#39;http://dbpedia.org/ontology/wikiPageID&#39;: [{&#39;type&#39;: &#39;literal&#39;,
+    &#39;value&#39;: 15542924,
+    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
+  &#39;http://dbpedia.org/property/wordnet_type&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://www.w3.org/2006/03/wn/wn20/instances/synset-scientist-noun-1&#39;}],
+  &#39;http://dbpedia.org/ontology/doctoralStudent&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Pierre_Ramond&#39;}],
+  &#39;http://dbpedia.org/ontology/doctoralAdvisor&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Alladi_Ramakrishnan&#39;}],
+  &#39;http://purl.org/linguistics/gold/hypernym&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Physicist&#39;}],
+  &#39;http://dbpedia.org/property/workInstitution&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Syracuse_University&#39;}],
+  &#39;http://dbpedia.org/ontology/field&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/Physicist&#39;}]},
+ &#39;http://dbpedia.org/resource/Alladi_Ramakrishnan&#39;: {&#39;http://dbpedia.org/ontology/doctoralStudent&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]},
+ &#39;http://dbpedia.org/resource/Balachandran&#39;: {&#39;http://dbpedia.org/ontology/wikiPageDisambiguates&#39;: [{&#39;type&#39;: &#39;uri&#39;,
+    &#39;value&#39;: &#39;http://dbpedia.org/resource/A._P._Balachandran&#39;}]}}</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13393,15 +13576,17 @@ div#notebook {
     <span class="n">flat_json</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">json_line</span><span class="p">)</span>
 
     <span class="c1"># find the resource, source and fullName</span>
-    <span class="n">resource</span> <span class="o">=</span> <span class="n">_find_resource</span><span class="p">(</span><span class="n">flat_json</span><span class="p">)</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="n">_get_source</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-    <span class="n">full_name</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="n">resource_url</span> <span class="o">=</span> <span class="n">find_resource_url</span><span class="p">(</span><span class="n">flat_json</span><span class="p">)</span>
+    <span class="n">source_url</span> <span class="o">=</span> <span class="n">get_source_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">)</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
 
     <span class="c1"># construct the dictionary</span>
-    <span class="n">dict_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="n">resource</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span> <span class="s1">&#39;fullName&#39;</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span>
-             <span class="o">**</span><span class="n">_process_json_keys</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">flat_json</span><span class="p">),</span>
-             <span class="o">**</span><span class="n">_process_json_values</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">flat_json</span><span class="p">),</span>
-             <span class="o">**</span><span class="n">_process_categories</span><span class="p">(</span><span class="n">flat_json</span><span class="p">)}</span>
+    <span class="n">dict_</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="n">resource_url</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">source_url</span><span class="p">,</span> <span class="s1">&#39;fullName&#39;</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">json_keys_to_dict</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">flat_json</span><span class="p">,</span>
+                                 <span class="n">DBPEDIA_JSON_KEYS</span><span class="p">,</span>
+                                 <span class="n">ignore_urls</span><span class="o">=</span><span class="n">DBPEDIA_IGNORE_URLS</span><span class="p">),</span>
+             <span class="o">**</span><span class="n">json_values_to_dict</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">flat_json</span><span class="p">,</span> <span class="n">DBPEDIA_JSON_VALUES</span><span class="p">),</span>
+             <span class="o">**</span><span class="n">json_categories_to_dict</span><span class="p">(</span><span class="n">flat_json</span><span class="p">)}</span>
 
     <span class="c1"># merge keys</span>
     <span class="n">dict_</span> <span class="o">=</span> <span class="n">_merge_keys</span><span class="p">(</span><span class="n">dict_</span><span class="p">)</span>
@@ -13409,102 +13594,6 @@ div#notebook {
     <span class="c1"># clean fields</span>
     <span class="n">dict_</span> <span class="o">=</span> <span class="n">_clean_fields</span><span class="p">(</span><span class="n">dict_</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">dict_</span>
-
-
-<span class="k">def</span> <span class="nf">_process_json_keys</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">flat_json</span><span class="p">):</span>
-    <span class="n">dict_</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="c1"># loop over the keys</span>
-    <span class="k">for</span> <span class="n">json_key</span> <span class="ow">in</span> <span class="n">DBPEDIA_JSON_KEYS</span><span class="p">:</span>
-        <span class="n">flat_json_key</span> <span class="o">=</span> <span class="n">resource</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">json_key</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span><span class="n">json_key</span><span class="p">)</span>
-        <span class="n">dict_key</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[</span><span class="n">filename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>  <span class="c1"># take fragment</span>
-        <span class="c1"># sanitize for later merging in _merge_influences</span>
-        <span class="k">if</span> <span class="n">dict_key</span> <span class="o">==</span> <span class="s1">&#39;influenced&#39;</span><span class="p">:</span>
-            <span class="n">dict_key</span> <span class="o">=</span> <span class="s1">&#39;influenced_&#39;</span>
-        <span class="k">if</span> <span class="n">flat_json_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">flat_json</span><span class="p">:</span>
-            <span class="k">continue</span>
-
-        <span class="c1"># loop and get the values</span>
-        <span class="k">for</span> <span class="n">list_</span> <span class="ow">in</span> <span class="n">flat_json</span><span class="p">[</span><span class="n">flat_json_key</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
-            <span class="n">val_list</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">list_</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">_val_is_english</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
-                    <span class="k">continue</span>
-
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>  <span class="c1"># str</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;* &#39;</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">DBPEDIA_IGNORE_URLS</span><span class="p">:</span>
-                    <span class="k">continue</span>
-
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">_value_has_information_content</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-                    <span class="k">continue</span>
-
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
-                    <span class="s1">&#39;http://wikidata.dbpedia.org/&#39;</span><span class="p">):</span>
-                        <span class="k">continue</span>
-                <span class="n">val_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">val_list</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">dict_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dict_</span><span class="p">:</span>
-                <span class="n">dict_</span><span class="p">[</span><span class="n">dict_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val_list</span><span class="p">):</span>
-                    <span class="c1"># multiple values must all be of &#39;str&#39; type</span>
-                    <span class="c1"># (some child and spouse have int values)</span>
-                    <span class="n">val_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val_list</span> <span class="k">if</span>
-                                <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">int</span><span class="p">)]</span>
-                <span class="k">if</span> <span class="n">dict_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dict_</span><span class="p">:</span>
-                    <span class="n">val_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
-                    <span class="n">dict_</span><span class="p">[</span><span class="n">dict_key</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val_list</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dict_</span>
-
-
-<span class="k">def</span> <span class="nf">_process_json_values</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">flat_json</span><span class="p">):</span>
-    <span class="n">dict_</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="c1"># loop over the values</span>
-    <span class="k">for</span> <span class="n">json_value</span> <span class="ow">in</span> <span class="n">DBPEDIA_JSON_VALUES</span><span class="p">:</span>
-        <span class="c1"># loop and get the keys</span>
-        <span class="n">key_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">json_key</span> <span class="ow">in</span> <span class="n">flat_json</span><span class="p">:</span>
-            <span class="n">sep_position</span> <span class="o">=</span> <span class="n">json_key</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;.http&#39;</span><span class="p">)</span>
-            <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">json_key</span><span class="p">[:</span><span class="n">sep_position</span><span class="p">],</span> <span class="n">json_key</span><span class="p">[</span><span class="n">sep_position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
-            <span class="c1"># only consider keys other than the resource</span>
-            <span class="k">if</span> <span class="n">json_value</span> <span class="o">==</span> <span class="n">val</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">key</span> <span class="o">==</span> <span class="n">resource</span><span class="p">:</span>
-                <span class="n">dict_key</span> <span class="o">=</span> <span class="n">key</span>
-                <span class="n">key_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dict_key</span><span class="p">)</span>
-                <span class="n">dict_val</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">key_list</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">key_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">dict_</span><span class="p">[</span><span class="n">dict_val</span><span class="p">]</span> <span class="o">=</span> <span class="n">key_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">key_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
-            <span class="n">dict_</span><span class="p">[</span><span class="n">dict_val</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">key_list</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dict_</span>
-
-
-<span class="k">def</span> <span class="nf">_process_categories</span><span class="p">(</span><span class="n">flat_json</span><span class="p">):</span>
-    <span class="n">dict_</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="n">val_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">list_</span> <span class="ow">in</span> <span class="n">flat_json</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
-                        <span class="n">DBPEDIA_RESOURCE_URL</span> <span class="o">+</span> <span class="s1">&#39;Category:&#39;</span><span class="p">)):</span>
-                    <span class="k">continue</span>
-                <span class="n">val_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">val_list</span><span class="p">:</span>
-        <span class="n">val_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
-        <span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val_list</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">dict_</span>
 
 
@@ -13534,41 +13623,6 @@ div#notebook {
     <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_spouse_child</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">,</span> <span class="s1">&#39;child&#39;</span><span class="p">)</span>
     <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">_clean_almaMater</span><span class="p">(</span><span class="n">cleaned_dict</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cleaned_dict</span>
-
-
-<span class="k">def</span> <span class="nf">_find_resource</span><span class="p">(</span><span class="n">flat_json</span><span class="p">):</span>
-    <span class="c1"># resource is the most common value</span>
-    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.h&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">flat_json</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-
-
-<span class="k">def</span> <span class="nf">_get_source</span><span class="p">(</span><span class="n">resource</span><span class="p">):</span>
-    <span class="n">parsed_url</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">{uri.scheme}</span><span class="s1">://</span><span class="si">{uri.netloc}</span><span class="s1">/&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">parsed_url</span><span class="p">)</span> <span class="o">+</span>
-            <span class="s1">&#39;data/&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.json&#39;</span><span class="p">)</span>
-
-
-
-<span class="k">def</span> <span class="nf">_val_is_english</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
-    <span class="n">language</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lang&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">language</span> <span class="ow">or</span> <span class="n">language</span> <span class="o">==</span> <span class="s1">&#39;en&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">return</span> <span class="kc">False</span>
-
-
-<span class="k">def</span> <span class="nf">_value_has_information_content</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">value</span> <span class="ow">or</span>
-            <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span> <span class="ow">or</span>
-            <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;* </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="ow">or</span>
-            <span class="n">value</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*&#39;</span><span class="p">)</span> <span class="ow">or</span>
-            <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">)</span> <span class="ow">or</span>
-            <span class="s1">&#39;_family&#39;</span> <span class="ow">in</span> <span class="n">value</span> <span class="ow">or</span>  <span class="c1"># e.g. child contains this</span>
-            <span class="n">value</span> <span class="ow">in</span> <span class="n">spacy</span><span class="o">.</span><span class="n">lang</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">STOP_WORDS</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span>
 
 
 <span class="k">def</span> <span class="nf">_merge_influences</span><span class="p">(</span><span class="n">dict_</span><span class="p">):</span>
@@ -13786,8 +13840,8 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Imputing-Redirects-in-the-Physicists-Dictionaries">Imputing Redirects in the Physicists Dictionaries<a class="anchor-link" href="#Imputing-Redirects-in-the-Physicists-Dictionaries">&#182;</a></h2><p>In order to impute redirects in the dictionaries I need to perform the following steps:</p>
 <ol>
-<li><em>Parse the dictionaries to obtain a list of all URLs.</em> I restrict this to the redirect keys in the list that you see below since these are the only fields of interest involving URLs that features will be extracted from.</li>
-<li><em>Submit HTTP requests to fetch the URLs and determine their redirect URLs.</em> A cache is kept mapping the URLs to the redirect URLs and as a consequence a HTTP request is only made to fetch a URL if the URL is not found in the cache. This greatly helps with performance.</li>
+<li><em>Parse the dictionaries to obtain a list of all URLs</em>. These are either resource URLs or URLs constructed in an <em>ad hoc</em> manner from the free form text in the hope that they resolve to a genuine resource URL. The aim is to resolve as many items as possible in the fields to semantic URLs. I restrict URL selection and construction to the following impute keys: <code>academicAdvisor</code>, <code>almaMater</code>, <code>award</code>, <code>birthPlace</code>, <code>categories</code>, <code>child</code>, <code>citizenship</code>, <code>deathPlace</code>, <code>doctoralAdvisor</code>, <code>doctoralStudent</code>, <code>field</code>, <code>influenced</code>, <code>influencedBy</code>, <code>knownFor</code>, <code>nationality</code>, <code>notableStudent</code>, <code>parent</code>, <code>residence</code>, <code>spouse</code>, <code>theorized</code>, <code>workplaces</code> as these are fields of interest involving URLs that features may be extracted from.</li>
+<li><em>Submit HTTP requests to fetch the URLs and determine their redirect URLs.</em> A cache is kept mapping the URLs to the redirect URLs and as a consequence a HTTP request is only made to fetch a URL if it is not found in the cache. This greatly helps with performance.</li>
 <li><em>Replace the URLs in the dictionaries with the redirect URLs.</em> In fact I use just the filename since the paths are identical for every URL.</li>
 </ol>
 
@@ -13799,62 +13853,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">REDIRECT_KEYS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;academicAdvisor&#39;</span><span class="p">,</span> <span class="s1">&#39;almaMater&#39;</span><span class="p">,</span> <span class="s1">&#39;award&#39;</span><span class="p">,</span> <span class="s1">&#39;birthPlace&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;child&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship&#39;</span><span class="p">,</span> <span class="s1">&#39;deathPlace&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;doctoralAdvisor&#39;</span><span class="p">,</span> <span class="s1">&#39;doctoralStudent&#39;</span><span class="p">,</span> <span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="s1">&#39;influenced&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;influencedBy&#39;</span><span class="p">,</span> <span class="s1">&#39;knownFor&#39;</span><span class="p">,</span> <span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="s1">&#39;notableStudent&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="s1">&#39;residence&#39;</span><span class="p">,</span> <span class="s1">&#39;spouse&#39;</span><span class="p">,</span> <span class="s1">&#39;theorized&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">contruct_urls</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Construct DBpedia resource URLs from physicists data.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        physicists (dict): Dict containing physicists data.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        list of `str`: List of URLs.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">urls_to_check</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">REDIRECT_KEYS</span><span class="p">:</span>
-         <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-                <span class="k">continue</span>
-            <span class="n">texts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
-            <span class="n">urls</span> <span class="o">=</span> <span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">texts</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
-                <span class="n">DBPEDIA_RESOURCE_URL</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
-                <span class="n">quoted_url</span> <span class="o">=</span> <span class="n">quote_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-                <span class="n">urls_to_check</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">quoted_url</span><span class="p">)</span>
-    
-    <span class="n">urls_to_check</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">urls_to_check</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls_to_check</span> <span class="o">=</span> <span class="n">contruct_urls</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls_to_check</span> <span class="o">=</span> <span class="n">construct_resource_urls</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">PHYSICISTS_IMPUTE_KEYS</span><span class="p">)</span>
 <span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)</span>
 </pre></div>
 
@@ -13868,13 +13867,13 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>10622</pre>
+<pre>10982</pre>
 </div>
 
 </div>
@@ -13885,13 +13884,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">url_cache_path</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/dbpedia-redirects.csv&#39;</span>
 <span class="n">redirects</span> <span class="o">=</span> <span class="n">get_redirect_urls</span><span class="p">(</span>
     <span class="n">urls_to_check</span><span class="p">,</span> <span class="n">url_cache_path</span><span class="o">=</span><span class="n">url_cache_path</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)))</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -13918,7 +13917,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Why_Does_E=mc%C2%B2%3F
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Helen_Louisa
 </pre>
 </div>
 </div>
@@ -13929,7 +13928,947 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 10622 / 10622 urls |██████| 100% Elapsed Time: 0:00:01 Time:  0:00:01
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Camille_Scoffier-Reeves
+404 Client Error: Not found for url: http://dbpedia.org/page/Irina_V._Grigorieva
+404 Client Error: Not found for url: http://dbpedia.org/page/PAECSUPARCOPINSTECHPunjab_UniversityImperial_College_LondonGovernment_College_UniversityUniversity_of_CambridgeICTPCOMSATSTWASEdward_Bouchet_Abdus_Salam_Institute
+404 Client Error: Not found for url: http://dbpedia.org/page/I._A._Campbell
+404 Client Error: Not found for url: http://dbpedia.org/page/Adele_Irene_DuMond
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Lynn_Bercovitz
+404 Client Error: Not found for url: http://dbpedia.org/page/Claire_Lhuillier
+404 Client Error: Not found for url: http://dbpedia.org/page/Katia_Chaterji
+404 Client Error: Not found for url: http://dbpedia.org/page/Robin_Marshall
+404 Client Error: Not found for url: http://dbpedia.org/page/Mary_Annette_Wheeler
+404 Client Error: Not found for url: http://dbpedia.org/page/University_of_Paris%0A%2A_%C3%89cole_Normale_Sup%C3%A9rieure%0A%2A_Curie_Institute_%28Paris%29_%0A%2A_French_Academy_of_Medicine%0A%2A_International_Committee_on_Intellectual_Cooperation
+404 Client Error: Not found for url: http://dbpedia.org/page/1871-12-25
+404 Client Error: Not found for url: http://dbpedia.org/page/Ushabati_Bose
+404 Client Error: Not found for url: http://dbpedia.org/page/Netherlands%2C_France
+404 Client Error: Not found for url: http://dbpedia.org/page/Northampton%2C_UK
+404 Client Error: Not found for url: http://dbpedia.org/page/Inventor_of_the_high-vacuum_tube
+404 Client Error: Not found for url: http://dbpedia.org/page/His_work_in_physics_of_disordered_system_and_the_modelling_of_financial_risks
+404 Client Error: Not found for url: http://dbpedia.org/page/Florence_Gordon
+404 Client Error: Not found for url: http://dbpedia.org/page/Xi-an%2C_China
+404 Client Error: Not found for url: http://dbpedia.org/page/Ultrafast_optics_and_Optoelectronics
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Amelia_Frank
+404 Client Error: Not found for url: http://dbpedia.org/page/Elizabeth_Christine_Zilch
+404 Client Error: Not found for url: http://dbpedia.org/page/Lidia_Dina
+404 Client Error: Not found for url: http://dbpedia.org/page/one_daughter
+404 Client Error: Not found for url: http://dbpedia.org/page/B.S%2CUniversity_of_Ankara%2C_Faculty_of_Science%2C1968
+404 Client Error: Not found for url: http://dbpedia.org/page/Irina_Barbolina
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Theoretical_galactic_and_extragalactic_astrophysics
+404 Client Error: Not found for url: http://dbpedia.org/page/Mafalda_Pisani
+404 Client Error: Not found for url: http://dbpedia.org/page/John_Huth
+404 Client Error: Not found for url: http://dbpedia.org/page/Margaret_Hemingway
+404 Client Error: Not found for url: http://dbpedia.org/page/K._T._Drobanzeva
+404 Client Error: Not found for url: http://dbpedia.org/page/Laboratoire_de_math%C3%A9matiques_et_physique_th%C3%A9orique_%3B_Department_of_Physics_and_Astronomy
+404 Client Error: Not found for url: http://dbpedia.org/page/Sylvia_Samuels
+404 Client Error: Not found for url: http://dbpedia.org/page/Hendrina__Khan
+404 Client Error: Not found for url: http://dbpedia.org/page/Francine_Brunel
+404 Client Error: Not found for url: http://dbpedia.org/page/astronomy%2C_mathematics%2C_physics
+404 Client Error: Not found for url: http://dbpedia.org/page/Jacquelyn_Savani
+404 Client Error: Not found for url: http://dbpedia.org/page/Fritz_Ehlotzky
+404 Client Error: Not found for url: http://dbpedia.org/page/Taub_Adiabat
+404 Client Error: Not found for url: http://dbpedia.org/page/Eileen_Clare-Patton_Hamilton
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Netherlands%2C
+404 Client Error: Not found for url: http://dbpedia.org/page/Marjorie_Louise_Butler
+404 Client Error: Not found for url: http://dbpedia.org/page/Britta_Marger_Siegumfeldt
+404 Client Error: Not found for url: http://dbpedia.org/page/Nina_Ilieva_Douglas
+404 Client Error: Not found for url: http://dbpedia.org/page/Trade_Ministry_of_Bavaria
+404 Client Error: Not found for url: http://dbpedia.org/page/Richard_D._Present
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Victor_Petrashov
+404 Client Error: Not found for url: http://dbpedia.org/page/Dutch_
+404 Client Error: Not found for url: http://dbpedia.org/page/Bartholom%C3%A4us_Leonhard_Schwendend%C3%B6rffer
+404 Client Error: Not found for url: http://dbpedia.org/page/Anna_Josepha_Newcomb_Whitney
+404 Client Error: Not found for url: http://dbpedia.org/page/Ph.D_%2C_Theoretical_High_Energy_Physics%2C_University_of_Colorado%2C_US%2C_1972
+404 Client Error: Not found for url: http://dbpedia.org/page/North_Carolina_State_University_%0AWesleyan_University_%0AUniversity_of_Pennsylvania_%0AMax-Planck-Insitut_f%C3%BCr_Metallforschung
+404 Client Error: Not found for url: http://dbpedia.org/page/Fernmeldetechnisches_Zentralamt
+404 Client Error: Not found for url: http://dbpedia.org/page/Mary_K._%22Molly%22__Lawrence
+404 Client Error: Not found for url: http://dbpedia.org/page/Rowena_Palmer
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Max_Planck_Institute_for_Gravitational_PhysicsNational_Autonomous_University_of_Mexico
+404 Client Error: Not found for url: http://dbpedia.org/page/Heterotransistors
+404 Client Error: Not found for url: http://dbpedia.org/page/Fan_Weng
+404 Client Error: Not found for url: http://dbpedia.org/page/R._Michael_Rich
+404 Client Error: Not found for url: http://dbpedia.org/page/Phyllis_Liu-Osheroff
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/physics
+404 Client Error: Not found for url: http://dbpedia.org/page/Galinka_Pavlovna_Ehrenfest
+404 Client Error: Not found for url: http://dbpedia.org/page/Olga_Bashina
+404 Client Error: Not found for url: http://dbpedia.org/page/Institute_of_Physics%2C_Academia_Sinica
+404 Client Error: Not found for url: http://dbpedia.org/page/Michael_Weyl
+404 Client Error: Not found for url: http://dbpedia.org/page/Aziza_Rahman
+404 Client Error: Not found for url: http://dbpedia.org/page/Janette_Hegner
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Ruth_Bonnie_Thompson
+404 Client Error: Not found for url: http://dbpedia.org/page/Professor_Jeff_Tostevin
+404 Client Error: Not found for url: http://dbpedia.org/page/Two_%2B_1_stepchild
+404 Client Error: Not found for url: http://dbpedia.org/page/Joan_Shirley_Alexander
+404 Client Error: Not found for url: http://dbpedia.org/page/Arthur_Alan
+404 Client Error: Not found for url: http://dbpedia.org/page/Jennifer_M._Gordon
+404 Client Error: Not found for url: http://dbpedia.org/page/Richard_J._Eden
+404 Client Error: Not found for url: http://dbpedia.org/page/Nora_Lombroso
+404 Client Error: Not found for url: http://dbpedia.org/page/Walter_K._Theumann
+404 Client Error: Not found for url: http://dbpedia.org/page/Johanna_Elisabeth_Lebret
+404 Client Error: Not found for url: http://dbpedia.org/page/Paul_Jr._Ehrenfest
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Winston-Salem%2C_North_Carolina%2C_United_States
+404 Client Error: Not found for url: http://dbpedia.org/page/Kathleen_Buchanan_Smith
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Melissa_Carroll
+404 Client Error: Not found for url: http://dbpedia.org/page/Separated_oscillatory_field_method
+404 Client Error: Not found for url: http://dbpedia.org/page/Lucy_Freund
+404 Client Error: Not found for url: http://dbpedia.org/page/Geometry_of_atomic_nuclei
+404 Client Error: Not found for url: http://dbpedia.org/page/Max_Franklin
+404 Client Error: Not found for url: http://dbpedia.org/page/Co-inventor_of_holography
+404 Client Error: Not found for url: http://dbpedia.org/page/Sucharita_Sen_Gupta
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Laurose_Becker
+404 Client Error: Not found for url: http://dbpedia.org/page/Hereward_L._Cooke
+404 Client Error: Not found for url: http://dbpedia.org/page/Nina_Yermakova_Ginzburg
+404 Client Error: Not found for url: http://dbpedia.org/page/Composition_and_Structure_of_Protoneutron_Stars
+404 Client Error: Not found for url: http://dbpedia.org/page/Mary_Gribbin
+404 Client Error: Not found for url: http://dbpedia.org/page/Multiverse_%3D_Quantum_Many_Worlds
+404 Client Error: Not found for url: http://dbpedia.org/page/Pauline_Cramer
+404 Client Error: Not found for url: http://dbpedia.org/page/Katherine_%22Kitty%22_Puening_Harrison
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Jacqueline_Veyrat
+404 Client Error: Not found for url: http://dbpedia.org/page/Marie_Merck
+404 Client Error: Not found for url: http://dbpedia.org/page/Pierre_Daure
+404 Client Error: Not found for url: http://dbpedia.org/page/four_others
+404 Client Error: Not found for url: http://dbpedia.org/page/Tracy_Day
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/University_of_Maryland%2C_College_ParkPrinceton_UniversityAmerican_Museum_of_Natural_History
+404 Client Error: Not found for url: http://dbpedia.org/page/Olga_Zamsha_Ginzburg
+404 Client Error: Not found for url: http://dbpedia.org/page/Poland_%0A%2A_France
+404 Client Error: Not found for url: http://dbpedia.org/page/Temperature_scale_named_for_him
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/eldest__was_mother_of_Olivia_Newton-John
+404 Client Error: Not found for url: http://dbpedia.org/page/Luise_Mehler
+404 Client Error: Not found for url: http://dbpedia.org/page/Elizabeth_Greytak
+404 Client Error: Not found for url: http://dbpedia.org/page/Susan_Carol_Marks
+404 Client Error: Not found for url: http://dbpedia.org/page/particle_phenomenology
+404 Client Error: Not found for url: http://dbpedia.org/page/Holographic_Higgs%2C
+404 Client Error: Not found for url: http://dbpedia.org/page/Nancy__Hofstadter
+404 Client Error: Not found for url: http://dbpedia.org/page/James_E._Young
+404 Client Error: Not found for url: http://dbpedia.org/page/Elanna
+404 Client Error: Not found for url: http://dbpedia.org/page/J._Margaret_Dow
+404 Client Error: Not found for url: http://dbpedia.org/page/Anisa_Bushra_Salam_Bajwa
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Deutsch-%C3%96sterreichischer_Telegraphenverein
+404 Client Error: Not found for url: http://dbpedia.org/page/Nancy_Jane_Reno
+404 Client Error: Not found for url: http://dbpedia.org/page/Martin_Burnell
+404 Client Error: Not found for url: http://dbpedia.org/page/Jean_Margaret_Kibble
+404 Client Error: Not found for url: http://dbpedia.org/page/Geraldine_Smithwick
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Tamara_Darskaya
+404 Client Error: Not found for url: http://dbpedia.org/page/Jean_Fetter
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/A._Aaron_Yalow
+404 Client Error: Not found for url: http://dbpedia.org/page/Tatiana_Chaterji
+404 Client Error: Not found for url: http://dbpedia.org/page/Kath%2C_Khwarezm%2C_Samanid_Empire
+404 Client Error: Not found for url: http://dbpedia.org/page/work_on_theory_of_multiverses
+404 Client Error: Not found for url: http://dbpedia.org/page/Predicting_Quantum_Origin_of_the_Universe_Structure
+404 Client Error: Not found for url: http://dbpedia.org/page/1931-10-18
+404 Client Error: Not found for url: http://dbpedia.org/page/Edna_Stanton
+404 Client Error: Not found for url: http://dbpedia.org/page/1886-02-24
+404 Client Error: Not found for url: http://dbpedia.org/page/von_Karman_Institute_for_Fluid_Dynamics
+404 Client Error: Not found for url: http://dbpedia.org/page/Marie_Bertha_Warner_Breisky
+404 Client Error: Not found for url: http://dbpedia.org/page/Morris_Washington
+404 Client Error: Not found for url: http://dbpedia.org/page/Afshona%2C_Peshkunskiy%2C_Bukhara%2C_Samanid_Empire
+404 Client Error: Not found for url: http://dbpedia.org/page/Edith_Junghans
+404 Client Error: Not found for url: http://dbpedia.org/page/Beverly_Hills%2C_Los_Angeles%2C_CA%2C_US
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Emily_Dyson
+404 Client Error: Not found for url: http://dbpedia.org/page/Ellen_Carr
+404 Client Error: Not found for url: http://dbpedia.org/page/Tola_Rotblat
+404 Client Error: Not found for url: http://dbpedia.org/page/suffragist
+404 Client Error: Not found for url: http://dbpedia.org/page/Susan_Yang
+404 Client Error: Not found for url: http://dbpedia.org/page/Lokasundari_Ammal
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Natalia_Malinina
+404 Client Error: Not found for url: http://dbpedia.org/page/Cynthia_Alff
+404 Client Error: Not found for url: http://dbpedia.org/page/California%2C_U.S.
+404 Client Error: Not found for url: http://dbpedia.org/page/Dr._Anita_Newcomb_McGee
+404 Client Error: Not found for url: http://dbpedia.org/page/Nancy_Joy_Schondorf
+404 Client Error: Not found for url: http://dbpedia.org/page/Ann_V_Sheppard
+404 Client Error: Not found for url: http://dbpedia.org/page/Second_Moscow_State_University_Moscow_State_University_Moscow_Institute_of_Physics_and_Technology_Lebedev_Physical_Institute
+404 Client Error: Not found for url: http://dbpedia.org/page/Daniela_Witten
+404 Client Error: Not found for url: http://dbpedia.org/page/Werner_Martienssen
+404 Client Error: Not found for url: http://dbpedia.org/page/Morton_F._Kaplon
+404 Client Error: Not found for url: http://dbpedia.org/page/Margrethe_N%C3%B8rlund
+404 Client Error: Not found for url: http://dbpedia.org/page/Ilana_Witten
+404 Client Error: Not found for url: http://dbpedia.org/page/A.U.B%2C_Lebanon%3B_IH%C3%89S%2C_France
+404 Client Error: Not found for url: http://dbpedia.org/page/founder_of_the_Army_Nurse_Corps
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Jesse_DuMond
+404 Client Error: Not found for url: http://dbpedia.org/page/Hungary%2C_Germany%2C_United_Kingdom%2C_United_States
+404 Client Error: Not found for url: http://dbpedia.org/page/Rebecca_Dyson
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Mary_Louise_Bell
+404 Client Error: Not found for url: http://dbpedia.org/page/Marga_von_H%C3%B6sslin
+404 Client Error: Not found for url: http://dbpedia.org/page/Austrian_Trade_Ministry
+404 Client Error: Not found for url: http://dbpedia.org/page/Charlotte_Davisson
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Chi-Li_Tu
+404 Client Error: Not found for url: http://dbpedia.org/page/Annemarie_Bertel
+404 Client Error: Not found for url: http://dbpedia.org/page/Aurelia_Townes
+404 Client Error: Not found for url: http://dbpedia.org/page/International_Solvay_Institute
+404 Client Error: Not found for url: http://dbpedia.org/page/Martin_J._Brabers
+404 Client Error: Not found for url: http://dbpedia.org/page/UFRGS_Physics_Institute
+404 Client Error: Not found for url: http://dbpedia.org/page/Nam%C4%B1k_Kemal_Pak%2C_Paul_Langacker
+404 Client Error: Not found for url: http://dbpedia.org/page/Vassily_Ehrenfest
+404 Client Error: Not found for url: http://dbpedia.org/page/Jack_Powles
+404 Client Error: Not found for url: http://dbpedia.org/page/Ida_Nicolaisen
+404 Client Error: Not found for url: http://dbpedia.org/page/Prof._Bob_Gross
+404 Client Error: Not found for url: http://dbpedia.org/page/Mary_Stilwell
+404 Client Error: Not found for url: http://dbpedia.org/page/Soviet_
+404 Client Error: Not found for url: http://dbpedia.org/page/Lila_Lee_Atwill
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Centre_for_Advanced_Studies_in_Physics
+404 Client Error: Not found for url: http://dbpedia.org/page/Karin_H%C3%B6gbom
+404 Client Error: Not found for url: http://dbpedia.org/page/Ingeborg_Marie_Louise_Winkler
+404 Client Error: Not found for url: http://dbpedia.org/page/H%C3%A9l%C3%A8ne_Jof%C3%A9__Maria_Prokopowicz
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Vidya_Jagadish
+404 Client Error: Not found for url: http://dbpedia.org/page/Gravitational_and_paranormal_research
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Orbifold_GUTs%2C
+404 Client Error: Not found for url: http://dbpedia.org/page/New_methods_to_search_for_supersymmetry_and_extra_dimensions_at_colliders
+404 Client Error: Not found for url: http://dbpedia.org/page/Marcia_Southwick
+404 Client Error: Not found for url: http://dbpedia.org/page/Hansen_Laboratories
+404 Client Error: Not found for url: http://dbpedia.org/page/Gweneth_Howarth
+404 Client Error: Not found for url: http://dbpedia.org/page/Nancy_Dahl
+404 Client Error: Not found for url: http://dbpedia.org/page/Galya_Chirikova
+404 Client Error: Not found for url: http://dbpedia.org/page/Ruth__Polkinghorne
+404 Client Error: Not found for url: http://dbpedia.org/page/Greta__Blanchard
+404 Client Error: Not found for url: http://dbpedia.org/page/Kay_Kuhne
+404 Client Error: Not found for url: http://dbpedia.org/page/Well_Surveys
+404 Client Error: Not found for url: http://dbpedia.org/page/Kharkov_Polytechnical_Institute_and_Kharkiv_University
+404 Client Error: Not found for url: http://dbpedia.org/page/Janet_L._Landis
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Irina_Lagunova%0A%2A_Irina_Valitova%0A%2A_Sidney_Orlov
+404 Client Error: Not found for url: http://dbpedia.org/page/Institute_for_Theoretical_and_Experimental_Physics%0A%2A_Yerevan_Physics_Institute%0A%2A_Institute_of_Terrestrial_Magnetism_and_Propagation_of_Radio_Waves%0A%2A_Cornell_University%0A%2A_American_Academy_of_Arts_and_Sciences%0A%2A_subsidiary_of_Amnesty_International_in_the_Soviet_Union%0A%2A_Moscow_Helsinki_Group
+404 Client Error: Not found for url: http://dbpedia.org/page/Particle_accelerator_science_and_technology
+404 Client Error: Not found for url: http://dbpedia.org/page/Manhattan_Project%0A%2A_Princeton_University
+404 Client Error: Not found for url: http://dbpedia.org/page/Bela_G_Fejer
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Elizabeth_M._Hoenke
+404 Client Error: Not found for url: http://dbpedia.org/page/Julie_Frampton
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Charles_Sommerfield
+404 Client Error: Not found for url: http://dbpedia.org/page/Rafael_Witten
+404 Client Error: Not found for url: http://dbpedia.org/page/John_D._Joannopoulos
+404 Client Error: Not found for url: http://dbpedia.org/page/Carol_Anne_Olivier
+404 Client Error: Not found for url: http://dbpedia.org/page/Theiss_Research
+404 Client Error: Not found for url: http://dbpedia.org/page/Eckhardt_Hoenig
+404 Client Error: Not found for url: http://dbpedia.org/page/Anne_Pearl_Barras
+404 Client Error: Not found for url: http://dbpedia.org/page/Robert_F._Mozley
+404 Client Error: Not found for url: http://dbpedia.org/page/Cynthia_Rich
+404 Client Error: Not found for url: http://dbpedia.org/page/1884-08-09
+404 Client Error: Not found for url: http://dbpedia.org/page/Austria%2C_Germany
+404 Client Error: Not found for url: http://dbpedia.org/page/Laboratoire_Central_des_Services_Chimiques_de_l%27%C3%89tat
+404 Client Error: Not found for url: http://dbpedia.org/page/University_of_Strassburg%0A%2A_University_of_Hohenheim%0A%2A_University_of_Giessen%0A%2A_University_of_W%C3%BCrzburg%0A%2A_University_of_Munich
+404 Client Error: Not found for url: http://dbpedia.org/page/Peter_Constantine_von_Braun
+404 Client Error: Not found for url: http://dbpedia.org/page/First_female_university_professor_of_Europe
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/padding%3A0.15em_0%3Bline-height%3A1.15em
+404 Client Error: Not found for url: http://dbpedia.org/page/Principal_of_the_United_College%2C_St_Andrews_University
+404 Client Error: Not found for url: http://dbpedia.org/page/Regina_Cleary
+404 Client Error: Not found for url: http://dbpedia.org/page/Grace_Burke_Sr.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/BritishAustralian
+404 Client Error: Not found for url: http://dbpedia.org/page/Solving_the_anharmonic_Grassmann_oscillator
+404 Client Error: Not found for url: http://dbpedia.org/page/Serena_Padmini
+404 Client Error: Not found for url: http://dbpedia.org/page/Joanna_Chataway
+404 Client Error: Not found for url: http://dbpedia.org/page/Haruko_Kinase
+404 Client Error: Not found for url: http://dbpedia.org/page/Poland%2C_France
+404 Client Error: Not found for url: http://dbpedia.org/page/line-height%3A1.3em%3B
+404 Client Error: Not found for url: http://dbpedia.org/page/Calvin_M._Class
+404 Client Error: Not found for url: http://dbpedia.org/page/Harwell_Tandem_Accelerator_Group
+404 Client Error: Not found for url: http://dbpedia.org/page/Willem_Henri_Julius
+404 Client Error: Not found for url: http://dbpedia.org/page/Moki
+404 Client Error: Not found for url: http://dbpedia.org/page/Hariet_Henry
+404 Client Error: Not found for url: http://dbpedia.org/page/Philip_B._Allen
+404 Client Error: Not found for url: http://dbpedia.org/page/Clemson_University_%0AWake_Forest_University
+404 Client Error: Not found for url: http://dbpedia.org/page/Iris_Careen_von_Braun
+404 Client Error: Not found for url: http://dbpedia.org/page/Lauren_Carroll
+404 Client Error: Not found for url: http://dbpedia.org/page/Shulamith_Toaff_Gross
+404 Client Error: Not found for url: http://dbpedia.org/page/Australia%0A%2A_United_Kingdom%0A%2A_United_States
+404 Client Error: Not found for url: http://dbpedia.org/page/artist
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Solving_the_solar_neutrino_problem
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Svetlana_Yuriyevna_Bunkova
+404 Client Error: Not found for url: http://dbpedia.org/page/Works_on_stellar_nucleo-synthesis
+404 Client Error: Not found for url: http://dbpedia.org/page/Professor_of_Natural_Philosophy%2C_Edinburgh_University
+404 Client Error: Not found for url: http://dbpedia.org/page/Betty_Charity_McCloskey
+404 Client Error: Not found for url: http://dbpedia.org/page/Dorothy_Dyson
+404 Client Error: Not found for url: http://dbpedia.org/page/AustraliaUnited_Kingdom
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Main_Geophysical_Observatory
+404 Client Error: Not found for url: http://dbpedia.org/page/Hedwig__Ehrenberg
+404 Client Error: Not found for url: http://dbpedia.org/page/Arline_Greenbaum
+404 Client Error: Not found for url: http://dbpedia.org/page/Margrit_Cecile_von_Braun
+404 Client Error: Not found for url: http://dbpedia.org/page/Tania_Letetsky-Baranovsky
+404 Client Error: Not found for url: http://dbpedia.org/page/Marianne_Mun_Ching_Sim
+404 Client Error: Not found for url: http://dbpedia.org/page/Janet_Chaterji
+404 Client Error: Not found for url: http://dbpedia.org/page/Ireland_United_States
+404 Client Error: Not found for url: http://dbpedia.org/page/Kirsten_Barbara_J%C3%B8rgensdatter
+404 Client Error: Not found for url: http://dbpedia.org/page/Liceo_Dante%2C_Florence
+404 Client Error: Not found for url: http://dbpedia.org/page/Mary_Anna
+404 Client Error: Not found for url: http://dbpedia.org/page/Why_Does_E=mc%C2%B2%3F
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Fetching: 10982 / 10982 urls |██████| 100% Elapsed Time: 0:00:06 Time:  0:00:06
 </pre>
 </div>
 </div>
@@ -13940,10 +14879,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">redirects</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">redirects</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13956,13 +14895,13 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>1</pre>
+<pre>18772</pre>
 </div>
 
 </div>
@@ -13974,7 +14913,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You can see that only one of the redirected URLs was not found. It is safe to ignore and proceed as this is not important for feature extraction.</p>
+<p>You can see that many of the requested URLs were not found. This is to be expected as there is free form text in the fields that do not map to a semantic URL in DBpedia. However, my <em>ad hoc</em> approach of constructing URLs from free form texts does find legitimate URLs in many instances.</p>
 <p>Now I sort and persist the URL cache to disk in case any new URLs are found.</p>
 
 </div>
@@ -13982,86 +14921,16 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dbpedia_redirects</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">redirects</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">redirects</span><span class="o">.</span><span class="n">values</span><span class="p">())),</span>
            <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;redirect_url&#39;</span><span class="p">])</span>
 <span class="n">dbpedia_redirects</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">url_cache_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">dbpedia_redirects</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[12]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>url</th>
-      <th>redirect_url</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>http://dbpedia.org/resource/13th_arrondissemen...</td>
-      <td>http://dbpedia.org/page/13th_arrondissement_of...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>http://dbpedia.org/resource/31_equal_temperament</td>
-      <td>http://dbpedia.org/page/31_equal_temperament</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>http://dbpedia.org/resource/3463_Kaokuen</td>
-      <td>http://dbpedia.org/page/3463_Kaokuen</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>http://dbpedia.org/resource/3M_Company</td>
-      <td>http://dbpedia.org/page/3M</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>http://dbpedia.org/resource/5th_arrondissement...</td>
-      <td>http://dbpedia.org/page/5th_arrondissement_of_...</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -14076,71 +14945,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">impute_redirects</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">redirects</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Impute the filenames from redirected URLs in the physicists data.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        data (list of `dict`): List of dicts containing physicists</span>
-<span class="sd">            data.</span>
-<span class="sd">        redirects (dict): The DBpedia redirected URLs. The key is</span>
-<span class="sd">            original URL and the value is the redirected URL.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        list of `dict`: List of dicts containing physicists data.</span>
-
-<span class="sd">        Identical to `data` except that it contains the filenames</span>
-<span class="sd">        from the redirected URLs.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">imputed_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">REDIRECT_KEYS</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># split up fields with these symbols</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">* &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">* &#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
-            <span class="n">texts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
-            
-            <span class="n">impute_texts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">DBPEDIA_RESOURCE_URL</span><span class="p">):</span>
-                    <span class="k">if</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">redirects</span><span class="p">:</span>
-                        <span class="n">name</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span>
-                            <span class="n">redirects</span><span class="p">[</span><span class="n">text</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">name</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span>
-                            <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">name</span> <span class="o">=</span> <span class="n">text</span>
-                <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Category:&#39;</span><span class="p">):</span>
-                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Category:&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">impute_texts</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-            <span class="n">impute_texts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">impute_texts</span><span class="p">)</span>
-            <span class="n">impute_texts</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">)</span>
-            <span class="n">datum</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">impute_texts</span><span class="p">)</span> 
-   
-    <span class="k">return</span> <span class="n">imputed_data</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">impute_redirects</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">redirects</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">impute_redirect_filenames</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">PHYSICISTS_IMPUTE_KEYS</span><span class="p">,</span> <span class="n">redirects</span><span class="p">)</span>
 <span class="n">imputed_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
@@ -14154,7 +14962,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14202,7 +15010,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
@@ -15959,7 +16767,7 @@ div#notebook {
       <td>Brooklyn</td>
       <td>1954 births|American physicists|Fellows of the...</td>
       <td>NaN</td>
-      <td>USA</td>
+      <td>United States</td>
       <td>...</td>
       <td>Johnson</td>
       <td>NaN</td>
@@ -17650,7 +18458,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Burton_Richter?ol...</td>
       <td>396684</td>
       <td>739623361</td>
-      <td>Stanford Linear Accelerator Center|Stanford Un...</td>
+      <td>SLAC National Accelerator Laboratory|Stanford ...</td>
     </tr>
     <tr>
       <th>141</th>
@@ -18040,7 +18848,7 @@ div#notebook {
       <th>157</th>
       <td>Carlo Giuseppe Matteo Marangoni (29 April 1840...</td>
       <td>NaN</td>
-      <td>Università degli Studi di Pavia</td>
+      <td>University of Pavia</td>
       <td>NaN</td>
       <td>1840-04-29</td>
       <td>NaN</td>
@@ -18946,7 +19754,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Daniel_C._Tsui?ol...</td>
       <td>896740</td>
       <td>734353835</td>
-      <td>Bell Laboratories|Boston University|Columbia U...</td>
+      <td>Bell Labs|Boston University|Columbia Universit...</td>
     </tr>
     <tr>
       <th>195</th>
@@ -19511,7 +20319,7 @@ div#notebook {
       <td>Sydney</td>
       <td>1951 births|Australian academics|Australian ch...</td>
       <td>NaN</td>
-      <td>Australian</td>
+      <td>Australians</td>
       <td>...</td>
       <td>Evans</td>
       <td>NaN</td>
@@ -22628,7 +23436,7 @@ div#notebook {
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>Omaha Nebraska</td>
+      <td>Omaha, Nebraska</td>
       <td>American physicists|Baylor University faculty|...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -23242,7 +24050,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Gustav_Kirchhoff?...</td>
       <td>12332</td>
       <td>739162434</td>
-      <td>Humboldt University of Berlin|University of Br...</td>
+      <td>Heidelberg University|Humboldt University of B...</td>
     </tr>
     <tr>
       <th>374</th>
@@ -23423,7 +24231,7 @@ div#notebook {
       <td>Mainz</td>
       <td>1919 births|2010 deaths|Alumni of Imperial Col...</td>
       <td>NaN</td>
-      <td>Australian|German</td>
+      <td>Australians|German</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -29350,7 +30158,7 @@ div#notebook {
       <td>NaN</td>
       <td>Buda</td>
       <td>1848 births|1919 deaths|Burials at Kerepesi Ce...</td>
-      <td>Ilona|Jolán|Rolanda</td>
+      <td>Ilona|Jolan|Rolanda</td>
       <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
@@ -30034,7 +30842,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Manne_Siegbahn?ol...</td>
       <td>573846</td>
       <td>713984361</td>
-      <td>Lund University|University of Stockholm|Uppsal...</td>
+      <td>Lund University|Stockholm University|Uppsala U...</td>
     </tr>
     <tr>
       <th>657</th>
@@ -30442,7 +31250,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Martin_Lewis_Perl...</td>
       <td>1641486</td>
       <td>718439438</td>
-      <td>Stanford Linear Accelerator Center|University ...</td>
+      <td>SLAC National Accelerator Laboratory|Universit...</td>
     </tr>
     <tr>
       <th>674</th>
@@ -31930,7 +32738,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Nihat_Berker?oldi...</td>
       <td>3450137</td>
       <td>744298782</td>
-      <td>Boğaziçi Üniversitesi|Koç University|Massachus...</td>
+      <td>Boğaziçi University|Istanbul Technical Univers...</td>
     </tr>
     <tr>
       <th>736</th>
@@ -32218,7 +33026,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Oliver_Heaviside?...</td>
       <td>22831</td>
       <td>741724766</td>
-      <td>Great Northern Telegraph Company</td>
+      <td>GN Store Nord</td>
     </tr>
     <tr>
       <th>748</th>
@@ -34271,7 +35079,7 @@ div#notebook {
       <td>New York|New York City</td>
       <td>1928 births|2014 deaths|Guggenheim Fellows|Har...</td>
       <td>NaN</td>
-      <td>USA</td>
+      <td>United States</td>
       <td>...</td>
       <td>Arnowitt</td>
       <td>NaN</td>
@@ -34390,7 +35198,7 @@ div#notebook {
       <td>Richard Phillips Feynman</td>
       <td>Queens</td>
       <td>1918 births|1988 deaths|20th-century physicist...</td>
-      <td>Carl Feynman|Michelle Feynman</td>
+      <td>Richard Feynman</td>
       <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
@@ -36311,7 +37119,7 @@ div#notebook {
       <td>Rivne|Second Polish Republic|Ukraine</td>
       <td>1931 births|Brandeis University faculty|Guggen...</td>
       <td>NaN</td>
-      <td>USA</td>
+      <td>United States</td>
       <td>...</td>
       <td>Deser</td>
       <td>NaN</td>
@@ -36911,7 +37719,7 @@ div#notebook {
       <td>Melbourne</td>
       <td>1936 births|American physicists|Antarctic scie...</td>
       <td>NaN</td>
-      <td>USA</td>
+      <td>United States</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -38314,7 +39122,7 @@ div#notebook {
       <td>http://en.wikipedia.org/wiki/Wilhelm_Röntgen?o...</td>
       <td>61325</td>
       <td>745154304</td>
-      <td>University of Giessen|University of Hohenheim|...</td>
+      <td>Ludwig Maximilian University of Munich|Univers...</td>
     </tr>
     <tr>
       <th>1002</th>
@@ -39358,7 +40166,7 @@ div#notebook {
       <td>NaN</td>
       <td>Moscow|Soviet Union</td>
       <td>1924 births|20th-century physicists|American p...</td>
-      <td>Aleksandr|Dmitri|Lev</td>
+      <td>Alexander|Dmitry|Lev</td>
       <td>Statelessness</td>
       <td>...</td>
       <td>Orlov</td>
@@ -39466,34 +40274,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/notable_physicists.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Cleaning-Up">Cleaning Up<a class="anchor-link" href="#Cleaning-Up">&#182;</a></h2><p>A clean up step is needed:</p>
-<ul>
-<li>Remove the top-level module directory of the repository from the system path.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">repo_dir</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/physicists.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>

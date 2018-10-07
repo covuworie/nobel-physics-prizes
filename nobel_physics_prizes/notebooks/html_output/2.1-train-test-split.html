@@ -13116,7 +13116,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Train-Test-Split">Train-Test Split<a class="anchor-link" href="#Train-Test-Split">&#182;</a></h1><p>The <a href="../data/interim/notable_physicists.csv">notable physicists dataframe</a> consists of a list of great physicists from the Ancient Greeks to modern times. I would like to reduce this to a list of modern physicists who have lived in the years when the <em>Nobel Prize in Physics</em> has been awarded. To be more precise, the Nobel Prize in Physics was first awarded on <em>10 December 1901</em> on the anniversary of Alfred Nobel's death. The prize has been awarded on the anniversary of his death every year since, excluding the few years in which no prize was awarded. Essentially, I would like a list of physicists who were alive on and after this date. Many of these physicists have died and many of them are still alive.</p>
+<h1 id="Train-Test-Split">Train-Test Split<a class="anchor-link" href="#Train-Test-Split">&#182;</a></h1><p>The <a href="../data/interim/physicists.csv">physicists dataframe</a> consists of a list of great physicists from the Ancient Greeks to modern times. I would like to reduce this to a list of modern physicists who have lived in the years when the <em>Nobel Prize in Physics</em> has been awarded. To be more precise, the Nobel Prize in Physics was first awarded on <em>10 December 1901</em> on the anniversary of Alfred Nobel's death. The prize has been awarded on the anniversary of his death every year since, excluding the few years in which no prize was awarded. Essentially, I would like a list of physicists who were alive on and after this date. Many of these physicists have died and many of them are still alive.</p>
 <p>Since one of the goals of this project is to try to predict the next Physics Nobel Laureate(s), I wish to form a <em>training set</em> that consists of physicists who have died. Naturally, some of these are Nobel Laureates and some are not. The aim is to use the training set to build models that predict whether a physicist who is still alive has been awarded or is likely to be awarded the Nobel Prize in Physics. So it is natural that my <em>test set</em> only consists of physicists who are still alive.</p>
 
 </div>
@@ -13140,7 +13140,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exploratory-Analysis-of-Physicists-Birth-and-Death-Dates">Exploratory Analysis of Physicists Birth and Death Dates<a class="anchor-link" href="#Exploratory-Analysis-of-Physicists-Birth-and-Death-Dates">&#182;</a></h2><p>First let's read in the notable physicists data into a pandas dataframe and take a look at it.</p>
+<h2 id="Exploratory-Analysis-of-Physicists-Birth-and-Death-Dates">Exploratory Analysis of Physicists Birth and Death Dates<a class="anchor-link" href="#Exploratory-Analysis-of-Physicists-Birth-and-Death-Dates">&#182;</a></h2><p>First let's read in the physicists data into a pandas dataframe and take a look at it.</p>
 
 </div>
 </div>
@@ -13150,7 +13150,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/notable_physicists.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/physicists.csv&#39;</span><span class="p">)</span>
 <span class="n">physicists</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 
@@ -21068,9 +21068,9 @@ Reading some of the abstracts in the dataframe and performing a Google search on
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
-    <span class="s1">&#39;../data/processed/train_notable_physicists_from_1901.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="s1">&#39;../data/processed/train-physicists-from-1901.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">test_physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
-    <span class="s1">&#39;../data/processed/test_notable_physicists_from_1901.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="s1">&#39;../data/processed/test-physicists-from-1901.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>

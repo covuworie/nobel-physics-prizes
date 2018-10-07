@@ -14093,7 +14093,7 @@ div#notebook {
 <span class="k">def</span> <span class="nf">test_train_test_split_train</span><span class="p">(</span><span class="n">expected_train_physicists</span><span class="p">):</span>
     <span class="k">assert</span><span class="p">(</span>
         <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-        <span class="s1">&#39;../data/processed/train_notable_physicists_from_1901.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="s1">&#39;../data/processed/train-physicists-from-1901.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
         <span class="n">expected_train_physicists</span><span class="p">)</span>
     <span class="p">)</span>
     
@@ -14101,7 +14101,7 @@ div#notebook {
 <span class="k">def</span> <span class="nf">test_train_test_split_test</span><span class="p">(</span><span class="n">expected_test_physicists</span><span class="p">):</span>
     <span class="k">assert</span><span class="p">(</span>
         <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-        <span class="s1">&#39;../data/processed/test_notable_physicists_from_1901.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="s1">&#39;../data/processed/test-physicists-from-1901.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
         <span class="n">expected_test_physicists</span><span class="p">)</span>
     <span class="p">)</span>
     
@@ -14126,15 +14126,15 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre><span class="ansi-bold">============================= test session starts =============================</span>
-platform win32 -- Python 3.6.5, pytest-3.8.1, py-1.6.0, pluggy-0.7.1 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
+platform win32 -- Python 3.6.5, pytest-3.8.2, py-1.6.0, pluggy-0.7.1 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
 cachedir: .pytest_cache
 rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 <span class="ansi-bold">collecting ... </span>collected 2 items
 
-..\..\tests\test_2.1-train-test-split.py::test_train_test_split_train &lt;- &lt;ipython-input-20-b15a97304bf1&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 50%]</span>
-..\..\tests\test_2.1-train-test-split.py::test_train_test_split_test &lt;- &lt;ipython-input-20-b15a97304bf1&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [100%]</span>
+..\..\tests\test_2.1-train-test-split.py::test_train_test_split_train &lt;- &lt;ipython-input-20-756be0865d52&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 50%]</span>
+..\..\tests\test_2.1-train-test-split.py::test_train_test_split_test &lt;- &lt;ipython-input-20-756be0865d52&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [100%]</span>
 
-<span class="ansi-green-intense-fg ansi-bold">========================== 2 passed in 0.09 seconds ===========================</span>
+<span class="ansi-green-intense-fg ansi-bold">========================== 2 passed in 0.08 seconds ===========================</span>
 </pre>
 </div>
 </div>
