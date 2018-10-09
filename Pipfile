@@ -16,6 +16,8 @@ jsonlines = "*"
 spacy = "*"
 "en-core-web-sm-2.0.0" = {file = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.0.0/en_core_web_sm-2.0.0.tar.gz"}
 requests-futures = "*"
+pycountry-convert = "*"
+reverse-geocoder = "*"
 
 [dev-packages]
 pytest = "*"
