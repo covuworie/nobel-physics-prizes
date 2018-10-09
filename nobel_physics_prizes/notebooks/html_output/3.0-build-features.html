@@ -14092,6 +14092,22 @@ div#notebook {
         <span class="n">physicists</span><span class="o">.</span><span class="n">residence</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_residence_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
         <span class="n">features</span><span class="p">[</span><span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">citizenship</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_country_alpha_2_codes&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">citizenship</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_continent_codes&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">nationality</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_nationality_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_country_alpha_2_codes&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">nationality</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_nationality_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_continent_codes&#39;</span><span class="p">])</span>
 
 
 
@@ -14278,16 +14294,16 @@ div#notebook {
       <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>birth_continent_codes</th>
-      <th>num_birth_continent_codes</th>
-      <th>death_country_alpha_2_codes</th>
-      <th>num_death_country_alpha_2_codes</th>
-      <th>death_continent_codes</th>
-      <th>num_death_continent_codes</th>
-      <th>residence_country_alpha_2_codes</th>
-      <th>num_residence_country_alpha_2_codes</th>
       <th>residence_continent_codes</th>
       <th>num_residence_continent_codes</th>
+      <th>citizenship_country_alpha_2_codes</th>
+      <th>num_citizenship_country_alpha_2_codes</th>
+      <th>citizenship_continent_codes</th>
+      <th>num_citizenship_continent_codes</th>
+      <th>nationality_country_alpha_2_codes</th>
+      <th>num_nationality_country_alpha_2_codes</th>
+      <th>nationality_continent_codes</th>
+      <th>num_nationality_continent_codes</th>
     </tr>
   </thead>
   <tbody>
@@ -14304,12 +14320,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[DK]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14330,14 +14346,14 @@ div#notebook {
       <td>...</td>
       <td>NaN</td>
       <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>[NL]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -14352,12 +14368,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[AS]</td>
-      <td>1</td>
-      <td>[GB]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14376,12 +14392,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[AS, EU]</td>
-      <td>2</td>
-      <td>[RU]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14406,8 +14422,8 @@ div#notebook {
       <td>0</td>
       <td>NaN</td>
       <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[US]</td>
+      <td>1</td>
       <td>NaN</td>
       <td>0</td>
     </tr>
@@ -14426,12 +14442,12 @@ div#notebook {
       <td>...</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>[DK]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[NL]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>[NL, US]</td>
+      <td>2</td>
       <td>[EU]</td>
       <td>1</td>
     </tr>
@@ -14448,12 +14464,12 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[RU]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14472,12 +14488,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[DE]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14496,16 +14512,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>[LT]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>9</th>
@@ -14520,12 +14536,12 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[AS]</td>
-      <td>1</td>
-      <td>[NL]</td>
-      <td>1</td>
       <td>[EU]</td>
       <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>[NL]</td>
       <td>1</td>
       <td>[EU]</td>
@@ -14544,8 +14560,8 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[AS]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14568,12 +14584,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[AU, JP]</td>
-      <td>2</td>
-      <td>[AS, OC]</td>
-      <td>2</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14592,14 +14608,14 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
       <td>NaN</td>
       <td>0</td>
     </tr>
@@ -14618,14 +14634,14 @@ div#notebook {
       <td>...</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>[US]</td>
+      <td>[AT, CH, DE]</td>
+      <td>3</td>
+      <td>[EU]</td>
       <td>1</td>
       <td>NaN</td>
       <td>0</td>
-      <td>[CH]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>14</th>
@@ -14640,12 +14656,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[UA]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14664,16 +14680,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>[RU]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>16</th>
@@ -14688,10 +14704,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[CA]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14712,16 +14728,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[OC]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>[RU]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>18</th>
@@ -14736,12 +14752,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[RU]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14760,16 +14776,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>[FR]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>20</th>
@@ -14786,8 +14802,8 @@ div#notebook {
       <td>...</td>
       <td>NaN</td>
       <td>0</td>
-      <td>[US]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14808,12 +14824,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[FR]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14832,10 +14848,10 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[AS]</td>
-      <td>1</td>
-      <td>[US]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14856,16 +14872,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[AF]</td>
-      <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>[EG, GB]</td>
-      <td>2</td>
       <td>[AF, EU]</td>
       <td>2</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>[EG]</td>
+      <td>1</td>
+      <td>[AF]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>24</th>
@@ -14882,14 +14898,14 @@ div#notebook {
       <td>...</td>
       <td>[AS]</td>
       <td>1</td>
-      <td>[US]</td>
-      <td>1</td>
       <td>NaN</td>
       <td>0</td>
-      <td>[IN]</td>
-      <td>1</td>
-      <td>[AS]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>25</th>
@@ -14904,10 +14920,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[AF]</td>
-      <td>1</td>
-      <td>[US]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14930,8 +14946,8 @@ div#notebook {
       <td>...</td>
       <td>NaN</td>
       <td>0</td>
-      <td>[US]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>NaN</td>
@@ -14958,10 +14974,10 @@ div#notebook {
       <td>0</td>
       <td>NaN</td>
       <td>0</td>
-      <td>[PK]</td>
-      <td>1</td>
-      <td>[AS]</td>
-      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>28</th>
@@ -15013,7 +15029,7 @@ div#notebook {
     </tr>
   </tbody>
 </table>
-<p>30 rows × 37 columns</p>
+<p>30 rows × 45 columns</p>
 </div>
 </div>
 
