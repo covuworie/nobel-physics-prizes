@@ -14072,10 +14072,26 @@ div#notebook {
         <span class="n">physicists</span><span class="o">.</span><span class="n">birthPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_birth_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
         <span class="n">features</span><span class="p">[</span><span class="s1">&#39;birth_country_alpha_2_codes&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">birthPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_birth_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">])</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;death_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">deathPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_death_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
         <span class="n">features</span><span class="p">[</span><span class="s1">&#39;death_country_alpha_2_codes&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;death_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">deathPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_death_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;death_continent_codes&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;residence_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">residence</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_residence_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;residence_country_alpha_2_codes&#39;</span><span class="p">])</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">residence</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_residence_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_places_codes</span><span class="p">(</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">])</span>
 
 
 
@@ -14215,7 +14231,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span>
                                            <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">)</span>
-<span class="n">train_physicists_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">train_physicists_features</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14262,16 +14278,16 @@ div#notebook {
       <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>num_physics_laureate_spouses</th>
-      <th>num_chemistry_laureate_spouses</th>
-      <th>num_physics_laureate_influenced</th>
-      <th>num_chemistry_laureate_influenced</th>
-      <th>num_physics_laureate_influenced_by</th>
-      <th>num_chemistry_laureate_influenced_by</th>
-      <th>birth_country_alpha_2_codes</th>
-      <th>num_birth_country_alpha_2_codes</th>
+      <th>birth_continent_codes</th>
+      <th>num_birth_continent_codes</th>
       <th>death_country_alpha_2_codes</th>
       <th>num_death_country_alpha_2_codes</th>
+      <th>death_continent_codes</th>
+      <th>num_death_continent_codes</th>
+      <th>residence_country_alpha_2_codes</th>
+      <th>num_residence_country_alpha_2_codes</th>
+      <th>residence_continent_codes</th>
+      <th>num_residence_continent_codes</th>
     </tr>
   </thead>
   <tbody>
@@ -14288,16 +14304,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>[DK]</td>
+      <td>[EU]</td>
       <td>1</td>
       <td>[DK]</td>
       <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
@@ -14312,16 +14328,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>NaN</td>
       <td>0</td>
       <td>[NL]</td>
       <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -14336,16 +14352,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>[PK]</td>
+      <td>[AS]</td>
       <td>1</td>
       <td>[GB]</td>
       <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
@@ -14360,16 +14376,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>[AZ, GE, RU]</td>
-      <td>3</td>
+      <td>[AS, EU]</td>
+      <td>2</td>
       <td>[RU]</td>
       <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
@@ -14384,20 +14400,620 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Abraham Pais</td>
+      <td>Abraham Pais</td>
+      <td>1</td>
+      <td>82</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[DK]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[NL]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Abram Ioffe</td>
+      <td>Abram Ioffe</td>
+      <td>1</td>
+      <td>79</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[RU]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Adolf Kratzer</td>
+      <td>Adolf Kratzer</td>
+      <td>1</td>
+      <td>89</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[DE]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Adolfas Jucys</td>
+      <td>Adolfas Jucys</td>
+      <td>1</td>
+      <td>69</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[LT]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Adriaan Fokker</td>
+      <td>Adriaan Fokker</td>
+      <td>1</td>
+      <td>85</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>[AS]</td>
+      <td>1</td>
+      <td>[NL]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[NL]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Akira Tonomura</td>
+      <td>Akira Tonomura</td>
+      <td>1</td>
+      <td>70</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[AS]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Alan Walsh (physicist)</td>
+      <td>Alan Walsh</td>
+      <td>1</td>
+      <td>81</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[AU, JP]</td>
+      <td>2</td>
+      <td>[AS, OC]</td>
+      <td>2</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Albert A. Michelson</td>
+      <td>Albert A. Michelson</td>
+      <td>1</td>
+      <td>78</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Albert Einstein</td>
+      <td>Albert Einstein</td>
+      <td>1</td>
+      <td>76</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>[CH]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Aleksandr Lyapunov</td>
+      <td>Aleksandr Lyapunov|Aleksandr Mikhailovich Lyap...</td>
+      <td>1</td>
+      <td>61</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[UA]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Alexander Friedmann</td>
+      <td>Alexander Friedmann</td>
+      <td>1</td>
+      <td>37</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[RU]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Alexander Graham Bell</td>
+      <td>Alexander Graham Bell</td>
+      <td>1</td>
+      <td>75</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[CA]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Alexander Prokhorov</td>
+      <td>Alexander Prokhorov</td>
+      <td>1</td>
+      <td>85</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[OC]</td>
+      <td>1</td>
+      <td>[RU]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Alexei Zamolodchikov</td>
+      <td>Alexei Zamolodchikov</td>
+      <td>1</td>
+      <td>55</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[RU]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Alfred Kastler</td>
+      <td>Alfred Kastler</td>
+      <td>1</td>
+      <td>81</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[FR]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Alfred Lee Loomis</td>
+      <td>Alfred Lee Loomis</td>
+      <td>1</td>
+      <td>87</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
       <td>0</td>
       <td>[US]</td>
       <td>1</td>
       <td>NaN</td>
       <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Alfred-Marie Liénard</td>
+      <td>Alfred-Marie Liénard</td>
+      <td>1</td>
+      <td>89</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[FR]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Ali Javan</td>
+      <td>()|Ali Javan</td>
+      <td>1</td>
+      <td>89</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>[AS]</td>
+      <td>1</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Ali Moustafa Mosharafa</td>
+      <td>Ali Moustafa Mosharafa|Dr. Ali Moustafa Moshar...</td>
+      <td>1</td>
+      <td>51</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[AF]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>[EG, GB]</td>
+      <td>2</td>
+      <td>[AF, EU]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Alladi Ramakrishnan</td>
+      <td>Alladi Ramakrishnan</td>
+      <td>1</td>
+      <td>84</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[AS]</td>
+      <td>1</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>[IN]</td>
+      <td>1</td>
+      <td>[AS]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Allan McLeod Cormack</td>
+      <td>Allan MacLeod Cormack|Allan McLeod Cormack</td>
+      <td>1</td>
+      <td>74</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[AF]</td>
+      <td>1</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Alvin M. Weinberg</td>
+      <td>Alvin M. Weinberg|Alvin Martin Weinberg</td>
+      <td>1</td>
+      <td>91</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Amal Kumar Raychaudhuri</td>
+      <td>Amal Kumar Raychaudhuri</td>
+      <td>1</td>
+      <td>81</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[AS]</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>[PK]</td>
+      <td>1</td>
+      <td>[AS]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Amos Dolbear</td>
+      <td>Amos Dolbear</td>
+      <td>1</td>
+      <td>72</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Amrom Harry Katz</td>
+      <td>Amrom Harry Katz</td>
+      <td>1</td>
+      <td>81</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 29 columns</p>
+<p>30 rows × 37 columns</p>
 </div>
 </div>
 
