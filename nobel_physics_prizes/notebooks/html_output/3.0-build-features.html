@@ -14047,7 +14047,12 @@ div#notebook {
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">child</span><span class="p">,</span>
                              <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>  <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">_impute_num_laureate_children_parents</span><span class="p">(</span><span class="n">features</span><span class="p">)</span> <span class="c1"># impute missing values</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
+                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
+                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>  <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_spouses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">spouse</span><span class="p">,</span>
                              <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
@@ -14174,31 +14179,6 @@ div#notebook {
     <span class="n">codes</span> <span class="o">=</span> <span class="n">places_in_physicists</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_get_places_codes</span><span class="p">,</span>
                                        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">full_name_in_places</span><span class="p">,</span> <span class="n">places_codes</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">codes</span>
-
-
-
-<span class="k">def</span> <span class="nf">_impute_num_laureate_children_parents</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
-    
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># none for chemistry</span>
-    
-    <span class="c1"># https://www.nobelprize.org/prizes/facts/facts-on-the-nobel-prize-in-physics/</span>
-    <span class="c1"># William Bragg and Lawrence Bragg, 1915</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;William Henry Bragg&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;num_physics_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;William Lawrence Bragg&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="c1"># Niels Bohr, 1922 and Aage N. Bohr, 1975</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Aage Bohr&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="c1"># Manne Siegbahn, 1924 and Kai M. Siegbahn, 1981</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Kai Siegbahn&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="c1"># J. J. Thomson, 1906 and George Paget Thomson, 1937</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;J. J. Thomson&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;num_physics_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;George Paget Thomson&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
 
 
