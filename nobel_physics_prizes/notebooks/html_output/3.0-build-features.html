@@ -14069,42 +14069,42 @@ div#notebook {
 
     
 <span class="k">def</span> <span class="nf">_build_places_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">places</span><span class="p">):</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;birth_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">birthPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_birth_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">birth_country_alpha_2_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">birthPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_birth_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">birth_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">birthPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_birth_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">features</span><span class="o">.</span><span class="n">birth_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;death_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">deathPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_death_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">death_country_alpha_2_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;death_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">deathPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_death_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">death_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;death_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">deathPlace</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_death_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">features</span><span class="o">.</span><span class="n">death_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;residence_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">residence</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_residence_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">residence_country_alpha_2_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">residence</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_residence_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">residence_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">residence</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_residence_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">features</span><span class="o">.</span><span class="n">residence_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">citizenship</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">citizenship_country_alpha_2_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">citizenship</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">citizenship_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">citizenship</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">features</span><span class="o">.</span><span class="n">citizenship_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">nationality</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_nationality_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">nationality_country_alpha_2_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">nationality</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_nationality_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">nationality_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">nationality</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_nationality_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
@@ -14112,10 +14112,10 @@ div#notebook {
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;alma_mater&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">almaMater</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">am</span><span class="p">:</span> <span class="nb">list</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">am</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">else</span> <span class="n">am</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_alma_mater&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">alma_mater</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;alma_mater_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">almaMater</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_alma_mater_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">alma_mater_country_alpha_2_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">almaMater</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_alma_mater_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">alma_mater_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">almaMater</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_alma_mater_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
@@ -14123,10 +14123,10 @@ div#notebook {
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;workplaces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">workplaces</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">wp</span><span class="p">:</span> <span class="nb">list</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">else</span> <span class="n">wp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_workplaces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">workplaces</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;workplaces_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">workplaces</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_workplaces_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">workplaces_country_alpha_2_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">workplaces</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_workplaces_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">workplaces_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">workplaces</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_workplaces_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
@@ -14320,14 +14320,14 @@ div#notebook {
       <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>alma_mater_country_alpha_2_codes</th>
-      <th>num_alma_mater_country_alpha_2_codes</th>
+      <th>alma_mater_country_alpha_3_codes</th>
+      <th>num_alma_mater_country_alpha_3_codes</th>
       <th>alma_mater_continent_codes</th>
       <th>num_alma_mater_continent_codes</th>
       <th>workplaces</th>
       <th>num_workplaces</th>
-      <th>workplaces_country_alpha_2_codes</th>
-      <th>num_workplaces_country_alpha_2_codes</th>
+      <th>workplaces_country_alpha_3_codes</th>
+      <th>num_workplaces_country_alpha_3_codes</th>
       <th>workplaces_continent_codes</th>
       <th>num_workplaces_continent_codes</th>
     </tr>
@@ -14346,13 +14346,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[DK]</td>
+      <td>[DNK]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
       <td>[Columbia University, Institute for Advanced S...</td>
       <td>4</td>
-      <td>[DK, US]</td>
+      <td>[DNK, USA]</td>
       <td>2</td>
       <td>[EU, NA]</td>
       <td>2</td>
@@ -14394,7 +14394,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[GB, PK]</td>
+      <td>[GBR, PAK]</td>
       <td>2</td>
       <td>[AS, EU]</td>
       <td>2</td>
@@ -14418,13 +14418,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
       <td>[Institute for Theoretical and Experimental Ph...</td>
       <td>1</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -14442,7 +14442,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
@@ -14490,7 +14490,7 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -14538,7 +14538,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[LT]</td>
+      <td>[LTU]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -14562,7 +14562,7 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[NL]</td>
+      <td>[NLD]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -14634,13 +14634,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[DE, US]</td>
+      <td>[DEU, USA]</td>
       <td>2</td>
       <td>[EU, NA]</td>
       <td>2</td>
       <td>[Case Western Reserve University, Clark Univer...</td>
       <td>3</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
@@ -14658,13 +14658,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[CH]</td>
+      <td>[CHE]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
       <td>[California Institute of Technology, Deutsche ...</td>
       <td>12</td>
-      <td>[CH, DE, NL, US]</td>
+      <td>[CHE, DEU, NLD, USA]</td>
       <td>4</td>
       <td>[EU, NA]</td>
       <td>2</td>
@@ -14682,13 +14682,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
       <td>[National University of Kharkiv, Russian Acade...</td>
       <td>3</td>
-      <td>[RU, UA]</td>
+      <td>[RUS, UKR]</td>
       <td>2</td>
       <td>[EU]</td>
       <td>1</td>
@@ -14706,13 +14706,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
       <td>[Main Geophysical Observatory, Peter the Great...</td>
       <td>2</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -14778,7 +14778,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -14874,7 +14874,7 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[IR, US]</td>
+      <td>[IRN, USA]</td>
       <td>2</td>
       <td>[AS, NA]</td>
       <td>2</td>
@@ -14922,13 +14922,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[GB, IN]</td>
+      <td>[GBR, IND]</td>
       <td>2</td>
       <td>[AS, EU]</td>
       <td>2</td>
       <td>[Institute of Mathematical Sciences, Chennai, ...</td>
       <td>2</td>
-      <td>[IN]</td>
+      <td>[IND]</td>
       <td>1</td>
       <td>[AS]</td>
       <td>1</td>
@@ -14970,13 +14970,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
       <td>[International Atomic Energy Agency, Metallurg...</td>
       <td>4</td>
-      <td>[AT, US]</td>
+      <td>[AUT, USA]</td>
       <td>2</td>
       <td>[EU, NA]</td>
       <td>2</td>
@@ -14994,7 +14994,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[IN]</td>
+      <td>[IND]</td>
       <td>1</td>
       <td>[AS]</td>
       <td>1</td>
@@ -15066,7 +15066,7 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -15090,7 +15090,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -15162,7 +15162,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -15186,13 +15186,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
       <td>[Marquette University]</td>
       <td>1</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
@@ -15210,7 +15210,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -15234,7 +15234,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
+      <td>[RUS]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -15258,7 +15258,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
@@ -15282,13 +15282,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[GB]</td>
+      <td>[GBR]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
       <td>[Trinity College, Cambridge]</td>
       <td>1</td>
-      <td>[GB]</td>
+      <td>[GBR]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
@@ -15354,13 +15354,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[CA]</td>
+      <td>[CAN]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
       <td>[Bell Labs, Columbia University, Stanford Univ...</td>
       <td>3</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
@@ -15402,7 +15402,7 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
@@ -15426,13 +15426,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[CH]</td>
+      <td>[CHE]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
       <td>[Reed College, Syracuse University, University...</td>
       <td>4</td>
-      <td>[US]</td>
+      <td>[USA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
@@ -15522,13 +15522,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[GB, TR]</td>
+      <td>[GBR, TUR]</td>
       <td>2</td>
       <td>[AS, EU]</td>
       <td>2</td>
       <td>[Middle East Technical University, University ...</td>
       <td>2</td>
-      <td>[TR, US]</td>
+      <td>[TUR, USA]</td>
       <td>2</td>
       <td>[AS, NA]</td>
       <td>2</td>
