@@ -1,8 +1,10 @@
 import pandas as pd
 import pytest
 
-from src.data.dbpedia_utils import (PHYSICISTS_IMPUTE_KEYS, PLACES_IMPUTE_KEYS,
-                                    construct_resource_urls, impute_redirect_filenames)
+from src.data.dbpedia_utils import (PHYSICISTS_IGNORE_REDIRECT_KEYS,
+                                    PHYSICISTS_IMPUTE_KEYS, PLACES_IMPUTE_KEYS,
+                                    construct_resource_urls,
+                                    impute_redirect_filenames)
 from src.data.jsonl_utils import read_jsonl
 
 
@@ -469,6 +471,107 @@ def expected_imputed_marie_curie_data():
 
 
 @pytest.fixture
+def expected_pierre_curie_data():
+    return {'abstract': 'Pierre Curie (/ˈkjʊri, kjʊˈriː/; French: [kyʁi]; 15 May 1859 – '
+            '19 April 1906) was a French physicist, a pioneer in '
+            'crystallography, magnetism, piezoelectricity and radioactivity. '
+            'In 1903 he received the Nobel Prize in Physics with his wife, '
+            'Marie Skłodowska-Curie, and Henri Becquerel, "in recognition of '
+            'the extraordinary services they have rendered by their joint '
+            'researches on the radiation phenomena discovered by Professor '
+            'Henri Becquerel".',
+            'almaMater': 'http://dbpedia.org/resource/University_of_Paris',
+            'birthDate': '1859-05-15',
+            'birthPlace': 'http://dbpedia.org/resource/Paris',
+            'categories': "http://dbpedia.org/resource/Category:1859_births|http://dbpedia.org/resource/Category:1906_deaths|http://dbpedia.org/resource/Category:19th-century_physicists|http://dbpedia.org/resource/Category:20th-century_physicists|http://dbpedia.org/resource/Category:Burials_at_the_Panthéon,_Paris|http://dbpedia.org/resource/Category:Curie_family|http://dbpedia.org/resource/Category:Discoverers_of_chemical_elements|http://dbpedia.org/resource/Category:French_atheists|http://dbpedia.org/resource/Category:French_chemists|http://dbpedia.org/resource/Category:French_Nobel_laureates|http://dbpedia.org/resource/Category:French_physicists|http://dbpedia.org/resource/Category:Légion_d'honneur_refusals|http://dbpedia.org/resource/Category:Members_of_the_French_Academy_of_Sciences|http://dbpedia.org/resource/Category:Nobel_laureates_in_Physics|http://dbpedia.org/resource/Category:Radioactivity|http://dbpedia.org/resource/Category:Road_incident_deaths_in_France|http://dbpedia.org/resource/Category:Scientists_from_Paris|http://dbpedia.org/resource/Category:University_of_Paris_alumni|http://dbpedia.org/resource/Category:University_of_Paris_faculty",
+            'child': 'http://dbpedia.org/resource/Ève_Curie|http://dbpedia.org/resource/Irène_Joliot-Curie',
+            'comment': 'Pierre Curie (/ˈkjʊri, kjʊˈriː/; French: [kyʁi]; 15 May 1859 – 19 '
+            'April 1906) was a French physicist, a pioneer in crystallography, '
+            'magnetism, piezoelectricity and radioactivity. In 1903 he '
+            'received the Nobel Prize in Physics with his wife, Marie '
+            'Skłodowska-Curie, and Henri Becquerel, "in recognition of the '
+            'extraordinary services they have rendered by their joint '
+            'researches on the radiation phenomena discovered by Professor '
+            'Henri Becquerel".',
+            'deathDate': '1906-04-19',
+            'deathPlace': 'http://dbpedia.org/resource/Paris',
+            'description': 'French physicist',
+            'doctoralAdvisor': 'http://dbpedia.org/resource/Gabriel_Lippmann',
+            'doctoralStudent': 'http://dbpedia.org/resource/André-Louis_Debierne|http://dbpedia.org/resource/Marguerite_Perey|http://dbpedia.org/resource/Paul_Langevin',
+            'field': 'http://dbpedia.org/resource/Physics',
+            'fullName': 'Pierre Curie',
+            'gender': 'male',
+            'givenName': 'Pierre',
+            'isPrimaryTopicOf': 'http://en.wikipedia.org/wiki/Pierre_Curie',
+            'knownFor': "http://dbpedia.org/resource/Curie's_law|http://dbpedia.org/resource/Radioactivity",
+            'name': 'Pierre Curie',
+            'nationality': 'French',
+            'resource': 'http://dbpedia.org/resource/Pierre_Curie',
+            'signature': 'Pierre Curie signature.svg',
+            'source': 'http://dbpedia.org/data/Pierre_Curie.json',
+            'spouse': 'http://dbpedia.org/resource/Marie_Skłodowska-Curie',
+            'surname': 'Curie',
+            'thumbnail': 'http://commons.wikimedia.org/wiki/Special:FilePath/Pierre_Curie_by_Dujardin_c1906.jpg?width=300',
+            'wasDerivedFrom': 'http://en.wikipedia.org/wiki/Pierre_Curie?oldid=745008823',
+            'wikiPageID': 24509,
+            'wikiPageRevisionID': 745008823}
+
+
+@pytest.fixture
+def expected_imputed_pierre_curie_data():
+    return {'abstract': 'Pierre Curie (/ˈkjʊri, kjʊˈriː/; French: [kyʁi]; 15 May 1859 – '
+            '19 April 1906) was a French physicist, a pioneer in '
+            'crystallography, magnetism, piezoelectricity and radioactivity. '
+            'In 1903 he received the Nobel Prize in Physics with his wife, '
+            'Marie Skłodowska-Curie, and Henri Becquerel, "in recognition of '
+            'the extraordinary services they have rendered by their joint '
+            'researches on the radiation phenomena discovered by Professor '
+            'Henri Becquerel".',
+            'almaMater': 'University of Paris',
+            'birthDate': '1859-05-15',
+            'birthPlace': 'Paris',
+            'categories': '1859 births|1906 deaths|19th-century physicists|20th-century '
+            'physicists|Burials at the Panthéon, Paris|Curie '
+            'family|Discoverers of chemical elements|French atheists|French '
+            'chemists|French Nobel laureates|French physicists|Légion '
+            "d'honneur refusals|Members of the French Academy of "
+            'Sciences|Nobel laureates in Physics|Radioactivity|Road '
+            'incident deaths in France|Scientists from Paris|University of '
+            'Paris alumni|University of Paris faculty',
+            'child': 'Ève Curie|Irène Joliot-Curie',
+            'comment': 'Pierre Curie (/ˈkjʊri, kjʊˈriː/; French: [kyʁi]; 15 May 1859 – 19 '
+            'April 1906) was a French physicist, a pioneer in crystallography, '
+            'magnetism, piezoelectricity and radioactivity. In 1903 he '
+            'received the Nobel Prize in Physics with his wife, Marie '
+            'Skłodowska-Curie, and Henri Becquerel, "in recognition of the '
+            'extraordinary services they have rendered by their joint '
+            'researches on the radiation phenomena discovered by Professor '
+            'Henri Becquerel".',
+            'deathDate': '1906-04-19',
+            'deathPlace': 'Paris',
+            'description': 'French physicist',
+            'doctoralAdvisor': 'Gabriel Lippmann',
+            'doctoralStudent': 'André-Louis Debierne|Marguerite Perey|Paul Langevin',
+            'field': 'Physics',
+            'fullName': 'Pierre Curie',
+            'gender': 'male',
+            'givenName': 'Pierre',
+            'isPrimaryTopicOf': 'http://en.wikipedia.org/wiki/Pierre_Curie',
+            'knownFor': "Curie's law|Radioactive decay",
+            'name': 'Pierre Curie',
+            'nationality': 'French',
+            'resource': 'http://dbpedia.org/resource/Pierre_Curie',
+            'signature': 'Pierre Curie signature.svg',
+            'source': 'http://dbpedia.org/data/Pierre_Curie.json',
+            'spouse': 'Marie Skłodowska-Curie',
+            'surname': 'Curie',
+            'thumbnail': 'http://commons.wikimedia.org/wiki/Special:FilePath/Pierre_Curie_by_Dujardin_c1906.jpg?width=300',
+            'wasDerivedFrom': 'http://en.wikipedia.org/wiki/Pierre_Curie?oldid=745008823',
+            'wikiPageID': 24509,
+            'wikiPageRevisionID': 745008823}
+
+
+@pytest.fixture
 def expected_max_born_data():
     return {'abstract': 'Max Born (German: [bɔɐ̯n]; 11 December 1882 – 5 January 1970) '
             'was a German physicist and mathematician who was instrumental in '
@@ -883,6 +986,194 @@ def expected_imputed_niels_bohr_data():
             'wikiPageRevisionID': 737858422,
             'workplaces': 'University of Cambridge|University of Copenhagen|Victoria '
             'University of Manchester'}
+
+
+@pytest.fixture
+def expected_richard_feynman_data():
+    return {'abstract': '("Feynman" redirects here. For other uses, see Feynman '
+            '(disambiguation).) Richard Phillips Feynman (/ˈfaɪnmən/; May 11, '
+            '1918 – February 15, 1988) was an American theoretical physicist '
+            'known for his work in the path integral formulation of quantum '
+            'mechanics, the theory of quantum electrodynamics, and the '
+            'physics of the superfluidity of supercooled liquid helium, as '
+            'well as in particle physics for which he proposed the parton '
+            'model. For his contributions to the development of quantum '
+            'electrodynamics, Feynman, jointly with Julian Schwinger and '
+            'Sin-Itiro Tomonaga, received the Nobel Prize in Physics in 1965. '
+            'Feynman developed a widely used pictorial representation scheme '
+            'for the mathematical expressions governing the behavior of '
+            'subatomic particles, which later became known as Feynman '
+            'diagrams. During his lifetime, Feynman became one of the '
+            'best-known scientists in the world. In a 1999 poll of 130 '
+            'leading physicists worldwide by the British journal Physics '
+            'World he was ranked as one of the ten greatest physicists of all '
+            'time. He assisted in the development of the atomic bomb during '
+            'World War II and became known to a wide public in the 1980s as a '
+            'member of the Rogers Commission, the panel that investigated the '
+            'Space Shuttle Challenger disaster. In addition to his work in '
+            'theoretical physics, Feynman has been credited with pioneering '
+            'the field of quantum computing, and introducing the concept of '
+            'nanotechnology. He held the Richard C. Tolman professorship in '
+            'theoretical physics at the California Institute of Technology. '
+            'Feynman was a keen popularizer of physics through both books and '
+            'lectures, including a 1959 talk on top-down nanotechnology '
+            "called There's Plenty of Room at the Bottom, and the "
+            'three-volume publication of his undergraduate lectures, The '
+            'Feynman Lectures on Physics. Feynman also became known through '
+            "his semi-autobiographical books Surely You're Joking, Mr. "
+            'Feynman! and What Do You Care What Other People Think? and books '
+            'written about him, such as Tuva or Bust! and Genius: The Life '
+            'and Science of Richard Feynman by James Gleick.',
+            'almaMater': 'http://dbpedia.org/resource/Massachusetts_Institute_of_Technology|http://dbpedia.org/resource/Princeton_University',
+            'award': 'http://dbpedia.org/resource/Albert_Einstein_Award|http://dbpedia.org/resource/Ernest_Orlando_Lawrence_Award|http://dbpedia.org/resource/Fellow_of_the_Royal_Society|http://dbpedia.org/resource/National_Medal_of_Science|http://dbpedia.org/resource/Nobel_Prize_in_Physics|http://dbpedia.org/resource/Oersted_Medal',
+            'birthDate': '1918-05-11',
+            'birthName': 'Richard Phillips Feynman',
+            'birthPlace': 'http://dbpedia.org/resource/Queens',
+            'categories': 'http://dbpedia.org/resource/Category:1918_births|http://dbpedia.org/resource/Category:1988_deaths|http://dbpedia.org/resource/Category:20th-century_physicists|http://dbpedia.org/resource/Category:20th-century_scientists|http://dbpedia.org/resource/Category:American_atheists|http://dbpedia.org/resource/Category:American_Nobel_laureates|http://dbpedia.org/resource/Category:American_people_of_Polish-Jewish_descent|http://dbpedia.org/resource/Category:American_people_of_Russian-Jewish_descent|http://dbpedia.org/resource/Category:American_physicists|http://dbpedia.org/resource/Category:American_skeptics|http://dbpedia.org/resource/Category:California_Institute_of_Technology_faculty|http://dbpedia.org/resource/Category:Cellular_automatists|http://dbpedia.org/resource/Category:Cornell_University_faculty|http://dbpedia.org/resource/Category:Deaths_from_cancer_in_California|http://dbpedia.org/resource/Category:Deaths_from_liposarcoma|http://dbpedia.org/resource/Category:Experimental_physicists|http://dbpedia.org/resource/Category:Far_Rockaway_High_School_alumni|http://dbpedia.org/resource/Category:Foreign_Members_of_the_Royal_Society|http://dbpedia.org/resource/Category:Jewish_atheists|http://dbpedia.org/resource/Category:Manhattan_Project_people|http://dbpedia.org/resource/Category:Massachusetts_Institute_of_Technology_alumni|http://dbpedia.org/resource/Category:Nanotechnologists|http://dbpedia.org/resource/Category:National_Medal_of_Science_laureates|http://dbpedia.org/resource/Category:Niels_Bohr_International_Gold_Medal_recipients|http://dbpedia.org/resource/Category:Nobel_laureates_in_Physics|http://dbpedia.org/resource/Category:Nuclear_weapons_scientists_and_engineers|http://dbpedia.org/resource/Category:Particle_physicists|http://dbpedia.org/resource/Category:People_from_Far_Rockaway,_Queens|http://dbpedia.org/resource/Category:Princeton_University_alumni,_1940–49|http://dbpedia.org/resource/Category:Putnam_Fellows|http://dbpedia.org/resource/Category:Quantum_computing|http://dbpedia.org/resource/Category:Quantum_electrodynamics|http://dbpedia.org/resource/Category:Quantum_physicists|http://dbpedia.org/resource/Category:Richard_Feynman|http://dbpedia.org/resource/Category:Scientists_from_California|http://dbpedia.org/resource/Category:Sigma_Xi|http://dbpedia.org/resource/Category:Space_Shuttle_Challenger_disaster|http://dbpedia.org/resource/Category:Textbook_writers|http://dbpedia.org/resource/Category:Theoretical_physicists|http://dbpedia.org/resource/Category:United_States_Army_civilians',
+            'child': 'Carl Feynman|Michelle Feynman',
+            'comment': '("Feynman" redirects here. For other uses, see Feynman '
+            '(disambiguation).) Richard Phillips Feynman (/ˈfaɪnmən/; May 11, '
+            '1918 – February 15, 1988) was an American theoretical physicist '
+            'known for his work in the path integral formulation of quantum '
+            'mechanics, the theory of quantum electrodynamics, and the physics '
+            'of the superfluidity of supercooled liquid helium, as well as in '
+            'particle physics for which he proposed the parton model. For his '
+            'contributions to the development of quantum electrodynamics, '
+            'Feynman, jointly with Julian Schwinger and Sin-Itiro Tomonaga, '
+            'received the Nobel Prize in Physics in 1965.',
+            'deathDate': '1988-02-15',
+            'deathPlace': 'http://dbpedia.org/resource/Los_Angeles',
+            'description': 'American quantum physicist',
+            'doctoralAdvisor': 'http://dbpedia.org/resource/John_Archibald_Wheeler',
+            'doctoralStudent': 'http://dbpedia.org/resource/Albert_Hibbs|http://dbpedia.org/resource/George_Zweig|http://dbpedia.org/resource/Giovanni_Rossi_Lomanitz|http://dbpedia.org/resource/James_M._Bardeen|http://dbpedia.org/resource/Thomas_Curtright',
+            'field': 'http://dbpedia.org/resource/Theoretical_physics',
+            'fullName': 'Richard Feynman',
+            'gender': 'male',
+            'givenName': 'Phillips',
+            'influenced': 'http://dbpedia.org/resource/Brian_Cox_(physicist)|http://dbpedia.org/resource/Douglas_Osheroff|http://dbpedia.org/resource/Freeman_Dyson|http://dbpedia.org/resource/Leonard_Mlodinow|http://dbpedia.org/resource/Neil_deGrasse_Tyson|http://dbpedia.org/resource/Robert_Williams_(geometer)|http://dbpedia.org/resource/Robin_Ince|http://dbpedia.org/resource/Rod_Crewther|http://dbpedia.org/resource/Sean_M._Carroll|http://dbpedia.org/resource/Stephen_Wolfram|http://dbpedia.org/resource/Virginia_Louise_Trimble',
+            'influencedBy': 'http://dbpedia.org/resource/Hagen_Kleinert|http://dbpedia.org/resource/Seymour_Benzer',
+            'isPrimaryTopicOf': 'http://en.wikipedia.org/wiki/Richard_Feynman',
+            'name': 'Richard Feynman',
+            'nationality': 'American',
+            'notableStudent': 'http://dbpedia.org/resource/Douglas_D._Osheroff|http://dbpedia.org/resource/Paul_Steinhardt|http://dbpedia.org/resource/Robert_Barro|http://dbpedia.org/resource/Stephen_Wolfram|http://dbpedia.org/resource/W._Daniel_Hillis',
+            'resource': 'http://dbpedia.org/resource/Richard_Feynman',
+            'signature': 'Richard Feynman signature.svg',
+            'source': 'http://dbpedia.org/data/Richard_Feynman.json',
+            'spouse': 'Arline Greenbaum|Gweneth Howarth|Mary Louise Bell',
+            'thesisTitle': 'The Principle of Least Action in Quantum Mechanics',
+            'thesisUrl': 'https://cds.cern.ch/record/101498/files/Thesis-1942-Feynman.pdf',
+            'thesisYear': 1942,
+            'thumbnail': 'http://en.wikipedia.org/wiki/Special:FilePath/Richard_Feynman_Nobel.jpg?width=300',
+            'wasDerivedFrom': 'http://en.wikipedia.org/wiki/Richard_Feynman?oldid=744730039',
+            'wikiPageID': 25523,
+            'wikiPageRevisionID': 744730039,
+            'workplaces': 'http://dbpedia.org/resource/California_Institute_of_Technology|http://dbpedia.org/resource/Cornell_University'}
+
+
+@pytest.fixture
+def expected_imputed_richard_feynman_data():
+    return {'abstract': '("Feynman" redirects here. For other uses, see Feynman '
+            '(disambiguation).) Richard Phillips Feynman (/ˈfaɪnmən/; May 11, '
+            '1918 – February 15, 1988) was an American theoretical physicist '
+            'known for his work in the path integral formulation of quantum '
+            'mechanics, the theory of quantum electrodynamics, and the '
+            'physics of the superfluidity of supercooled liquid helium, as '
+            'well as in particle physics for which he proposed the parton '
+            'model. For his contributions to the development of quantum '
+            'electrodynamics, Feynman, jointly with Julian Schwinger and '
+            'Sin-Itiro Tomonaga, received the Nobel Prize in Physics in 1965. '
+            'Feynman developed a widely used pictorial representation scheme '
+            'for the mathematical expressions governing the behavior of '
+            'subatomic particles, which later became known as Feynman '
+            'diagrams. During his lifetime, Feynman became one of the '
+            'best-known scientists in the world. In a 1999 poll of 130 '
+            'leading physicists worldwide by the British journal Physics '
+            'World he was ranked as one of the ten greatest physicists of all '
+            'time. He assisted in the development of the atomic bomb during '
+            'World War II and became known to a wide public in the 1980s as a '
+            'member of the Rogers Commission, the panel that investigated the '
+            'Space Shuttle Challenger disaster. In addition to his work in '
+            'theoretical physics, Feynman has been credited with pioneering '
+            'the field of quantum computing, and introducing the concept of '
+            'nanotechnology. He held the Richard C. Tolman professorship in '
+            'theoretical physics at the California Institute of Technology. '
+            'Feynman was a keen popularizer of physics through both books and '
+            'lectures, including a 1959 talk on top-down nanotechnology '
+            "called There's Plenty of Room at the Bottom, and the "
+            'three-volume publication of his undergraduate lectures, The '
+            'Feynman Lectures on Physics. Feynman also became known through '
+            "his semi-autobiographical books Surely You're Joking, Mr. "
+            'Feynman! and What Do You Care What Other People Think? and books '
+            'written about him, such as Tuva or Bust! and Genius: The Life '
+            'and Science of Richard Feynman by James Gleick.',
+            'almaMater': 'Massachusetts Institute of Technology|Princeton University',
+            'award': 'Albert Einstein Award|Ernest Orlando Lawrence Award|Fellow of the '
+            'Royal Society|National Medal of Science|Nobel Prize in '
+            'Physics|Oersted Medal',
+            'birthDate': '1918-05-11',
+            'birthName': 'Richard Phillips Feynman',
+            'birthPlace': 'Queens',
+            'categories': '1918 births|1988 deaths|20th-century physicists|20th-century '
+            'scientists|American atheists|American Nobel laureates|American '
+            'people of Polish-Jewish descent|American people of '
+            'Russian-Jewish descent|American physicists|American '
+            'skeptics|California Institute of Technology faculty|Cellular '
+            'automatists|Cornell University faculty|Deaths from cancer in '
+            'California|Deaths from liposarcoma|Experimental physicists|Far '
+            'Rockaway High School alumni|Foreign Members of the Royal '
+            'Society|Jewish atheists|Manhattan Project people|Massachusetts '
+            'Institute of Technology alumni|Nanotechnologists|National '
+            'Medal of Science laureates|Niels Bohr International Gold Medal '
+            'recipients|Nobel laureates in Physics|Nuclear weapons '
+            'scientists and engineers|Particle physicists|People from Far '
+            'Rockaway, Queens|Princeton University alumni, 1940–49|Putnam '
+            'Fellows|Quantum computing|Quantum electrodynamics|Quantum '
+            'physicists|Richard Feynman|Scientists from California|Sigma '
+            'Xi|Space Shuttle Challenger disaster|Textbook '
+            'writers|Theoretical physicists|United States Army civilians',
+            'child': 'Carl Feynman|Michelle Feynman',
+            'comment': '("Feynman" redirects here. For other uses, see Feynman '
+            '(disambiguation).) Richard Phillips Feynman (/ˈfaɪnmən/; May 11, '
+            '1918 – February 15, 1988) was an American theoretical physicist '
+            'known for his work in the path integral formulation of quantum '
+            'mechanics, the theory of quantum electrodynamics, and the physics '
+            'of the superfluidity of supercooled liquid helium, as well as in '
+            'particle physics for which he proposed the parton model. For his '
+            'contributions to the development of quantum electrodynamics, '
+            'Feynman, jointly with Julian Schwinger and Sin-Itiro Tomonaga, '
+            'received the Nobel Prize in Physics in 1965.',
+            'deathDate': '1988-02-15',
+            'deathPlace': 'Los Angeles',
+            'description': 'American quantum physicist',
+            'doctoralAdvisor': 'John Archibald Wheeler',
+            'doctoralStudent': 'Albert Hibbs|George Zweig|Giovanni Rossi Lomanitz|James '
+            'M. Bardeen|Thomas Curtright',
+            'field': 'Theoretical physics',
+            'fullName': 'Richard Feynman',
+            'gender': 'male',
+            'givenName': 'Phillips',
+            'influenced': 'Brian Cox (physicist)|Douglas Osheroff|Freeman Dyson|Leonard '
+            'Mlodinow|Neil deGrasse Tyson|Robert Williams (geometer)|Robin '
+            'Ince|Rod Crewther|Sean M. Carroll|Stephen Wolfram|Virginia '
+            'Louise Trimble',
+            'influencedBy': 'Hagen Kleinert|Seymour Benzer',
+            'isPrimaryTopicOf': 'http://en.wikipedia.org/wiki/Richard_Feynman',
+            'name': 'Richard Feynman',
+            'nationality': 'American',
+            'notableStudent': 'Danny Hillis|Douglas Osheroff|Paul Steinhardt|Robert '
+            'Barro|Stephen Wolfram',
+            'resource': 'http://dbpedia.org/resource/Richard_Feynman',
+            'signature': 'Richard Feynman signature.svg',
+            'source': 'http://dbpedia.org/data/Richard_Feynman.json',
+            'spouse': 'Arline Greenbaum|Gweneth Howarth|Mary Louise Bell',
+            'thesisTitle': 'The Principle of Least Action in Quantum Mechanics',
+            'thesisUrl': 'https://cds.cern.ch/record/101498/files/Thesis-1942-Feynman.pdf',
+            'thesisYear': 1942,
+            'thumbnail': 'http://en.wikipedia.org/wiki/Special:FilePath/Richard_Feynman_Nobel.jpg?width=300',
+            'wasDerivedFrom': 'http://en.wikipedia.org/wiki/Richard_Feynman?oldid=744730039',
+            'wikiPageID': 25523,
+            'wikiPageRevisionID': 744730039,
+            'workplaces': 'California Institute of Technology|Cornell University'}
 
 
 @pytest.fixture
@@ -1718,6 +2009,16 @@ def test_impute_redirect_filenames_marie_curie(
     assert(imputed_data == expected_imputed_marie_curie_data)
 
 
+def test_impute_redirect_filenames_pierre_curie(
+        expected_pierre_curie_data,
+        expected_imputed_pierre_curie_data,
+        read_redirects_cache):
+    imputed_data = impute_redirect_filenames([expected_pierre_curie_data],
+                                             PHYSICISTS_IMPUTE_KEYS, read_redirects_cache,
+                                             PHYSICISTS_IGNORE_REDIRECT_KEYS)[0]
+    assert(imputed_data == expected_imputed_pierre_curie_data)
+
+
 def test_impute_redirect_filenames_max_born(
         expected_max_born_data,
         expected_imputed_max_born_data,
@@ -1734,6 +2035,16 @@ def test_impute_redirect_filenames_niels_bohr(
     imputed_data = impute_redirect_filenames([expected_niels_bohr_data],
                                              PHYSICISTS_IMPUTE_KEYS, read_redirects_cache)[0]
     assert(imputed_data == expected_imputed_niels_bohr_data)
+
+
+def test_impute_redirect_filenames_richard_feynman(
+        expected_richard_feynman_data,
+        expected_imputed_richard_feynman_data,
+        read_redirects_cache):
+    imputed_data = impute_redirect_filenames([expected_richard_feynman_data],
+                                             PHYSICISTS_IMPUTE_KEYS, read_redirects_cache,
+                                             PHYSICISTS_IGNORE_REDIRECT_KEYS)[0]
+    assert(imputed_data == expected_imputed_richard_feynman_data)
 
 
 def test_impute_redirect_filenames_david_carroll(

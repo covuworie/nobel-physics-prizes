@@ -1,4 +1,5 @@
 import collections
+import copy
 import itertools
 import locale
 from urllib import parse
@@ -8,6 +9,12 @@ from pandas.io.json import json_normalize
 
 from src.data.url_utils import (DBPEDIA_RESOURCE_URL, get_filename_from_url,
                                 quote_url)
+
+PHYSICISTS_IGNORE_REDIRECT_KEYS = ['child', 'parent', 'spouse']
+"""list of `str`: Physicists ignore redirect keys.
+
+List of keys in the physicists dictionary to ignore redirects for.
+"""
 
 PHYSICISTS_IMPUTE_KEYS = ['academicAdvisor', 'almaMater', 'award', 'birthPlace',
                           'categories', 'child', 'citizenship', 'deathPlace',
@@ -290,7 +297,8 @@ def construct_resource_urls(data, keys):
     return urls_to_check
 
 
-def impute_redirect_filenames(data, keys, redirect_urls):
+def impute_redirect_filenames(data, keys, redirect_urls,
+                              ignore_redirect_keys=None):
     """Impute the filenames from redirected URLs in the data.
 
     Args:
@@ -299,6 +307,8 @@ def impute_redirect_filenames(data, keys, redirect_urls):
             to use for imputation.
         redirect_urls (dict): The redirected URLs. The key is
             the original URL and the value is the redirected URL.
+        ignore_redirect_keys (list of `str`): List of keys in the
+            dictionaries to ignore redirects for.
 
     Returns:
         list of `dict`: List of dicts containing imputed data.
@@ -307,11 +317,12 @@ def impute_redirect_filenames(data, keys, redirect_urls):
         from the redirected URLs.
     """
 
-    imputed_data = data.copy()
+    imputed_data = []
 
-    for key in keys:
-        for datum in data:
-            text = datum.get(key)
+    for datum in data:
+        imputed_datum = copy.deepcopy(datum)
+        for key in keys:
+            text = imputed_datum.get(key)
             if not text or isinstance(text, (int, float)):
                 continue
 
@@ -329,19 +340,14 @@ def impute_redirect_filenames(data, keys, redirect_urls):
                 else:
                     if not text.startswith(DBPEDIA_RESOURCE_URL):
                         text = DBPEDIA_RESOURCE_URL + text.replace(' ', '_')
-                    if text in redirect_urls:
+                    if ignore_redirect_keys and key in ignore_redirect_keys:
+                        name = get_filename_from_url(text)
+                    elif text in redirect_urls:
                         name = get_filename_from_url(redirect_urls[text])
                     else:
                         name = get_filename_from_url(text)
-                name = name.replace('_', ' ')
 
-                # if not text.startswith(DBPEDIA_RESOURCE_URL):
-                #    text = DBPEDIA_RESOURCE_URL + text.replace(' ', '_')
-                # if text in redirect_urls:
-                #    name = get_filename_from_url(redirect_urls[text])
-                # else:
-                #    name = get_filename_from_url(text)
-                #name = name.replace('_', ' ')
+                name = name.replace('_', ' ')
 
                 if name.startswith('Category:'):
                     name = name.replace('Category:', '')
@@ -349,6 +355,7 @@ def impute_redirect_filenames(data, keys, redirect_urls):
 
             impute_texts = list(impute_texts)
             impute_texts.sort(key=locale.strxfrm)
-            datum[key] = '|'.join(impute_texts)
+            imputed_datum[key] = '|'.join(impute_texts)
+        imputed_data.append(imputed_datum)
 
     return imputed_data
