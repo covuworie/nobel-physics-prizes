@@ -13783,7 +13783,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span> <span class="o">==</span> <span class="s1">&#39;USA&#39;</span><span class="p">][</span><span class="s1">&#39;continentCode&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s1">&#39;NA&#39;</span><span class="p">))</span>
 <span class="n">places</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -13848,7 +13849,7 @@ div#notebook {
       <th>0</th>
       <td>The 13th arrondissement of Paris (also known a...</td>
       <td>13th arrondissement of Paris|Chinatowns in Eur...</td>
-      <td>NaN</td>
+      <td></td>
       <td>The 13th arrondissement of Paris (also known a...</td>
       <td>EU</td>
       <td>Europe</td>
@@ -13857,8 +13858,8 @@ div#notebook {
       <td>FRA</td>
       <td>France</td>
       <td>...</td>
-      <td>48.832222</td>
-      <td>2.355556</td>
+      <td>48.83222198486328</td>
+      <td>2.355555534362793</td>
       <td>13th arrondissement ofParis</td>
       <td>http://dbpedia.org/resource/13th_arrondissemen...</td>
       <td>http://dbpedia.org/data/13th_arrondissement_of...</td>
@@ -13872,17 +13873,17 @@ div#notebook {
       <th>1</th>
       <td>The 3M Company, formerly known as the Minnesot...</td>
       <td>1902 establishments in Minnesota|3M|Companies ...</td>
-      <td>NaN</td>
+      <td></td>
       <td>The 3M Company, formerly known as the Minnesot...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td></td>
+      <td></td>
       <td>3M Company</td>
       <td>http://dbpedia.org/resource/3M</td>
       <td>http://dbpedia.org/data/3M.json</td>
@@ -13896,7 +13897,7 @@ div#notebook {
       <th>2</th>
       <td>The 5th arrondissement of Paris (also known as...</td>
       <td>5th arrondissement of Paris</td>
-      <td>NaN</td>
+      <td></td>
       <td>The 5th arrondissement of Paris (also known as...</td>
       <td>EU</td>
       <td>Europe</td>
@@ -13905,8 +13906,8 @@ div#notebook {
       <td>FRA</td>
       <td>France</td>
       <td>...</td>
-      <td>48.847221</td>
-      <td>2.344445</td>
+      <td>48.84722137451172</td>
+      <td>2.3444445133209233</td>
       <td>5th arrondissement ofParis</td>
       <td>http://dbpedia.org/resource/5th_arrondissement...</td>
       <td>http://dbpedia.org/data/5th_arrondissement_of_...</td>
@@ -13920,7 +13921,7 @@ div#notebook {
       <th>3</th>
       <td>Aachen (German pronunciation: [ˈʔaːxn̩] ) or B...</td>
       <td>Aachen|Aachen (district)|Articles including re...</td>
-      <td>NaN</td>
+      <td></td>
       <td>Aachen (German pronunciation: [ˈʔaːxn̩] ) or B...</td>
       <td>EU</td>
       <td>Europe</td>
@@ -13929,13 +13930,13 @@ div#notebook {
       <td>DEU</td>
       <td>Germany</td>
       <td>...</td>
-      <td>50.783333</td>
-      <td>6.083333</td>
+      <td>50.78333282470703</td>
+      <td>6.083333492279053</td>
       <td>Aachen</td>
       <td>http://dbpedia.org/resource/Aachen</td>
       <td>http://dbpedia.org/data/Aachen.json</td>
       <td>http://commons.wikimedia.org/wiki/Special:File...</td>
-      <td>NaN</td>
+      <td></td>
       <td>http://en.wikipedia.org/wiki/Aachen?oldid=7449...</td>
       <td>1520.0</td>
       <td>744991843.0</td>
@@ -13953,8 +13954,8 @@ div#notebook {
       <td>DNK</td>
       <td>Denmark</td>
       <td>...</td>
-      <td>56.166668</td>
-      <td>10.200000</td>
+      <td>56.16666793823242</td>
+      <td>10.19999980926514</td>
       <td>Aarhus Universitet|Aarhus University</td>
       <td>http://dbpedia.org/resource/Aarhus_University</td>
       <td>http://dbpedia.org/data/Aarhus_University.json</td>
@@ -14343,10 +14344,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[University of Copenhagen]</td>
       <td>1</td>
       <td>[DK]</td>
@@ -14391,10 +14392,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[Government College University (Lahore), St Jo...</td>
       <td>3</td>
       <td>[GB, PK]</td>
@@ -14415,10 +14416,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[Peter the Great St. Petersburg Polytechnic Un...</td>
       <td>1</td>
       <td>[RU]</td>
@@ -14441,14 +14442,14 @@ div#notebook {
       <td>...</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
       <td>[Princeton University]</td>
       <td>1</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>5</th>
@@ -14465,14 +14466,14 @@ div#notebook {
       <td>...</td>
       <td>[NL, US]</td>
       <td>2</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[EU, NA]</td>
+      <td>2</td>
       <td>[Utrecht University]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>6</th>
@@ -14633,14 +14634,14 @@ div#notebook {
       <td>...</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
       <td>[Humboldt University of Berlin, United States ...</td>
       <td>2</td>
       <td>[DE, US]</td>
       <td>2</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[EU, NA]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>13</th>
@@ -14679,10 +14680,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[Saint Petersburg State University]</td>
       <td>1</td>
       <td>[RU]</td>
@@ -14871,16 +14872,16 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[Columbia University, University of Tehran]</td>
       <td>2</td>
       <td>[IR, US]</td>
       <td>2</td>
-      <td>[AS]</td>
-      <td>1</td>
+      <td>[AS, NA]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>23</th>
@@ -14919,10 +14920,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[Tata Institute of Fundamental Research, Unive...</td>
       <td>3</td>
       <td>[GB, IN]</td>
@@ -14975,8 +14976,8 @@ div#notebook {
       <td>1</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>27</th>
@@ -14991,10 +14992,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[Presidency University, Kolkata]</td>
       <td>1</td>
       <td>[IN]</td>
@@ -15159,10 +15160,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[University of Königsberg]</td>
       <td>1</td>
       <td>[RU]</td>
@@ -15183,16 +15184,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[University of Chicago]</td>
       <td>1</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>36</th>
@@ -15257,14 +15258,14 @@ div#notebook {
       <td>...</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
       <td>[College of Wooster, Princeton University]</td>
       <td>2</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>39</th>
@@ -15279,10 +15280,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[Trinity College, Cambridge, Victoria Universi...</td>
       <td>2</td>
       <td>[GB]</td>
@@ -15353,14 +15354,14 @@ div#notebook {
       <td>...</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
       <td>[University of Toronto]</td>
       <td>1</td>
       <td>[CA]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>43</th>
@@ -15401,14 +15402,14 @@ div#notebook {
       <td>...</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
       <td>[Princeton University, Yale University]</td>
       <td>2</td>
       <td>[US]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[NA]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>45</th>
@@ -15423,10 +15424,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
       <td>[ETH Zurich]</td>
       <td>1</td>
       <td>[CH]</td>
@@ -15477,10 +15478,10 @@ div#notebook {
       <td>1</td>
       <td>[Utrecht University]</td>
       <td>1</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>0</td>
+      <td>[]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>48</th>
