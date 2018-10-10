@@ -14120,6 +14120,18 @@ div#notebook {
         <span class="n">physicists</span><span class="o">.</span><span class="n">almaMater</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_alma_mater_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">features</span><span class="o">.</span><span class="n">alma_mater_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;workplaces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">workplaces</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">wp</span><span class="p">:</span> <span class="nb">list</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">else</span> <span class="n">wp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_workplaces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">workplaces</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;workplaces_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">workplaces</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_workplaces_country_alpha_2_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">workplaces_country_alpha_2_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
+        <span class="n">physicists</span><span class="o">.</span><span class="n">workplaces</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_workplaces_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">workplaces_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    
 
 
 
@@ -14308,16 +14320,16 @@ div#notebook {
       <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>nationality_country_alpha_2_codes</th>
-      <th>num_nationality_country_alpha_2_codes</th>
-      <th>nationality_continent_codes</th>
-      <th>num_nationality_continent_codes</th>
-      <th>alma_mater</th>
-      <th>num_alma_mater</th>
       <th>alma_mater_country_alpha_2_codes</th>
       <th>num_alma_mater_country_alpha_2_codes</th>
       <th>alma_mater_continent_codes</th>
       <th>num_alma_mater_continent_codes</th>
+      <th>workplaces</th>
+      <th>num_workplaces</th>
+      <th>workplaces_country_alpha_2_codes</th>
+      <th>num_workplaces_country_alpha_2_codes</th>
+      <th>workplaces_continent_codes</th>
+      <th>num_workplaces_continent_codes</th>
     </tr>
   </thead>
   <tbody>
@@ -14334,16 +14346,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[University of Copenhagen]</td>
-      <td>1</td>
       <td>[DK]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
+      <td>[Columbia University, Institute for Advanced S...</td>
+      <td>4</td>
+      <td>[DK, US]</td>
+      <td>2</td>
+      <td>[EU, NA]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>1</th>
@@ -14358,10 +14370,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[NL]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
@@ -14382,16 +14394,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Government College University (Lahore), St Jo...</td>
-      <td>3</td>
       <td>[GB, PK]</td>
       <td>2</td>
       <td>[AS, EU]</td>
       <td>2</td>
+      <td>[PAECSUPARCOPINSTECHPunjab UniversityImperial ...</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
@@ -14406,11 +14418,11 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Peter the Great St. Petersburg Polytechnic Un...</td>
+      <td>[RU]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Institute for Theoretical and Experimental Ph...</td>
       <td>1</td>
       <td>[RU]</td>
       <td>1</td>
@@ -14434,12 +14446,12 @@ div#notebook {
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
-      <td>[Princeton University]</td>
-      <td>1</td>
-      <td>[US]</td>
-      <td>1</td>
-      <td>[NA]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>5</th>
@@ -14454,12 +14466,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[NL, US]</td>
-      <td>2</td>
-      <td>[EU, NA]</td>
-      <td>2</td>
-      <td>[Utrecht University]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
@@ -14478,16 +14490,16 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Saint Petersburg State Institute of Technology]</td>
-      <td>1</td>
       <td>[RU]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>7</th>
@@ -14530,12 +14542,12 @@ div#notebook {
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>[Vytautas Magnus University]</td>
-      <td>1</td>
-      <td>[LT]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>9</th>
@@ -14554,12 +14566,12 @@ div#notebook {
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>[Delft University of Technology, Leiden Univer...</td>
-      <td>2</td>
-      <td>[NL]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>10</th>
@@ -14622,16 +14634,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[US]</td>
-      <td>1</td>
-      <td>[NA]</td>
-      <td>1</td>
-      <td>[Humboldt University of Berlin, United States ...</td>
-      <td>2</td>
       <td>[DE, US]</td>
       <td>2</td>
       <td>[EU, NA]</td>
       <td>2</td>
+      <td>[Case Western Reserve University, Clark Univer...</td>
+      <td>3</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>13</th>
@@ -14646,16 +14658,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[ETH Zurich, University of Zurich]</td>
-      <td>2</td>
       <td>[CH]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
+      <td>[California Institute of Technology, Deutsche ...</td>
+      <td>12</td>
+      <td>[CH, DE, NL, US]</td>
+      <td>4</td>
+      <td>[EU, NA]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>14</th>
@@ -14670,14 +14682,14 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Saint Petersburg State University]</td>
-      <td>1</td>
       <td>[RU]</td>
       <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[National University of Kharkiv, Russian Acade...</td>
+      <td>3</td>
+      <td>[RU, UA]</td>
+      <td>2</td>
       <td>[EU]</td>
       <td>1</td>
     </tr>
@@ -14698,8 +14710,8 @@ div#notebook {
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>[Saint Petersburg State University]</td>
-      <td>1</td>
+      <td>[Main Geophysical Observatory, Peter the Great...</td>
+      <td>2</td>
       <td>[RU]</td>
       <td>1</td>
       <td>[EU]</td>
@@ -14742,10 +14754,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[RU]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
@@ -14766,16 +14778,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Moscow Institute of Physics and Technology]</td>
-      <td>1</td>
       <td>[RU]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>19</th>
@@ -14790,10 +14802,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[FR]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
@@ -14862,16 +14874,16 @@ div#notebook {
       <td>0</td>
       <td>1</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Columbia University, University of Tehran]</td>
-      <td>2</td>
       <td>[IR, US]</td>
       <td>2</td>
       <td>[AS, NA]</td>
       <td>2</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>23</th>
@@ -14886,10 +14898,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[EG]</td>
-      <td>1</td>
-      <td>[AF]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
@@ -14910,16 +14922,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Tata Institute of Fundamental Research, Unive...</td>
-      <td>3</td>
       <td>[GB, IN]</td>
       <td>2</td>
       <td>[AS, EU]</td>
       <td>2</td>
+      <td>[Institute of Mathematical Sciences, Chennai, ...</td>
+      <td>2</td>
+      <td>[IN]</td>
+      <td>1</td>
+      <td>[AS]</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>25</th>
@@ -14958,16 +14970,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[University of Chicago]</td>
-      <td>1</td>
       <td>[US]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
+      <td>[International Atomic Energy Agency, Metallurg...</td>
+      <td>4</td>
+      <td>[AT, US]</td>
+      <td>2</td>
+      <td>[EU, NA]</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>27</th>
@@ -14982,16 +14994,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Presidency University, Kolkata]</td>
-      <td>1</td>
       <td>[IN]</td>
       <td>1</td>
       <td>[AS]</td>
       <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>28</th>
@@ -15058,12 +15070,12 @@ div#notebook {
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>[Moscow State University]</td>
-      <td>1</td>
-      <td>[RU]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>31</th>
@@ -15078,16 +15090,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Lebedev Physical Institute, Moscow State Univ...</td>
-      <td>2</td>
       <td>[RU]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>32</th>
@@ -15150,16 +15162,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[University of Königsberg]</td>
-      <td>1</td>
       <td>[RU]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>35</th>
@@ -15174,11 +15186,11 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[University of Chicago]</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[Marquette University]</td>
       <td>1</td>
       <td>[US]</td>
       <td>1</td>
@@ -15202,12 +15214,12 @@ div#notebook {
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
-      <td>[Tomsk State University]</td>
-      <td>1</td>
-      <td>[RU]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>37</th>
@@ -15222,16 +15234,16 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[AM]</td>
-      <td>1</td>
-      <td>[AS]</td>
-      <td>1</td>
-      <td>[Saint Petersburg State University]</td>
-      <td>1</td>
       <td>[RU]</td>
       <td>1</td>
       <td>[EU]</td>
       <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>38</th>
@@ -15250,12 +15262,12 @@ div#notebook {
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
-      <td>[College of Wooster, Princeton University]</td>
-      <td>2</td>
-      <td>[US]</td>
-      <td>1</td>
-      <td>[NA]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>39</th>
@@ -15270,12 +15282,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[Trinity College, Cambridge, Victoria Universi...</td>
-      <td>2</td>
+      <td>[GB]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Trinity College, Cambridge]</td>
+      <td>1</td>
       <td>[GB]</td>
       <td>1</td>
       <td>[EU]</td>
@@ -15318,10 +15330,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[DE]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
@@ -15342,13 +15354,13 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[US]</td>
+      <td>[CA]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
-      <td>[University of Toronto]</td>
-      <td>1</td>
-      <td>[CA]</td>
+      <td>[Bell Labs, Columbia University, Stanford Univ...</td>
+      <td>3</td>
+      <td>[US]</td>
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
@@ -15394,12 +15406,12 @@ div#notebook {
       <td>1</td>
       <td>[NA]</td>
       <td>1</td>
-      <td>[Princeton University, Yale University]</td>
-      <td>2</td>
-      <td>[US]</td>
-      <td>1</td>
-      <td>[NA]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>45</th>
@@ -15414,15 +15426,15 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[ETH Zurich]</td>
-      <td>1</td>
       <td>[CH]</td>
       <td>1</td>
       <td>[EU]</td>
+      <td>1</td>
+      <td>[Reed College, Syracuse University, University...</td>
+      <td>4</td>
+      <td>[US]</td>
+      <td>1</td>
+      <td>[NA]</td>
       <td>1</td>
     </tr>
     <tr>
@@ -15462,12 +15474,12 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[NL]</td>
-      <td>1</td>
-      <td>[EU]</td>
-      <td>1</td>
-      <td>[Utrecht University]</td>
-      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
@@ -15510,20 +15522,20 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[TR]</td>
-      <td>1</td>
-      <td>[AS]</td>
-      <td>1</td>
-      <td>[Ankara University, University of Cambridge, U...</td>
-      <td>3</td>
       <td>[GB, TR]</td>
       <td>2</td>
       <td>[AS, EU]</td>
       <td>2</td>
+      <td>[Middle East Technical University, University ...</td>
+      <td>2</td>
+      <td>[TR, US]</td>
+      <td>2</td>
+      <td>[AS, NA]</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
-<p>50 rows × 51 columns</p>
+<p>50 rows × 57 columns</p>
 </div>
 </div>
 
