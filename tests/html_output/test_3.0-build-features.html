@@ -13232,11 +13232,12 @@ div#notebook {
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
         <span class="p">[</span><span class="s1">&#39;DNK&#39;</span><span class="p">],</span>
         <span class="p">[],</span>
-        <span class="p">[</span><span class="s1">&#39;PAK&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;AZE&#39;</span><span class="p">,</span><span class="s1">&#39;GEO&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span> <span class="s1">&#39;PAK&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;AZE&#39;</span><span class="p">,</span> <span class="s1">&#39;GEO&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;UKR&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span>
         <span class="p">[]</span>
     <span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">)</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;workplaces_alpha_3_codes&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13360,6 +13361,9 @@ div#notebook {
         <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
         <span class="s1">&#39;Jhang|Presidencies and provinces of British India|Punjab Province (British India)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Elisabethpol Governorate|Ganja, Azerbaijan|Russian Empire|Tbilisi&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;California Institute of Technology|Institute for Advanced Study|&#39;</span>
+        <span class="s1">&#39;Kharkiv Polytechnic Institute|Leipzig University|&#39;</span>
+        <span class="s1">&#39;Los Angeles Bureau of Power and Light|University of Cincinnati|Xavier University&#39;</span><span class="p">,</span>
         <span class="s1">&#39;No possible chance of being found in places dataframe&#39;</span>
     <span class="p">])</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">_build_places_codes</span><span class="p">(</span>
@@ -13394,18 +13398,18 @@ rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 plugins: mock-1.10.0, cov-2.6.0
 <span class="ansi-bold">collecting ... </span>collected 10 items
 
-..\..\tests\test_3.0-build-features.py::test_build_features_gender &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 10%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 20%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 30%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 40%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 50%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 60%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 70%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_num_laureates &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 80%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_num_laureates_name &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 90%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_places_codes &lt;- &lt;ipython-input-15-df570676f5a9&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [100%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_gender &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 10%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 20%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 30%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 40%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 50%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 60%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 70%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_num_laureates &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 80%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_num_laureates_name &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 90%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_places_codes &lt;- &lt;ipython-input-15-c1dd48f57390&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [100%]</span>
 
-<span class="ansi-green-intense-fg ansi-bold">========================== 10 passed in 0.13 seconds ==========================</span>
+<span class="ansi-green-intense-fg ansi-bold">========================== 10 passed in 0.21 seconds ==========================</span>
 </pre>
 </div>
 </div>

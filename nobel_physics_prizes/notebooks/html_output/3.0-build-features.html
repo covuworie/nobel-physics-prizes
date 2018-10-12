@@ -13875,12 +13875,12 @@ div#notebook {
       <td>1902 establishments in Minnesota|3M|Companies ...</td>
       <td></td>
       <td>The 3M Company, formerly known as the Minnesot...</td>
+      <td>NA</td>
+      <td>North America</td>
       <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>US</td>
+      <td>USA</td>
+      <td>United States</td>
       <td>...</td>
       <td></td>
       <td></td>
@@ -14139,7 +14139,6 @@ div#notebook {
     
 
 
-
 <span class="k">def</span> <span class="nf">_build_gender</span><span class="p">(</span><span class="n">gender</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">gender</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;male&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
 
@@ -14215,9 +14214,11 @@ div#notebook {
             <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">code_indices</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">code_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">code_index</span> <span class="o">=</span> <span class="n">code_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">code</span> <span class="o">=</span> <span class="n">places_codes</span><span class="p">[</span><span class="n">code_index</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">code</span><span class="p">:</span>
-                    <span class="n">codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+                <span class="n">codes_text</span> <span class="o">=</span> <span class="n">places_codes</span><span class="p">[</span><span class="n">code_index</span><span class="p">]</span>
+                <span class="n">codes_in_cell</span> <span class="o">=</span> <span class="n">codes_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">code_in_cell</span> <span class="ow">in</span> <span class="n">codes_in_cell</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">code_in_cell</span><span class="p">:</span>
+                        <span class="n">codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">code_in_cell</span><span class="p">)</span>
                 
     <span class="n">codes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">codes</span>
@@ -14332,8 +14333,8 @@ div#notebook {
       <td>1</td>
       <td>[Columbia University, Institute for Advanced S...</td>
       <td>4</td>
-      <td>[DNK, USA]</td>
-      <td>2</td>
+      <td>[CAN, DNK, GBR, USA]</td>
+      <td>4</td>
       <td>[EU, NA]</td>
       <td>2</td>
     </tr>
@@ -14446,10 +14447,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
+      <td>[NLD]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
@@ -15454,10 +15455,10 @@ div#notebook {
       <td>0</td>
       <td>0</td>
       <td>...</td>
-      <td>[]</td>
-      <td>0</td>
-      <td>[]</td>
-      <td>0</td>
+      <td>[NLD]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
       <td>[]</td>
       <td>0</td>
       <td>[]</td>
