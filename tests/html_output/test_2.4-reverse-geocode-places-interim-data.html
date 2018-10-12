@@ -13115,7 +13115,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ipytest</span>
@@ -13129,7 +13129,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">PYTEST_OPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--color=yes&#39;</span><span class="p">]</span>
@@ -13142,7 +13142,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
@@ -13179,12 +13179,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_reverse_geocode*&quot;</span><span class="p">)</span>
 <span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_country_to_alpha2_code*&quot;</span><span class="p">)</span>
 <span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_alpha2_to_codes_names*&quot;</span><span class="p">)</span>
+<span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_nationality_to_alpha2_code*&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">test_reverse_geocode</span><span class="p">(</span><span class="n">expected_reverse_geocode_places</span><span class="p">):</span>
@@ -13221,19 +13222,95 @@ div#notebook {
     <span class="n">alpha2</span> <span class="o">=</span> <span class="n">country_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;DE|NZ&#39;</span><span class="p">)</span>
 
+
+<span class="k">def</span> <span class="nf">test_nationality_to_alpha2_code_single</span><span class="p">():</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Turkey&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;TR&#39;</span><span class="p">)</span>
     
-<span class="k">def</span> <span class="nf">test_country_to_alpha2_known_country_mappings</span><span class="p">():</span>
-    <span class="n">known_country_mappings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;England&#39;</span><span class="p">:</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;Northern Ireland&#39;</span><span class="p">:</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;NZL-cats&#39;</span><span class="p">:</span> <span class="s1">&#39;NZ&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;Prussia&#39;</span><span class="p">:</span> <span class="s1">&#39;DE&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;Soviet Union&#39;</span><span class="p">:</span> <span class="s1">&#39;RU&#39;</span><span class="p">}</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">known_country_mappings</span><span class="p">:</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">key</span>
-        <span class="n">alpha2</span> <span class="o">=</span> <span class="n">country_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-        <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="n">known_country_mappings</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Turkish&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;TR&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Turk&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;TR&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Turks&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;TR&#39;</span><span class="p">)</span>
+    
+    
+<span class="k">def</span> <span class="nf">test_nationality_to_alpha2_code_multiple</span><span class="p">():</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Turkey and United States of America&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;TR|US&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Turkish American&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;TR|US&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Turk and American&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;TR|US&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Turkish Americans&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;TR|US&#39;</span><span class="p">)</span>
 
+    
+<span class="k">def</span> <span class="nf">test_nationality_to_alpha2_code_not_found</span><span class="p">():</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;3M&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">alpha2</span><span class="p">))</span>
+    
 
+<span class="k">def</span> <span class="nf">test_nationality_to_alpha2_code_text_is_float</span><span class="p">():</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">alpha2</span><span class="p">))</span>
+    
+
+<span class="k">def</span> <span class="nf">test_nationality_to_alpha2_code_pipes_to_periods_for_tokenization</span><span class="p">():</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Counties of Northern Ireland|County Down|The Troubles in County Down|Ulster&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;GB&#39;</span><span class="p">)</span>
+    
+
+<span class="k">def</span> <span class="nf">test_nationality_to_alpha2_code_northern_ireland</span><span class="p">():</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Duke of Northern Ireland&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;GB&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Ireland&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;IE&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Irish&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;IE&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Northern Irish&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;GB&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Northern Ireland and Ireland&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;GB|IE&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Northern Ireland and The Republic of Ireland&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;GB|IE&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Northern Irish and Irish&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;GB|IE&#39;</span><span class="p">)</span>
+    
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Northern Ireland and the Irish&#39;</span>
+    <span class="n">alpha2</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">alpha2</span> <span class="o">==</span> <span class="s1">&#39;GB|IE&#39;</span><span class="p">)</span>
+    
+        
 <span class="k">def</span> <span class="nf">test_alpha2_to_codes_names</span><span class="p">(</span><span class="n">expected_alpha2_to_codes_names</span><span class="p">):</span>
     <span class="n">places</span> <span class="o">=</span> <span class="n">expected_alpha2_to_codes_names</span><span class="p">[[</span><span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
@@ -13264,25 +13341,30 @@ platform win32 -- Python 3.6.5, pytest-3.8.2, py-1.6.0, pluggy-0.7.1 -- c:\users
 cachedir: .pytest_cache
 rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 plugins: mock-1.10.0, cov-2.6.0
-collecting ... collected 8 items
+collecting ... collected 13 items
 
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_reverse_geocode &lt;- &lt;ipython-input-19-e4b819287851&gt; PASSED [ 12%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_single_country &lt;- &lt;ipython-input-19-e4b819287851&gt; PASSED [ 25%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_multiple_country_sorted &lt;- &lt;ipython-input-19-e4b819287851&gt; PASSED [ 37%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_unknown_country &lt;- &lt;ipython-input-19-e4b819287851&gt; PASSED [ 50%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_single_gpe &lt;- &lt;ipython-input-19-e4b819287851&gt; PASSED [ 62%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_multiple_gpe &lt;- &lt;ipython-input-19-e4b819287851&gt; PASSED [ 75%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_known_country_mappings &lt;- &lt;ipython-input-19-e4b819287851&gt; PASSED [ 87%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_alpha2_to_codes_names &lt;- &lt;ipython-input-19-e4b819287851&gt; PASSED [100%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_reverse_geocode &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [  7%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_single_country &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 15%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_multiple_country_sorted &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 23%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_unknown_country &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 30%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_single_gpe &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 38%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_multiple_gpe &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 46%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_nationality_to_alpha2_code_single &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 53%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_nationality_to_alpha2_code_multiple &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 61%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_nationality_to_alpha2_code_not_found &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 69%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_nationality_to_alpha2_code_text_is_float &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 76%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_nationality_to_alpha2_code_pipes_to_periods_for_tokenization &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 84%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_nationality_to_alpha2_code_northern_ireland &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [ 92%]
+..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_alpha2_to_codes_names &lt;- &lt;ipython-input-31-3b099027ef94&gt; PASSED [100%]
 
-========================== 8 passed in 1.92 seconds ===========================
+========================== 13 passed in 1.62 seconds ==========================
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[31]:</div>
 
 
 

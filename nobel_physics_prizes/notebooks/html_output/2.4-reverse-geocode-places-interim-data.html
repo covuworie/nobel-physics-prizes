@@ -13116,9 +13116,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Reverse-Geocode-Places-Interim-Data">Reverse Geocode Places Interim Data<a class="anchor-link" href="#Reverse-Geocode-Places-Interim-Data">&#182;</a></h1><p>The <a href="../data/interim/places.csv">places interim dataframe</a> consists of many places with a <em>latitude</em> and a <em>longitude</em> and some with only a <em>country</em> defined. My goal here is obtain identifiable <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha 2 country codes</a> and names for these places which can be used further down the line for feature construction. The process of mapping from a latitude and longitude to a location name is known as <a href="https://en.wikipedia.org/wiki/Reverse_geocoding">reverse geocoding</a> and here I used the <em>python</em> library <a href="https://github.com/thampiman/reverse-geocoder">reverse-geocoder</a> to help me with that.</p>
-<p>As mentioned, some places do not have a latitude or longitude, but do have a country defined. For places of this type I will use the python library <a href="https://github.com/TuneLab/pycountry-convert">pycountry-convert</a> to convert between the <em>country name</em> and the <em>country code</em>, <em>continent code</em> and <em>continent name</em>. This certainly will not work in all instances due to some free form text in the country variable and in such cases I will resort to <a href="https://en.wikipedia.org/wiki/Named-entity_recognition">named entity recognition</a> to extract <a href="https://en.wiktionary.org/wiki/geopolitical_entity">geopolicatal entities</a>. For this task, I will use the excellent natural language processing library <a href="https://spacy.io/usage/linguistic-features#section-named-entities">spacy</a>.</p>
-<p>It is important to note that some of the places do not have a latitude, longitude or country defined. In such cases, there is not much that can be done. OK enough words for now, time to go on a mapping frenzy!</p>
+<h1 id="Reverse-Geocode-Places-Interim-Data">Reverse Geocode Places Interim Data<a class="anchor-link" href="#Reverse-Geocode-Places-Interim-Data">&#182;</a></h1><p>The <a href="../data/interim/places.csv">places interim dataframe</a> consists of many places with a <em>latitude</em> and a <em>longitude</em> and some with only a <em>country</em> defined. Futhermore, there are some places which are actually nationalities and have none of these defined. My goal here is obtain identifiable <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha 2 country codes</a>, <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO 3166-1 alpha 3 country codes</a> and <em>continent codes</em> for these places which can be used further down the line for feature construction. The process of mapping from a latitude and longitude to a location is known as <a href="https://en.wikipedia.org/wiki/Reverse_geocoding">reverse geocoding</a> and here I used the <em>python</em> library <a href="https://github.com/thampiman/reverse-geocoder">reverse-geocoder</a> to help me with that.</p>
+<p>As mentioned, some places do not have a latitude or longitude, but do have a country defined. For places of this type I will use the python library <a href="https://github.com/TuneLab/pycountry-convert">pycountry-convert</a> to convert between the <em>country name</em> and <em>country codes</em>. This certainly will not work in all instances due to some free form text in the country variable and in such cases I will resort to <a href="https://en.wikipedia.org/wiki/Named-entity_recognition">named entity recognition</a> to extract <a href="https://en.wiktionary.org/wiki/geopolitical_entity">geopolicatal entities</a>. For this task, I will use the excellent natural language processing library <a href="https://spacy.io/usage/linguistic-features#section-named-entities">spacy</a>.</p>
+<p>For places which are nationalities I will <a href="https://t2a.io/blog/normalising-nationalities-via-a-good-iso-3166-country-list/">normalize nationalities via a ISO 3166-1 alpha 2 country codes list</a> to convert from nationalities to country codes.  It is important to note that some of the places do not have a latitude, longitude, country or nationality defined. In such cases, I'll have to get creative. OK enough said, time to go on a mapping frenzy!</p>
 
 </div>
 </div>
@@ -13397,10 +13397,10 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of places: &#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">places</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with lat / long: &#39;</span><span class="p">,</span>
-      <span class="p">(</span><span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+      <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with country: &#39;</span><span class="p">,</span>
-      <span class="p">(</span><span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+      <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with neither: &#39;</span><span class="p">,</span> 
       <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </pre></div>
@@ -13478,7 +13478,7 @@ Number with neither:  246
               <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
     <span class="n">ccs</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;cc&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">rg</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">coords</span><span class="p">)]</span>
     <span class="n">coords_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
-        <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span><span class="p">]</span>
+        <span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span><span class="p">]</span>
     
     <span class="n">country_codes</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">places</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">coords_indices</span><span class="p">:</span>
@@ -13833,7 +13833,7 @@ Number with neither:  246
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13889,7 +13889,7 @@ Number with neither:  246
 <span class="sd">    This function should only be called for a subset of the</span>
 <span class="sd">    places dataframe where country is defined and latitude or</span>
 <span class="sd">    longitude is not (or equivalently ISO 3166-1 alpha-2</span>
-<span class="sd">    country code is defined).</span>
+<span class="sd">    country code is not defined).</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text (str): Text containing countries.</span>
@@ -13897,15 +13897,8 @@ Number with neither:  246
 <span class="sd">    Returns:</span>
 <span class="sd">        `str` or `numpy.nan`: Pipe separated list of ISO 3166-1</span>
 <span class="sd">            alpha-2 country codes if found, otherwise numpy.nan.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="c1"># country mappings not recognized by reverse_geocoder and spacy</span>
-    <span class="n">known_country_mappings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;England&#39;</span><span class="p">:</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;Northern Ireland&#39;</span><span class="p">:</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;NZL-cats&#39;</span><span class="p">:</span> <span class="s1">&#39;NZ&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;Prussia&#39;</span><span class="p">:</span> <span class="s1">&#39;DE&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;Soviet Union&#39;</span><span class="p">:</span> <span class="s1">&#39;RU&#39;</span><span class="p">}</span>
     <span class="n">countries</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
     <span class="n">alpha2_codes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">country</span> <span class="ow">in</span> <span class="n">countries</span><span class="p">:</span>
@@ -13913,14 +13906,13 @@ Number with neither:  246
             <span class="n">alpha2</span> <span class="o">=</span> <span class="n">country_name_to_country_alpha2</span><span class="p">(</span><span class="n">country</span><span class="p">)</span>
             <span class="n">alpha2_codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">alpha2</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">country</span> <span class="ow">in</span> <span class="n">known_country_mappings</span><span class="p">:</span>
-                <span class="n">alpha2</span> <span class="o">=</span> <span class="n">known_country_mappings</span><span class="p">[</span><span class="n">country</span><span class="p">]</span>
-                <span class="n">alpha2_codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">alpha2</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">country</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ent</span> <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span> <span class="k">if</span> <span class="n">ent</span><span class="o">.</span><span class="n">label_</span> <span class="o">==</span> <span class="s1">&#39;GPE&#39;</span><span class="p">):</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">country</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ent</span> <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span> <span class="k">if</span> <span class="n">ent</span><span class="o">.</span><span class="n">label_</span> <span class="o">==</span> <span class="s1">&#39;GPE&#39;</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
                     <span class="n">alpha2</span> <span class="o">=</span> <span class="n">country_name_to_country_alpha2</span><span class="p">(</span><span class="n">ent</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
                     <span class="n">alpha2_codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">alpha2</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">pass</span>
                     
     <span class="k">if</span> <span class="n">alpha2_codes</span><span class="p">:</span>
         <span class="n">alpha2_codes</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">alpha2_codes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">))</span>
@@ -13940,10 +13932,10 @@ Number with neither:  246
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_countries</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span>
-           <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
+           <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">()][[</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
 <span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_countries</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">places_countries</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">country_to_alpha2_code</span><span class="p">))</span>
-<span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
+<span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_countries</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="n">place_cols</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -14089,7 +14081,7 @@ Number with neither:  246
       <td>NaN</td>
       <td>NaN</td>
       <td>Northern Ireland</td>
-      <td>GB</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>399</th>
@@ -14177,7 +14169,7 @@ Number with neither:  246
       <td>NaN</td>
       <td>NaN</td>
       <td>Prussia</td>
-      <td>DE</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>504</th>
@@ -14409,7 +14401,7 @@ Number with neither:  246
       <td>NaN</td>
       <td>NaN</td>
       <td>Soviet Union</td>
-      <td>RU</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1440</th>
@@ -14417,7 +14409,7 @@ Number with neither:  246
       <td>NaN</td>
       <td>NaN</td>
       <td>NZL-cats</td>
-      <td>NZ</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1633</th>
@@ -14490,7 +14482,7 @@ Number with neither:  246
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Mapping-Alpha-2-Country-Codes-to-Other-Codes-and-Names">Mapping Alpha-2 Country Codes to Other Codes and Names<a class="anchor-link" href="#Mapping-Alpha-2-Country-Codes-to-Other-Codes-and-Names">&#182;</a></h2><p>Finally, I can now use <code>pycountry-convert</code> to map from all the alpha-2 country codes to alpha-3 country codes, continent codes, country names and continent names.</p>
+<h2 id="Converting-Nationalities-to-Alpha-2-Country-Codes">Converting Nationalities to Alpha-2 Country Codes<a class="anchor-link" href="#Converting-Nationalities-to-Alpha-2-Country-Codes">&#182;</a></h2><p>Looking at the dataframe, it is clear that some of the remaining places are nationalities.</p>
 
 </div>
 </div>
@@ -14498,6 +14490,4096 @@ Number with neither:  246
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[12]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fullName</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>country</th>
+      <th>countryAlpha2Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>3M</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>AGA AB</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Albanians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Allerly House</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>All-Union Research Institute of Oxygen Enginee...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>American</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Americans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>Anhui</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>Armenians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>Atomic Energy Commission of India</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Auergesellschaft</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>Austek Microsystems</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>Australians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>Austrian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>Austrian nationality law</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Austrians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>Autodidacticism</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Balliol College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>Battelle Memorial Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>BBC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Bedford College, London</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Bombay Presidency</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>187</th>
+      <td>Brazilian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>British</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>British Americans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>British Coal Utilisation Research Association</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>British Humanist Association</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>British nationality law</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>British people</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>British subject</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1447</th>
+      <td>Stanford Institute for Theoretical Physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1450</th>
+      <td>Statelessness</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1470</th>
+      <td>Sunoco</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1478</th>
+      <td>Swedes</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1479</th>
+      <td>Swedish</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1480</th>
+      <td>Swedish Meteorological and Hydrological Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1482</th>
+      <td>Swiss Federal Institute of Intellectual Property</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1506</th>
+      <td>Technische Hochschule</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1519</th>
+      <td>Theoretical physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1525</th>
+      <td>Tirana</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1538</th>
+      <td>Toyonaka, Osaka</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1547</th>
+      <td>Trinity College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1558</th>
+      <td>Turkish</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1559</th>
+      <td>Turkish Americans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1560</th>
+      <td>Turkish people</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1575</th>
+      <td>United States nationality law</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1582</th>
+      <td>University College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1588</th>
+      <td>University of Altdorf</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1627</th>
+      <td>University of Franeker</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1717</th>
+      <td>University of Washington, University of Maryla...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1732</th>
+      <td>Urenco Group</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1736</th>
+      <td>Utrecht University</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1744</th>
+      <td>Varian Associates</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1747</th>
+      <td>Vavilov State Optical Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1760</th>
+      <td>Vinnytsia Oblast</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1773</th>
+      <td>Wadham College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1774</th>
+      <td>Waffenamt</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1800</th>
+      <td>West Berlin</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1804</th>
+      <td>West Riding of Yorkshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1837</th>
+      <td>Württemberg</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>251 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I will now read in the nationality list that will help me in converting these nationalities to their associated alpha-2 country codes.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># NB: I have manually fixed the csv to have &#39;NA&#39; as the country code</span>
+    <span class="c1"># for Namibia. The author of the file clearly did not realize that by</span>
+    <span class="c1"># default &#39;NA&#39; in a field is treated as NAN by pandas.</span>
+    <span class="n">nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/external/Countries-List.csv&#39;</span><span class="p">,</span>
+                                <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">nationalities</span> <span class="o">=</span> <span class="n">nationalities</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="n">nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="s1">&#39;https://t2a.io/blog/wp-content/uploads/2014/03/Countries-List.csv&#39;</span><span class="p">,</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">)</span>
+    <span class="n">nationalities</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/external/Countries-List.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">nationalities</span><span class="p">[</span>
+    <span class="n">nationalities</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="s1">&#39;Namibia&#39;</span><span class="p">][</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s1">&#39;NA&#39;</span><span class="p">)</span>
+<span class="n">nationalities</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ISO 3166 Code</th>
+      <th>Name</th>
+      <th>Demonym 1</th>
+      <th>Demonym 2</th>
+      <th>Demonym 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AD</td>
+      <td>Andorra</td>
+      <td>Andorran</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AE</td>
+      <td>United Arab Emirates</td>
+      <td>Emirian</td>
+      <td>Emirati</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AF</td>
+      <td>Afghanistan</td>
+      <td>Afghani</td>
+      <td>Afghan</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AG</td>
+      <td>Antigua and Barbuda</td>
+      <td>Antiguan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AI</td>
+      <td>Anguilla</td>
+      <td>Anguillan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>AL</td>
+      <td>Albania</td>
+      <td>Albanian</td>
+      <td>Alabanian</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>AM</td>
+      <td>Armenia</td>
+      <td>Armenian</td>
+      <td>Hayastani</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>AO</td>
+      <td>Angola</td>
+      <td>Angolan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>AQ</td>
+      <td>Antarctica</td>
+      <td>Antarctic</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>AR</td>
+      <td>Argentina</td>
+      <td>Argentine</td>
+      <td>Argentinian</td>
+      <td>Argentinean</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>AS</td>
+      <td>American Samoa</td>
+      <td>Samoan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>AT</td>
+      <td>Austria</td>
+      <td>Austrian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>AU</td>
+      <td>Australia</td>
+      <td>Australian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>AW</td>
+      <td>Aruba</td>
+      <td>Arubian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>AX</td>
+      <td>Åland Islands</td>
+      <td>Ålandic</td>
+      <td>Ålandish</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>AZ</td>
+      <td>Azerbaijan</td>
+      <td>Azerbaijani</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>BA</td>
+      <td>Bosnia and Herzegovina</td>
+      <td>Bosnian</td>
+      <td>Herzegovinian</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>BB</td>
+      <td>Barbados</td>
+      <td>Barbadian</td>
+      <td>Barbadan</td>
+      <td>Bajan</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>BD</td>
+      <td>Bangladesh</td>
+      <td>Bangladeshi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>BE</td>
+      <td>Belgium</td>
+      <td>Belgian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>BF</td>
+      <td>Burkina Faso</td>
+      <td>Burkinabe</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>BG</td>
+      <td>Bulgaria</td>
+      <td>Bulgarian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>BH</td>
+      <td>Bahrain</td>
+      <td>Bahrainian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>BI</td>
+      <td>Burundi</td>
+      <td>Burundian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>BJ</td>
+      <td>Benin</td>
+      <td>Beninese</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>BL</td>
+      <td>Saint Barthélemy</td>
+      <td>Barthélemois</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>BM</td>
+      <td>Bermuda</td>
+      <td>Bermudan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>BN</td>
+      <td>Brunei</td>
+      <td>Bruneian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>BO</td>
+      <td>Bolivia</td>
+      <td>Bolivian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>BQ</td>
+      <td>Caribbean Netherlands</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>219</th>
+      <td>TK</td>
+      <td>Tokelau</td>
+      <td>Tokelauan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>220</th>
+      <td>TL</td>
+      <td>Timor-Leste</td>
+      <td>Timorese</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>221</th>
+      <td>TM</td>
+      <td>Turkmenistan</td>
+      <td>Turkmen</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>222</th>
+      <td>TN</td>
+      <td>Tunisia</td>
+      <td>Tunisian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>223</th>
+      <td>TO</td>
+      <td>Tonga</td>
+      <td>Tongan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>TR</td>
+      <td>Turkey</td>
+      <td>Turkish</td>
+      <td>Turk</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>225</th>
+      <td>TT</td>
+      <td>Trinidad and Tobago</td>
+      <td>Trinidadian</td>
+      <td>Tobagonian</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>226</th>
+      <td>TV</td>
+      <td>Tuvalu</td>
+      <td>Tuvaluan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td>TW</td>
+      <td>Taiwan</td>
+      <td>Taiwanese</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <td>TZ</td>
+      <td>Tanzania</td>
+      <td>Tanzanian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>UA</td>
+      <td>Ukraine</td>
+      <td>Ukrainian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>UG</td>
+      <td>Uganda</td>
+      <td>Ugandan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>231</th>
+      <td>UM</td>
+      <td>United States Minor Outlying Islands</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>US</td>
+      <td>United States of America</td>
+      <td>American</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td>UY</td>
+      <td>Uruguay</td>
+      <td>Uruguayan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>234</th>
+      <td>UZ</td>
+      <td>Uzbekistan</td>
+      <td>Uzbekistani</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>235</th>
+      <td>VA</td>
+      <td>Vatican</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td>VC</td>
+      <td>Saint Vincent and Grenadines</td>
+      <td>Saint Vincentian</td>
+      <td>Vincentian</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>237</th>
+      <td>VE</td>
+      <td>Venezuela</td>
+      <td>Venezuelan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>238</th>
+      <td>VG</td>
+      <td>British Virgin Islands</td>
+      <td>Virgin Islander</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>239</th>
+      <td>VI</td>
+      <td>United States Virgin Islands</td>
+      <td>Virgin Islander</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>240</th>
+      <td>VN</td>
+      <td>Vietnam</td>
+      <td>Vietnamese</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td>VU</td>
+      <td>Vanuatu</td>
+      <td>Ni-Vanuatu</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>242</th>
+      <td>WF</td>
+      <td>Wallis and Futuna Islands</td>
+      <td>Wallisian</td>
+      <td>Futunan</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>243</th>
+      <td>WS</td>
+      <td>Samoa</td>
+      <td>Samoan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>244</th>
+      <td>YE</td>
+      <td>Yemen</td>
+      <td>Yemeni</td>
+      <td>Yemenese</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>245</th>
+      <td>YT</td>
+      <td>Mayotte</td>
+      <td>Mahoran</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>246</th>
+      <td>ZA</td>
+      <td>South Africa</td>
+      <td>South African</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>247</th>
+      <td>ZM</td>
+      <td>Zambia</td>
+      <td>Zambian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>248</th>
+      <td>ZW</td>
+      <td>Zimbabwe</td>
+      <td>Zimbabwean</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>249 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I'll manually add some commonly used names and demonyms to the dataframe. Despite these being neither countries or nationalities, they either are or were in common use.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">other_nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;England&#39;</span><span class="p">,</span> <span class="s1">&#39;English&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;CI&#39;</span><span class="p">,</span> <span class="s1">&#39;Ivory Coast&#39;</span><span class="p">,</span> <span class="s1">&#39;Ivorian&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;Northern Ireland&#39;</span><span class="p">,</span> <span class="s1">&#39;Northern Irish&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;IR&#39;</span><span class="p">,</span> <span class="s1">&#39;Persia&#39;</span><span class="p">,</span> <span class="s1">&#39;Persian&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;DE&#39;</span><span class="p">,</span> <span class="s1">&#39;Prussia&#39;</span><span class="p">,</span> <span class="s1">&#39;Prussian&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;IE&#39;</span><span class="p">,</span> <span class="s1">&#39;Republic of Ireland&#39;</span><span class="p">,</span> <span class="s1">&#39;Irish&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;Scotland&#39;</span><span class="p">,</span> <span class="s1">&#39;Scottish&#39;</span><span class="p">,</span> <span class="s1">&#39;Scot&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;RU&#39;</span><span class="p">,</span> <span class="s1">&#39;Soviet Union&#39;</span><span class="p">,</span> <span class="s1">&#39;Soviet&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;US&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;American&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;Wales&#39;</span><span class="p">,</span> <span class="s1">&#39;Welsh&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]</span>
+    <span class="p">],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">nationalities</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">)</span>
+<span class="n">nationalities</span> <span class="o">=</span> <span class="n">nationalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+    <span class="n">other_nationalities</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nationalities</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">other_nationalities</span><span class="p">)</span> <span class="o">==</span> <span class="mi">249</span><span class="p">)</span>
+<span class="n">nationalities</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[14]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ISO 3166 Code</th>
+      <th>Name</th>
+      <th>Demonym 1</th>
+      <th>Demonym 2</th>
+      <th>Demonym 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AD</td>
+      <td>Andorra</td>
+      <td>Andorran</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AE</td>
+      <td>United Arab Emirates</td>
+      <td>Emirian</td>
+      <td>Emirati</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AF</td>
+      <td>Afghanistan</td>
+      <td>Afghani</td>
+      <td>Afghan</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AG</td>
+      <td>Antigua and Barbuda</td>
+      <td>Antiguan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AI</td>
+      <td>Anguilla</td>
+      <td>Anguillan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>AL</td>
+      <td>Albania</td>
+      <td>Albanian</td>
+      <td>Alabanian</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>AM</td>
+      <td>Armenia</td>
+      <td>Armenian</td>
+      <td>Hayastani</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>AO</td>
+      <td>Angola</td>
+      <td>Angolan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>AQ</td>
+      <td>Antarctica</td>
+      <td>Antarctic</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>AR</td>
+      <td>Argentina</td>
+      <td>Argentine</td>
+      <td>Argentinian</td>
+      <td>Argentinean</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>AS</td>
+      <td>American Samoa</td>
+      <td>Samoan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>AT</td>
+      <td>Austria</td>
+      <td>Austrian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>AU</td>
+      <td>Australia</td>
+      <td>Australian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>AW</td>
+      <td>Aruba</td>
+      <td>Arubian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>AX</td>
+      <td>Åland Islands</td>
+      <td>Ålandic</td>
+      <td>Ålandish</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>AZ</td>
+      <td>Azerbaijan</td>
+      <td>Azerbaijani</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>BA</td>
+      <td>Bosnia and Herzegovina</td>
+      <td>Bosnian</td>
+      <td>Herzegovinian</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>BB</td>
+      <td>Barbados</td>
+      <td>Barbadian</td>
+      <td>Barbadan</td>
+      <td>Bajan</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>BD</td>
+      <td>Bangladesh</td>
+      <td>Bangladeshi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>BE</td>
+      <td>Belgium</td>
+      <td>Belgian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>BF</td>
+      <td>Burkina Faso</td>
+      <td>Burkinabe</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>BG</td>
+      <td>Bulgaria</td>
+      <td>Bulgarian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>BH</td>
+      <td>Bahrain</td>
+      <td>Bahrainian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>BI</td>
+      <td>Burundi</td>
+      <td>Burundian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>BJ</td>
+      <td>Benin</td>
+      <td>Beninese</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>BL</td>
+      <td>Saint Barthélemy</td>
+      <td>Barthélemois</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>BM</td>
+      <td>Bermuda</td>
+      <td>Bermudan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>BN</td>
+      <td>Brunei</td>
+      <td>Bruneian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>BO</td>
+      <td>Bolivia</td>
+      <td>Bolivian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>BQ</td>
+      <td>Caribbean Netherlands</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>220</th>
+      <td>TL</td>
+      <td>Timor-Leste</td>
+      <td>Timorese</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>221</th>
+      <td>TM</td>
+      <td>Turkmenistan</td>
+      <td>Turkmen</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>222</th>
+      <td>TN</td>
+      <td>Tunisia</td>
+      <td>Tunisian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>223</th>
+      <td>TO</td>
+      <td>Tonga</td>
+      <td>Tongan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>TR</td>
+      <td>Turkey</td>
+      <td>Turkish</td>
+      <td>Turk</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>225</th>
+      <td>TT</td>
+      <td>Trinidad and Tobago</td>
+      <td>Trinidadian</td>
+      <td>Tobagonian</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>226</th>
+      <td>TV</td>
+      <td>Tuvalu</td>
+      <td>Tuvaluan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td>TW</td>
+      <td>Taiwan</td>
+      <td>Taiwanese</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <td>TZ</td>
+      <td>Tanzania</td>
+      <td>Tanzanian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>UA</td>
+      <td>Ukraine</td>
+      <td>Ukrainian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>UG</td>
+      <td>Uganda</td>
+      <td>Ugandan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>231</th>
+      <td>UM</td>
+      <td>United States Minor Outlying Islands</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>US</td>
+      <td>United States of America</td>
+      <td>American</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>257</th>
+      <td>US</td>
+      <td>United States</td>
+      <td>American</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td>UY</td>
+      <td>Uruguay</td>
+      <td>Uruguayan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>234</th>
+      <td>UZ</td>
+      <td>Uzbekistan</td>
+      <td>Uzbekistani</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>235</th>
+      <td>VA</td>
+      <td>Vatican</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td>VC</td>
+      <td>Saint Vincent and Grenadines</td>
+      <td>Saint Vincentian</td>
+      <td>Vincentian</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>237</th>
+      <td>VE</td>
+      <td>Venezuela</td>
+      <td>Venezuelan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>238</th>
+      <td>VG</td>
+      <td>British Virgin Islands</td>
+      <td>Virgin Islander</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>239</th>
+      <td>VI</td>
+      <td>United States Virgin Islands</td>
+      <td>Virgin Islander</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>240</th>
+      <td>VN</td>
+      <td>Vietnam</td>
+      <td>Vietnamese</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td>VU</td>
+      <td>Vanuatu</td>
+      <td>Ni-Vanuatu</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>242</th>
+      <td>WF</td>
+      <td>Wallis and Futuna Islands</td>
+      <td>Wallisian</td>
+      <td>Futunan</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>243</th>
+      <td>WS</td>
+      <td>Samoa</td>
+      <td>Samoan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>244</th>
+      <td>YE</td>
+      <td>Yemen</td>
+      <td>Yemeni</td>
+      <td>Yemenese</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>245</th>
+      <td>YT</td>
+      <td>Mayotte</td>
+      <td>Mahoran</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>246</th>
+      <td>ZA</td>
+      <td>South Africa</td>
+      <td>South African</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>247</th>
+      <td>ZM</td>
+      <td>Zambia</td>
+      <td>Zambian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>248</th>
+      <td>ZW</td>
+      <td>Zimbabwe</td>
+      <td>Zimbabwean</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>259 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I'm now going to convert the remaining places which are nationalities to their associated alpha-2 country codes.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create ISO 3166-1 alpha-2 country codes from nationalities.</span>
+<span class="sd">    </span>
+<span class="sd">    Use the nationality to find ISO 3166-1 alpha-2 country codes.</span>
+<span class="sd">    This function should only be called for a subset of the</span>
+<span class="sd">    places dataframe where country is not defined and latitude or</span>
+<span class="sd">    longitude is not (or equivalently ISO 3166-1 alpha-2</span>
+<span class="sd">    country code is not defined).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): Text containing nationalities.</span>
+<span class="sd">        nationalities (pandas.Dataframe): Dataframe of nationalities</span>
+<span class="sd">            data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `str` or `numpy.nan`: Pipe separated list of ISO 3166-1</span>
+<span class="sd">            alpha-2 country codes if found, otherwise numpy.nan.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="c1"># try as is</span>
+    <span class="n">texts_to_check</span> <span class="o">=</span> <span class="p">{</span><span class="n">text</span><span class="p">}</span>
+    
+    <span class="c1"># flatten all demonyms in nationalities dataframe and try any</span>
+    <span class="c1"># of those that are found in text </span>
+    <span class="n">demonyms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">nationalities</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">demonyms</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">demonym</span><span class="p">)</span> <span class="k">for</span> <span class="n">demonym</span> <span class="ow">in</span> <span class="n">demonyms</span>
+                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">demonym</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;nan&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">demonym</span> <span class="ow">in</span> <span class="n">demonyms</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">demonym</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+            <span class="n">texts_to_check</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">demonym</span><span class="p">)</span>
+    
+    <span class="c1"># use named entity recognition to remove Ireland or Irish</span>
+    <span class="c1"># for special case of Northern Ireland or Northern Irish</span>
+    <span class="n">IRELAND</span> <span class="o">=</span> <span class="s1">&#39;Ireland&#39;</span>
+    <span class="n">IRISH</span> <span class="o">=</span> <span class="s1">&#39;Irish&#39;</span>
+    <span class="n">NORTHERN_IRELAND</span> <span class="o">=</span> <span class="s1">&#39;Northern Ireland&#39;</span>
+    <span class="n">NORTHERN_IRISH</span> <span class="o">=</span> <span class="s1">&#39;Northern Irish&#39;</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">NORTHERN_IRELAND</span> <span class="ow">and</span> <span class="n">IRELAND</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">NORTHERN_IRISH</span> <span class="ow">and</span> <span class="n">IRISH</span><span class="p">)</span>
+        <span class="ow">in</span> <span class="n">texts_to_check</span><span class="p">):</span>
+        <span class="c1"># replace pipes with periods so that spacy&#39;s tokenization</span>
+        <span class="c1"># is not thrown off which affects named entity recognition</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">))</span> 
+        <span class="n">ents</span> <span class="o">=</span> <span class="p">[</span><span class="n">ent</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">IRELAND</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ents</span> <span class="ow">and</span> <span class="n">NORTHERN_IRELAND</span> <span class="ow">in</span> <span class="n">ents</span><span class="p">:</span>
+            <span class="n">texts_to_check</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">IRELAND</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">IRISH</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ents</span> <span class="ow">and</span> <span class="n">NORTHERN_IRISH</span> <span class="ow">in</span> <span class="n">ents</span><span class="p">:</span>
+            <span class="n">texts_to_check</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">IRISH</span><span class="p">)</span>
+    
+    <span class="c1"># also try with an &#39;s&#39; on the end</span>
+    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">):</span>
+        <span class="n">texts_to_check</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">text</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="n">alpha2_codes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">text_to_check</span> <span class="ow">in</span> <span class="n">texts_to_check</span><span class="p">:</span>
+        <span class="c1"># check all columns except ISO 3166 Code</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">nationalities</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">nationality_present</span> <span class="o">=</span> <span class="n">nationalities</span><span class="p">[</span>
+                <span class="n">text_to_check</span> <span class="o">==</span> <span class="n">nationalities</span><span class="p">[</span><span class="n">column</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">nationality_present</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">alpha2_codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="n">nationality_present</span><span class="p">[</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="k">if</span> <span class="n">alpha2_codes</span><span class="p">:</span>
+        <span class="n">alpha2_codes</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">alpha2_codes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">alpha2_codes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">return</span> <span class="n">alpha2_codes</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_nationalities</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
+    <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
+<span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_nationalities</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">places_nationalities</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">nationality_to_alpha2_code</span><span class="p">,</span>
+                                        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,)))</span>
+<span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span>
+       <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">notna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fullName</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>country</th>
+      <th>countryAlpha2Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>21</th>
+      <td>Albanians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>American</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Americans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>Armenians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AM</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>Atomic Energy Commission of India</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>IN</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>Australians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AU</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>Austrian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AT</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>Austrian nationality law</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AT</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Austrians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AT</td>
+    </tr>
+    <tr>
+      <th>187</th>
+      <td>Brazilian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>BR</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>British</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>British Americans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB|US</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>British Coal Utilisation Research Association</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>British Humanist Association</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>British nationality law</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>British people</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>British subject</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>242</th>
+      <td>Canadians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CA</td>
+    </tr>
+    <tr>
+      <th>257</th>
+      <td>Carpathian Germans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE</td>
+    </tr>
+    <tr>
+      <th>288</th>
+      <td>Chilean Americans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CL|US</td>
+    </tr>
+    <tr>
+      <th>290</th>
+      <td>China and weapons of mass destruction</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>291</th>
+      <td>China Association for Science and Technology</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>292</th>
+      <td>China Engineering Physics Research Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>293</th>
+      <td>China Institute of Atomic Energy</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>294</th>
+      <td>China Institute of Modern Physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>295</th>
+      <td>China Ninth Research Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>296</th>
+      <td>China Nuclear industry Science and Technology ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>297</th>
+      <td>China Nuclear Society</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>298</th>
+      <td>Chinese Physical Society</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>306</th>
+      <td>Citizenship of the United States</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1178</th>
+      <td>Petit Luxembourg</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>LU</td>
+    </tr>
+    <tr>
+      <th>1195</th>
+      <td>Poles</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PL</td>
+    </tr>
+    <tr>
+      <th>1196</th>
+      <td>Poles in the United Kingdom</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB|PL</td>
+    </tr>
+    <tr>
+      <th>1197</th>
+      <td>Polish</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PL</td>
+    </tr>
+    <tr>
+      <th>1198</th>
+      <td>Polish Academy of Sciences</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PL</td>
+    </tr>
+    <tr>
+      <th>1211</th>
+      <td>Presidencies and provinces of British India</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB|IN</td>
+    </tr>
+    <tr>
+      <th>1237</th>
+      <td>Prussian Academy of Sciences</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE</td>
+    </tr>
+    <tr>
+      <th>1238</th>
+      <td>Puerto Rican citizenship</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PR</td>
+    </tr>
+    <tr>
+      <th>1239</th>
+      <td>Puerto Ricans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PR</td>
+    </tr>
+    <tr>
+      <th>1243</th>
+      <td>Punjab Province (British India)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB|IN</td>
+    </tr>
+    <tr>
+      <th>1307</th>
+      <td>Royal Prussia</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE</td>
+    </tr>
+    <tr>
+      <th>1314</th>
+      <td>Russian</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RU</td>
+    </tr>
+    <tr>
+      <th>1317</th>
+      <td>Russian Soviet Federative Socialist Republic</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RU</td>
+    </tr>
+    <tr>
+      <th>1318</th>
+      <td>Russians</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RU</td>
+    </tr>
+    <tr>
+      <th>1369</th>
+      <td>Scottish</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>1370</th>
+      <td>Scottish Church Collegiate School</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>1371</th>
+      <td>Scottish people</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>1379</th>
+      <td>Serbs</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RS</td>
+    </tr>
+    <tr>
+      <th>1415</th>
+      <td>South Korean nationality law</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>KR</td>
+    </tr>
+    <tr>
+      <th>1421</th>
+      <td>Soviet people</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>RU</td>
+    </tr>
+    <tr>
+      <th>1424</th>
+      <td>Spanish</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>ES</td>
+    </tr>
+    <tr>
+      <th>1429</th>
+      <td>SS France (1910)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>FR</td>
+    </tr>
+    <tr>
+      <th>1478</th>
+      <td>Swedes</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>SE</td>
+    </tr>
+    <tr>
+      <th>1479</th>
+      <td>Swedish</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>SE</td>
+    </tr>
+    <tr>
+      <th>1480</th>
+      <td>Swedish Meteorological and Hydrological Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>SE</td>
+    </tr>
+    <tr>
+      <th>1482</th>
+      <td>Swiss Federal Institute of Intellectual Property</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CH</td>
+    </tr>
+    <tr>
+      <th>1558</th>
+      <td>Turkish</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>TR</td>
+    </tr>
+    <tr>
+      <th>1559</th>
+      <td>Turkish Americans</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>TR|US</td>
+    </tr>
+    <tr>
+      <th>1560</th>
+      <td>Turkish people</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>TR</td>
+    </tr>
+    <tr>
+      <th>1575</th>
+      <td>United States nationality law</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+  </tbody>
+</table>
+<p>108 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Please take note that although this is process is very accurate it is not perfect as it can result in a few false positives. For instance, <em>Scottish Church Collegiate School</em> is actually in India and not Scotland and <em>Petit Luxembourg</em> is a hotel in Paris and not in Luxembourg. But since the quantity of true positives far outweigh the false positives I'll go with it. Now I'm left with just the following places without a country code. They are a mix of companies, educational institutions, cities and some plain random stuff.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[17]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fullName</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>country</th>
+      <th>countryAlpha2Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>3M</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>AGA AB</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Allerly House</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>All-Union Research Institute of Oxygen Enginee...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>Anhui</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Auergesellschaft</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>Austek Microsystems</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>Autodidacticism</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Balliol College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>Battelle Memorial Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>BBC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Bedford College, London</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Bombay Presidency</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>Bureau des Longitudes</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>C. A. Steinheil &amp; Söhne</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>246</th>
+      <td>Canton of Geneva</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>249</th>
+      <td>Cape Canaveral</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>255</th>
+      <td>Carnegie Institute of Technology</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>256</th>
+      <td>Carnegie Institution for Science</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>266</th>
+      <td>Central Electricity Generating Board</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>267</th>
+      <td>Centre national de la recherche scientifique</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>301</th>
+      <td>Christ Church, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>320</th>
+      <td>College of Navarre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>323</th>
+      <td>Colleges of Durham University</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>Commonwealth Scientific and Industrial Researc...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>Constantinople</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>Corps des mines</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>344</th>
+      <td>County Antrim</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Northern Ireland</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>347</th>
+      <td>County Down</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>384</th>
+      <td>Deutsche Physikalische Gesellschaft</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1432</th>
+      <td>St. Peter (Klagenfurt am Wörthersee)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1433</th>
+      <td>St. Stephen's College, Delhi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1437</th>
+      <td>St John's College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1440</th>
+      <td>St Peter's College, Auckland</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NZL-cats</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1442</th>
+      <td>Stagira (ancient city)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1443</th>
+      <td>Standard Telephones and Cables</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1444</th>
+      <td>Standing Committee of the National People's Co...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1445</th>
+      <td>Stanford%5D, %5BUSA</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1447</th>
+      <td>Stanford Institute for Theoretical Physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1450</th>
+      <td>Statelessness</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1470</th>
+      <td>Sunoco</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1506</th>
+      <td>Technische Hochschule</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1519</th>
+      <td>Theoretical physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1525</th>
+      <td>Tirana</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1538</th>
+      <td>Toyonaka, Osaka</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1547</th>
+      <td>Trinity College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1582</th>
+      <td>University College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1588</th>
+      <td>University of Altdorf</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1627</th>
+      <td>University of Franeker</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1717</th>
+      <td>University of Washington, University of Maryla...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1732</th>
+      <td>Urenco Group</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1736</th>
+      <td>Utrecht University</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1744</th>
+      <td>Varian Associates</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1747</th>
+      <td>Vavilov State Optical Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1760</th>
+      <td>Vinnytsia Oblast</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1773</th>
+      <td>Wadham College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1774</th>
+      <td>Waffenamt</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1800</th>
+      <td>West Berlin</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1804</th>
+      <td>West Riding of Yorkshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1837</th>
+      <td>Württemberg</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>140 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Interestingly, examining the <em>categories</em> column of the false positive above gives me the idea of applying the <code>nationality_to_alpha2_code</code> function to it also since the correct information is available there.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span>
+    <span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Scottish Church Collegiate School&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Petit Luxembourg&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#34;1830 establishments in India|Boys&#39; schools in India|Christian schools in India|Educational institutions established in 1830|High schools and secondary schools in West Bengal|Primary schools in West Bengal|Private schools in India|Schools in Colonial India|Schools in Kolkata&#34;]
+
+[&#39;Baroque buildings in France|Buildings and structures in the 6th arrondissement of Paris|French Parliament|Hôtels particuliers in Paris&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>However, rather than blindly applying the function to all the "nationalities" in the places dataframe which would give many false positives, such as the following:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Albanians&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Carpathian Germans&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;Albanian people|Ethnic groups in Albania|Ethnic groups in Bosnia and Herzegovina|Ethnic groups in Europe|Ethnic groups in Greece|Ethnic groups in Italy|Ethnic groups in Kosovo|Ethnic groups in Montenegro|Ethnic groups in Serbia|Ethnic groups in the Balkans|Ethnic groups in the Republic of Macedonia|Ethnic groups in Turkey|History of the Albanians|Muslim communities in Europe&#39;]
+
+[&#39;Carpathian German people|Ethnic groups in Czechoslovakia|Ethnic groups in Hungary|Ethnic groups in Romania|Ethnic groups in Slovakia|German diaspora by country|Hungarian-German people|Social history of Slovakia&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I'll be conservative and now apply it to only the categories column of the remaining places without a country code. That is to the mix of companies, educational institutions, cities and some plain random stuff shown in the dataframe above.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_others</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
+    <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;categories&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
+<span class="n">places_others</span>
+<span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_others</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">places_others</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">nationality_to_alpha2_code</span><span class="p">,</span>
+                                   <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,)))</span>
+<span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_others</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="n">place_cols</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fullName</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>country</th>
+      <th>countryAlpha2Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>3M</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>AGA AB</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>SE</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Allerly House</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>All-Union Research Institute of Oxygen Enginee...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>Anhui</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Auergesellschaft</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>Austek Microsystems</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AU</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>Autodidacticism</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Balliol College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>Battelle Memorial Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>BBC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Bedford College, London</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Bombay Presidency</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB|IN|PK</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>Bureau des Longitudes</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>FR</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>C. A. Steinheil &amp; Söhne</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>246</th>
+      <td>Canton of Geneva</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CH</td>
+    </tr>
+    <tr>
+      <th>249</th>
+      <td>Cape Canaveral</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>IN</td>
+    </tr>
+    <tr>
+      <th>255</th>
+      <td>Carnegie Institute of Technology</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>256</th>
+      <td>Carnegie Institution for Science</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+    <tr>
+      <th>266</th>
+      <td>Central Electricity Generating Board</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>267</th>
+      <td>Centre national de la recherche scientifique</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>FR</td>
+    </tr>
+    <tr>
+      <th>301</th>
+      <td>Christ Church, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>320</th>
+      <td>College of Navarre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>323</th>
+      <td>Colleges of Durham University</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>Commonwealth Scientific and Industrial Researc...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AU</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>Constantinople</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>Corps des mines</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>FR</td>
+    </tr>
+    <tr>
+      <th>344</th>
+      <td>County Antrim</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Northern Ireland</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>347</th>
+      <td>County Down</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>384</th>
+      <td>Deutsche Physikalische Gesellschaft</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1432</th>
+      <td>St. Peter (Klagenfurt am Wörthersee)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1433</th>
+      <td>St. Stephen's College, Delhi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB|IN</td>
+    </tr>
+    <tr>
+      <th>1437</th>
+      <td>St John's College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>1440</th>
+      <td>St Peter's College, Auckland</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NZL-cats</td>
+      <td>NZ</td>
+    </tr>
+    <tr>
+      <th>1442</th>
+      <td>Stagira (ancient city)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GR</td>
+    </tr>
+    <tr>
+      <th>1443</th>
+      <td>Standard Telephones and Cables</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>1444</th>
+      <td>Standing Committee of the National People's Co...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>CN</td>
+    </tr>
+    <tr>
+      <th>1445</th>
+      <td>Stanford%5D, %5BUSA</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1447</th>
+      <td>Stanford Institute for Theoretical Physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1450</th>
+      <td>Statelessness</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1470</th>
+      <td>Sunoco</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+    <tr>
+      <th>1506</th>
+      <td>Technische Hochschule</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AT|CH|DE|NL</td>
+    </tr>
+    <tr>
+      <th>1519</th>
+      <td>Theoretical physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1525</th>
+      <td>Tirana</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th>1538</th>
+      <td>Toyonaka, Osaka</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1547</th>
+      <td>Trinity College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>1582</th>
+      <td>University College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>1588</th>
+      <td>University of Altdorf</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE</td>
+    </tr>
+    <tr>
+      <th>1627</th>
+      <td>University of Franeker</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NL</td>
+    </tr>
+    <tr>
+      <th>1717</th>
+      <td>University of Washington, University of Maryla...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1732</th>
+      <td>Urenco Group</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE|GB|NL</td>
+    </tr>
+    <tr>
+      <th>1736</th>
+      <td>Utrecht University</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NL</td>
+    </tr>
+    <tr>
+      <th>1744</th>
+      <td>Varian Associates</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>US</td>
+    </tr>
+    <tr>
+      <th>1747</th>
+      <td>Vavilov State Optical Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1760</th>
+      <td>Vinnytsia Oblast</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>UA</td>
+    </tr>
+    <tr>
+      <th>1773</th>
+      <td>Wadham College, Oxford</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>GB</td>
+    </tr>
+    <tr>
+      <th>1774</th>
+      <td>Waffenamt</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE</td>
+    </tr>
+    <tr>
+      <th>1800</th>
+      <td>West Berlin</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>DE</td>
+    </tr>
+    <tr>
+      <th>1804</th>
+      <td>West Riding of Yorkshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1837</th>
+      <td>Württemberg</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>140 rows × 5 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Again the success rate is so high that it is definitely sufficient to proceed with this. However, as usual there are few false positives. A clear example of this is <em>Cape Canaveral</em> which is of course located in the United States and not India. This is due to the fact that it is situated near the <em>Indian</em> River Lagoon.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Cape Canaveral&#39;</span><span class="p">][</span><span class="n">place_cols</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Cape Canaveral&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fullName</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>country</th>
+      <th>countryAlpha2Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>249</th>
+      <td>Cape Canaveral</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>IN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;Beaches of Brevard County, Florida|Beaches of Florida|Cape Canaveral Air Force Station|Headlands of Florida|Indian River Lagoon|Kennedy Space Center|Landforms of Brevard County, Florida|Visitor attractions in Brevard County, Florida&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's check to see how many places remain without a country code.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[22]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fullName</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>country</th>
+      <th>countryAlpha2Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>31</th>
+      <td>Allerly House</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>All-Union Research Institute of Oxygen Enginee...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>Autodidacticism</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>C. A. Steinheil &amp; Söhne</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>255</th>
+      <td>Carnegie Institute of Technology</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>320</th>
+      <td>College of Navarre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>Constantinople</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>473</th>
+      <td>Evergreen, California</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>577</th>
+      <td>Groupe des écoles des mines</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>588</th>
+      <td>Halcyon Castle</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>610</th>
+      <td>Hasmark</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>611</th>
+      <td>Haurum</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>629</th>
+      <td>High Tension Nuclear Laboratory</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>653</th>
+      <td>IBM Research</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>687</th>
+      <td>International Committee on Intellectual Cooper...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>744</th>
+      <td>Karl-Ferdinands-Universität</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>765</th>
+      <td>Kholmogory District</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>794</th>
+      <td>Klausgalvų Medsėdžiai</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>797</th>
+      <td>Knutstorp Castle</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>822</th>
+      <td>Laboratory for Astrophysics and Space Research</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>862</th>
+      <td>List of schools named after Francis Xavier</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>872</th>
+      <td>Los Angeles Bureau of Power and Light</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>885</th>
+      <td>Luoxue Mountain Cosmic Rays Research Center</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>996</th>
+      <td>Moscow Institute of Chemical Engineering</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1004</th>
+      <td>Mount Wilson Observatory</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1109</th>
+      <td>Oba-Igbomina</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1155</th>
+      <td>Paris (disambiguation)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1159</th>
+      <td>Pashenivka</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1183</th>
+      <td>Physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1191</th>
+      <td>PLATO (computer system)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1235</th>
+      <td>Province of Zamora</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1299</th>
+      <td>Rowland Institute for Science</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1432</th>
+      <td>St. Peter (Klagenfurt am Wörthersee)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1445</th>
+      <td>Stanford%5D, %5BUSA</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1447</th>
+      <td>Stanford Institute for Theoretical Physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1450</th>
+      <td>Statelessness</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1519</th>
+      <td>Theoretical physics</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1538</th>
+      <td>Toyonaka, Osaka</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1717</th>
+      <td>University of Washington, University of Maryla...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1747</th>
+      <td>Vavilov State Optical Institute</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1804</th>
+      <td>West Riding of Yorkshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1837</th>
+      <td>Württemberg</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Very few indeed. In fact many of these are not even "places". I have managed to map nearly all of the places to country codes so it's time to move on.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Percentage of places mapped to country codes:&#39;</span><span class="p">,</span>
+      <span class="mi">100</span> <span class="o">*</span> <span class="nb">round</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> 
+                  <span class="nb">len</span><span class="p">(</span><span class="n">places</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Percentage of places mapped to country codes: 98.0 %
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Mapping-Alpha-2-Country-Codes-to-Other-Codes-and-Names">Mapping Alpha-2 Country Codes to Other Codes and Names<a class="anchor-link" href="#Mapping-Alpha-2-Country-Codes-to-Other-Codes-and-Names">&#182;</a></h2><p>Finally, I can now use <code>pycountry-convert</code> to map from all the alpha-2 country codes to alpha-3 country codes, continent codes, country names and continent names.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">):</span>
@@ -14563,13 +18645,14 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">place_cols</span> <span class="o">=</span> <span class="n">place_cols</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;countryAlpha3Code&#39;</span><span class="p">,</span> <span class="s1">&#39;countryName&#39;</span><span class="p">,</span> <span class="s1">&#39;continentCode&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;continentName&#39;</span><span class="p">]</span>
+<span class="k">assert</span><span class="p">((</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> 
+        <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">place_cols</span> <span class="o">=</span> <span class="n">place_cols</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;countryAlpha3Code&#39;</span><span class="p">,</span> <span class="s1">&#39;countryName&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;continentCode&#39;</span><span class="p">,</span> <span class="s1">&#39;continentName&#39;</span><span class="p">]</span>
 <span class="n">places</span><span class="p">[</span><span class="n">place_cols</span><span class="p">]</span>
 </pre></div>
 
@@ -14583,7 +18666,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -14636,11 +18719,11 @@ Number with neither:  246
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>US</td>
+      <td>USA</td>
+      <td>United States</td>
+      <td>NA</td>
+      <td>North America</td>
     </tr>
     <tr>
       <th>2</th>
@@ -14768,11 +18851,11 @@ Number with neither:  246
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>SE</td>
+      <td>SWE</td>
+      <td>Sweden</td>
+      <td>EU</td>
+      <td>Europe</td>
     </tr>
     <tr>
       <th>13</th>
@@ -14876,11 +18959,11 @@ Number with neither:  246
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>AL</td>
+      <td>ALB</td>
+      <td>Albania</td>
+      <td>EU</td>
+      <td>Europe</td>
     </tr>
     <tr>
       <th>22</th>
@@ -15365,14 +19448,14 @@ Number with neither:  246
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the dataframe, I'd like to persist it for future use in feature construction. I'll first sort the dataframe by the column name, take a quick peek at the first few places and write out the contents of the full dataframe to a csv file.</p>
+<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the places and nationalities dataframes, I'll persist them for future use in feature construction.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">places</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -15389,7 +19472,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[26]:</div>
 
 
 
@@ -15466,12 +19549,12 @@ Number with neither:  246
       <td>1902 establishments in Minnesota|3M|Companies ...</td>
       <td>NaN</td>
       <td>The 3M Company, formerly known as the Minnesot...</td>
+      <td>NA</td>
+      <td>North America</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>US</td>
+      <td>USA</td>
+      <td>United States</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -15730,12 +19813,12 @@ Number with neither:  246
       <td>Defunct companies of Sweden</td>
       <td>NaN</td>
       <td>AGA AB, previously AB Gasaccumulator and AB Sv...</td>
+      <td>EU</td>
+      <td>Europe</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>SE</td>
+      <td>SWE</td>
+      <td>Sweden</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -15930,10 +20013,11 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">nationalities</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/Countries-List.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
