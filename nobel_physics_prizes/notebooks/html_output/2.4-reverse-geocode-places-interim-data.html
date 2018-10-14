@@ -13166,6 +13166,8 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">pycountry_convert</span> <span class="k">import</span> <span class="n">country_name_to_country_alpha2</span>
 <span class="kn">from</span> <span class="nn">pycountry_convert</span> <span class="k">import</span> <span class="n">country_name_to_country_alpha3</span>
 <span class="kn">import</span> <span class="nn">reverse_geocoder</span> <span class="k">as</span> <span class="nn">rg</span>
+
+<span class="kn">from</span> <span class="nn">src.data.country_utils</span> <span class="k">import</span> <span class="n">nationality_to_alpha2_code</span>
 </pre></div>
 
     </div>
@@ -16196,88 +16198,6 @@ Number with neither:  246
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create ISO 3166-1 alpha-2 country codes from nationalities.</span>
-<span class="sd">    </span>
-<span class="sd">    Use the nationality to find ISO 3166-1 alpha-2 country codes.</span>
-<span class="sd">    This function should only be called for a subset of the</span>
-<span class="sd">    places dataframe where country is not defined and latitude or</span>
-<span class="sd">    longitude is not (or equivalently ISO 3166-1 alpha-2</span>
-<span class="sd">    country code is not defined).</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        text (str): Text containing nationalities.</span>
-<span class="sd">        nationalities (pandas.Dataframe): Dataframe of nationalities</span>
-<span class="sd">            data.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        `str` or `numpy.nan`: Pipe separated list of ISO 3166-1</span>
-<span class="sd">            alpha-2 country codes if found, otherwise numpy.nan.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-
-    <span class="c1"># try as is</span>
-    <span class="n">texts_to_check</span> <span class="o">=</span> <span class="p">{</span><span class="n">text</span><span class="p">}</span>
-    
-    <span class="c1"># flatten all demonyms in nationalities dataframe and try any</span>
-    <span class="c1"># of those that are found in text </span>
-    <span class="n">demonyms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">nationalities</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">demonyms</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">demonym</span><span class="p">)</span> <span class="k">for</span> <span class="n">demonym</span> <span class="ow">in</span> <span class="n">demonyms</span>
-                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">demonym</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;nan&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">demonym</span> <span class="ow">in</span> <span class="n">demonyms</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">demonym</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
-            <span class="n">texts_to_check</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">demonym</span><span class="p">)</span>
-    
-    <span class="c1"># use named entity recognition to remove Ireland or Irish</span>
-    <span class="c1"># for special case of Northern Ireland or Northern Irish</span>
-    <span class="n">IRELAND</span> <span class="o">=</span> <span class="s1">&#39;Ireland&#39;</span>
-    <span class="n">IRISH</span> <span class="o">=</span> <span class="s1">&#39;Irish&#39;</span>
-    <span class="n">NORTHERN_IRELAND</span> <span class="o">=</span> <span class="s1">&#39;Northern Ireland&#39;</span>
-    <span class="n">NORTHERN_IRISH</span> <span class="o">=</span> <span class="s1">&#39;Northern Irish&#39;</span>
-    <span class="k">if</span> <span class="p">((</span><span class="n">NORTHERN_IRELAND</span> <span class="ow">and</span> <span class="n">IRELAND</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">NORTHERN_IRISH</span> <span class="ow">and</span> <span class="n">IRISH</span><span class="p">)</span>
-        <span class="ow">in</span> <span class="n">texts_to_check</span><span class="p">):</span>
-        <span class="c1"># replace pipes with periods so that spacy&#39;s tokenization</span>
-        <span class="c1"># is not thrown off which affects named entity recognition</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">))</span> 
-        <span class="n">ents</span> <span class="o">=</span> <span class="p">[</span><span class="n">ent</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">IRELAND</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ents</span> <span class="ow">and</span> <span class="n">NORTHERN_IRELAND</span> <span class="ow">in</span> <span class="n">ents</span><span class="p">:</span>
-            <span class="n">texts_to_check</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">IRELAND</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">IRISH</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ents</span> <span class="ow">and</span> <span class="n">NORTHERN_IRISH</span> <span class="ow">in</span> <span class="n">ents</span><span class="p">:</span>
-            <span class="n">texts_to_check</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">IRISH</span><span class="p">)</span>
-    
-    <span class="c1"># also try with an &#39;s&#39; on the end</span>
-    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">):</span>
-        <span class="n">texts_to_check</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">text</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-    
-    <span class="n">alpha2_codes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">text_to_check</span> <span class="ow">in</span> <span class="n">texts_to_check</span><span class="p">:</span>
-        <span class="c1"># check all columns except ISO 3166 Code</span>
-        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">nationalities</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-            <span class="n">nationality_present</span> <span class="o">=</span> <span class="n">nationalities</span><span class="p">[</span>
-                <span class="n">text_to_check</span> <span class="o">==</span> <span class="n">nationalities</span><span class="p">[</span><span class="n">column</span><span class="p">]]</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">nationality_present</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-                <span class="n">alpha2_codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-                    <span class="n">nationality_present</span><span class="p">[</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    
-    <span class="k">if</span> <span class="n">alpha2_codes</span><span class="p">:</span>
-        <span class="n">alpha2_codes</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">alpha2_codes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">alpha2_codes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-    <span class="k">return</span> <span class="n">alpha2_codes</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_nationalities</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
     <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
 <span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_nationalities</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
@@ -16297,7 +16217,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -16838,7 +16758,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
@@ -16854,7 +16774,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -17395,7 +17315,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span>
@@ -17439,7 +17359,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Albanians&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
@@ -17482,7 +17402,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_others</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
@@ -17505,7 +17425,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
@@ -18046,7 +17966,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Cape Canaveral&#39;</span><span class="p">][</span><span class="n">place_cols</span><span class="p">])</span>
@@ -18134,7 +18054,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
@@ -18150,7 +18070,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[21]:</div>
 
 
 
@@ -18538,7 +18458,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Percentage of places mapped to country codes:&#39;</span><span class="p">,</span>
@@ -18579,7 +18499,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">):</span>
@@ -18645,7 +18565,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">)</span>
@@ -18666,7 +18586,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[24]:</div>
 
 
 
@@ -19455,7 +19375,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">places</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -19472,7 +19392,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[26]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -20013,7 +19933,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>

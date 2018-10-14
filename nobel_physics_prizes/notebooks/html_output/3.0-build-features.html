@@ -13120,48 +13120,24 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setting-up-the-Environment">Setting up the Environment<a class="anchor-link" href="#Setting-up-the-Environment">&#182;</a></h2><p>An initialization step is are needed to setup the environment:</p>
-<ul>
-<li>The locale needs to be set for all categories to the user’s default setting (typically specified in the LANG environment variable) to enable correct sorting of words with accents.</li>
-</ul>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
-    
-<span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pycountry_convert</span> <span class="k">import</span> <span class="n">country_alpha2_to_country_name</span>
+<span class="kn">from</span> <span class="nn">pycountry_convert</span> <span class="k">import</span> <span class="n">country_name_to_country_alpha3</span>
+<span class="kn">from</span> <span class="nn">pycountry_convert</span> <span class="k">import</span> <span class="n">country_alpha2_to_continent_code</span>
+<span class="kn">from</span> <span class="nn">pycountry_convert</span> <span class="k">import</span> <span class="n">country_alpha3_to_country_alpha2</span>
+
+<span class="kn">from</span> <span class="nn">src.data.country_utils</span> <span class="k">import</span> <span class="n">nationality_to_alpha2_code</span> 
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[1]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;English_United States.1252&#39;</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -13169,22 +13145,6 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
@@ -13202,7 +13162,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -13383,7 +13343,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
@@ -13401,7 +13361,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13479,11 +13439,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Laureate&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Country&#39;</span><span class="p">,</span> <span class="s1">&#39;Rationale&#39;</span><span class="p">]</span>
-<span class="n">nobel_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">train_physicists</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Laureate&#39;</span><span class="p">,</span>
+<span class="n">nobel_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">train_physicists</span><span class="p">,</span>
+                            <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Laureate&#39;</span><span class="p">,</span>
                             <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;fullName&#39;</span><span class="p">)[</span><span class="n">nobel_columns</span><span class="p">]</span>
 <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -13498,7 +13459,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13582,7 +13543,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
@@ -13600,7 +13561,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13678,10 +13639,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">train_physicists</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Laureate&#39;</span><span class="p">,</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">train_physicists</span><span class="p">,</span>
+                          <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Laureate&#39;</span><span class="p">,</span>
                           <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;fullName&#39;</span><span class="p">)[</span><span class="n">nobel_columns</span><span class="p">]</span>
 <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -13696,7 +13658,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13780,11 +13742,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span> <span class="o">==</span> <span class="s1">&#39;USA&#39;</span><span class="p">][</span><span class="s1">&#39;continentCode&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s1">&#39;NA&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span>
+                     <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">places</span> <span class="o">=</span> <span class="n">places</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">places</span><span class="p">[</span>
+    <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span> <span class="o">==</span> <span class="s1">&#39;USA&#39;</span><span class="p">][</span><span class="s1">&#39;continentCode&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s1">&#39;NA&#39;</span><span class="p">))</span>
 <span class="n">places</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -13798,7 +13763,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13849,7 +13814,7 @@ div#notebook {
       <th>0</th>
       <td>The 13th arrondissement of Paris (also known a...</td>
       <td>13th arrondissement of Paris|Chinatowns in Eur...</td>
-      <td></td>
+      <td>NaN</td>
       <td>The 13th arrondissement of Paris (also known a...</td>
       <td>EU</td>
       <td>Europe</td>
@@ -13873,17 +13838,17 @@ div#notebook {
       <th>1</th>
       <td>The 3M Company, formerly known as the Minnesot...</td>
       <td>1902 establishments in Minnesota|3M|Companies ...</td>
-      <td></td>
+      <td>NaN</td>
       <td>The 3M Company, formerly known as the Minnesot...</td>
       <td>NA</td>
       <td>North America</td>
-      <td></td>
+      <td>NaN</td>
       <td>US</td>
       <td>USA</td>
       <td>United States</td>
       <td>...</td>
-      <td></td>
-      <td></td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>3M Company</td>
       <td>http://dbpedia.org/resource/3M</td>
       <td>http://dbpedia.org/data/3M.json</td>
@@ -13897,7 +13862,7 @@ div#notebook {
       <th>2</th>
       <td>The 5th arrondissement of Paris (also known as...</td>
       <td>5th arrondissement of Paris</td>
-      <td></td>
+      <td>NaN</td>
       <td>The 5th arrondissement of Paris (also known as...</td>
       <td>EU</td>
       <td>Europe</td>
@@ -13921,7 +13886,7 @@ div#notebook {
       <th>3</th>
       <td>Aachen (German pronunciation: [ˈʔaːxn̩] ) or B...</td>
       <td>Aachen|Aachen (district)|Articles including re...</td>
-      <td></td>
+      <td>NaN</td>
       <td>Aachen (German pronunciation: [ˈʔaːxn̩] ) or B...</td>
       <td>EU</td>
       <td>Europe</td>
@@ -13936,7 +13901,7 @@ div#notebook {
       <td>http://dbpedia.org/resource/Aachen</td>
       <td>http://dbpedia.org/data/Aachen.json</td>
       <td>http://commons.wikimedia.org/wiki/Special:File...</td>
-      <td></td>
+      <td>NaN</td>
       <td>http://en.wikipedia.org/wiki/Aachen?oldid=7449...</td>
       <td>1520.0</td>
       <td>744991843.0</td>
@@ -13979,18 +13944,126 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/Countries-List.csv&#39;</span><span class="p">,</span>
+                            <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">nationalities</span> <span class="o">=</span> <span class="n">nationalities</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">nationalities</span><span class="p">[</span>
+    <span class="n">nationalities</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="s1">&#39;Namibia&#39;</span><span class="p">][</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s1">&#39;NA&#39;</span><span class="p">)</span>
+<span class="n">nationalities</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[8]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ISO 3166 Code</th>
+      <th>Name</th>
+      <th>Demonym 1</th>
+      <th>Demonym 2</th>
+      <th>Demonym 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AD</td>
+      <td>Andorra</td>
+      <td>Andorran</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AE</td>
+      <td>United Arab Emirates</td>
+      <td>Emirian</td>
+      <td>Emirati</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AF</td>
+      <td>Afghanistan</td>
+      <td>Afghani</td>
+      <td>Afghan</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AG</td>
+      <td>Antigua and Barbuda</td>
+      <td>Antiguan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AI</td>
+      <td>Anguilla</td>
+      <td>Anguillan</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">build_features</span><span class="p">(</span><span class="n">physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">build_features</span><span class="p">(</span><span class="n">physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span>
+                   <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">):</span>
     <span class="n">features</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">copy</span><span class="p">()[[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]]</span>    
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_gender</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">gender</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;years_lived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_years_lived</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="p">,</span>
                                                  <span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="p">)</span>
     
     <span class="n">_build_physics_subfield_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">)</span>
-    <span class="n">_build_num_laureates_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span>
-                                  <span class="n">nobel_chemists</span><span class="p">)</span>
+    <span class="n">_build_num_laureates_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span>
+                                  <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">)</span>
+    
+    <span class="n">_build_citizenship_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
     
     <span class="n">_build_places_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">places</span><span class="p">)</span>
     
@@ -14098,22 +14171,6 @@ div#notebook {
         <span class="n">physicists</span><span class="o">.</span><span class="n">residence</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_residence_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">features</span><span class="o">.</span><span class="n">residence_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">citizenship</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">citizenship_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">citizenship</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">citizenship_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">nationality</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_nationality_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">nationality_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;nationality_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">nationality</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_nationality_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">nationality_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;alma_mater&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">almaMater</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">am</span><span class="p">:</span> <span class="nb">list</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">am</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">else</span> <span class="n">am</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">))</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_alma_mater&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">alma_mater</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
@@ -14136,9 +14193,29 @@ div#notebook {
         <span class="n">physicists</span><span class="o">.</span><span class="n">workplaces</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">continentCode</span><span class="p">)</span>
     <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_workplaces_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">features</span><span class="o">.</span><span class="n">workplaces_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+
+
     
-
-
+<span class="k">def</span> <span class="nf">_build_citizenship_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">):</span>
+    <span class="n">citizenship</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">citizenship</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="n">_get_citizenship_codes</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,))</span>
+    <span class="n">nationality</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">nationality</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="n">_get_citizenship_codes</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,))</span>
+    <span class="n">citizenship_description</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="n">_get_citizenship_codes</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">citizenship</span> <span class="o">+</span> <span class="n">nationality</span> <span class="o">+</span> <span class="n">citizenship_description</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">ctz</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ctz</span><span class="p">)))))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_country_alpha_3_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">citizenship_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;citizenship_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">citizenship_country_alpha_3_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">al3</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">({</span><span class="n">country_alpha2_to_continent_code</span><span class="p">(</span>
+                <span class="n">country_alpha3_to_country_alpha2</span><span class="p">(</span><span class="n">cd</span><span class="p">))</span> <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">al3</span><span class="p">}))))</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_citizenship_continent_codes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">citizenship_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+    
+    
 <span class="k">def</span> <span class="nf">_build_gender</span><span class="p">(</span><span class="n">gender</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">gender</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;male&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
 
@@ -14170,7 +14247,8 @@ div#notebook {
 
 
 <span class="k">def</span> <span class="nf">_build_num_laureates</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">laureates</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-    <span class="n">laureate_names</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_get_nobel_laureates</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">laureates</span><span class="p">,</span> <span class="n">names</span><span class="p">))</span>
+    <span class="n">laureate_names</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_get_nobel_laureates</span><span class="p">,</span>
+                                  <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">laureates</span><span class="p">,</span> <span class="n">names</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">laureate_names</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
 
 
@@ -14180,13 +14258,19 @@ div#notebook {
     <span class="k">return</span> <span class="n">codes</span>
 
 
+<span class="k">def</span> <span class="nf">_get_citizenship_codes</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">):</span>
+    <span class="n">alpha_2_codes</span> <span class="o">=</span> <span class="n">nationality_to_alpha2_code</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alpha_2_codes</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">alpha_2_codes</span> <span class="o">=</span> <span class="n">alpha_2_codes</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+    <span class="n">alpha_3_codes</span> <span class="o">=</span> <span class="p">[</span><span class="n">country_name_to_country_alpha3</span><span class="p">(</span>
+        <span class="n">country_alpha2_to_country_name</span><span class="p">(</span><span class="n">alpha_2_code</span><span class="p">))</span>
+                     <span class="k">for</span> <span class="n">alpha_2_code</span> <span class="ow">in</span> <span class="n">alpha_2_codes</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">alpha_3_codes</span>
+
 
 <span class="k">def</span> <span class="nf">_get_nobel_laureates</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">laureates</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
     <span class="n">laureates_in_cell</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    
-    <span class="c1"># flatten the alternative laureate names</span>
-    <span class="n">alt_laureate_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">names</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">nam</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">nam</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
     
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="c1"># assume the same name if only differs by a hyphen</span>
@@ -14195,11 +14279,10 @@ div#notebook {
         <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">laureates</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
                 <span class="n">laureates_in_cell</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">alt_laureate_names</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">names</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">laureates_in_cell</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
                     
     <span class="n">laureates_in_cell</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">laureates_in_cell</span><span class="p">)</span>
-    
     <span class="k">return</span> <span class="n">laureates_in_cell</span>
 
     
@@ -14212,15 +14295,19 @@ div#notebook {
             <span class="n">code_indices</span> <span class="o">=</span> <span class="n">full_name_in_places</span><span class="p">[</span>
                 <span class="n">full_name_in_places</span> <span class="o">==</span> <span class="n">place</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
             <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">code_indices</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">code_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">code_index</span> <span class="o">=</span> <span class="n">code_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">codes_text</span> <span class="o">=</span> <span class="n">places_codes</span><span class="p">[</span><span class="n">code_index</span><span class="p">]</span>
-                <span class="n">codes_in_cell</span> <span class="o">=</span> <span class="n">codes_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">code_in_cell</span> <span class="ow">in</span> <span class="n">codes_in_cell</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">code_in_cell</span><span class="p">:</span>
-                        <span class="n">codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">code_in_cell</span><span class="p">)</span>
-                
-    <span class="n">codes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">code_indices</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">code_index</span> <span class="o">=</span> <span class="n">code_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">codes_text</span> <span class="o">=</span> <span class="n">places_codes</span><span class="p">[</span><span class="n">code_index</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">codes_text</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">codes_in_cell</span> <span class="o">=</span> <span class="n">codes_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">code_in_cell</span> <span class="ow">in</span> <span class="n">codes_in_cell</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">code_in_cell</span><span class="p">:</span>
+                    <span class="n">codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">code_in_cell</span><span class="p">)</span>
+
+    <span class="n">codes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span>
+    <span class="n">codes</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">codes</span>
     
 
@@ -14241,20 +14328,8 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span>
-                                           <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists_features</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+                                           <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+<span class="n">train_physicists_features</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14267,7 +14342,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -15516,7 +15591,7 @@ div#notebook {
     </tr>
   </tbody>
 </table>
-<p>50 rows × 57 columns</p>
+<p>50 rows × 53 columns</p>
 </div>
 </div>
 
