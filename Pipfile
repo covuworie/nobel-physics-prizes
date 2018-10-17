@@ -18,6 +18,7 @@ spacy = "*"
 requests-futures = "*"
 pycountry-convert = "*"
 reverse-geocoder = "*"
+scikit-learn = "*"
 
 [dev-packages]
 pytest = "*"

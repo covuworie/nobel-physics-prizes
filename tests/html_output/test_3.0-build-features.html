@@ -13288,6 +13288,31 @@ div#notebook {
                  <span class="s1">&#39;citizenship_continent_codes&#39;</span><span class="p">,</span>
                  <span class="s1">&#39;num_citizenship_continent_codes&#39;</span><span class="p">])</span>
 
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">expected_binary_features</span><span class="p">():</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;born_in_GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;born_in_JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;born_in_AS&#39;</span><span class="p">,</span> <span class="s1">&#39;born_in_EU&#39;</span><span class="p">,</span> <span class="s1">&#39;died_in_JPN&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;died_in_NZL&#39;</span><span class="p">,</span> <span class="s1">&#39;died_in_AS&#39;</span><span class="p">,</span> <span class="s1">&#39;died_in_AU&#39;</span><span class="p">,</span> <span class="s1">&#39;lived_in_GBR&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;lived_in_JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;lived_in_USA&#39;</span><span class="p">,</span> <span class="s1">&#39;lived_in_AS&#39;</span><span class="p">,</span> <span class="s1">&#39;lived_in_EU&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;lived_in_NA&#39;</span><span class="p">,</span> <span class="s1">&#39;alumnus_of_Columbia_University&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;alumnus_of_Harvard_University&#39;</span><span class="p">,</span> <span class="s1">&#39;alumnus_in_USA&#39;</span><span class="p">,</span> <span class="s1">&#39;alumnus_in_NA&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;worked_at_Columbia_University&#39;</span><span class="p">,</span> <span class="s1">&#39;worked_at_RIKEN&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;worked_at_Stanford_University&#39;</span><span class="p">,</span> <span class="s1">&#39;worked_in_JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;worked_in_USA&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;worked_in_AS&#39;</span><span class="p">,</span> <span class="s1">&#39;worked_in_NA&#39;</span><span class="p">,</span> <span class="s1">&#39;citizen_of_GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;citizen_of_JPN&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;citizen_of_NZL&#39;</span><span class="p">,</span> <span class="s1">&#39;citizen_of_USA&#39;</span><span class="p">,</span> <span class="s1">&#39;citizen_in_AS&#39;</span><span class="p">,</span> <span class="s1">&#39;citizen_in_AU&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;citizen_in_EU&#39;</span><span class="p">,</span> <span class="s1">&#39;citizen_in_NA&#39;</span><span class="p">]</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+         <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+         <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">])</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="n">expected</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">expected</span>
+
+
+
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <span class="k">def</span> <span class="nf">expected_target</span><span class="p">():</span>
     <span class="n">expected</span> <span class="o">=</span> <span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
@@ -13307,6 +13332,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_build_features*&quot;</span><span class="p">)</span>
+<span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_binarize_list_features*&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">test_build_features_full_name</span><span class="p">():</span>
@@ -13509,6 +13535,33 @@ div#notebook {
     <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_citizenship_codes_not_found</span><span class="p">))</span>
     
     
+<span class="k">def</span> <span class="nf">test_binarize_list_features</span><span class="p">(</span><span class="n">expected_binary_features</span><span class="p">):</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">[[</span><span class="s1">&#39;GBR&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NZL&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AU&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">],</span>
+             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
+             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Stanford University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
+             <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;NZL&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AU&#39;</span><span class="p">,</span> <span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">]],</span>
+            <span class="p">[[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
+             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span>
+             <span class="p">[</span><span class="s1">&#39;RIKEN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
+             <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">]],</span>
+        <span class="p">],</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;death_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;death_continent_codes&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;alma_mater&#39;</span><span class="p">,</span> <span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship_continent_codes&#39;</span>
+        <span class="p">])</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    
+    <span class="n">binarize</span> <span class="o">=</span> <span class="n">_binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">binarize</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_binary_features</span><span class="p">))</span>
+    
+    
 <span class="k">def</span> <span class="nf">test_build_target</span><span class="p">(</span><span class="n">expected_target</span><span class="p">):</span>
     <span class="n">target</span> <span class="o">=</span> <span class="n">build_target</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">)</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_target</span><span class="p">))</span>
@@ -13533,32 +13586,33 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-bold">============================= test session starts =============================</span>
-platform win32 -- Python 3.6.5, pytest-3.8.2, py-1.6.0, pluggy-0.7.1 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
+<pre><span class="ansi-bold">============================================================== test session starts ==============================================================</span>
+platform win32 -- Python 3.6.5, pytest-3.8.2, py-1.7.0, pluggy-0.7.1 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
 cachedir: .pytest_cache
 rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 plugins: mock-1.10.0, cov-2.6.0
-<span class="ansi-bold">collecting ... </span>collected 17 items
+<span class="ansi-bold">collecting ... </span>collected 18 items
 
-..\..\tests\test_3.0-build-features.py::test_build_features_full_name &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [  5%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_gender &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 11%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 17%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 23%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 29%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 35%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 41%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 47%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 52%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates_name &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 58%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_places_codes &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 64%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_citizenship &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 70%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_nationality &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 76%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_description &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 82%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_multiple &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 88%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_not_found &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 94%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_target &lt;- &lt;ipython-input-15-2c84050cc45d&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [100%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_full_name &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                            [  5%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_gender &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                               [ 11%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                     [ 16%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                    [ 22%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">          [ 27%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">               [ 33%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">         [ 38%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 44%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                        [ 50%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates_name &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                   [ 55%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_places_codes &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                         [ 61%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_citizenship &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 66%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_nationality &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 72%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_description &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 77%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_multiple &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                 [ 83%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_not_found &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                [ 88%]</span>
+..\..\tests\test_3.0-build-features.py::test_binarize_list_features &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                              [ 94%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_target &lt;- &lt;ipython-input-15-28c1a0d11147&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                        [100%]</span>
 
-<span class="ansi-green-intense-fg ansi-bold">========================= 17 passed in 13.80 seconds ==========================</span>
+<span class="ansi-green-intense-fg ansi-bold">========================================================== 18 passed in 14.24 seconds ===========================================================</span>
 </pre>
 </div>
 </div>
