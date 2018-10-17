@@ -14075,21 +14075,20 @@ div#notebook {
 
 
 <span class="k">def</span> <span class="nf">_build_physics_subfield_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">):</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_physics_subfield</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> 
-        <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
-        <span class="n">search_terms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">})</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;experimental_physicist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_physics_subfield</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> 
-        <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
-        <span class="n">search_terms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Experimental physicists&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;experimental physic&#39;</span><span class="p">})</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;astronomer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_physics_subfield</span><span class="p">(</span>
-        <span class="n">physicists</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> 
-        <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
-        <span class="n">search_terms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;astronomers&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;astronom&#39;</span><span class="p">})</span>
+    <span class="n">features_to_build</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;experimental_physicist&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Experimental physicists&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;experimental physic&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;astronomer&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;astronomers&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;astronom&#39;</span><span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">search_terms</span> <span class="ow">in</span> <span class="n">features_to_build</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">features</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_physics_subfield</span><span class="p">(</span>
+            <span class="n">physicists</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">physicists</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span> <span class="n">search_terms</span><span class="o">=</span><span class="n">search_terms</span><span class="p">)</span>
+    
 
 
 <span class="k">def</span> <span class="nf">_build_num_laureates_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span>
@@ -14266,10 +14265,12 @@ div#notebook {
     <span class="n">comm_theoretical_physicist</span> <span class="o">=</span> <span class="n">description</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">comm</span><span class="p">:</span> <span class="n">search_terms</span><span class="p">[</span><span class="s1">&#39;others&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">comm</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
         <span class="k">else</span> <span class="kc">False</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">cat_theoretical_physicist</span> <span class="o">|</span>
-            <span class="n">field_theoretical_physicist</span> <span class="o">|</span>
-            <span class="n">desc_theoretical_physicist</span> <span class="o">|</span>
-            <span class="n">comm_theoretical_physicist</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">subfield</span> <span class="o">=</span> <span class="p">(</span><span class="n">cat_theoretical_physicist</span> <span class="o">|</span>
+                <span class="n">field_theoretical_physicist</span> <span class="o">|</span>
+                <span class="n">desc_theoretical_physicist</span> <span class="o">|</span>
+                <span class="n">comm_theoretical_physicist</span><span class="p">)</span>
+    <span class="n">subfield</span> <span class="o">=</span> <span class="n">subfield</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="kc">True</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">subfield</span>
 
 
 <span class="k">def</span> <span class="nf">_binarize_list_feature</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
@@ -14453,9 +14454,9 @@ div#notebook {
       <td>Aage Bohr</td>
       <td>male</td>
       <td>87</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14477,9 +14478,9 @@ div#notebook {
       <td>Aaldert Wapstra</td>
       <td>male</td>
       <td>84</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14501,9 +14502,9 @@ div#notebook {
       <td>Abdus Salam</td>
       <td>male</td>
       <td>70</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14525,9 +14526,9 @@ div#notebook {
       <td>Abraham Alikhanov</td>
       <td>male</td>
       <td>66</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14549,9 +14550,9 @@ div#notebook {
       <td>Abraham H. Taub</td>
       <td>male</td>
       <td>88</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14573,9 +14574,9 @@ div#notebook {
       <td>Abraham Pais</td>
       <td>male</td>
       <td>82</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14597,9 +14598,9 @@ div#notebook {
       <td>Abram Ioffe</td>
       <td>male</td>
       <td>79</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -14621,9 +14622,9 @@ div#notebook {
       <td>Adolf Kratzer</td>
       <td>male</td>
       <td>89</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14645,9 +14646,9 @@ div#notebook {
       <td>Adolfas Jucys</td>
       <td>male</td>
       <td>69</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14669,9 +14670,9 @@ div#notebook {
       <td>Adriaan Fokker</td>
       <td>male</td>
       <td>85</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -14693,9 +14694,9 @@ div#notebook {
       <td>Akira Tonomura</td>
       <td>male</td>
       <td>70</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14717,9 +14718,9 @@ div#notebook {
       <td>Alan Walsh (physicist)</td>
       <td>male</td>
       <td>81</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14741,9 +14742,9 @@ div#notebook {
       <td>Albert A. Michelson</td>
       <td>male</td>
       <td>78</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14765,9 +14766,9 @@ div#notebook {
       <td>Albert Einstein</td>
       <td>male</td>
       <td>76</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14789,9 +14790,9 @@ div#notebook {
       <td>Aleksandr Lyapunov</td>
       <td>male</td>
       <td>61</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14813,9 +14814,9 @@ div#notebook {
       <td>Alexander Friedmann</td>
       <td>male</td>
       <td>37</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14837,9 +14838,9 @@ div#notebook {
       <td>Alexander Graham Bell</td>
       <td>male</td>
       <td>75</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14861,9 +14862,9 @@ div#notebook {
       <td>Alexander Prokhorov</td>
       <td>male</td>
       <td>85</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14885,9 +14886,9 @@ div#notebook {
       <td>Alexei Zamolodchikov</td>
       <td>male</td>
       <td>55</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14909,9 +14910,9 @@ div#notebook {
       <td>Alfred Kastler</td>
       <td>male</td>
       <td>81</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14933,9 +14934,9 @@ div#notebook {
       <td>Alfred Lee Loomis</td>
       <td>male</td>
       <td>87</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14957,9 +14958,9 @@ div#notebook {
       <td>Alfred-Marie Liénard</td>
       <td>male</td>
       <td>89</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -14981,9 +14982,9 @@ div#notebook {
       <td>Ali Javan</td>
       <td>male</td>
       <td>89</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -15005,9 +15006,9 @@ div#notebook {
       <td>Ali Moustafa Mosharafa</td>
       <td>male</td>
       <td>51</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15029,9 +15030,9 @@ div#notebook {
       <td>Alladi Ramakrishnan</td>
       <td>male</td>
       <td>84</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15053,9 +15054,9 @@ div#notebook {
       <td>Allan McLeod Cormack</td>
       <td>male</td>
       <td>74</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15077,9 +15078,9 @@ div#notebook {
       <td>Alvin M. Weinberg</td>
       <td>male</td>
       <td>91</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15101,9 +15102,9 @@ div#notebook {
       <td>Amal Kumar Raychaudhuri</td>
       <td>male</td>
       <td>81</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15125,9 +15126,9 @@ div#notebook {
       <td>Amos Dolbear</td>
       <td>male</td>
       <td>72</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15149,9 +15150,9 @@ div#notebook {
       <td>Amrom Harry Katz</td>
       <td>male</td>
       <td>81</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15173,9 +15174,9 @@ div#notebook {
       <td>Anatoly Vlasov</td>
       <td>male</td>
       <td>67</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -15197,9 +15198,9 @@ div#notebook {
       <td>Andrei Sakharov</td>
       <td>male</td>
       <td>68</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15221,9 +15222,9 @@ div#notebook {
       <td>Archibald Low</td>
       <td>male</td>
       <td>68</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15245,9 +15246,9 @@ div#notebook {
       <td>Ari Brynjolfsson</td>
       <td>male</td>
       <td>86</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15269,9 +15270,9 @@ div#notebook {
       <td>Arnold Sommerfeld</td>
       <td>male</td>
       <td>82</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15293,9 +15294,9 @@ div#notebook {
       <td>Arpad Elo</td>
       <td>male</td>
       <td>89</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15317,9 +15318,9 @@ div#notebook {
       <td>Arseny Sokolov</td>
       <td>male</td>
       <td>76</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15341,9 +15342,9 @@ div#notebook {
       <td>Artem Alikhanian</td>
       <td>male</td>
       <td>69</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15365,9 +15366,9 @@ div#notebook {
       <td>Arthur Compton</td>
       <td>male</td>
       <td>69</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15389,9 +15390,9 @@ div#notebook {
       <td>Arthur Eddington</td>
       <td>male</td>
       <td>61</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15413,9 +15414,9 @@ div#notebook {
       <td>Arthur Iberall</td>
       <td>male</td>
       <td>84</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15437,9 +15438,9 @@ div#notebook {
       <td>Arthur Korn</td>
       <td>male</td>
       <td>75</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15461,9 +15462,9 @@ div#notebook {
       <td>Arthur Leonard Schawlow</td>
       <td>male</td>
       <td>77</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15485,9 +15486,9 @@ div#notebook {
       <td>Arthur Maitland</td>
       <td>male</td>
       <td>66</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15509,9 +15510,9 @@ div#notebook {
       <td>Arthur Wightman</td>
       <td>male</td>
       <td>90</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15533,9 +15534,9 @@ div#notebook {
       <td>Asım Orhan Barut</td>
       <td>male</td>
       <td>68</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15557,9 +15558,9 @@ div#notebook {
       <td>Baien Tomlin</td>
       <td>male</td>
       <td>66</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15581,9 +15582,9 @@ div#notebook {
       <td>Balthasar van der Pol</td>
       <td>male</td>
       <td>70</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15605,9 +15606,9 @@ div#notebook {
       <td>Basilis C. Xanthopoulos</td>
       <td>male</td>
       <td>39</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15629,9 +15630,9 @@ div#notebook {
       <td>Behram Kurşunoğlu</td>
       <td>male</td>
       <td>81</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
