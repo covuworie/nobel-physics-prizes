@@ -14139,60 +14139,24 @@ div#notebook {
 
 <span class="k">def</span> <span class="nf">_build_num_laureates_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span>
                                   <span class="n">nobel_chemists</span><span class="p">):</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_academic_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">academicAdvisor</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_academic_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">academicAdvisor</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_doctoral_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralAdvisor</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_doctoral_advisors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralAdvisor</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_doctoral_students&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralStudent</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_doctoral_students&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">doctoralStudent</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_notable_students&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">notableStudent</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_notable_students&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">notableStudent</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">child</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_children&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">child</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>  <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_parents&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>  <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_spouses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">spouse</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_spouses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">spouse</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>  <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_influenced&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">influenced</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_influenced&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">influenced</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>  <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_influenced_by&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">influencedBy</span><span class="p">,</span>
-                             <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_laureate_influenced_by&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">_build_num_laureates</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">influencedBy</span><span class="p">,</span>
-                             <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>  <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">features_to_build</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;laureate_academic_advisors&#39;</span><span class="p">:</span> <span class="s1">&#39;academicAdvisor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;laureate_doctoral_advisors&#39;</span><span class="p">:</span> <span class="s1">&#39;doctoralAdvisor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;laureate_doctoral_students&#39;</span><span class="p">:</span> <span class="s1">&#39;doctoralStudent&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;laureate_notable_students&#39;</span><span class="p">:</span> <span class="s1">&#39;notableStudent&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;laureate_children&#39;</span><span class="p">:</span> <span class="s1">&#39;child&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;laureate_parents&#39;</span><span class="p">:</span> <span class="s1">&#39;parent&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;laureate_spouses&#39;</span><span class="p">:</span> <span class="s1">&#39;spouse&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;laureate_influenced&#39;</span><span class="p">:</span> <span class="s1">&#39;influenced&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;laureate_influenced_by&#39;</span><span class="p">:</span> <span class="s1">&#39;influencedBy&#39;</span>
+    <span class="p">}</span>
+    
+    <span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">relation</span> <span class="ow">in</span> <span class="n">features_to_build</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_physics_&#39;</span> <span class="o">+</span> <span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_laureates</span><span class="p">(</span>
+            <span class="n">physicists</span><span class="p">[</span><span class="n">relation</span><span class="p">],</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_&#39;</span> <span class="o">+</span> <span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_laureates</span><span class="p">(</span>
+            <span class="n">physicists</span><span class="p">[</span><span class="n">relation</span><span class="p">],</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
 
     
 <span class="k">def</span> <span class="nf">_build_places_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">places</span><span class="p">):</span>
