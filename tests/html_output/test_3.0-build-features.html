@@ -13115,7 +13115,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ipytest</span>
@@ -13131,7 +13131,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">PYTEST_OPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--color=yes&#39;</span><span class="p">]</span>
@@ -13144,58 +13144,58 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_years_lived_dead</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">expected_num_years_lived_dead</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">87</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;years_lived&#39;</span><span class="p">)</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;num_years_lived&#39;</span><span class="p">)</span>
 
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_years_lived_alive</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">expected_num_years_lived_alive</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">55</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;years_lived&#39;</span><span class="p">)</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;num_years_lived&#39;</span><span class="p">)</span>
 
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_theoretical_physicist_categories</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">expected_is_theoretical_physicist_categories</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
         <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
         <span class="s1">&#39;no&#39;</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">)</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;is_theoretical_physicist&#39;</span><span class="p">)</span>
 
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_theoretical_physicist_field</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
-        <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;no&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;no&#39;</span>
-    <span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">)</span>
-
-
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_experimental_physicist_description</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">expected_is_theoretical_physicist_field</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
         <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
         <span class="s1">&#39;no&#39;</span><span class="p">,</span>
         <span class="s1">&#39;no&#39;</span>
     <span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">)</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;is_theoretical_physicist&#39;</span><span class="p">)</span>
 
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_astronomer_comment</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">expected_is_experimental_physicist_description</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
         <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
         <span class="s1">&#39;no&#39;</span><span class="p">,</span>
         <span class="s1">&#39;no&#39;</span>
     <span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;theoretical_physicist&#39;</span><span class="p">)</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;is_experimental_physicist&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">expected_is_astronomer_comment</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
+        <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;no&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;no&#39;</span>
+    <span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;is_astronomer&#39;</span><span class="p">)</span>
 
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
@@ -13310,15 +13310,6 @@ div#notebook {
     <span class="n">expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
     <span class="n">expected</span> <span class="o">=</span> <span class="n">expected</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">expected</span>
-
-
-
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_target</span><span class="p">():</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="o">.</span><span class="n">values</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
-    <span class="n">expected</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;physics_laureate&#39;</span>
-    <span class="k">return</span> <span class="n">expected</span>
 </pre></div>
 
     </div>
@@ -13328,7 +13319,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_build_features*&quot;</span><span class="p">)</span>
@@ -13348,22 +13339,22 @@ div#notebook {
     <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">gender</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">gender</span><span class="p">))</span>    
 
 
-<span class="k">def</span> <span class="nf">test_build_features_years_lived_dead</span><span class="p">(</span><span class="n">expected_years_lived_dead</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_build_features_years_lived_dead</span><span class="p">(</span><span class="n">expected_num_years_lived_dead</span><span class="p">):</span>
     <span class="n">birth_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1908-11-12&#39;</span><span class="p">)</span>
     <span class="n">death_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1996-1-19&#39;</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_years_lived_dead</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_num_years_lived_dead</span><span class="p">))</span>
     
     
-<span class="k">def</span> <span class="nf">test_build_features_years_lived_alive</span><span class="p">(</span><span class="n">expected_years_lived_alive</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_build_features_years_lived_alive</span><span class="p">(</span><span class="n">expected_num_years_lived_alive</span><span class="p">):</span>
     <span class="n">birth_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1963-05-07&#39;</span><span class="p">)</span>
     <span class="n">death_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_years_lived_alive</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_num_years_lived_alive</span><span class="p">))</span>
     
 
 <span class="k">def</span> <span class="nf">test_build_features_physics_subfield_categories</span><span class="p">(</span>
-    <span class="n">expected_theoretical_physicist_categories</span><span class="p">):</span>
+    <span class="n">expected_is_theoretical_physicist_categories</span><span class="p">):</span>
     <span class="n">categories</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Nuclear Physicist|Theoretical physicists&#39;</span><span class="p">,</span>
                             <span class="s1">&#39;1932 deaths|American physicists&#39;</span><span class="p">])</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
@@ -13373,11 +13364,11 @@ div#notebook {
         <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">),</span>
         <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
          <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_theoretical_physicist_categories</span><span class="p">))</span>
+        <span class="n">expected_is_theoretical_physicist_categories</span><span class="p">))</span>
     
     
 <span class="k">def</span> <span class="nf">test_build_features_physics_subfield_field</span><span class="p">(</span>
-    <span class="n">expected_theoretical_physicist_field</span><span class="p">):</span>
+    <span class="n">expected_is_theoretical_physicist_field</span><span class="p">):</span>
     <span class="n">field</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;physics|Theoretical physics&#39;</span><span class="p">,</span>
                        <span class="s1">&#39;Philosophy|Mathematics|Quantum field theory&#39;</span><span class="p">,</span>
                        <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
@@ -13388,11 +13379,11 @@ div#notebook {
         <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
         <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
          <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_theoretical_physicist_field</span><span class="p">))</span>
+        <span class="n">expected_is_theoretical_physicist_field</span><span class="p">))</span>
                      
 
 <span class="k">def</span> <span class="nf">test_build_features_physics_subfield_description</span><span class="p">(</span>
-    <span class="n">expected_experimental_physicist_description</span><span class="p">):</span>
+    <span class="n">expected_is_experimental_physicist_description</span><span class="p">):</span>
     <span class="n">description</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Marie Curie was chair of experimental physics&#39;</span><span class="p">,</span>
                              <span class="s1">&#39;Lise Meitner was a nuclear physicist&#39;</span><span class="p">,</span>
                              <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
@@ -13403,11 +13394,11 @@ div#notebook {
         <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">description</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
         <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Experimental physicists&#39;</span><span class="p">,</span>
          <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;experimental physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_experimental_physicist_description</span><span class="p">))</span>
+        <span class="n">expected_is_experimental_physicist_description</span><span class="p">))</span>
     
 
 <span class="k">def</span> <span class="nf">test_build_features_physics_subfield_comment</span><span class="p">(</span>
-    <span class="n">expected_astronomer_comment</span><span class="p">):</span>
+    <span class="n">expected_is_astronomer_comment</span><span class="p">):</span>
     <span class="n">comment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Antony Hewish was an astronomer&#39;</span><span class="p">,</span>
                          <span class="s1">&#39;Jocelyn Bell Burnell is an Astrophysicist&#39;</span><span class="p">,</span>
                          <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
@@ -13418,7 +13409,7 @@ div#notebook {
         <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">comment</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
         <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;astronomers&#39;</span><span class="p">,</span>
          <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;astronom&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_astronomer_comment</span><span class="p">))</span>
+        <span class="n">expected_is_astronomer_comment</span><span class="p">))</span>
     
     
 <span class="k">def</span> <span class="nf">test_build_features_num_laureates</span><span class="p">(</span><span class="n">expected_num_laureates</span><span class="p">):</span>
@@ -13592,11 +13583,6 @@ div#notebook {
     <span class="n">binarize</span> <span class="o">=</span> <span class="n">_binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">binarize</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_binary_features</span><span class="p">))</span>
     
-    
-<span class="k">def</span> <span class="nf">test_build_target</span><span class="p">(</span><span class="n">expected_target</span><span class="p">):</span>
-    <span class="n">target</span> <span class="o">=</span> <span class="n">build_target</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_target</span><span class="p">))</span>
-
 
 <span class="n">ipytest</span><span class="o">.</span><span class="n">run_pytest</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../../tests/test_3.0-build-features.ipynb&#39;</span><span class="p">,</span>
@@ -13622,40 +13608,39 @@ platform win32 -- Python 3.6.5, pytest-3.8.2, py-1.7.0, pluggy-0.7.1 -- c:\users
 cachedir: .pytest_cache
 rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 plugins: mock-1.10.0, cov-2.6.0
-<span class="ansi-bold">collecting ... </span>collected 23 items
+<span class="ansi-bold">collecting ... </span>collected 22 items
 
-..\..\tests\test_3.0-build-features.py::test_build_features_full_name &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                            [  4%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_gender &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                               [  8%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                     [ 13%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                    [ 17%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">          [ 21%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">               [ 26%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">         [ 30%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 34%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                        [ 39%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates_name &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                   [ 43%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_places_codes &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                         [ 47%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_endswith_comma_oxford &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">  [ 52%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_ends_with_comma_oxford &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 56%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_duplicate &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 60%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_no_oxford_cambridge &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">    [ 65%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_float &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                  [ 69%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_citizenship &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 73%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_nationality &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 78%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_description &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 82%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_multiple &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                 [ 86%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_not_found &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                [ 91%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                              [ 95%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_target &lt;- &lt;ipython-input-20-99bff5d9f062&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                        [100%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_full_name &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                            [  4%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_gender &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                               [  9%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                     [ 13%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                    [ 18%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">          [ 22%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">               [ 27%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">         [ 31%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 36%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                        [ 40%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates_name &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                   [ 45%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_places_codes &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                         [ 50%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_endswith_comma_oxford &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">  [ 54%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_ends_with_comma_oxford &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 59%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_duplicate &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 63%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_no_oxford_cambridge &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">    [ 68%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_float &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                  [ 72%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_citizenship &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 77%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_nationality &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 81%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_description &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 86%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_multiple &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                 [ 90%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_not_found &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                [ 95%]</span>
+..\..\tests\test_3.0-build-features.py::test_binarize_list_features &lt;- &lt;ipython-input-18-bab1616bc349&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                              [100%]</span>
 
-<span class="ansi-green-intense-fg ansi-bold">========================================================== 23 passed in 14.43 seconds ===========================================================</span>
+<span class="ansi-green-intense-fg ansi-bold">========================================================== 22 passed in 14.02 seconds ===========================================================</span>
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
