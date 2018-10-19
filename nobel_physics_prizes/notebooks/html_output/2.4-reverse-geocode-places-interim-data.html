@@ -13137,7 +13137,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
@@ -13155,7 +13155,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -13185,7 +13185,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/places.csv&#39;</span><span class="p">)</span>
@@ -13203,7 +13203,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13394,7 +13394,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of places: &#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">places</span><span class="p">))</span>
@@ -13421,10 +13421,10 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Number of places:  1865
-Number with lat / long:  1546
-Number with country:  1288
-Number with neither:  246
+<pre>Number of places:  1876
+Number with lat / long:  1554
+Number with country:  1296
+Number with neither:  249
 </pre>
 </div>
 </div>
@@ -13455,7 +13455,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">reverse_geocode</span><span class="p">(</span><span class="n">places</span><span class="p">):</span>
@@ -13497,7 +13497,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">reverse_geocode</span><span class="p">(</span><span class="n">places</span><span class="p">)</span>
@@ -13527,7 +13527,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13739,7 +13739,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rg</span><span class="o">.</span><span class="n">search</span><span class="p">([(</span><span class="mf">34.929001</span><span class="p">,</span> <span class="mf">138.600998</span><span class="p">)])</span>
@@ -13755,7 +13755,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13785,7 +13785,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rg</span><span class="o">.</span><span class="n">search</span><span class="p">([(</span><span class="o">-</span><span class="mf">34.929001</span><span class="p">,</span> <span class="mf">138.600998</span><span class="p">)])</span>
@@ -13801,7 +13801,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13832,7 +13832,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -13848,7 +13848,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -13881,7 +13881,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">country_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
@@ -13930,7 +13930,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_countries</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span>
@@ -13950,7 +13950,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -14022,7 +14022,7 @@ Number with neither:  246
       <td>GR</td>
     </tr>
     <tr>
-      <th>196</th>
+      <th>197</th>
       <td>British America</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14030,7 +14030,7 @@ Number with neither:  246
       <td>CA|US</td>
     </tr>
     <tr>
-      <th>203</th>
+      <th>204</th>
       <td>British Raj</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14038,7 +14038,7 @@ Number with neither:  246
       <td>IN</td>
     </tr>
     <tr>
-      <th>226</th>
+      <th>227</th>
       <td>Buyid dynasty</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14046,7 +14046,7 @@ Number with neither:  246
       <td>IQ|IR</td>
     </tr>
     <tr>
-      <th>270</th>
+      <th>271</th>
       <td>Chalcis</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14054,7 +14054,7 @@ Number with neither:  246
       <td>GR</td>
     </tr>
     <tr>
-      <th>275</th>
+      <th>276</th>
       <td>Champaign–Urbana metropolitan area</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14062,7 +14062,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>326</th>
+      <th>329</th>
       <td>Colony of New Zealand</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14070,7 +14070,7 @@ Number with neither:  246
       <td>NZ</td>
     </tr>
     <tr>
-      <th>328</th>
+      <th>331</th>
       <td>Columbia College, Columbia University</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14078,7 +14078,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>344</th>
+      <th>347</th>
       <td>County Antrim</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14086,7 +14086,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>399</th>
+      <th>402</th>
       <td>Drama, Greece</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14094,7 +14094,7 @@ Number with neither:  246
       <td>GR</td>
     </tr>
     <tr>
-      <th>408</th>
+      <th>411</th>
       <td>Duchy of Brabant</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14102,7 +14102,7 @@ Number with neither:  246
       <td>BE|NL</td>
     </tr>
     <tr>
-      <th>409</th>
+      <th>412</th>
       <td>Duchy of Brunswick</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14110,7 +14110,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>410</th>
+      <th>413</th>
       <td>Duchy of Florence</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14118,7 +14118,7 @@ Number with neither:  246
       <td>IT</td>
     </tr>
     <tr>
-      <th>411</th>
+      <th>414</th>
       <td>Duchy of Holstein</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14126,7 +14126,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>412</th>
+      <th>415</th>
       <td>Duchy of Mecklenburg-Schwerin</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14134,7 +14134,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>449</th>
+      <th>452</th>
       <td>Electorate of Bavaria</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14142,7 +14142,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>450</th>
+      <th>453</th>
       <td>Electorate of Hesse</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14150,7 +14150,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>451</th>
+      <th>454</th>
       <td>Electorate of Saxony</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14158,7 +14158,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>476</th>
+      <th>479</th>
       <td>Fatimid Caliphate</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14166,7 +14166,7 @@ Number with neither:  246
       <td>EG</td>
     </tr>
     <tr>
-      <th>497</th>
+      <th>500</th>
       <td>Free State of Prussia</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14174,7 +14174,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>504</th>
+      <th>507</th>
       <td>French Army</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14182,7 +14182,7 @@ Number with neither:  246
       <td>FR</td>
     </tr>
     <tr>
-      <th>505</th>
+      <th>508</th>
       <td>French Navy</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14190,7 +14190,7 @@ Number with neither:  246
       <td>FR</td>
     </tr>
     <tr>
-      <th>512</th>
+      <th>515</th>
       <td>Friuli-Venezia Giulia</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14198,7 +14198,7 @@ Number with neither:  246
       <td>IT</td>
     </tr>
     <tr>
-      <th>539</th>
+      <th>542</th>
       <td>German nuclear weapon project</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14206,7 +14206,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>587</th>
+      <th>590</th>
       <td>Haifa</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14214,7 +14214,7 @@ Number with neither:  246
       <td>IL</td>
     </tr>
     <tr>
-      <th>655</th>
+      <th>659</th>
       <td>Idaho</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14230,7 +14230,7 @@ Number with neither:  246
       <td>...</td>
     </tr>
     <tr>
-      <th>888</th>
+      <th>895</th>
       <td>Luxembourg City</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14238,7 +14238,7 @@ Number with neither:  246
       <td>LU</td>
     </tr>
     <tr>
-      <th>924</th>
+      <th>931</th>
       <td>Maryland</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14246,7 +14246,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>926</th>
+      <th>933</th>
       <td>Massachusetts</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14254,7 +14254,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>975</th>
+      <th>983</th>
       <td>Minnesota</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14262,7 +14262,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>979</th>
+      <th>987</th>
       <td>Missouri</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14270,7 +14270,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1025</th>
+      <th>1033</th>
       <td>National Centre for Physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14278,7 +14278,7 @@ Number with neither:  246
       <td>PK</td>
     </tr>
     <tr>
-      <th>1052</th>
+      <th>1060</th>
       <td>New Jersey</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14286,7 +14286,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1054</th>
+      <th>1062</th>
       <td>New Mexico</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14294,7 +14294,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1079</th>
+      <th>1087</th>
       <td>Normandy</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14302,7 +14302,7 @@ Number with neither:  246
       <td>FR</td>
     </tr>
     <tr>
-      <th>1119</th>
+      <th>1127</th>
       <td>Old Swiss Confederacy</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14310,7 +14310,7 @@ Number with neither:  246
       <td>CH</td>
     </tr>
     <tr>
-      <th>1144</th>
+      <th>1152</th>
       <td>Pahlavi dynasty</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14318,7 +14318,7 @@ Number with neither:  246
       <td>IR</td>
     </tr>
     <tr>
-      <th>1168</th>
+      <th>1176</th>
       <td>Pennsylvania</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14326,7 +14326,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1185</th>
+      <th>1193</th>
       <td>Piedmont</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14334,7 +14334,7 @@ Number with neither:  246
       <td>IT</td>
     </tr>
     <tr>
-      <th>1222</th>
+      <th>1230</th>
       <td>Principality of Bayreuth</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14342,7 +14342,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>1223</th>
+      <th>1231</th>
       <td>Principality of Brunswick-Wolfenbüttel</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14350,7 +14350,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>1236</th>
+      <th>1244</th>
       <td>Prussia</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14358,7 +14358,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>1270</th>
+      <th>1278</th>
       <td>Republic of China (1912–49)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14366,7 +14366,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>1301</th>
+      <th>1310</th>
       <td>Royal Air Force</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14374,7 +14374,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1303</th>
+      <th>1312</th>
       <td>Royal Engineers</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14382,7 +14382,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1392</th>
+      <th>1402</th>
       <td>Sindh</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14390,7 +14390,7 @@ Number with neither:  246
       <td>PK</td>
     </tr>
     <tr>
-      <th>1410</th>
+      <th>1420</th>
       <td>Song dynasty</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14398,7 +14398,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>1420</th>
+      <th>1430</th>
       <td>Soviet atomic bomb project</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14406,7 +14406,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1440</th>
+      <th>1450</th>
       <td>St Peter's College, Auckland</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14414,7 +14414,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1633</th>
+      <th>1643</th>
       <td>University of Greenwich</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14422,7 +14422,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1727</th>
+      <th>1738</th>
       <td>Upper Austria</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14430,7 +14430,7 @@ Number with neither:  246
       <td>AT</td>
     </tr>
     <tr>
-      <th>1761</th>
+      <th>1772</th>
       <td>Virginia</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14438,7 +14438,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1778</th>
+      <th>1789</th>
       <td>Walter Reed Army Medical Center</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14446,7 +14446,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1782</th>
+      <th>1793</th>
       <td>Warwickshire</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14454,7 +14454,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1786</th>
+      <th>1797</th>
       <td>Washington (state)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14462,7 +14462,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1840</th>
+      <th>1851</th>
       <td>Wyoming</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14491,7 +14491,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
@@ -14507,7 +14507,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[13]:</div>
 
 
 
@@ -14699,7 +14699,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>127</th>
+      <th>128</th>
       <td>Bedford College, London</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14707,7 +14707,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>168</th>
+      <th>169</th>
       <td>Bombay Presidency</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14715,7 +14715,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>187</th>
+      <th>188</th>
       <td>Brazilian</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14723,7 +14723,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>195</th>
+      <th>196</th>
       <td>British</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14731,7 +14731,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>197</th>
+      <th>198</th>
       <td>British Americans</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14739,7 +14739,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>198</th>
+      <th>199</th>
       <td>British Coal Utilisation Research Association</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14747,7 +14747,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>200</th>
+      <th>201</th>
       <td>British Humanist Association</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14755,7 +14755,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>201</th>
+      <th>202</th>
       <td>British nationality law</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14763,7 +14763,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>202</th>
+      <th>203</th>
       <td>British people</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14771,7 +14771,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>204</th>
+      <th>205</th>
       <td>British subject</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14787,7 +14787,7 @@ Number with neither:  246
       <td>...</td>
     </tr>
     <tr>
-      <th>1447</th>
+      <th>1457</th>
       <td>Stanford Institute for Theoretical Physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14795,7 +14795,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1450</th>
+      <th>1460</th>
       <td>Statelessness</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14803,7 +14803,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1470</th>
+      <th>1480</th>
       <td>Sunoco</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14811,7 +14811,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1478</th>
+      <th>1488</th>
       <td>Swedes</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14819,7 +14819,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1479</th>
+      <th>1489</th>
       <td>Swedish</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14827,7 +14827,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1480</th>
+      <th>1490</th>
       <td>Swedish Meteorological and Hydrological Institute</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14835,7 +14835,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1482</th>
+      <th>1492</th>
       <td>Swiss Federal Institute of Intellectual Property</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14843,7 +14843,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1506</th>
+      <th>1516</th>
       <td>Technische Hochschule</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14851,7 +14851,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1519</th>
+      <th>1529</th>
       <td>Theoretical physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14859,7 +14859,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1525</th>
+      <th>1535</th>
       <td>Tirana</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14867,7 +14867,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1538</th>
+      <th>1548</th>
       <td>Toyonaka, Osaka</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14875,7 +14875,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1547</th>
+      <th>1557</th>
       <td>Trinity College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14883,7 +14883,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1558</th>
+      <th>1568</th>
       <td>Turkish</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14891,7 +14891,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1559</th>
+      <th>1569</th>
       <td>Turkish Americans</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14899,7 +14899,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1560</th>
+      <th>1570</th>
       <td>Turkish people</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14907,7 +14907,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1575</th>
+      <th>1585</th>
       <td>United States nationality law</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14915,7 +14915,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1582</th>
+      <th>1592</th>
       <td>University College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14923,7 +14923,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1588</th>
+      <th>1598</th>
       <td>University of Altdorf</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14931,7 +14931,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1627</th>
+      <th>1637</th>
       <td>University of Franeker</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14939,7 +14939,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1717</th>
+      <th>1728</th>
       <td>University of Washington, University of Maryla...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14947,7 +14947,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1732</th>
+      <th>1743</th>
       <td>Urenco Group</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14955,7 +14955,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1736</th>
+      <th>1747</th>
       <td>Utrecht University</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14963,7 +14963,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1744</th>
+      <th>1755</th>
       <td>Varian Associates</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14971,7 +14971,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1747</th>
+      <th>1758</th>
       <td>Vavilov State Optical Institute</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14979,7 +14979,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1760</th>
+      <th>1771</th>
       <td>Vinnytsia Oblast</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14987,7 +14987,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1773</th>
+      <th>1784</th>
       <td>Wadham College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14995,7 +14995,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1774</th>
+      <th>1785</th>
       <td>Waffenamt</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -15003,7 +15003,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1800</th>
+      <th>1811</th>
       <td>West Berlin</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -15011,7 +15011,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1804</th>
+      <th>1815</th>
       <td>West Riding of Yorkshire</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -15019,7 +15019,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1837</th>
+      <th>1848</th>
       <td>Württemberg</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -15028,7 +15028,7 @@ Number with neither:  246
     </tr>
   </tbody>
 </table>
-<p>251 rows × 5 columns</p>
+<p>254 rows × 5 columns</p>
 </div>
 </div>
 
@@ -15041,14 +15041,14 @@ Number with neither:  246
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I will now read in the nationality list that will help me in converting these nationalities to their associated alpha-2 country codes.</p>
+<p>I will now read in the nationality list that will help me in converting these nationalities to their associated alpha-2 country codes. It's important at this point to turn off the default behavior of <em>pandas</em> which is to treat the string literal 'NA' as a missing value. In the dataset, 'NA' is the ISO 3166 alpha-2 country code of Namibia. I then have to impute the missing values since <em>pandas</em> replaces them with the empty string.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -15079,7 +15079,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -15620,7 +15620,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">other_nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -15654,7 +15654,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -16195,7 +16195,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_nationalities</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
@@ -16217,7 +16217,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[15]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -16321,7 +16321,7 @@ Number with neither:  246
       <td>AT</td>
     </tr>
     <tr>
-      <th>187</th>
+      <th>188</th>
       <td>Brazilian</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16329,7 +16329,7 @@ Number with neither:  246
       <td>BR</td>
     </tr>
     <tr>
-      <th>195</th>
+      <th>196</th>
       <td>British</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16337,7 +16337,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>197</th>
+      <th>198</th>
       <td>British Americans</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16345,7 +16345,7 @@ Number with neither:  246
       <td>GB|US</td>
     </tr>
     <tr>
-      <th>198</th>
+      <th>199</th>
       <td>British Coal Utilisation Research Association</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16353,7 +16353,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>200</th>
+      <th>201</th>
       <td>British Humanist Association</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16361,7 +16361,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>201</th>
+      <th>202</th>
       <td>British nationality law</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16369,7 +16369,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>202</th>
+      <th>203</th>
       <td>British people</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16377,7 +16377,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>204</th>
+      <th>205</th>
       <td>British subject</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16385,7 +16385,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>242</th>
+      <th>243</th>
       <td>Canadians</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16393,7 +16393,7 @@ Number with neither:  246
       <td>CA</td>
     </tr>
     <tr>
-      <th>257</th>
+      <th>258</th>
       <td>Carpathian Germans</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16401,7 +16401,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>288</th>
+      <th>290</th>
       <td>Chilean Americans</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16409,7 +16409,7 @@ Number with neither:  246
       <td>CL|US</td>
     </tr>
     <tr>
-      <th>290</th>
+      <th>292</th>
       <td>China and weapons of mass destruction</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16417,7 +16417,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>291</th>
+      <th>293</th>
       <td>China Association for Science and Technology</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16425,7 +16425,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>292</th>
+      <th>294</th>
       <td>China Engineering Physics Research Institute</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16433,7 +16433,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>293</th>
+      <th>295</th>
       <td>China Institute of Atomic Energy</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16441,7 +16441,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>294</th>
+      <th>296</th>
       <td>China Institute of Modern Physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16449,7 +16449,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>295</th>
+      <th>297</th>
       <td>China Ninth Research Institute</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16457,7 +16457,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>296</th>
+      <th>298</th>
       <td>China Nuclear industry Science and Technology ...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16465,7 +16465,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>297</th>
+      <th>299</th>
       <td>China Nuclear Society</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16473,7 +16473,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>298</th>
+      <th>300</th>
       <td>Chinese Physical Society</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16481,7 +16481,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>306</th>
+      <th>309</th>
       <td>Citizenship of the United States</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16497,7 +16497,7 @@ Number with neither:  246
       <td>...</td>
     </tr>
     <tr>
-      <th>1178</th>
+      <th>1186</th>
       <td>Petit Luxembourg</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16505,7 +16505,7 @@ Number with neither:  246
       <td>LU</td>
     </tr>
     <tr>
-      <th>1195</th>
+      <th>1203</th>
       <td>Poles</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16513,7 +16513,7 @@ Number with neither:  246
       <td>PL</td>
     </tr>
     <tr>
-      <th>1196</th>
+      <th>1204</th>
       <td>Poles in the United Kingdom</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16521,7 +16521,7 @@ Number with neither:  246
       <td>GB|PL</td>
     </tr>
     <tr>
-      <th>1197</th>
+      <th>1205</th>
       <td>Polish</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16529,7 +16529,7 @@ Number with neither:  246
       <td>PL</td>
     </tr>
     <tr>
-      <th>1198</th>
+      <th>1206</th>
       <td>Polish Academy of Sciences</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16537,7 +16537,7 @@ Number with neither:  246
       <td>PL</td>
     </tr>
     <tr>
-      <th>1211</th>
+      <th>1219</th>
       <td>Presidencies and provinces of British India</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16545,7 +16545,7 @@ Number with neither:  246
       <td>GB|IN</td>
     </tr>
     <tr>
-      <th>1237</th>
+      <th>1245</th>
       <td>Prussian Academy of Sciences</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16553,7 +16553,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>1238</th>
+      <th>1246</th>
       <td>Puerto Rican citizenship</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16561,7 +16561,7 @@ Number with neither:  246
       <td>PR</td>
     </tr>
     <tr>
-      <th>1239</th>
+      <th>1247</th>
       <td>Puerto Ricans</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16569,7 +16569,7 @@ Number with neither:  246
       <td>PR</td>
     </tr>
     <tr>
-      <th>1243</th>
+      <th>1251</th>
       <td>Punjab Province (British India)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16577,7 +16577,7 @@ Number with neither:  246
       <td>GB|IN</td>
     </tr>
     <tr>
-      <th>1307</th>
+      <th>1316</th>
       <td>Royal Prussia</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16585,7 +16585,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>1314</th>
+      <th>1323</th>
       <td>Russian</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16593,7 +16593,7 @@ Number with neither:  246
       <td>RU</td>
     </tr>
     <tr>
-      <th>1317</th>
+      <th>1326</th>
       <td>Russian Soviet Federative Socialist Republic</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16601,7 +16601,7 @@ Number with neither:  246
       <td>RU</td>
     </tr>
     <tr>
-      <th>1318</th>
+      <th>1327</th>
       <td>Russians</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16609,7 +16609,7 @@ Number with neither:  246
       <td>RU</td>
     </tr>
     <tr>
-      <th>1369</th>
+      <th>1379</th>
       <td>Scottish</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16617,7 +16617,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1370</th>
+      <th>1380</th>
       <td>Scottish Church Collegiate School</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16625,7 +16625,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1371</th>
+      <th>1381</th>
       <td>Scottish people</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16633,7 +16633,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1379</th>
+      <th>1389</th>
       <td>Serbs</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16641,7 +16641,7 @@ Number with neither:  246
       <td>RS</td>
     </tr>
     <tr>
-      <th>1415</th>
+      <th>1425</th>
       <td>South Korean nationality law</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16649,7 +16649,7 @@ Number with neither:  246
       <td>KR</td>
     </tr>
     <tr>
-      <th>1421</th>
+      <th>1431</th>
       <td>Soviet people</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16657,7 +16657,7 @@ Number with neither:  246
       <td>RU</td>
     </tr>
     <tr>
-      <th>1424</th>
+      <th>1434</th>
       <td>Spanish</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16665,7 +16665,7 @@ Number with neither:  246
       <td>ES</td>
     </tr>
     <tr>
-      <th>1429</th>
+      <th>1439</th>
       <td>SS France (1910)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16673,7 +16673,7 @@ Number with neither:  246
       <td>FR</td>
     </tr>
     <tr>
-      <th>1478</th>
+      <th>1488</th>
       <td>Swedes</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16681,7 +16681,7 @@ Number with neither:  246
       <td>SE</td>
     </tr>
     <tr>
-      <th>1479</th>
+      <th>1489</th>
       <td>Swedish</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16689,7 +16689,7 @@ Number with neither:  246
       <td>SE</td>
     </tr>
     <tr>
-      <th>1480</th>
+      <th>1490</th>
       <td>Swedish Meteorological and Hydrological Institute</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16697,7 +16697,7 @@ Number with neither:  246
       <td>SE</td>
     </tr>
     <tr>
-      <th>1482</th>
+      <th>1492</th>
       <td>Swiss Federal Institute of Intellectual Property</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16705,7 +16705,7 @@ Number with neither:  246
       <td>CH</td>
     </tr>
     <tr>
-      <th>1558</th>
+      <th>1568</th>
       <td>Turkish</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16713,7 +16713,7 @@ Number with neither:  246
       <td>TR</td>
     </tr>
     <tr>
-      <th>1559</th>
+      <th>1569</th>
       <td>Turkish Americans</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16721,7 +16721,7 @@ Number with neither:  246
       <td>TR|US</td>
     </tr>
     <tr>
-      <th>1560</th>
+      <th>1570</th>
       <td>Turkish people</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16729,7 +16729,7 @@ Number with neither:  246
       <td>TR</td>
     </tr>
     <tr>
-      <th>1575</th>
+      <th>1585</th>
       <td>United States nationality law</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16758,7 +16758,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
@@ -16774,7 +16774,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -16894,7 +16894,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>127</th>
+      <th>128</th>
       <td>Bedford College, London</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16902,7 +16902,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>168</th>
+      <th>169</th>
       <td>Bombay Presidency</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16910,7 +16910,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>224</th>
+      <th>225</th>
       <td>Bureau des Longitudes</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16918,7 +16918,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>229</th>
+      <th>230</th>
       <td>C. A. Steinheil &amp; Söhne</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16926,7 +16926,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>246</th>
+      <th>247</th>
       <td>Canton of Geneva</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16934,7 +16934,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>249</th>
+      <th>250</th>
       <td>Cape Canaveral</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16942,7 +16942,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>255</th>
+      <th>256</th>
       <td>Carnegie Institute of Technology</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16950,7 +16950,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>256</th>
+      <th>257</th>
       <td>Carnegie Institution for Science</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16958,7 +16958,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>266</th>
+      <th>267</th>
       <td>Central Electricity Generating Board</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16966,7 +16966,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>267</th>
+      <th>268</th>
       <td>Centre national de la recherche scientifique</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16974,7 +16974,15 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>301</th>
+      <th>302</th>
+      <td>Chiran, Kagoshima</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>304</th>
       <td>Christ Church, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16982,7 +16990,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>320</th>
+      <th>323</th>
       <td>College of Navarre</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16990,7 +16998,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>323</th>
+      <th>326</th>
       <td>Colleges of Durham University</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -16998,7 +17006,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>330</th>
+      <th>333</th>
       <td>Commonwealth Scientific and Industrial Researc...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17006,7 +17014,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>336</th>
+      <th>339</th>
       <td>Constantinople</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17014,7 +17022,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>341</th>
+      <th>344</th>
       <td>Corps des mines</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17022,7 +17030,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>344</th>
+      <th>347</th>
       <td>County Antrim</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17030,16 +17038,8 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>347</th>
+      <th>350</th>
       <td>County Down</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>384</th>
-      <td>Deutsche Physikalische Gesellschaft</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17054,7 +17054,7 @@ Number with neither:  246
       <td>...</td>
     </tr>
     <tr>
-      <th>1432</th>
+      <th>1442</th>
       <td>St. Peter (Klagenfurt am Wörthersee)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17062,7 +17062,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1433</th>
+      <th>1443</th>
       <td>St. Stephen's College, Delhi</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17070,7 +17070,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1437</th>
+      <th>1447</th>
       <td>St John's College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17078,7 +17078,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1440</th>
+      <th>1450</th>
       <td>St Peter's College, Auckland</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17086,7 +17086,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1442</th>
+      <th>1452</th>
       <td>Stagira (ancient city)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17094,7 +17094,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1443</th>
+      <th>1453</th>
       <td>Standard Telephones and Cables</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17102,7 +17102,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1444</th>
+      <th>1454</th>
       <td>Standing Committee of the National People's Co...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17110,7 +17110,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1445</th>
+      <th>1455</th>
       <td>Stanford%5D, %5BUSA</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17118,7 +17118,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1447</th>
+      <th>1457</th>
       <td>Stanford Institute for Theoretical Physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17126,7 +17126,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1450</th>
+      <th>1460</th>
       <td>Statelessness</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17134,7 +17134,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1470</th>
+      <th>1480</th>
       <td>Sunoco</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17142,7 +17142,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1506</th>
+      <th>1516</th>
       <td>Technische Hochschule</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17150,7 +17150,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1519</th>
+      <th>1529</th>
       <td>Theoretical physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17158,7 +17158,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1525</th>
+      <th>1535</th>
       <td>Tirana</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17166,7 +17166,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1538</th>
+      <th>1548</th>
       <td>Toyonaka, Osaka</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17174,7 +17174,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1547</th>
+      <th>1557</th>
       <td>Trinity College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17182,7 +17182,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1582</th>
+      <th>1592</th>
       <td>University College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17190,7 +17190,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1588</th>
+      <th>1598</th>
       <td>University of Altdorf</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17198,7 +17198,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1627</th>
+      <th>1637</th>
       <td>University of Franeker</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17206,7 +17206,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1717</th>
+      <th>1728</th>
       <td>University of Washington, University of Maryla...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17214,7 +17214,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1732</th>
+      <th>1743</th>
       <td>Urenco Group</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17222,7 +17222,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1736</th>
+      <th>1747</th>
       <td>Utrecht University</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17230,7 +17230,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1744</th>
+      <th>1755</th>
       <td>Varian Associates</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17238,7 +17238,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1747</th>
+      <th>1758</th>
       <td>Vavilov State Optical Institute</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17246,7 +17246,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1760</th>
+      <th>1771</th>
       <td>Vinnytsia Oblast</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17254,7 +17254,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1773</th>
+      <th>1784</th>
       <td>Wadham College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17262,7 +17262,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1774</th>
+      <th>1785</th>
       <td>Waffenamt</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17270,7 +17270,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1800</th>
+      <th>1811</th>
       <td>West Berlin</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17278,7 +17278,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1804</th>
+      <th>1815</th>
       <td>West Riding of Yorkshire</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17286,7 +17286,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1837</th>
+      <th>1848</th>
       <td>Württemberg</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17295,7 +17295,7 @@ Number with neither:  246
     </tr>
   </tbody>
 </table>
-<p>140 rows × 5 columns</p>
+<p>143 rows × 5 columns</p>
 </div>
 </div>
 
@@ -17315,7 +17315,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span>
@@ -17359,7 +17359,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Albanians&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
@@ -17402,7 +17402,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_others</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
@@ -17425,7 +17425,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[20]:</div>
 
 
 
@@ -17545,7 +17545,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>127</th>
+      <th>128</th>
       <td>Bedford College, London</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17553,7 +17553,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>168</th>
+      <th>169</th>
       <td>Bombay Presidency</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17561,7 +17561,7 @@ Number with neither:  246
       <td>GB|IN|PK</td>
     </tr>
     <tr>
-      <th>224</th>
+      <th>225</th>
       <td>Bureau des Longitudes</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17569,7 +17569,7 @@ Number with neither:  246
       <td>FR</td>
     </tr>
     <tr>
-      <th>229</th>
+      <th>230</th>
       <td>C. A. Steinheil &amp; Söhne</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17577,7 +17577,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>246</th>
+      <th>247</th>
       <td>Canton of Geneva</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17585,7 +17585,7 @@ Number with neither:  246
       <td>CH</td>
     </tr>
     <tr>
-      <th>249</th>
+      <th>250</th>
       <td>Cape Canaveral</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17593,7 +17593,7 @@ Number with neither:  246
       <td>IN</td>
     </tr>
     <tr>
-      <th>255</th>
+      <th>256</th>
       <td>Carnegie Institute of Technology</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17601,7 +17601,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>256</th>
+      <th>257</th>
       <td>Carnegie Institution for Science</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17609,7 +17609,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>266</th>
+      <th>267</th>
       <td>Central Electricity Generating Board</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17617,7 +17617,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>267</th>
+      <th>268</th>
       <td>Centre national de la recherche scientifique</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17625,7 +17625,15 @@ Number with neither:  246
       <td>FR</td>
     </tr>
     <tr>
-      <th>301</th>
+      <th>302</th>
+      <td>Chiran, Kagoshima</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>304</th>
       <td>Christ Church, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17633,7 +17641,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>320</th>
+      <th>323</th>
       <td>College of Navarre</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17641,7 +17649,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>323</th>
+      <th>326</th>
       <td>Colleges of Durham University</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17649,7 +17657,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>330</th>
+      <th>333</th>
       <td>Commonwealth Scientific and Industrial Researc...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17657,7 +17665,7 @@ Number with neither:  246
       <td>AU</td>
     </tr>
     <tr>
-      <th>336</th>
+      <th>339</th>
       <td>Constantinople</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17665,7 +17673,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>341</th>
+      <th>344</th>
       <td>Corps des mines</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17673,7 +17681,7 @@ Number with neither:  246
       <td>FR</td>
     </tr>
     <tr>
-      <th>344</th>
+      <th>347</th>
       <td>County Antrim</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17681,20 +17689,12 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>347</th>
+      <th>350</th>
       <td>County Down</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>GB</td>
-    </tr>
-    <tr>
-      <th>384</th>
-      <td>Deutsche Physikalische Gesellschaft</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>DE</td>
     </tr>
     <tr>
       <th>...</th>
@@ -17705,7 +17705,7 @@ Number with neither:  246
       <td>...</td>
     </tr>
     <tr>
-      <th>1432</th>
+      <th>1442</th>
       <td>St. Peter (Klagenfurt am Wörthersee)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17713,7 +17713,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1433</th>
+      <th>1443</th>
       <td>St. Stephen's College, Delhi</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17721,7 +17721,7 @@ Number with neither:  246
       <td>GB|IN</td>
     </tr>
     <tr>
-      <th>1437</th>
+      <th>1447</th>
       <td>St John's College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17729,7 +17729,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1440</th>
+      <th>1450</th>
       <td>St Peter's College, Auckland</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17737,7 +17737,7 @@ Number with neither:  246
       <td>NZ</td>
     </tr>
     <tr>
-      <th>1442</th>
+      <th>1452</th>
       <td>Stagira (ancient city)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17745,7 +17745,7 @@ Number with neither:  246
       <td>GR</td>
     </tr>
     <tr>
-      <th>1443</th>
+      <th>1453</th>
       <td>Standard Telephones and Cables</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17753,7 +17753,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1444</th>
+      <th>1454</th>
       <td>Standing Committee of the National People's Co...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17761,7 +17761,7 @@ Number with neither:  246
       <td>CN</td>
     </tr>
     <tr>
-      <th>1445</th>
+      <th>1455</th>
       <td>Stanford%5D, %5BUSA</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17769,7 +17769,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1447</th>
+      <th>1457</th>
       <td>Stanford Institute for Theoretical Physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17777,7 +17777,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1450</th>
+      <th>1460</th>
       <td>Statelessness</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17785,7 +17785,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1470</th>
+      <th>1480</th>
       <td>Sunoco</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17793,7 +17793,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1506</th>
+      <th>1516</th>
       <td>Technische Hochschule</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17801,7 +17801,7 @@ Number with neither:  246
       <td>AT|CH|DE|NL</td>
     </tr>
     <tr>
-      <th>1519</th>
+      <th>1529</th>
       <td>Theoretical physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17809,7 +17809,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1525</th>
+      <th>1535</th>
       <td>Tirana</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17817,7 +17817,7 @@ Number with neither:  246
       <td>AL</td>
     </tr>
     <tr>
-      <th>1538</th>
+      <th>1548</th>
       <td>Toyonaka, Osaka</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17825,7 +17825,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1547</th>
+      <th>1557</th>
       <td>Trinity College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17833,7 +17833,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1582</th>
+      <th>1592</th>
       <td>University College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17841,7 +17841,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1588</th>
+      <th>1598</th>
       <td>University of Altdorf</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17849,7 +17849,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>1627</th>
+      <th>1637</th>
       <td>University of Franeker</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17857,7 +17857,7 @@ Number with neither:  246
       <td>NL</td>
     </tr>
     <tr>
-      <th>1717</th>
+      <th>1728</th>
       <td>University of Washington, University of Maryla...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17865,7 +17865,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1732</th>
+      <th>1743</th>
       <td>Urenco Group</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17873,7 +17873,7 @@ Number with neither:  246
       <td>DE|GB|NL</td>
     </tr>
     <tr>
-      <th>1736</th>
+      <th>1747</th>
       <td>Utrecht University</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17881,7 +17881,7 @@ Number with neither:  246
       <td>NL</td>
     </tr>
     <tr>
-      <th>1744</th>
+      <th>1755</th>
       <td>Varian Associates</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17889,7 +17889,7 @@ Number with neither:  246
       <td>US</td>
     </tr>
     <tr>
-      <th>1747</th>
+      <th>1758</th>
       <td>Vavilov State Optical Institute</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17897,7 +17897,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1760</th>
+      <th>1771</th>
       <td>Vinnytsia Oblast</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17905,7 +17905,7 @@ Number with neither:  246
       <td>UA</td>
     </tr>
     <tr>
-      <th>1773</th>
+      <th>1784</th>
       <td>Wadham College, Oxford</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17913,7 +17913,7 @@ Number with neither:  246
       <td>GB</td>
     </tr>
     <tr>
-      <th>1774</th>
+      <th>1785</th>
       <td>Waffenamt</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17921,7 +17921,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>1800</th>
+      <th>1811</th>
       <td>West Berlin</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17929,7 +17929,7 @@ Number with neither:  246
       <td>DE</td>
     </tr>
     <tr>
-      <th>1804</th>
+      <th>1815</th>
       <td>West Riding of Yorkshire</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17937,7 +17937,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1837</th>
+      <th>1848</th>
       <td>Württemberg</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -17946,7 +17946,7 @@ Number with neither:  246
     </tr>
   </tbody>
 </table>
-<p>140 rows × 5 columns</p>
+<p>143 rows × 5 columns</p>
 </div>
 </div>
 
@@ -17966,7 +17966,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Cape Canaveral&#39;</span><span class="p">][</span><span class="n">place_cols</span><span class="p">])</span>
@@ -18015,7 +18015,7 @@ Number with neither:  246
   </thead>
   <tbody>
     <tr>
-      <th>249</th>
+      <th>250</th>
       <td>Cape Canaveral</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18054,7 +18054,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
@@ -18070,7 +18070,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[21]:</div>
+    <div class="prompt output_prompt">Out[22]:</div>
 
 
 
@@ -18126,7 +18126,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>229</th>
+      <th>230</th>
       <td>C. A. Steinheil &amp; Söhne</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18134,7 +18134,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>255</th>
+      <th>256</th>
       <td>Carnegie Institute of Technology</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18142,7 +18142,15 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>320</th>
+      <th>302</th>
+      <td>Chiran, Kagoshima</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>323</th>
       <td>College of Navarre</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18150,7 +18158,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>336</th>
+      <th>339</th>
       <td>Constantinople</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18158,7 +18166,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>473</th>
+      <th>476</th>
       <td>Evergreen, California</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18166,7 +18174,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>577</th>
+      <th>580</th>
       <td>Groupe des écoles des mines</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18174,7 +18182,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>588</th>
+      <th>591</th>
       <td>Halcyon Castle</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18182,7 +18190,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>610</th>
+      <th>614</th>
       <td>Hasmark</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18190,7 +18198,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>611</th>
+      <th>615</th>
       <td>Haurum</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18198,7 +18206,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>629</th>
+      <th>633</th>
       <td>High Tension Nuclear Laboratory</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18206,7 +18214,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>653</th>
+      <th>657</th>
       <td>IBM Research</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18214,7 +18222,15 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>687</th>
+      <th>661</th>
+      <td>Ikata, Ehime</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>692</th>
       <td>International Committee on Intellectual Cooper...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18222,7 +18238,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>744</th>
+      <th>750</th>
       <td>Karl-Ferdinands-Universität</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18230,7 +18246,15 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>765</th>
+      <th>757</th>
+      <td>Kawanabe District, Kagoshima</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>772</th>
       <td>Kholmogory District</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18238,7 +18262,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>794</th>
+      <th>801</th>
       <td>Klausgalvų Medsėdžiai</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18246,7 +18270,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>797</th>
+      <th>804</th>
       <td>Knutstorp Castle</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18254,7 +18278,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>822</th>
+      <th>829</th>
       <td>Laboratory for Astrophysics and Space Research</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18262,7 +18286,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>862</th>
+      <th>869</th>
       <td>List of schools named after Francis Xavier</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18270,7 +18294,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>872</th>
+      <th>879</th>
       <td>Los Angeles Bureau of Power and Light</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18278,7 +18302,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>885</th>
+      <th>892</th>
       <td>Luoxue Mountain Cosmic Rays Research Center</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18286,7 +18310,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>996</th>
+      <th>1004</th>
       <td>Moscow Institute of Chemical Engineering</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18294,7 +18318,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1004</th>
+      <th>1012</th>
       <td>Mount Wilson Observatory</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18302,7 +18326,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1109</th>
+      <th>1117</th>
       <td>Oba-Igbomina</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18310,7 +18334,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1155</th>
+      <th>1163</th>
       <td>Paris (disambiguation)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18318,7 +18342,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1159</th>
+      <th>1167</th>
       <td>Pashenivka</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18326,7 +18350,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1183</th>
+      <th>1191</th>
       <td>Physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18334,7 +18358,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1191</th>
+      <th>1199</th>
       <td>PLATO (computer system)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18342,7 +18366,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1235</th>
+      <th>1243</th>
       <td>Province of Zamora</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18350,7 +18374,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1299</th>
+      <th>1308</th>
       <td>Rowland Institute for Science</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18358,7 +18382,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1432</th>
+      <th>1442</th>
       <td>St. Peter (Klagenfurt am Wörthersee)</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18366,7 +18390,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1445</th>
+      <th>1455</th>
       <td>Stanford%5D, %5BUSA</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18374,7 +18398,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1447</th>
+      <th>1457</th>
       <td>Stanford Institute for Theoretical Physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18382,7 +18406,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1450</th>
+      <th>1460</th>
       <td>Statelessness</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18390,7 +18414,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1519</th>
+      <th>1529</th>
       <td>Theoretical physics</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18398,7 +18422,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1538</th>
+      <th>1548</th>
       <td>Toyonaka, Osaka</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18406,7 +18430,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1717</th>
+      <th>1728</th>
       <td>University of Washington, University of Maryla...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18414,7 +18438,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1747</th>
+      <th>1758</th>
       <td>Vavilov State Optical Institute</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18422,7 +18446,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1804</th>
+      <th>1815</th>
       <td>West Riding of Yorkshire</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18430,7 +18454,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1837</th>
+      <th>1848</th>
       <td>Württemberg</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -18458,7 +18482,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Percentage of places mapped to country codes:&#39;</span><span class="p">,</span>
@@ -18499,7 +18523,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">):</span>
@@ -18565,7 +18589,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">)</span>
@@ -18586,7 +18610,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -18994,7 +19018,7 @@ Number with neither:  246
       <td>...</td>
     </tr>
     <tr>
-      <th>1835</th>
+      <th>1846</th>
       <td>Woudenberg</td>
       <td>52.083332</td>
       <td>5.416667</td>
@@ -19006,7 +19030,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1836</th>
+      <th>1847</th>
       <td>Wrocław</td>
       <td>51.099998</td>
       <td>17.033333</td>
@@ -19018,7 +19042,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1837</th>
+      <th>1848</th>
       <td>Württemberg</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -19030,7 +19054,7 @@ Number with neither:  246
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1838</th>
+      <th>1849</th>
       <td>Würzburg</td>
       <td>49.783333</td>
       <td>9.933333</td>
@@ -19042,7 +19066,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1839</th>
+      <th>1850</th>
       <td>Wustrow, Lower Saxony</td>
       <td>52.921944</td>
       <td>11.121667</td>
@@ -19054,7 +19078,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1840</th>
+      <th>1851</th>
       <td>Wyoming</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -19066,7 +19090,7 @@ Number with neither:  246
       <td>North America</td>
     </tr>
     <tr>
-      <th>1841</th>
+      <th>1852</th>
       <td>Wyrzysk</td>
       <td>53.156113</td>
       <td>17.267778</td>
@@ -19078,7 +19102,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1842</th>
+      <th>1853</th>
       <td>Xavier University</td>
       <td>39.148682</td>
       <td>-84.477989</td>
@@ -19090,7 +19114,7 @@ Number with neither:  246
       <td>North America</td>
     </tr>
     <tr>
-      <th>1843</th>
+      <th>1854</th>
       <td>Xiamen</td>
       <td>24.479836</td>
       <td>118.089417</td>
@@ -19102,7 +19126,7 @@ Number with neither:  246
       <td>Asia</td>
     </tr>
     <tr>
-      <th>1844</th>
+      <th>1855</th>
       <td>Yale University</td>
       <td>41.311111</td>
       <td>-72.926666</td>
@@ -19114,7 +19138,7 @@ Number with neither:  246
       <td>North America</td>
     </tr>
     <tr>
-      <th>1845</th>
+      <th>1856</th>
       <td>Yaroslavl</td>
       <td>57.616665</td>
       <td>39.849998</td>
@@ -19126,7 +19150,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1846</th>
+      <th>1857</th>
       <td>Yaycı</td>
       <td>38.942780</td>
       <td>45.731945</td>
@@ -19138,7 +19162,7 @@ Number with neither:  246
       <td>Asia</td>
     </tr>
     <tr>
-      <th>1847</th>
+      <th>1858</th>
       <td>Yerevan</td>
       <td>40.183334</td>
       <td>44.516666</td>
@@ -19150,7 +19174,7 @@ Number with neither:  246
       <td>Asia</td>
     </tr>
     <tr>
-      <th>1848</th>
+      <th>1859</th>
       <td>Yerevan Physics Institute</td>
       <td>40.206390</td>
       <td>44.485001</td>
@@ -19162,7 +19186,7 @@ Number with neither:  246
       <td>Asia</td>
     </tr>
     <tr>
-      <th>1849</th>
+      <th>1860</th>
       <td>Yeshiva University</td>
       <td>40.850281</td>
       <td>-73.929718</td>
@@ -19174,7 +19198,7 @@ Number with neither:  246
       <td>North America</td>
     </tr>
     <tr>
-      <th>1850</th>
+      <th>1861</th>
       <td>Yonne</td>
       <td>47.799999</td>
       <td>3.566667</td>
@@ -19186,7 +19210,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1851</th>
+      <th>1862</th>
       <td>York</td>
       <td>53.958332</td>
       <td>-1.080278</td>
@@ -19198,7 +19222,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1852</th>
+      <th>1863</th>
       <td>Yorkshire</td>
       <td>54.000000</td>
       <td>-2.000000</td>
@@ -19210,7 +19234,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1853</th>
+      <th>1864</th>
       <td>Yuba City, California</td>
       <td>39.134724</td>
       <td>-121.626114</td>
@@ -19222,7 +19246,7 @@ Number with neither:  246
       <td>North America</td>
     </tr>
     <tr>
-      <th>1854</th>
+      <th>1865</th>
       <td>Yukon, Florida</td>
       <td>30.233334</td>
       <td>-81.699997</td>
@@ -19234,7 +19258,7 @@ Number with neither:  246
       <td>North America</td>
     </tr>
     <tr>
-      <th>1855</th>
+      <th>1866</th>
       <td>Zagreb</td>
       <td>45.816666</td>
       <td>15.983334</td>
@@ -19246,7 +19270,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1856</th>
+      <th>1867</th>
       <td>Zaragoza</td>
       <td>41.650002</td>
       <td>-0.883333</td>
@@ -19258,7 +19282,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1857</th>
+      <th>1868</th>
       <td>Zeist</td>
       <td>52.083332</td>
       <td>5.233333</td>
@@ -19270,7 +19294,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1858</th>
+      <th>1869</th>
       <td>Zeithain</td>
       <td>51.333332</td>
       <td>13.350000</td>
@@ -19282,7 +19306,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1859</th>
+      <th>1870</th>
       <td>Zhejiang University</td>
       <td>30.263611</td>
       <td>120.120834</td>
@@ -19294,7 +19318,7 @@ Number with neither:  246
       <td>Asia</td>
     </tr>
     <tr>
-      <th>1860</th>
+      <th>1871</th>
       <td>Zhenjiang</td>
       <td>32.200001</td>
       <td>119.416664</td>
@@ -19306,7 +19330,7 @@ Number with neither:  246
       <td>Asia</td>
     </tr>
     <tr>
-      <th>1861</th>
+      <th>1872</th>
       <td>Zollikon</td>
       <td>47.333332</td>
       <td>8.583333</td>
@@ -19318,7 +19342,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1862</th>
+      <th>1873</th>
       <td>Zonnemaire</td>
       <td>51.712502</td>
       <td>3.950833</td>
@@ -19330,7 +19354,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1863</th>
+      <th>1874</th>
       <td>Żory</td>
       <td>50.049999</td>
       <td>18.700001</td>
@@ -19342,7 +19366,7 @@ Number with neither:  246
       <td>Europe</td>
     </tr>
     <tr>
-      <th>1864</th>
+      <th>1875</th>
       <td>Zürich</td>
       <td>47.366665</td>
       <td>8.550000</td>
@@ -19355,7 +19379,7 @@ Number with neither:  246
     </tr>
   </tbody>
 </table>
-<p>1865 rows × 9 columns</p>
+<p>1876 rows × 9 columns</p>
 </div>
 </div>
 
@@ -19375,10 +19399,10 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">places</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">places</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
 <span class="n">places</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 
@@ -19392,7 +19416,7 @@ Number with neither:  246
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[26]:</div>
 
 
 
@@ -19933,7 +19957,7 @@ Number with neither:  246
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>

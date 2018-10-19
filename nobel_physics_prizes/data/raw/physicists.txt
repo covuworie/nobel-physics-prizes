@@ -109,6 +109,7 @@ Ayyub Guliyev
 B. Roy Frieden
 Baien Tomlin
 Balthasar van der Pol
+Barry Barish
 Barton Zwiebach
 Basilis C. Xanthopoulos
 Behram Kurşunoğlu
@@ -209,6 +210,7 @@ David Enskog
 David Finkelstein
 David Gross
 David J. Griffiths
+David J. Thouless
 David J. Wineland
 David Lee (physicist)
 David Lindley (physicist)
@@ -231,6 +233,7 @@ Donald A. Glaser
 Dorothy Hodgkin
 Douglas Hartree
 Douglas Osheroff
+Duncan Haldane
 Durmus A. Demir
 E. C. George Sudarshan
 Edward Arthur Milne
@@ -426,6 +429,7 @@ Hideki Yukawa
 Hideo Ohno
 Hippolyte Fizeau
 Hiranmay Sen Gupta
+Hiroshi Amano
 Holger Bech Nielsen
 Homi J. Bhabha
 Horst Ludwig Störmer
@@ -445,6 +449,7 @@ Irving Langmuir
 Isaac Beeckman
 Isaac Newton
 Isaak Markovich Khalatnikov
+Isamu Akasaki
 Isidor Isaac Rabi
 Isidor Sauers
 İsmail Hakkı Duru
@@ -452,6 +457,7 @@ Ivan Puluj
 Ivar Giaever
 J. Hans D. Jensen
 J. J. Thomson
+J. Michael Kosterlitz
 J. Robert Oppenheimer
 Jack Kilby
 Jack Steinberger
@@ -642,6 +648,7 @@ Louis Néel
 Louis Rendu
 Louis Slotin
 Lowell S. Brown
+Luboš Motl
 Luciano Maiani
 Lucretius
 Ludvig Faddeev
@@ -816,6 +823,7 @@ Pyotr Kapitsa
 Pyotr Lebedev
 Pythagoras
 Rafael Sorkin
+Rainer Weiss
 Ralph Asher Alpher
 Ralph H. Fowler
 Ralph Kronig
@@ -914,6 +922,7 @@ Shen Kuo
 Shiraz Minwalla
 Shirley Ann Jackson
 Shoichi Sakata
+Shuji Nakamura
 Sidney Drell
 Sidney Redner
 Siméon Denis Poisson
