@@ -14710,7 +14710,7 @@ Name: name, dtype: object</pre>
 <span class="sd">            Laureate dataframe.</span>
 <span class="sd">        places (pandas.DataFrame): Places dataframe.</span>
 <span class="sd">        nationality (pandas.DataFrame): Nationalies dataframe.</span>
-
+<span class="sd">            </span>
 <span class="sd">    Returns:</span>
 <span class="sd">        pandas.DataFrame: Features dataframe.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -14728,8 +14728,6 @@ Name: name, dtype: object</pre>
     
     <span class="n">_build_places_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">places</span><span class="p">)</span>
     
-    <span class="n">features</span> <span class="o">=</span> <span class="n">_binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-
     <span class="n">features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">features</span>
 
@@ -14824,33 +14822,6 @@ Name: name, dtype: object</pre>
         <span class="n">features</span><span class="o">.</span><span class="n">citizenship_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
 
 
-
-<span class="k">def</span> <span class="nf">_binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
-    <span class="c1"># union of places and citizenship (without the counts)</span>
-    <span class="n">series_to_binarize</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;born_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;born_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;death_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;died_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;death_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;died_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;lived_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;lived_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;alma_mater&#39;</span><span class="p">:</span> <span class="s1">&#39;alumnus_of_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;alumnus_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;alumnus_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;workplaces&#39;</span><span class="p">:</span> <span class="s1">&#39;worked_at_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;worked_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;worked_in_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;citizen_of_&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;citizenship_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;citizen_in_&#39;</span>
-    <span class="p">}</span>
-        
-    <span class="k">for</span> <span class="n">series</span><span class="p">,</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">series_to_binarize</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">binarized</span> <span class="o">=</span> <span class="n">_binarize_list_feature</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">series</span><span class="p">],</span> <span class="n">prefix</span><span class="p">)</span>
-        <span class="n">features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">binarized</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">features</span>
-    
-    
-
 <span class="k">def</span> <span class="nf">_build_num_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">):</span>
     <span class="n">death_date_no_nan</span> <span class="o">=</span> <span class="n">death_date</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_date_no_nan</span><span class="p">)</span>
     <span class="n">birth_date_no_nan</span> <span class="o">=</span> <span class="n">birth_date</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_date_no_nan</span><span class="p">)</span>
@@ -14877,18 +14848,6 @@ Name: name, dtype: object</pre>
                 <span class="n">comm_theoretical_physicist</span><span class="p">)</span>
     <span class="n">subfield</span> <span class="o">=</span> <span class="n">subfield</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="kc">True</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">subfield</span>
-
-
-
-<span class="k">def</span> <span class="nf">_binarize_list_feature</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
-    <span class="n">mlb</span> <span class="o">=</span> <span class="n">MultiLabelBinarizer</span><span class="p">()</span>
-    <span class="n">binarized</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="n">mlb</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">series</span><span class="p">),</span>
-        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">class_</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">class_</span> <span class="ow">in</span> <span class="n">mlb</span><span class="o">.</span><span class="n">classes_</span><span class="p">],</span>
-        <span class="n">index</span><span class="o">=</span><span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-    <span class="n">binarized</span> <span class="o">=</span> <span class="n">binarized</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">binarized</span>
-    
 
 
 <span class="k">def</span> <span class="nf">_build_num_laureates</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">laureates</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
@@ -14996,7 +14955,7 @@ Name: name, dtype: object</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
     <span class="n">train_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">779</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">52</span><span class="p">)</span>
 <span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -15044,16 +15003,539 @@ Name: name, dtype: object</pre>
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>num_chemistry_laureate_doctoral_advisors</th>
       <th>...</th>
+      <th>alma_mater_country_alpha_3_codes</th>
+      <th>num_alma_mater_country_alpha_3_codes</th>
+      <th>alma_mater_continent_codes</th>
+      <th>num_alma_mater_continent_codes</th>
+      <th>workplaces</th>
+      <th>num_workplaces</th>
+      <th>workplaces_country_alpha_3_codes</th>
+      <th>num_workplaces_country_alpha_3_codes</th>
+      <th>workplaces_continent_codes</th>
+      <th>num_workplaces_continent_codes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Aage Bohr</td>
+      <td>male</td>
+      <td>87</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[DNK]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Columbia University, Institute for Advanced S...</td>
+      <td>4</td>
+      <td>[CAN, DNK, GBR, USA]</td>
+      <td>4</td>
+      <td>[EU, NA]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Aaldert Wapstra</td>
+      <td>male</td>
+      <td>84</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Abdus Salam</td>
+      <td>male</td>
+      <td>70</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[GBR, PAK]</td>
+      <td>2</td>
+      <td>[AS, EU]</td>
+      <td>2</td>
+      <td>[PAECSUPARCOPINSTECHPunjab UniversityImperial ...</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Abraham Alikhanov</td>
+      <td>male</td>
+      <td>66</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[RUS]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Institute for Theoretical and Experimental Ph...</td>
+      <td>1</td>
+      <td>[RUS]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Abraham H. Taub</td>
+      <td>male</td>
+      <td>88</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[USA]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 52 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
+    <span class="n">test_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[14]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>num_years_lived</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_chemistry_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_chemistry_laureate_doctoral_advisors</th>
+      <th>...</th>
+      <th>alma_mater_country_alpha_3_codes</th>
+      <th>num_alma_mater_country_alpha_3_codes</th>
+      <th>alma_mater_continent_codes</th>
+      <th>num_alma_mater_continent_codes</th>
+      <th>workplaces</th>
+      <th>num_workplaces</th>
+      <th>workplaces_country_alpha_3_codes</th>
+      <th>num_workplaces_country_alpha_3_codes</th>
+      <th>workplaces_continent_codes</th>
+      <th>num_workplaces_continent_codes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A. P. Balachandran</td>
+      <td>male</td>
+      <td>80</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[IND]</td>
+      <td>1</td>
+      <td>[AS]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Abdul Qadeer Khan</td>
+      <td>male</td>
+      <td>82</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[BEL, DEU, NLD]</td>
+      <td>3</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Ghulam Ishaq Khan Institute of Engineering Sc...</td>
+      <td>3</td>
+      <td>[DEU, GBR, NLD, PAK]</td>
+      <td>4</td>
+      <td>[AS, EU]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adam Riess</td>
+      <td>male</td>
+      <td>48</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[USA]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Adrian Melott</td>
+      <td>male</td>
+      <td>71</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[USA]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alain Aspect</td>
+      <td>male</td>
+      <td>71</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[FRA]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Centre national de la recherche scientifique,...</td>
+      <td>3</td>
+      <td>[FRA]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 52 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now I one-hot encode the list features. Due to one-hot encoding there are less features in the test set than in the training set. This is because there are differing country codes, workplaces, educational institutions, etc. The majority of the differences are due to the way that the data was sampled. For instance, the <code>died_in_[country_code]</code> features cannot possibly appear in the test set features since these
+physicists are still alive. The rest of the few differences are due variability in the data.</p>
+<p>Since any machine models I build will be evaluated on the test set, the tempting thing to do is to reduce the features to the common set of features between the training and test sets. However, this would clearly be <em>data snooping</em> (cheating) since the test set is meant to be unseen data. The other issue is if some of the features in the training set are thrown away and new examples come along with those exact features, the model would not be able to leverage this information. So the only logical thing to do is to ensure that the test set features are identical to the training set features. I do this by "padding" the extra features in the test set with all "no" values. Let's go ahead and do this now.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Binarize list features.</span>
+<span class="sd">    </span>
+<span class="sd">    One-hot encode the list categorical features in the</span>
+<span class="sd">    features dataframe.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        features (pandas.DataFrame): Features dataframe.</span>
+<span class="sd">        train_features (pandas.DataFrame): Training features</span>
+<span class="sd">            dataframe. Pass this parameter when building features</span>
+<span class="sd">            for a test set so that that identical features are</span>
+<span class="sd">            created for the test set.</span>
+<span class="sd">        presence_threshold (float): For each category in a </span>
+<span class="sd">            categorical list feature, the fraction of</span>
+<span class="sd">            physicists for which the category is present will</span>
+<span class="sd">            be calculated. If the fraction is below this</span>
+<span class="sd">            threshold it will grouped into the &quot;other&quot;</span>
+<span class="sd">            category (represented by one or more &quot;*&#39;s&#39;&quot; in its</span>
+<span class="sd">            name). This is intended for &quot;bucketing&quot; rare</span>
+<span class="sd">            values to keep the dimensionality of the feature</span>
+<span class="sd">            space down and reduce chances of overfitting. Set</span>
+<span class="sd">            this value to zero to prevent any grouping of</span>
+<span class="sd">            values. Note that this value will be ignored when</span>
+<span class="sd">            `train_features` is not None.</span>
+<span class="sd">            </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        pandas.DataFrame: Features dataframe.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># union of places and citizenship (without the counts)</span>
+    <span class="n">series_to_binarize</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;born_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;born_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;death_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;died_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;death_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;died_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;lived_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;lived_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;alma_mater&#39;</span><span class="p">:</span> <span class="s1">&#39;alumnus_of_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;alumnus_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;alumnus_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;workplaces&#39;</span><span class="p">:</span> <span class="s1">&#39;worked_at_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;worked_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;worked_in_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;citizen_of_&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;citizenship_continent_codes&#39;</span><span class="p">:</span> <span class="s1">&#39;citizen_in_&#39;</span>
+    <span class="p">}</span>
+        
+    <span class="k">for</span> <span class="n">series</span><span class="p">,</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">series_to_binarize</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">binarized</span> <span class="o">=</span> <span class="n">_binarize_list_feature</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">series</span><span class="p">],</span> <span class="n">prefix</span><span class="p">,</span>
+                                           <span class="n">train_features</span><span class="p">,</span> <span class="n">presence_threshold</span><span class="p">)</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">binarized</span><span class="p">)</span>
+        
+    <span class="c1"># add extra features in test set to sync with training set</span>
+    <span class="k">if</span> <span class="n">train_features</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cols_to_add</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols_to_add</span><span class="p">))</span>
+        <span class="n">features_to_pad</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">features</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols_to_add</span><span class="p">)</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">features_to_pad</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">features</span>
+    
+    
+<span class="k">def</span> <span class="nf">_binarize_list_feature</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="n">mlb</span> <span class="o">=</span> <span class="n">MultiLabelBinarizer</span><span class="p">()</span>
+    <span class="n">binarized</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">mlb</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">series</span><span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">class_</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">class_</span> <span class="ow">in</span> <span class="n">mlb</span><span class="o">.</span><span class="n">classes_</span><span class="p">],</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">presence_threshold</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">train_features</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">train_features</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cols_to_group</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">binarized</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span>
+                             <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cols_to_group</span> <span class="o">=</span> <span class="n">binarized</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">presence_threshold</span>
+            <span class="n">cols_to_group</span> <span class="o">=</span> <span class="n">cols_to_group</span><span class="p">[</span><span class="n">cols_to_group</span><span class="o">.</span><span class="n">values</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            
+        <span class="c1"># look for at least one &#39;1&#39; value in the row for a physicist</span>
+        <span class="k">if</span> <span class="n">cols_to_group</span><span class="p">:</span>
+            <span class="n">other_col</span> <span class="o">=</span> <span class="n">binarized</span><span class="p">[</span><span class="n">cols_to_group</span><span class="p">]</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+            <span class="n">other_col</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">_series_name</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span>
+            <span class="n">binarized</span> <span class="o">=</span> <span class="n">binarized</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">cols_to_group</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">other_col</span><span class="p">)</span>
+
+    <span class="n">binarized</span> <span class="o">=</span> <span class="n">binarized</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">binarized</span>
+
+
+<span class="k">def</span> <span class="nf">_series_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;alpha_3_codes&#39;</span><span class="p">):</span>
+        <span class="n">other_name</span> <span class="o">=</span> <span class="s1">&#39;***&#39;</span>
+    <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;continent_codes&#39;</span><span class="p">):</span>
+        <span class="n">other_name</span> <span class="o">=</span> <span class="s1">&#39;**&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">other_name</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+    <span class="k">return</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">other_name</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">presence_threshold</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">train_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="p">,</span> <span class="n">presence_threshold</span><span class="o">=</span><span class="n">presence_threshold</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">187</span><span class="p">)</span>
+<span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>num_years_lived</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_chemistry_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_chemistry_laureate_doctoral_advisors</th>
+      <th>...</th>
+      <th>citizen_of_POL</th>
+      <th>citizen_of_RUS</th>
       <th>citizen_of_SWE</th>
-      <th>citizen_of_TUR</th>
-      <th>citizen_of_UKR</th>
       <th>citizen_of_USA</th>
-      <th>citizen_in_AF</th>
+      <th>citizen_of_***</th>
       <th>citizen_in_AS</th>
       <th>citizen_in_EU</th>
       <th>citizen_in_NA</th>
       <th>citizen_in_OC</th>
-      <th>citizen_in_SA</th>
+      <th>citizen_in_**</th>
     </tr>
   </thead>
   <tbody>
@@ -15122,7 +15604,7 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
@@ -15146,7 +15628,7 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
@@ -15179,7 +15661,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 779 columns</p>
+<p>5 rows × 187 columns</p>
 </div>
 </div>
 
@@ -15191,13 +15673,14 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
-    <span class="n">test_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span>
+                                       <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">663</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
 <span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -15211,7 +15694,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -15245,16 +15728,16 @@ Name: name, dtype: object</pre>
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>num_chemistry_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>citizen_of_TUR</th>
-      <th>citizen_of_UKR</th>
-      <th>citizen_of_USA</th>
-      <th>citizen_of_VNM</th>
-      <th>citizen_in_AF</th>
-      <th>citizen_in_AS</th>
-      <th>citizen_in_EU</th>
-      <th>citizen_in_NA</th>
-      <th>citizen_in_OC</th>
-      <th>citizen_in_SA</th>
+      <th>worked_at_Humboldt_University_of_Berlin</th>
+      <th>died_in_AS</th>
+      <th>died_in_ITA</th>
+      <th>died_in_NA</th>
+      <th>died_in_SWE</th>
+      <th>died_in_GBR</th>
+      <th>alumnus_of_Humboldt_University_of_Berlin</th>
+      <th>citizen_of_POL</th>
+      <th>died_in_NLD</th>
+      <th>died_in_EU</th>
     </tr>
   </thead>
   <tbody>
@@ -15276,7 +15759,7 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15300,7 +15783,7 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15321,12 +15804,12 @@ Name: name, dtype: object</pre>
       <td>...</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
     </tr>
@@ -15345,12 +15828,12 @@ Name: name, dtype: object</pre>
       <td>...</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
     </tr>
@@ -15373,14 +15856,14 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 663 columns</p>
+<p>5 rows × 187 columns</p>
 </div>
 </div>
 
@@ -15389,10 +15872,18 @@ Name: name, dtype: object</pre>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now I convert the count features to ratio features by diving the cell values by the mean value of the feature. I also drop any features with zero counts in all the columns since they are uninformative.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">convert_counts_to_ratios</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -15400,8 +15891,6 @@ Name: name, dtype: object</pre>
 <span class="sd">    </span>
 <span class="sd">    Converts all counts features in the `features` dataframe to</span>
 <span class="sd">    ratios by dividing cell values by the mean value of the feature.</span>
-<span class="sd">    This function should be called after `build_features` for both</span>
-<span class="sd">    the training and test features.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        features (pandas.DataFrame): Features dataframe.</span>
@@ -15443,13 +15932,13 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span>
                                          <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">660</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">184</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
 <span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -15464,7 +15953,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
@@ -15492,11 +15981,11 @@ Name: name, dtype: object</pre>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
-      <th>born_in_ALB</th>
-      <th>born_in_ARG</th>
       <th>born_in_AUT</th>
-      <th>born_in_AZE</th>
-      <th>born_in_BEL</th>
+      <th>born_in_CAN</th>
+      <th>born_in_CHE</th>
+      <th>born_in_DEU</th>
+      <th>born_in_FRA</th>
       <th>...</th>
       <th>ratio_num_death_country_alpha_3_codes</th>
       <th>ratio_num_death_continent_codes</th>
@@ -15618,7 +16107,7 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -15633,7 +16122,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 660 columns</p>
+<p>5 rows × 184 columns</p>
 </div>
 </div>
 
@@ -15645,12 +16134,13 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">776</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
 <span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -15665,7 +16155,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[20]:</div>
 
 
 
@@ -15693,11 +16183,11 @@ Name: name, dtype: object</pre>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
-      <th>born_in_AUS</th>
       <th>born_in_AUT</th>
-      <th>born_in_AZE</th>
-      <th>born_in_BEL</th>
-      <th>born_in_BGD</th>
+      <th>born_in_CAN</th>
+      <th>born_in_CHE</th>
+      <th>born_in_DEU</th>
+      <th>born_in_FRA</th>
       <th>...</th>
       <th>ratio_num_death_country_alpha_3_codes</th>
       <th>ratio_num_death_continent_codes</th>
@@ -15793,7 +16283,7 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>...</td>
@@ -15834,7 +16324,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 776 columns</p>
+<p>5 rows × 184 columns</p>
 </div>
 </div>
 
@@ -15847,960 +16337,27 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Hold on a second, there are less features for the test set than for the training set! Let's inspect the dataframe columns to see the difference. The difference is obviously due to the one-hot encoding as there are many differing country codes, workplaces, educational institutions etc. in the training and test sets. Some of this is due to the way that the data was sampled. For instance, the <code>died_in_[country_code]</code> features cannot possibly appear in the test set features since all the physicists are still alive. However, the majority of differences are due to the sheer variability in the data, which shows how difficult learning may be in this problem.</p>
+<p>The one-hot encoding has increased the dimensionality of the problem. There are now 183 features (excluding the <code>full_name</code>) for 540 observations in the training set and 387 observations in the test set. A model that is fit to such data could be prone to overfitting and a dimensionality reduction on this data may be warranted.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">test_features_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">feature_cols_difference</span> <span class="o">=</span> <span class="n">train_features_cols</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">test_features_cols</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">feature_cols_difference</span><span class="p">)</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">feature_cols_difference</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_text output_subarea ">
-<pre>{&#39;alumnus_in_ESP&#39;,
- &#39;alumnus_in_FIN&#39;,
- &#39;alumnus_in_IRL&#39;,
- &#39;alumnus_in_IRN&#39;,
- &#39;alumnus_in_KOR&#39;,
- &#39;alumnus_in_LBN&#39;,
- &#39;alumnus_in_LTU&#39;,
- &#39;alumnus_in_PAK&#39;,
- &#39;alumnus_in_TWN&#39;,
- &#39;alumnus_in_UKR&#39;,
- &#39;alumnus_in_ZAF&#39;,
- &#39;alumnus_of_Aligarh_Muslim_University&#39;,
- &#39;alumnus_of_American_University_of_Beirut&#39;,
- &#39;alumnus_of_Amherst_College&#39;,
- &#39;alumnus_of_Ankara_University&#39;,
- &#39;alumnus_of_Autodidacticism&#39;,
- &#39;alumnus_of_Bowdoin_College&#39;,
- &#39;alumnus_of_Bradford_College&#39;,
- &#39;alumnus_of_Budapest_University_of_Technology_and_Economics&#39;,
- &#39;alumnus_of_Case_School_of_Engineering&#39;,
- &#39;alumnus_of_Case_Western_Reserve_University&#39;,
- &#39;alumnus_of_Chalmers_University_of_Technology&#39;,
- &#39;alumnus_of_College_of_Wooster&#39;,
- &#39;alumnus_of_Colleges_of_Durham_University&#39;,
- &#39;alumnus_of_Collège_de_France&#39;,
- &#39;alumnus_of_Columbia_College,_Columbia_University&#39;,
- &#39;alumnus_of_Dartmouth_College&#39;,
- &#39;alumnus_of_Dhaka_College&#39;,
- &#39;alumnus_of_Duke_University&#39;,
- &#39;alumnus_of_Durham_University&#39;,
- &#39;alumnus_of_ESPCI_ParisTech&#39;,
- &#39;alumnus_of_Furman_University&#39;,
- &#39;alumnus_of_George_Washington_University&#39;,
- &#39;alumnus_of_Government_College_University_(Lahore)&#39;,
- &#39;alumnus_of_Graz_University_of_Technology&#39;,
- &#39;alumnus_of_Groupe_des_écoles_des_mines&#39;,
- &#39;alumnus_of_Gujarat_College&#39;,
- &#39;alumnus_of_Helsinki_University_of_Technology&#39;,
- &#39;alumnus_of_Herzen_University&#39;,
- &#39;alumnus_of_Hindu_School,_Kolkata&#39;,
- &#39;alumnus_of_Humboldt_University_of_Berlin&#39;,
- &#39;alumnus_of_Hunter_College&#39;,
- &#39;alumnus_of_Ioffe_Institute&#39;,
- &#39;alumnus_of_Istanbul_University&#39;,
- &#39;alumnus_of_Kazan_(Volga_region)_Federal_University&#39;,
- &#39;alumnus_of_Kyunggi_High_School&#39;,
- &#39;alumnus_of_Lebedev_Physical_Institute&#39;,
- &#39;alumnus_of_Lehigh_University&#39;,
- &#39;alumnus_of_Leipzig_University&#39;,
- &#39;alumnus_of_Lick-Wilmerding_High_School&#39;,
- &#39;alumnus_of_Lower_Canada_College&#39;,
- &#39;alumnus_of_Lund_University&#39;,
- &#39;alumnus_of_Lviv_Polytechnic&#39;,
- &#39;alumnus_of_Martin_Luther_University_of_Halle-Wittenberg&#39;,
- &#34;alumnus_of_Merchant_Taylors&#39;_School,_Northwood&#34;,
- &#39;alumnus_of_Miami_University&#39;,
- &#39;alumnus_of_Mines_ParisTech&#39;,
- &#39;alumnus_of_National_Central_University&#39;,
- &#39;alumnus_of_National_Research_Nuclear_University_MEPhI&#39;,
- &#39;alumnus_of_Northwestern_University&#39;,
- &#39;alumnus_of_Norwegian_Nobel_Institute&#39;,
- &#39;alumnus_of_Oberlin_College&#39;,
- &#39;alumnus_of_Ohio_State_University&#39;,
- &#39;alumnus_of_Osborne_House&#39;,
- &#39;alumnus_of_Peter_the_Great_St._Petersburg_Polytechnic_University&#39;,
- &#39;alumnus_of_Physics&#39;,
- &#39;alumnus_of_Presidency_College,_Chennai&#39;,
- &#34;alumnus_of_Queen&#39;s_University_Belfast&#34;,
- &#39;alumnus_of_RWTH_Aachen_University&#39;,
- &#39;alumnus_of_Reed_College&#39;,
- &#39;alumnus_of_Royal_Belfast_Academical_Institution&#39;,
- &#39;alumnus_of_Saint_Petersburg_State_Institute_of_Technology&#39;,
- &#39;alumnus_of_Santa_Clara_University&#39;,
- &#39;alumnus_of_Southern_Methodist_University&#39;,
- &#34;alumnus_of_St._Xavier&#39;s_College,_Kolkata&#34;,
- &#39;alumnus_of_Stevens_Institute_of_Technology&#39;,
- &#39;alumnus_of_Stockholm_University&#39;,
- &#39;alumnus_of_Supélec&#39;,
- &#39;alumnus_of_TU_Wien&#39;,
- &#39;alumnus_of_Tavrida_National_V.I._Vernadsky_University&#39;,
- &#39;alumnus_of_Tomsk_State_University&#39;,
- &#39;alumnus_of_Trinity_College,_Dublin&#39;,
- &#39;alumnus_of_United_States_Naval_Academy&#39;,
- &#39;alumnus_of_University_of_Amsterdam&#39;,
- &#39;alumnus_of_University_of_Bergen&#39;,
- &#39;alumnus_of_University_of_Birmingham&#39;,
- &#39;alumnus_of_University_of_British_Columbia&#39;,
- &#39;alumnus_of_University_of_Cagliari&#39;,
- &#39;alumnus_of_University_of_Erlangen-Nuremberg&#39;,
- &#39;alumnus_of_University_of_Glasgow&#39;,
- &#39;alumnus_of_University_of_Graz&#39;,
- &#39;alumnus_of_University_of_Greifswald&#39;,
- &#39;alumnus_of_University_of_Helsinki&#39;,
- &#39;alumnus_of_University_of_Kansas&#39;,
- &#39;alumnus_of_University_of_Königsberg&#39;,
- &#39;alumnus_of_University_of_Liverpool&#39;,
- &#39;alumnus_of_University_of_Manchester_Institute_of_Science_and_Technology&#39;,
- &#39;alumnus_of_University_of_Marburg&#39;,
- &#39;alumnus_of_University_of_Pavia&#39;,
- &#39;alumnus_of_University_of_Pisa&#39;,
- &#39;alumnus_of_University_of_Pittsburgh&#39;,
- &#39;alumnus_of_University_of_South_Dakota&#39;,
- &#39;alumnus_of_University_of_Southern_California&#39;,
- &#39;alumnus_of_University_of_Strasbourg&#39;,
- &#39;alumnus_of_University_of_Tasmania&#39;,
- &#39;alumnus_of_University_of_Tehran&#39;,
- &#39;alumnus_of_University_of_Turin&#39;,
- &#39;alumnus_of_University_of_Tübingen&#39;,
- &#39;alumnus_of_University_of_Virginia&#39;,
- &#39;alumnus_of_University_of_Warsaw&#39;,
- &#39;alumnus_of_University_of_Wrocław&#39;,
- &#39;alumnus_of_University_of_Zaragoza&#39;,
- &#39;alumnus_of_University_of_Zurich&#39;,
- &#39;alumnus_of_University_of_the_Punjab&#39;,
- &#39;alumnus_of_University_of_the_Witwatersrand&#39;,
- &#39;alumnus_of_Uppsala_University&#39;,
- &#39;alumnus_of_Victoria_University_of_Manchester&#39;,
- &#39;alumnus_of_Virginia_Tech&#39;,
- &#39;alumnus_of_Voronezh_State_University&#39;,
- &#39;alumnus_of_Vytautas_Magnus_University&#39;,
- &#39;alumnus_of_Whitman_College&#39;,
- &#39;alumnus_of_Woodberry_Forest_School&#39;,
- &#39;alumnus_of_École_des_ponts_ParisTech&#39;,
- &#39;born_in_AUS&#39;,
- &#39;born_in_BIH&#39;,
- &#39;born_in_FIN&#39;,
- &#39;born_in_GEO&#39;,
- &#39;born_in_IDN&#39;,
- &#39;born_in_ISL&#39;,
- &#39;born_in_KOR&#39;,
- &#39;born_in_LUX&#39;,
- &#39;born_in_MNP&#39;,
- &#39;born_in_SVK&#39;,
- &#39;born_in_SVN&#39;,
- &#39;citizen_of_ARM&#39;,
- &#39;citizen_of_EGY&#39;,
- &#39;citizen_of_FIN&#39;,
- &#39;citizen_of_GEO&#39;,
- &#39;citizen_of_ISL&#39;,
- &#39;citizen_of_KOR&#39;,
- &#39;citizen_of_LTU&#39;,
- &#39;citizen_of_POL&#39;,
- &#39;died_in_ARG&#39;,
- &#39;died_in_ARM&#39;,
- &#39;died_in_AS&#39;,
- &#39;died_in_AUS&#39;,
- &#39;died_in_AUT&#39;,
- &#39;died_in_AZE&#39;,
- &#39;died_in_BEL&#39;,
- &#39;died_in_BGD&#39;,
- &#39;died_in_BRA&#39;,
- &#39;died_in_CAN&#39;,
- &#39;died_in_CHE&#39;,
- &#39;died_in_CHN&#39;,
- &#39;died_in_CZE&#39;,
- &#39;died_in_DEU&#39;,
- &#39;died_in_DNK&#39;,
- &#39;died_in_ESP&#39;,
- &#39;died_in_EU&#39;,
- &#39;died_in_FIN&#39;,
- &#39;died_in_FRA&#39;,
- &#39;died_in_GBR&#39;,
- &#39;died_in_GEO&#39;,
- &#39;died_in_HUN&#39;,
- &#39;died_in_IND&#39;,
- &#39;died_in_IRL&#39;,
- &#39;died_in_IRN&#39;,
- &#39;died_in_ISR&#39;,
- &#39;died_in_ITA&#39;,
- &#39;died_in_JPN&#39;,
- &#39;died_in_KGZ&#39;,
- &#39;died_in_LTU&#39;,
- &#39;died_in_MEX&#39;,
- &#39;died_in_NA&#39;,
- &#39;died_in_NLD&#39;,
- &#39;died_in_NOR&#39;,
- &#39;died_in_OC&#39;,
- &#39;died_in_PAK&#39;,
- &#39;died_in_POL&#39;,
- &#39;died_in_PRT&#39;,
- &#39;died_in_RUS&#39;,
- &#39;died_in_SA&#39;,
- &#39;died_in_SWE&#39;,
- &#39;died_in_TUR&#39;,
- &#39;died_in_UKR&#39;,
- &#39;died_in_USA&#39;,
- &#39;lived_in_AF&#39;,
- &#39;lived_in_CHE&#39;,
- &#39;lived_in_EGY&#39;,
- &#39;lived_in_FIN&#39;,
- &#39;lived_in_HUN&#39;,
- &#39;lived_in_ISR&#39;,
- &#39;lived_in_NZL&#39;,
- &#39;worked_at_3M&#39;,
- &#39;worked_at_AGA_AB&#39;,
- &#39;worked_at_Atomic_Energy_Commission_of_India&#39;,
- &#39;worked_at_Atomic_Energy_Research_Establishment&#39;,
- &#39;worked_at_Auergesellschaft&#39;,
- &#39;worked_at_Austrian_Academy_of_Sciences&#39;,
- &#39;worked_at_Autonomous_University_of_Madrid&#39;,
- &#39;worked_at_Banaras_Hindu_University&#39;,
- &#39;worked_at_Ben-Gurion_University_of_the_Negev&#39;,
- &#39;worked_at_Bhabha_Atomic_Research_Centre&#39;,
- &#39;worked_at_British_Coal_Utilisation_Research_Association&#39;,
- &#39;worked_at_Brookhaven_National_Laboratory&#39;,
- &#39;worked_at_Brown_University&#39;,
- &#39;worked_at_Bryn_Mawr_College&#39;,
- &#39;worked_at_Budker_Institute_of_Nuclear_Physics&#39;,
- &#39;worked_at_Bureau_des_Longitudes&#39;,
- &#39;worked_at_Carnegie_Institute_of_Technology&#39;,
- &#39;worked_at_Case_Western_Reserve_University&#39;,
- &#39;worked_at_Catholic_University_of_Leuven_(1834–1968)&#39;,
- &#39;worked_at_Central_Electricity_Generating_Board&#39;,
- &#39;worked_at_Centre_for_Advanced_Studies_in_Physics&#39;,
- &#39;worked_at_Chalk_River_Laboratories&#39;,
- &#39;worked_at_China_Association_for_Science_and_Technology&#39;,
- &#39;worked_at_China_Engineering_Physics_Research_Institute&#39;,
- &#39;worked_at_China_Institute_of_Atomic_Energy&#39;,
- &#39;worked_at_China_Institute_of_Modern_Physics&#39;,
- &#39;worked_at_China_Ninth_Research_Institute&#39;,
- &#39;worked_at_China_Nuclear_Society&#39;,
- &#39;worked_at_China_Nuclear_industry_Science_and_Technology_Commission&#39;,
- &#39;worked_at_China_and_weapons_of_mass_destruction&#39;,
- &#39;worked_at_Chinese_Physical_Society&#39;,
- &#39;worked_at_Clark_University&#39;,
- &#39;worked_at_Commonwealth_Scientific_and_Industrial_Research_Organisation&#39;,
- &#39;worked_at_Corps_des_mines&#39;,
- &#39;worked_at_Curie_Institute_(Paris)&#39;,
- &#39;worked_at_Daresbury_Laboratory&#39;,
- &#39;worked_at_Delft_University_of_Technology&#39;,
- &#39;worked_at_Deutsche_Physikalische_Gesellschaft&#39;,
- &#39;worked_at_Dresden_University_of_Technology&#39;,
- &#39;worked_at_Dublin_Institute_for_Advanced_Studies&#39;,
- &#39;worked_at_ETH_Zurich&#39;,
- &#39;worked_at_Eötvös_Loránd_University&#39;,
- &#39;worked_at_Fordham_University&#39;,
- &#39;worked_at_Frederick_William_University&#39;,
- &#39;worked_at_French_Academy_of_Medicine&#39;,
- &#39;worked_at_GN_Store_Nord&#39;,
- &#39;worked_at_George_Washington_University&#39;,
- &#39;worked_at_German_nuclear_weapon_project&#39;,
- &#39;worked_at_Ghent_University&#39;,
- &#39;worked_at_Goethe_University_Frankfurt&#39;,
- &#39;worked_at_Government_College_University_(Lahore)&#39;,
- &#39;worked_at_Grenoble&#39;,
- &#39;worked_at_Gresham_College&#39;,
- &#39;worked_at_Hanover&#39;,
- &#39;worked_at_Hansen_Laboratories&#39;,
- &#39;worked_at_Harwell_Tandem_Accelerator_Group&#39;,
- &#39;worked_at_Helsinki_University_of_Technology&#39;,
- &#39;worked_at_High_Tension_Nuclear_Laboratory&#39;,
- &#39;worked_at_Humboldt_University_of_Berlin&#39;,
- &#39;worked_at_IBM&#39;,
- &#39;worked_at_IBM_Research_-_Almaden&#39;,
- &#39;worked_at_Indian_Association_for_the_Cultivation_of_Science&#39;,
- &#39;worked_at_Indian_Audit_and_Accounts_Service&#39;,
- &#39;worked_at_Indian_Institute_of_Science&#39;,
- &#39;worked_at_Institute_for_Physical_Problems&#39;,
- &#39;worked_at_Institute_of_Mathematical_Sciences,_Chennai&#39;,
- &#39;worked_at_Institute_of_Physics,_Academia_Sinica&#39;,
- &#39;worked_at_Institute_of_Problems_of_Chemical_Physics&#39;,
- &#39;worked_at_International_Atomic_Energy_Agency&#39;,
- &#39;worked_at_International_Bureau_of_Weights_and_Measures&#39;,
- &#39;worked_at_International_Committee_on_Intellectual_Cooperation&#39;,
- &#39;worked_at_International_Solvay_Institute&#39;,
- &#39;worked_at_Ioffe_Institute&#39;,
- &#39;worked_at_Istituto_Nazionale_di_Fisica_Nucleare&#39;,
- &#39;worked_at_Johns_Hopkins_University&#39;,
- &#39;worked_at_Joint_Institute_for_Nuclear_Research&#39;,
- &#39;worked_at_Kaiser_Wilhelm_Society&#39;,
- &#39;worked_at_Karl-Ferdinands-Universität&#39;,
- &#39;worked_at_Karlsruhe_Institute_of_Technology&#39;,
- &#39;worked_at_Kharkiv_Polytechnic_Institute&#39;,
- &#39;worked_at_Kharkov_Polytechnical_Institute_and_Kharkiv_University&#39;,
- &#39;worked_at_King_Fahd_University_of_Petroleum_and_Minerals&#39;,
- &#39;worked_at_Kurchatov_Institute&#39;,
- &#34;worked_at_Laboratoire_Central_des_Services_Chimiques_de_l&#39;État&#34;,
- &#39;worked_at_Laboratory_B_in_Sungul’&#39;,
- &#39;worked_at_Laboratory_for_Astrophysics_and_Space_Research&#39;,
- &#39;worked_at_Lebedev_Physical_Institute&#39;,
- &#39;worked_at_Leipzig_University&#39;,
- &#39;worked_at_Liceo_Dante,_Florence&#39;,
- &#39;worked_at_Los_Angeles_Bureau_of_Power_and_Light&#39;,
- &#39;worked_at_Ludwig_Maximilian_University_of_Munich&#39;,
- &#39;worked_at_Lund_University&#39;,
- &#39;worked_at_Luoxue_Mountain_Cosmic_Rays_Research_Center&#39;,
- &#39;worked_at_MSU_Faculty_of_Physics&#39;,
- &#39;worked_at_Main_Geophysical_Observatory&#39;,
- &#39;worked_at_Manhattan_Project&#39;,
- &#39;worked_at_Marquette_University&#39;,
- &#39;worked_at_Martin_Luther_University_of_Halle-Wittenberg&#39;,
- &#39;worked_at_Mason_Science_College&#39;,
- &#39;worked_at_Max_Planck_Institute_for_Medical_Research&#39;,
- &#39;worked_at_Max_Planck_Society&#39;,
- &#39;worked_at_McMaster_University&#39;,
- &#39;worked_at_Metallurgical_Laboratory&#39;,
- &#39;worked_at_Methodist_College_Belfast&#39;,
- &#39;worked_at_Miami_University&#39;,
- &#39;worked_at_Middle_East_Technical_University&#39;,
- &#39;worked_at_Ministry_of_Federal_Education_and_Professional_Training&#39;,
- &#39;worked_at_Monsanto&#39;,
- &#39;worked_at_Montreal_Laboratory&#39;,
- &#39;worked_at_Moscow_State_University&#39;,
- &#39;worked_at_Mount_Wilson_Observatory&#39;,
- &#39;worked_at_NUI_Galway&#39;,
- &#39;worked_at_National_Physical_Laboratory_(United_Kingdom)&#39;,
- &#39;worked_at_National_University_of_Kharkiv&#39;,
- &#39;worked_at_National_University_of_Sciences_and_Technology_(Pakistan)&#39;,
- &#39;worked_at_Naval_Ordnance_Laboratory&#39;,
- &#39;worked_at_New_York_Academy_of_Sciences&#39;,
- &#39;worked_at_Oak_Ridge_Associated_Universities&#39;,
- &#39;worked_at_Oak_Ridge_National_Laboratory&#39;,
- &#39;worked_at_Ohio_State_University&#39;,
- &#39;worked_at_Osaka_University&#39;,
- &#39;worked_at_PAECSUPARCOPINSTECHPunjab_UniversityImperial_College_LondonGovernment_College_UniversityUniversity_of_CambridgeICTPCOMSATSTWASEdward_Bouchet_Abdus_Salam_Institute&#39;,
- &#39;worked_at_PLATO_(computer_system)&#39;,
- &#39;worked_at_Pakistan_Atomic_Energy_Commission&#39;,
- &#39;worked_at_Pakistan_Institute_of_Engineering_and_Applied_Sciences&#39;,
- &#39;worked_at_Peter_the_Great_St._Petersburg_Polytechnic_University&#39;,
- &#39;worked_at_Philips_Natuurkundig_Laboratorium&#39;,
- &#39;worked_at_Physikalisch-Technische_Bundesanstalt&#39;,
- &#39;worked_at_Pontifical_Academy_of_Sciences&#39;,
- &#39;worked_at_Project_Y&#39;,
- &#39;worked_at_Prussian_Academy_of_Sciences&#39;,
- &#39;worked_at_RIKEN&#39;,
- &#39;worked_at_Raman_Research_Institute&#39;,
- &#39;worked_at_Reed_College&#39;,
- &#39;worked_at_Roma_Tre_University&#39;,
- &#39;worked_at_Royal_Engineers&#39;,
- &#39;worked_at_Royal_Institution&#39;,
- &#39;worked_at_Saint_Petersburg_State_University&#39;,
- &#39;worked_at_Salk_Institute_for_Biological_Studies&#39;,
- &#39;worked_at_Scuola_Normale_Superiore_di_Pisa&#39;,
- &#39;worked_at_Second_Moscow_State_University_Moscow_State_University_Moscow_Institute_of_Physics_and_Technology_Lebedev_Physical_Institute&#39;,
- &#39;worked_at_Shandong_University&#39;,
- &#39;worked_at_Siemens&#39;,
- &#39;worked_at_Smith_College&#39;,
- &#39;worked_at_Smithsonian_Astrophysical_Observatory&#39;,
- &#39;worked_at_Sorbonne&#39;,
- &#39;worked_at_Soviet_atomic_bomb_project&#39;,
- &#34;worked_at_Standing_Committee_of_the_National_People&#39;s_Congress&#34;,
- &#39;worked_at_Sternberg_Astronomical_Institute&#39;,
- &#39;worked_at_Stockholm_University&#39;,
- &#39;worked_at_Sunoco&#39;,
- &#39;worked_at_Supélec&#39;,
- &#39;worked_at_Swansea_University&#39;,
- &#39;worked_at_Swedish_Meteorological_and_Hydrological_Institute&#39;,
- &#39;worked_at_Swiss_Federal_Institute_of_Intellectual_Property&#39;,
- &#39;worked_at_Sèvres&#39;,
- &#39;worked_at_Technion_–_Israel_Institute_of_Technology&#39;,
- &#39;worked_at_Technische_Hochschule&#39;,
- &#39;worked_at_Technische_Universität_Ilmenau&#39;,
- &#39;worked_at_Trinity_College,_Dublin&#39;,
- &#39;worked_at_Tsinghua_University&#39;,
- &#39;worked_at_United_States_Army_Research_Laboratory&#39;,
- &#39;worked_at_University_at_Buffalo&#39;,
- &#39;worked_at_University_of_Arizona&#39;,
- &#39;worked_at_University_of_Azad_Jammu_and_Kashmir&#39;,
- &#39;worked_at_University_of_Bern&#39;,
- &#39;worked_at_University_of_Bonn&#39;,
- &#39;worked_at_University_of_Bristol&#39;,
- &#39;worked_at_University_of_Caen_Normandy&#39;,
- &#39;worked_at_University_of_Calcutta&#39;,
- &#39;worked_at_University_of_California,_Irvine&#39;,
- &#39;worked_at_University_of_Cincinnati&#39;,
- &#39;worked_at_University_of_Colorado&#39;,
- &#39;worked_at_University_of_Erlangen-Nuremberg&#39;,
- &#39;worked_at_University_of_Florence&#39;,
- &#39;worked_at_University_of_Giessen&#39;,
- &#39;worked_at_University_of_Graz&#39;,
- &#39;worked_at_University_of_Greifswald&#39;,
- &#39;worked_at_University_of_Groningen&#39;,
- &#39;worked_at_University_of_Göttingen&#39;,
- &#39;worked_at_University_of_Hamburg&#39;,
- &#39;worked_at_University_of_Hanover&#39;,
- &#39;worked_at_University_of_Helsinki&#39;,
- &#39;worked_at_University_of_Hohenheim&#39;,
- &#39;worked_at_University_of_Innsbruck&#39;,
- &#39;worked_at_University_of_Iowa&#39;,
- &#39;worked_at_University_of_Jena&#39;,
- &#39;worked_at_University_of_Kiel&#39;,
- &#39;worked_at_University_of_Liverpool&#39;,
- &#39;worked_at_University_of_Madras&#39;,
- &#39;worked_at_University_of_Marburg&#39;,
- &#39;worked_at_University_of_Melbourne&#39;,
- &#39;worked_at_University_of_Miami&#39;,
- &#39;worked_at_University_of_Minnesota&#39;,
- &#39;worked_at_University_of_Palermo&#39;,
- &#39;worked_at_University_of_Rostock&#39;,
- &#39;worked_at_University_of_Strasbourg&#39;,
- &#39;worked_at_University_of_São_Paulo&#39;,
- &#39;worked_at_University_of_Tsukuba&#39;,
- &#39;worked_at_University_of_Tübingen&#39;,
- &#39;worked_at_University_of_Washington&#39;,
- &#39;worked_at_University_of_Washington,_University_of_Maryland,_College_Park&#39;,
- &#39;worked_at_University_of_Wisconsin–Madison&#39;,
- &#39;worked_at_University_of_Wrocław&#39;,
- &#39;worked_at_University_of_Würzburg&#39;,
- &#39;worked_at_University_of_the_Punjab&#39;,
- &#39;worked_at_University_of_the_Witwatersrand&#39;,
- &#39;worked_at_Uppsala_University&#39;,
- &#39;worked_at_Utrecht_University&#39;,
- &#39;worked_at_Vanderbilt_University&#39;,
- &#39;worked_at_Vavilov_State_Optical_Institute&#39;,
- &#39;worked_at_Victoria_University_of_Manchester&#39;,
- &#39;worked_at_Victoria_University_of_Wellington&#39;,
- &#39;worked_at_Virginia_Tech&#39;,
- &#39;worked_at_Waffenamt&#39;,
- &#39;worked_at_Washington,_D.C.&#39;,
- &#39;worked_at_Washington_University_in_St._Louis&#39;,
- &#39;worked_at_Well_Surveys&#39;,
- &#39;worked_at_Whitman_College&#39;,
- &#39;worked_at_Woods_Hole_Oceanographic_Institution&#39;,
- &#39;worked_at_Xavier_University&#39;,
- &#39;worked_at_Zhejiang_University&#39;,
- &#39;worked_at_padding:0.15em_0;line-height:1.15em&#39;,
- &#39;worked_at_von_Karman_Institute_for_Fluid_Dynamics&#39;,
- &#39;worked_in_BRA&#39;,
- &#39;worked_in_CHN&#39;,
- &#39;worked_in_ESP&#39;,
- &#39;worked_in_FIN&#39;,
- &#39;worked_in_HUN&#39;,
- &#39;worked_in_IRL&#39;,
- &#39;worked_in_NZL&#39;,
- &#39;worked_in_SA&#39;,
- &#39;worked_in_SAU&#39;,
- &#39;worked_in_UKR&#39;,
- &#39;worked_in_ZAF&#39;}</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[18]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>428</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>But which and how many features are actually in common between the training and test sets? Under half of the features that are in the training set are in common. Unsurprisingly, these are the main educational institutions, workplaces and countries that are associated with physics research.</p>
+<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the training and test features dataframes I'll persist them for future use.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_cols_intersection</span> <span class="o">=</span> <span class="n">train_features_cols</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">test_features_cols</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">feature_cols_intersection</span><span class="p">)</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">feature_cols_intersection</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_text output_subarea ">
-<pre>{&#39;alumnus_in_AF&#39;,
- &#39;alumnus_in_AS&#39;,
- &#39;alumnus_in_AUS&#39;,
- &#39;alumnus_in_AUT&#39;,
- &#39;alumnus_in_AZE&#39;,
- &#39;alumnus_in_BEL&#39;,
- &#39;alumnus_in_BGD&#39;,
- &#39;alumnus_in_BRB&#39;,
- &#39;alumnus_in_CAN&#39;,
- &#39;alumnus_in_CHE&#39;,
- &#39;alumnus_in_CHN&#39;,
- &#39;alumnus_in_DEU&#39;,
- &#39;alumnus_in_DNK&#39;,
- &#39;alumnus_in_EU&#39;,
- &#39;alumnus_in_FRA&#39;,
- &#39;alumnus_in_GBR&#39;,
- &#39;alumnus_in_HUN&#39;,
- &#39;alumnus_in_IND&#39;,
- &#39;alumnus_in_ITA&#39;,
- &#39;alumnus_in_JPN&#39;,
- &#39;alumnus_in_NA&#39;,
- &#39;alumnus_in_NLD&#39;,
- &#39;alumnus_in_NOR&#39;,
- &#39;alumnus_in_OC&#39;,
- &#39;alumnus_in_POL&#39;,
- &#39;alumnus_in_RUS&#39;,
- &#39;alumnus_in_SWE&#39;,
- &#39;alumnus_in_TUR&#39;,
- &#39;alumnus_in_USA&#39;,
- &#39;alumnus_of_Baku_State_University&#39;,
- &#39;alumnus_of_California_Institute_of_Technology&#39;,
- &#39;alumnus_of_Catholic_University_of_Leuven_(1834–1968)&#39;,
- &#39;alumnus_of_City_College_of_New_York&#39;,
- &#39;alumnus_of_Columbia_University&#39;,
- &#39;alumnus_of_Cornell_University&#39;,
- &#39;alumnus_of_Delft_University_of_Technology&#39;,
- &#39;alumnus_of_ETH_Zurich&#39;,
- &#39;alumnus_of_Eötvös_Loránd_University&#39;,
- &#39;alumnus_of_Goethe_University_Frankfurt&#39;,
- &#39;alumnus_of_Harvard_College&#39;,
- &#39;alumnus_of_Harvard_University&#39;,
- &#39;alumnus_of_Heidelberg_University&#39;,
- &#39;alumnus_of_Imperial_College_London&#39;,
- &#39;alumnus_of_Johns_Hopkins_University&#39;,
- &#39;alumnus_of_Kyoto_University&#39;,
- &#39;alumnus_of_Leiden_University&#39;,
- &#39;alumnus_of_Ludwig_Maximilian_University_of_Munich&#39;,
- &#39;alumnus_of_Massachusetts_Institute_of_Technology&#39;,
- &#39;alumnus_of_McGill_University&#39;,
- &#39;alumnus_of_Moscow_Institute_of_Physics_and_Technology&#39;,
- &#39;alumnus_of_Moscow_State_University&#39;,
- &#39;alumnus_of_New_York_University&#39;,
- &#39;alumnus_of_New_York_University_Tandon_School_of_Engineering&#39;,
- &#39;alumnus_of_Norwegian_University_of_Science_and_Technology&#39;,
- &#39;alumnus_of_Pennsylvania_State_University&#39;,
- &#39;alumnus_of_Presidency_University,_Kolkata&#39;,
- &#39;alumnus_of_Princeton_University&#39;,
- &#39;alumnus_of_Purdue_University&#39;,
- &#39;alumnus_of_Saint_Petersburg_State_University&#39;,
- &#39;alumnus_of_Sapienza_University_of_Rome&#39;,
- &#39;alumnus_of_Scuola_Normale_Superiore_di_Pisa&#39;,
- &#39;alumnus_of_Stanford_University&#39;,
- &#39;alumnus_of_Stuyvesant_High_School&#39;,
- &#39;alumnus_of_Tata_Institute_of_Fundamental_Research&#39;,
- &#39;alumnus_of_Technical_University_of_Berlin&#39;,
- &#39;alumnus_of_Technical_University_of_Munich&#39;,
- &#39;alumnus_of_Tsinghua_University&#39;,
- &#39;alumnus_of_University_College_London&#39;,
- &#39;alumnus_of_University_of_Adelaide&#39;,
- &#39;alumnus_of_University_of_Bologna&#39;,
- &#39;alumnus_of_University_of_Bristol&#39;,
- &#39;alumnus_of_University_of_Calcutta&#39;,
- &#39;alumnus_of_University_of_California,_Berkeley&#39;,
- &#39;alumnus_of_University_of_California,_Los_Angeles&#39;,
- &#39;alumnus_of_University_of_Cambridge&#39;,
- &#39;alumnus_of_University_of_Chicago&#39;,
- &#39;alumnus_of_University_of_Colorado_Boulder&#39;,
- &#39;alumnus_of_University_of_Copenhagen&#39;,
- &#39;alumnus_of_University_of_Edinburgh&#39;,
- &#39;alumnus_of_University_of_Groningen&#39;,
- &#39;alumnus_of_University_of_Göttingen&#39;,
- &#39;alumnus_of_University_of_Hamburg&#39;,
- &#39;alumnus_of_University_of_Illinois_at_Urbana–Champaign&#39;,
- &#39;alumnus_of_University_of_Jena&#39;,
- &#39;alumnus_of_University_of_Madras&#39;,
- &#39;alumnus_of_University_of_Manchester&#39;,
- &#39;alumnus_of_University_of_Maryland,_College_Park&#39;,
- &#39;alumnus_of_University_of_Melbourne&#39;,
- &#39;alumnus_of_University_of_Minnesota&#39;,
- &#39;alumnus_of_University_of_Mumbai&#39;,
- &#39;alumnus_of_University_of_Oregon&#39;,
- &#39;alumnus_of_University_of_Oxford&#39;,
- &#39;alumnus_of_University_of_Padua&#39;,
- &#39;alumnus_of_University_of_Paris&#39;,
- &#39;alumnus_of_University_of_Pennsylvania&#39;,
- &#39;alumnus_of_University_of_Rochester&#39;,
- &#39;alumnus_of_University_of_Stuttgart&#39;,
- &#39;alumnus_of_University_of_Sydney&#39;,
- &#39;alumnus_of_University_of_Tokyo&#39;,
- &#39;alumnus_of_University_of_Toronto&#39;,
- &#39;alumnus_of_University_of_Vienna&#39;,
- &#39;alumnus_of_University_of_Washington&#39;,
- &#39;alumnus_of_University_of_Wisconsin–Madison&#39;,
- &#39;alumnus_of_University_of_Wisconsin–Milwaukee&#39;,
- &#39;alumnus_of_Université_libre_de_Bruxelles&#39;,
- &#39;alumnus_of_Utrecht_University&#39;,
- &#39;alumnus_of_Yale_University&#39;,
- &#39;alumnus_of_École_Normale_Supérieure&#39;,
- &#39;alumnus_of_École_Polytechnique&#39;,
- &#39;born_in_AF&#39;,
- &#39;born_in_AS&#39;,
- &#39;born_in_AUT&#39;,
- &#39;born_in_AZE&#39;,
- &#39;born_in_BEL&#39;,
- &#39;born_in_BGD&#39;,
- &#39;born_in_BLR&#39;,
- &#39;born_in_BRA&#39;,
- &#39;born_in_CAN&#39;,
- &#39;born_in_CHE&#39;,
- &#39;born_in_CHN&#39;,
- &#39;born_in_CZE&#39;,
- &#39;born_in_DEU&#39;,
- &#39;born_in_DNK&#39;,
- &#39;born_in_EGY&#39;,
- &#39;born_in_ESP&#39;,
- &#39;born_in_EU&#39;,
- &#39;born_in_FRA&#39;,
- &#39;born_in_GBR&#39;,
- &#39;born_in_GRC&#39;,
- &#39;born_in_HRV&#39;,
- &#39;born_in_HUN&#39;,
- &#39;born_in_IND&#39;,
- &#39;born_in_IRL&#39;,
- &#39;born_in_IRN&#39;,
- &#39;born_in_ISR&#39;,
- &#39;born_in_ITA&#39;,
- &#39;born_in_JPN&#39;,
- &#39;born_in_NA&#39;,
- &#39;born_in_NLD&#39;,
- &#39;born_in_NOR&#39;,
- &#39;born_in_NZL&#39;,
- &#39;born_in_OC&#39;,
- &#39;born_in_PAK&#39;,
- &#39;born_in_POL&#39;,
- &#39;born_in_ROU&#39;,
- &#39;born_in_RUS&#39;,
- &#39;born_in_SA&#39;,
- &#39;born_in_SRB&#39;,
- &#39;born_in_SWE&#39;,
- &#39;born_in_TUR&#39;,
- &#39;born_in_UKR&#39;,
- &#39;born_in_USA&#39;,
- &#39;born_in_ZAF&#39;,
- &#39;citizen_in_AF&#39;,
- &#39;citizen_in_AS&#39;,
- &#39;citizen_in_EU&#39;,
- &#39;citizen_in_NA&#39;,
- &#39;citizen_in_OC&#39;,
- &#39;citizen_in_SA&#39;,
- &#39;citizen_of_ARG&#39;,
- &#39;citizen_of_AUS&#39;,
- &#39;citizen_of_AUT&#39;,
- &#39;citizen_of_AZE&#39;,
- &#39;citizen_of_BEL&#39;,
- &#39;citizen_of_BGD&#39;,
- &#39;citizen_of_BRA&#39;,
- &#39;citizen_of_CAN&#39;,
- &#39;citizen_of_CHE&#39;,
- &#39;citizen_of_CHN&#39;,
- &#39;citizen_of_CZE&#39;,
- &#39;citizen_of_DEU&#39;,
- &#39;citizen_of_DNK&#39;,
- &#39;citizen_of_ESP&#39;,
- &#39;citizen_of_FRA&#39;,
- &#39;citizen_of_GBR&#39;,
- &#39;citizen_of_GRC&#39;,
- &#39;citizen_of_HUN&#39;,
- &#39;citizen_of_IND&#39;,
- &#39;citizen_of_IRL&#39;,
- &#39;citizen_of_IRN&#39;,
- &#39;citizen_of_ISR&#39;,
- &#39;citizen_of_ITA&#39;,
- &#39;citizen_of_JPN&#39;,
- &#39;citizen_of_NLD&#39;,
- &#39;citizen_of_NOR&#39;,
- &#39;citizen_of_NZL&#39;,
- &#39;citizen_of_PAK&#39;,
- &#39;citizen_of_RUS&#39;,
- &#39;citizen_of_SRB&#39;,
- &#39;citizen_of_SWE&#39;,
- &#39;citizen_of_TUR&#39;,
- &#39;citizen_of_UKR&#39;,
- &#39;citizen_of_USA&#39;,
- &#39;full_name&#39;,
- &#39;gender&#39;,
- &#39;is_astronomer&#39;,
- &#39;is_experimental_physicist&#39;,
- &#39;is_theoretical_physicist&#39;,
- &#39;lived_in_AS&#39;,
- &#39;lived_in_AUS&#39;,
- &#39;lived_in_AUT&#39;,
- &#39;lived_in_AZE&#39;,
- &#39;lived_in_CAN&#39;,
- &#39;lived_in_CHN&#39;,
- &#39;lived_in_DEU&#39;,
- &#39;lived_in_DNK&#39;,
- &#39;lived_in_EU&#39;,
- &#39;lived_in_FRA&#39;,
- &#39;lived_in_GBR&#39;,
- &#39;lived_in_IND&#39;,
- &#39;lived_in_ITA&#39;,
- &#39;lived_in_NA&#39;,
- &#39;lived_in_NLD&#39;,
- &#39;lived_in_OC&#39;,
- &#39;lived_in_PAK&#39;,
- &#39;lived_in_RUS&#39;,
- &#39;lived_in_TUR&#39;,
- &#39;lived_in_USA&#39;,
- &#39;ratio_num_alma_mater&#39;,
- &#39;ratio_num_alma_mater_continent_codes&#39;,
- &#39;ratio_num_alma_mater_country_alpha_3_codes&#39;,
- &#39;ratio_num_birth_continent_codes&#39;,
- &#39;ratio_num_birth_country_alpha_3_codes&#39;,
- &#39;ratio_num_chemistry_laureate_academic_advisors&#39;,
- &#39;ratio_num_chemistry_laureate_doctoral_advisors&#39;,
- &#39;ratio_num_chemistry_laureate_doctoral_students&#39;,
- &#39;ratio_num_chemistry_laureate_influenced&#39;,
- &#39;ratio_num_chemistry_laureate_influenced_by&#39;,
- &#39;ratio_num_chemistry_laureate_notable_students&#39;,
- &#39;ratio_num_chemistry_laureate_spouses&#39;,
- &#39;ratio_num_citizenship_continent_codes&#39;,
- &#39;ratio_num_citizenship_country_alpha_3_codes&#39;,
- &#39;ratio_num_death_continent_codes&#39;,
- &#39;ratio_num_death_country_alpha_3_codes&#39;,
- &#39;ratio_num_physics_laureate_academic_advisors&#39;,
- &#39;ratio_num_physics_laureate_children&#39;,
- &#39;ratio_num_physics_laureate_doctoral_advisors&#39;,
- &#39;ratio_num_physics_laureate_doctoral_students&#39;,
- &#39;ratio_num_physics_laureate_influenced&#39;,
- &#39;ratio_num_physics_laureate_influenced_by&#39;,
- &#39;ratio_num_physics_laureate_notable_students&#39;,
- &#39;ratio_num_physics_laureate_spouses&#39;,
- &#39;ratio_num_residence_continent_codes&#39;,
- &#39;ratio_num_residence_country_alpha_3_codes&#39;,
- &#39;ratio_num_workplaces&#39;,
- &#39;ratio_num_workplaces_continent_codes&#39;,
- &#39;ratio_num_workplaces_country_alpha_3_codes&#39;,
- &#39;ratio_num_years_lived&#39;,
- &#39;worked_at_Bell_Labs&#39;,
- &#39;worked_at_Birkbeck,_University_of_London&#39;,
- &#39;worked_at_CERN&#39;,
- &#39;worked_at_California_Institute_of_Technology&#39;,
- &#39;worked_at_Carnegie_Institution_for_Science&#39;,
- &#39;worked_at_Cavendish_Laboratory&#39;,
- &#39;worked_at_Centre_national_de_la_recherche_scientifique&#39;,
- &#39;worked_at_Collège_de_France&#39;,
- &#39;worked_at_Columbia_University&#39;,
- &#39;worked_at_Cornell_University&#39;,
- &#39;worked_at_Enrico_Fermi_Institute&#39;,
- &#39;worked_at_Fermilab&#39;,
- &#39;worked_at_Florida_State_University&#39;,
- &#39;worked_at_Germany&#39;,
- &#39;worked_at_Harvard_University&#39;,
- &#39;worked_at_Heidelberg_University&#39;,
- &#39;worked_at_Imperial_College_London&#39;,
- &#39;worked_at_Institute_for_Advanced_Study&#39;,
- &#39;worked_at_Institute_for_Theoretical_and_Experimental_Physics&#39;,
- &#39;worked_at_International_Centre_for_Theoretical_Physics&#39;,
- &#34;worked_at_King&#39;s_College_London&#34;,
- &#39;worked_at_Kyoto_University&#39;,
- &#39;worked_at_Leiden_University&#39;,
- &#39;worked_at_Los_Alamos_National_Laboratory&#39;,
- &#39;worked_at_Macquarie_University&#39;,
- &#39;worked_at_Massachusetts_Institute_of_Technology&#39;,
- &#39;worked_at_Nagoya_University&#39;,
- &#39;worked_at_National_Institute_of_Standards_and_Technology&#39;,
- &#39;worked_at_New_York_University&#39;,
- &#39;worked_at_Niels_Bohr_Institute&#39;,
- &#39;worked_at_Northeastern_University&#39;,
- &#39;worked_at_Princeton_Plasma_Physics_Laboratory&#39;,
- &#39;worked_at_Princeton_University&#39;,
- &#39;worked_at_Quaid-i-Azam_University&#39;,
- &#39;worked_at_RWTH_Aachen_University&#39;,
- &#39;worked_at_Rockefeller_University&#39;,
- &#39;worked_at_Russian_Academy_of_Sciences&#39;,
- &#39;worked_at_SLAC_National_Accelerator_Laboratory&#39;,
- &#39;worked_at_Sapienza_University_of_Rome&#39;,
- &#39;worked_at_Stanford_University&#39;,
- &#39;worked_at_Steklov_Institute_of_Mathematics&#39;,
- &#39;worked_at_Stony_Brook_University&#39;,
- &#39;worked_at_Syracuse_University&#39;,
- &#39;worked_at_Tata_Institute_of_Fundamental_Research&#39;,
- &#39;worked_at_Technical_University_of_Munich&#39;,
- &#39;worked_at_Texas_A&amp;M_University&#39;,
- &#39;worked_at_University_College_London&#39;,
- &#39;worked_at_University_of_Adelaide&#39;,
- &#39;worked_at_University_of_Amsterdam&#39;,
- &#39;worked_at_University_of_Birmingham&#39;,
- &#39;worked_at_University_of_California,_Berkeley&#39;,
- &#39;worked_at_University_of_Cambridge&#39;,
- &#39;worked_at_University_of_Chicago&#39;,
- &#39;worked_at_University_of_Colorado_Boulder&#39;,
- &#39;worked_at_University_of_Copenhagen&#39;,
- &#39;worked_at_University_of_Edinburgh&#39;,
- &#39;worked_at_University_of_Florida&#39;,
- &#39;worked_at_University_of_Illinois_at_Urbana–Champaign&#39;,
- &#39;worked_at_University_of_Leeds&#39;,
- &#39;worked_at_University_of_Manchester&#39;,
- &#39;worked_at_University_of_Maryland,_College_Park&#39;,
- &#39;worked_at_University_of_Michigan&#39;,
- &#39;worked_at_University_of_New_Mexico&#39;,
- &#39;worked_at_University_of_North_Carolina_at_Chapel_Hill&#39;,
- &#39;worked_at_University_of_Oxford&#39;,
- &#39;worked_at_University_of_Paris&#39;,
- &#39;worked_at_University_of_Pennsylvania&#39;,
- &#39;worked_at_University_of_Rochester&#39;,
- &#39;worked_at_University_of_Texas_at_Austin&#39;,
- &#39;worked_at_University_of_Texas_at_Dallas&#39;,
- &#39;worked_at_University_of_Vienna&#39;,
- &#39;worked_at_University_of_Zurich&#39;,
- &#39;worked_at_Université_libre_de_Bruxelles&#39;,
- &#39;worked_at_Yale_University&#39;,
- &#39;worked_at_École_Normale_Supérieure&#39;,
- &#39;worked_in_AF&#39;,
- &#39;worked_in_AS&#39;,
- &#39;worked_in_AUS&#39;,
- &#39;worked_in_AUT&#39;,
- &#39;worked_in_BEL&#39;,
- &#39;worked_in_CAN&#39;,
- &#39;worked_in_CHE&#39;,
- &#39;worked_in_DEU&#39;,
- &#39;worked_in_DNK&#39;,
- &#39;worked_in_EU&#39;,
- &#39;worked_in_FRA&#39;,
- &#39;worked_in_GBR&#39;,
- &#39;worked_in_IND&#39;,
- &#39;worked_in_ISR&#39;,
- &#39;worked_in_ITA&#39;,
- &#39;worked_in_JPN&#39;,
- &#39;worked_in_NA&#39;,
- &#39;worked_in_NLD&#39;,
- &#39;worked_in_OC&#39;,
- &#39;worked_in_PAK&#39;,
- &#39;worked_in_POL&#39;,
- &#39;worked_in_RUS&#39;,
- &#39;worked_in_SWE&#39;,
- &#39;worked_in_TUR&#39;,
- &#39;worked_in_USA&#39;}</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[19]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>348</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Since any machine models I build will be evaluated on the test set, the tempting thing to do is to reduce the features to the common set of features between the training and test sets. However, this would clearly be <em>data snooping</em> (cheating) since the test set is meant to be unseen data. The other issue is if half of the features in the training set are thrown away and new examples come along with those exact features, the model would not be able to leverage this information. So the only logical thing to do is to ensure that the test set features are identical to the full set of features in the training set. And yes, this does mean that over half the test set features will consist of binary columns in which the values are all "no". Let's go ahead and do this now.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">sync_test_features_with_training_features</span><span class="p">(</span>
-    <span class="n">test_features</span><span class="p">,</span> <span class="n">train_features</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Synchronize test features dataframe with train features for physicists.</span>
-<span class="sd">    </span>
-<span class="sd">    The test features dataframe is changed so that its columns</span>
-<span class="sd">    match those in the training features dataframe. The union of</span>
-<span class="sd">    the columns in the training and test features is first taken</span>
-<span class="sd">    and then columns present in the training set that are not</span>
-<span class="sd">    present in the test set are joined with it. These columns are</span>
-<span class="sd">    filled with &quot;no&quot; values. This function should be called after</span>
-<span class="sd">    `build_features`.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        test_features (pandas.DataFrame): Training features dataframe.</span>
-<span class="sd">        train_features (pandas.DataFrame): Test features dataframe.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        pandas.DataFrame: Test features dataframe.</span>
-<span class="sd">        </span>
-<span class="sd">        Columns are identical to the columns in the training</span>
-<span class="sd">        features dataframe.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">train_features_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-    <span class="n">test_features_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-    <span class="n">feature_cols_intersection</span> <span class="o">=</span> <span class="n">train_features_cols</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
-        <span class="n">test_features_cols</span><span class="p">)</span>
-    <span class="n">feature_cols_difference</span> <span class="o">=</span> <span class="n">train_features_cols</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span>
-        <span class="n">test_features_cols</span><span class="p">)</span>
-    
-    <span class="n">test_features_synced</span> <span class="o">=</span> <span class="n">test_features</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">test_features_synced</span> <span class="o">=</span> <span class="n">test_features_synced</span><span class="p">[</span>
-        <span class="nb">list</span><span class="p">(</span><span class="n">feature_cols_intersection</span><span class="p">)]</span>
-    <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features_synced</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">feature_cols_difference</span><span class="p">))</span>
-    <span class="n">features_to_pad</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">),</span>
-                                   <span class="n">columns</span><span class="o">=</span><span class="n">feature_cols_difference</span><span class="p">)</span>
-    <span class="n">test_features_synced</span> <span class="o">=</span> <span class="n">test_features_synced</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">features_to_pad</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">test_features_synced</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">sync_test_features_with_training_features</span><span class="p">(</span>
-    <span class="n">test_features</span><span class="p">,</span> <span class="n">train_features</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
-    <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
+    <span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+<span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -16836,65 +16393,65 @@ Name: name, dtype: object</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>ratio_num_chemistry_laureate_doctoral_advisors</th>
-      <th>worked_at_SLAC_National_Accelerator_Laboratory</th>
-      <th>ratio_num_chemistry_laureate_influenced_by</th>
-      <th>worked_at_Imperial_College_London</th>
-      <th>lived_in_IND</th>
-      <th>born_in_AS</th>
-      <th>worked_in_BEL</th>
-      <th>citizen_of_ESP</th>
-      <th>ratio_num_death_continent_codes</th>
-      <th>worked_at_University_of_Vienna</th>
+      <th>alumnus_in_**</th>
+      <th>alumnus_in_***</th>
+      <th>alumnus_in_AS</th>
+      <th>alumnus_in_AUS</th>
+      <th>alumnus_in_AUT</th>
+      <th>alumnus_in_CHE</th>
+      <th>alumnus_in_DEU</th>
+      <th>alumnus_in_EU</th>
+      <th>alumnus_in_FRA</th>
+      <th>alumnus_in_GBR</th>
       <th>...</th>
-      <th>worked_at_Corps_des_mines</th>
-      <th>alumnus_of_Leipzig_University</th>
-      <th>died_in_IRN</th>
-      <th>worked_at_Government_College_University_(Lahore)</th>
-      <th>worked_in_SAU</th>
-      <th>alumnus_of_Gujarat_College</th>
-      <th>born_in_MNP</th>
-      <th>worked_at_Roma_Tre_University</th>
-      <th>worked_at_PAECSUPARCOPINSTECHPunjab_UniversityImperial_College_LondonGovernment_College_UniversityUniversity_of_CambridgeICTPCOMSATSTWASEdward_Bouchet_Abdus_Salam_Institute</th>
-      <th>alumnus_of_Physics</th>
+      <th>worked_in_DEU</th>
+      <th>worked_in_DNK</th>
+      <th>worked_in_EU</th>
+      <th>worked_in_FRA</th>
+      <th>worked_in_GBR</th>
+      <th>worked_in_ITA</th>
+      <th>worked_in_NA</th>
+      <th>worked_in_NLD</th>
+      <th>worked_in_RUS</th>
+      <th>worked_in_USA</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.0</td>
-      <td>no</td>
-      <td>0.0</td>
-      <td>no</td>
       <td>no</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
-      <td>0.0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>...</td>
       <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.0</td>
-      <td>no</td>
-      <td>0.0</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
-      <td>0.0</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>...</td>
       <td>no</td>
@@ -16910,16 +16467,16 @@ Name: name, dtype: object</pre>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.0</td>
       <td>no</td>
-      <td>0.0</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>0.0</td>
       <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
       <td>...</td>
       <td>no</td>
       <td>no</td>
@@ -16934,39 +16491,39 @@ Name: name, dtype: object</pre>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.0</td>
-      <td>no</td>
-      <td>0.0</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>0.0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>...</td>
       <td>no</td>
       <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.0</td>
-      <td>no</td>
-      <td>0.0</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>0.0</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>...</td>
       <td>no</td>
@@ -16982,7 +16539,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 776 columns</p>
+<p>5 rows × 184 columns</p>
 </div>
 </div>
 
@@ -16991,32 +16548,15 @@ Name: name, dtype: object</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This looks much better now.</p>
-<p>It is clear to see that the one-hot encoding has tremendously increased the dimensionality of the problem. There are now 778 features (excluding the <code>full_name</code>) for 540 observations in the training set and 387 observations in the test set! Any model that is fit to such data would clearly be extremely prone to overfitting, so a dimensionality reduction is clearly needed on this data.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the training and test features dataframes I'll persist them for future use.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
-    <span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-<span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">test_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
+    <span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -17052,27 +16592,27 @@ Name: name, dtype: object</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>alumnus_in_AF</th>
+      <th>alumnus_in_**</th>
+      <th>alumnus_in_***</th>
       <th>alumnus_in_AS</th>
       <th>alumnus_in_AUS</th>
       <th>alumnus_in_AUT</th>
-      <th>alumnus_in_AZE</th>
-      <th>alumnus_in_BEL</th>
-      <th>alumnus_in_BGD</th>
-      <th>alumnus_in_BRB</th>
-      <th>alumnus_in_CAN</th>
       <th>alumnus_in_CHE</th>
+      <th>alumnus_in_DEU</th>
+      <th>alumnus_in_EU</th>
+      <th>alumnus_in_FRA</th>
+      <th>alumnus_in_GBR</th>
       <th>...</th>
-      <th>worked_in_PAK</th>
-      <th>worked_in_POL</th>
+      <th>worked_in_DEU</th>
+      <th>worked_in_DNK</th>
+      <th>worked_in_EU</th>
+      <th>worked_in_FRA</th>
+      <th>worked_in_GBR</th>
+      <th>worked_in_ITA</th>
+      <th>worked_in_NA</th>
+      <th>worked_in_NLD</th>
       <th>worked_in_RUS</th>
-      <th>worked_in_SA</th>
-      <th>worked_in_SAU</th>
-      <th>worked_in_SWE</th>
-      <th>worked_in_TUR</th>
-      <th>worked_in_UKR</th>
       <th>worked_in_USA</th>
-      <th>worked_in_ZAF</th>
     </tr>
   </thead>
   <tbody>
@@ -17080,7 +16620,7 @@ Name: name, dtype: object</pre>
       <th>0</th>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -17097,37 +16637,37 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>no</td>
     </tr>
     <tr>
       <th>1</th>
       <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>...</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
     </tr>
     <tr>
       <th>2</th>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -17163,7 +16703,7 @@ Name: name, dtype: object</pre>
       <td>...</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -17181,14 +16721,14 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
       <td>...</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -17198,7 +16738,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 776 columns</p>
+<p>5 rows × 184 columns</p>
 </div>
 </div>
 
@@ -17211,205 +16751,6 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">test_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
-    <span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[23]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>alumnus_in_AF</th>
-      <th>alumnus_in_AS</th>
-      <th>alumnus_in_AUS</th>
-      <th>alumnus_in_AUT</th>
-      <th>alumnus_in_AZE</th>
-      <th>alumnus_in_BEL</th>
-      <th>alumnus_in_BGD</th>
-      <th>alumnus_in_BRB</th>
-      <th>alumnus_in_CAN</th>
-      <th>alumnus_in_CHE</th>
-      <th>...</th>
-      <th>worked_in_PAK</th>
-      <th>worked_in_POL</th>
-      <th>worked_in_RUS</th>
-      <th>worked_in_SA</th>
-      <th>worked_in_SAU</th>
-      <th>worked_in_SWE</th>
-      <th>worked_in_TUR</th>
-      <th>worked_in_UKR</th>
-      <th>worked_in_USA</th>
-      <th>worked_in_ZAF</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 776 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-features.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
