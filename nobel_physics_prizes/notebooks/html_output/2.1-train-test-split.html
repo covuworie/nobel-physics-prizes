@@ -13946,7 +13946,12 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I can see that there are some missing birth and death dates. Let's examine exactly whose birth dates are missing.</p>
+<p>I can see that there are two issues:</p>
+<ol>
+<li>Missing birth and death dates.</li>
+<li>Death dates equal to birth dates.</li>
+</ol>
+<p>The second issue is due to poor validation of data in dbPedia and since these physicists are dead, the death dates just need to be corrected.</p>
 
 </div>
 </div>
@@ -13957,7 +13962,8 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dates_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;birthDate&#39;</span><span class="p">,</span> <span class="s1">&#39;deathDate&#39;</span><span class="p">,</span> <span class="s1">&#39;fullName&#39;</span><span class="p">]</span>
-<span class="n">physicists</span><span class="p">[</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">dates_names</span><span class="p">]</span>
+<span class="n">physicists</span><span class="p">[</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">|</span>
+           <span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span> <span class="o">==</span> <span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="p">)][</span><span class="n">dates_names</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -14036,6 +14042,12 @@ div#notebook {
       <td>Craige Schensted</td>
     </tr>
     <tr>
+      <th>202</th>
+      <td>1917-12-20</td>
+      <td>1917-12-20</td>
+      <td>David Bohm</td>
+    </tr>
+    <tr>
       <th>221</th>
       <td>NaN</td>
       <td>NaN</td>
@@ -14076,6 +14088,12 @@ div#notebook {
       <td>NaN</td>
       <td>NaN</td>
       <td>James W. LaBelle</td>
+    </tr>
+    <tr>
+      <th>514</th>
+      <td>1911-07-09</td>
+      <td>1911-07-09</td>
+      <td>John Archibald Wheeler</td>
     </tr>
     <tr>
       <th>590</th>
@@ -14168,6 +14186,12 @@ div#notebook {
       <td>Richard Clegg</td>
     </tr>
     <tr>
+      <th>890</th>
+      <td>1925-05-27</td>
+      <td>1925-05-27</td>
+      <td>Sam Treiman</td>
+    </tr>
+    <tr>
       <th>900</th>
       <td>NaN</td>
       <td>NaN</td>
@@ -14199,8 +14223,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Interestingly, Pythagoras is the only name I know here so it's likely that this is a list of modern physicists.
-Reading some of the abstracts in the dataframe and performing a Google search on some of these physicists confirms my suspicions. Rather than just dropping them and losing valuable data, I would like to see if I can find out their dates of birth. A combination of the following allows me to <em>impute</em> exact or fairly accurate pproximate values for most of the missing birth dates for the physicists:</p>
+<p>For the first issue, let's examine exactly whose birth dates are missing. Interestingly, Pythagoras is the only name I know here so it's likely that this is a list of modern physicists. Reading some of the abstracts in the dataframe and performing a Google search on some of these physicists confirms my suspicions. Rather than just dropping them and losing valuable data, I would like to see if I can find out their dates of birth. A combination of the following allows me to <em>impute</em> exact or fairly accurate approximate values for most of the missing birth and death dates for the physicists:</p>
 <ul>
 <li>Searching the abstract field of the dataframe</li>
 <li>Looking at the <em>Google Knowledge Graph</em> results provided from a Google search</li>
@@ -14230,6 +14253,8 @@ Reading some of the abstracts in the dataframe and performing a Google search on
                 <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1957</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Craige Schensted&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1928</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
+    <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;David Bohm&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;deathDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1992</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">27</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Denis Weaire&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1942</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Eric Poisson&#39;</span><span class="p">,</span>
@@ -14244,6 +14269,8 @@ Reading some of the abstracts in the dataframe and performing a Google search on
                 <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1934</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;James W. LaBelle&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1958</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
+    <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;John Archibald Wheeler&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;deathDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2008</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Kathryn Moler&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1965</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Kenneth Young&#39;</span><span class="p">,</span>
@@ -14270,6 +14297,8 @@ Reading some of the abstracts in the dataframe and performing a Google search on
                 <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1940</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Richard Clegg&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1957</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
+    <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Sam Treiman&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;deathDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1999</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span>
                 <span class="s1">&#39;Scott Diddams&#39;</span><span class="p">,</span> <span class="s1">&#39;birthDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1968</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
     <span class="n">imputed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Willibald Peter Prasthofer&#39;</span><span class="p">,</span>
@@ -14298,7 +14327,7 @@ Reading some of the abstracts in the dataframe and performing a Google search on
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>OK let's check again to see how many birth dates remain missing.</p>
+<p>OK let's check again to see if any of these issues remain.</p>
 
 </div>
 </div>
@@ -14308,7 +14337,8 @@ Reading some of the abstracts in the dataframe and performing a Google search on
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dead_missing_no_birth_date</span> <span class="o">=</span> <span class="n">physicists</span><span class="p">[</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">dates_names</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dead_missing_no_birth_date</span> <span class="o">=</span> <span class="n">physicists</span><span class="p">[</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">|</span>
+           <span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span> <span class="o">==</span> <span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="p">)][</span><span class="n">dates_names</span><span class="p">]</span>
 <span class="n">dead_missing_no_birth_date</span>
 </pre></div>
 
@@ -18349,7 +18379,7 @@ Reading some of the abstracts in the dataframe and performing a Google search on
     <tr>
       <th>202</th>
       <td>1917-12-20</td>
-      <td>1917-12-20</td>
+      <td>1992-10-27</td>
       <td>David Bohm</td>
     </tr>
     <tr>
@@ -19351,7 +19381,7 @@ Reading some of the abstracts in the dataframe and performing a Google search on
     <tr>
       <th>514</th>
       <td>1911-07-09</td>
-      <td>1911-07-09</td>
+      <td>2008-04-13</td>
       <td>John Archibald Wheeler</td>
     </tr>
     <tr>
@@ -20533,7 +20563,7 @@ Reading some of the abstracts in the dataframe and performing a Google search on
     <tr>
       <th>890</th>
       <td>1925-05-27</td>
-      <td>1925-05-27</td>
+      <td>1999-11-30</td>
       <td>Sam Treiman</td>
     </tr>
     <tr>
