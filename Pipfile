@@ -19,6 +19,8 @@ requests-futures = "*"
 pycountry-convert = "*"
 reverse-geocoder = "*"
 scikit-learn = "*"
+prince = "*"
+seaborn = "*"
 
 [dev-packages]
 pytest = "*"
