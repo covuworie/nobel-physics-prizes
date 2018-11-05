@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>test_2.1-train-test-split</title>
+<title>test_2.1-train-val-test-split</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13115,7 +13115,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ipytest</span>
@@ -13130,7 +13130,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">PYTEST_OPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--color=yes&#39;</span><span class="p">]</span>
@@ -13143,7 +13143,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
@@ -13230,6 +13230,7 @@ div#notebook {
         <span class="s1">&#39;Charles H. Henry&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Charles H. Townes&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Charles Thomson Rees Wilson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Charlotte Riefenstahl&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Chien-Shiung Wu&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Christian Gerthsen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Clifford Shull&#39;</span><span class="p">,</span>
@@ -13398,6 +13399,7 @@ div#notebook {
         <span class="s1">&#39;Joël Scherk&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Johannes Bosscha&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Johannes Diderik van der Waals&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Johannes Fischer&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Johannes Rydberg&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Johannes Stark&#39;</span><span class="p">,</span>
         <span class="s1">&#39;John Alexander Simpson&#39;</span><span class="p">,</span>
@@ -13693,23 +13695,214 @@ div#notebook {
 
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_test_physicists</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">expected_validation_physicists</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
         <span class="s1">&#39;A. P. Balachandran&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Abdul Qadeer Khan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Alan Andrew Watson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Albert Fert&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Alexander Animalu&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Alexander Markovich Polyakov&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Alexei Alexeyevich Abrikosov&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Anthony Ichiro Sanda&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Anthony James Leggett&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Anthony Zee&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Anton Zeilinger&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Antonino Zichichi&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Antony Hewish&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Archibald Howie&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Arno Allan Penzias&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Arthur B. McDonald&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Asoke Nath Mitra&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;B. Roy Frieden&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Barry Barish&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ben Roy Mottelson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Bent Sørensen (physicist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Bernard de Wit&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Bimla Buti&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Brandon Carter&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Brendan Scaife&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Brian Josephson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Burton Richter&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;C. R. Hagen&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Carl M. Bender&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Carlo Rubbia&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Charles K. Kao&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Chen-Ning Yang&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Claude Cohen-Tannoudji&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Clemens C. J. Roothaan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Colin Webb&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Craige Schensted&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Curtis Callan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Daniel C. Tsui&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Daniel Greenberger&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Daniel Z. Freedman&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;David Gross&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;David J. Griffiths&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;David J. Thouless&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;David J. Wineland&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;David Lee (physicist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;David Ruelle&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Denis Weaire&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Douglas Osheroff&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;E. C. George Sudarshan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Emil Wolf&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ernest Courant&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Evans Hayward&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Evgeny Velikhov&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ezra T. Newman&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Félix Ynduráin Muñoz&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;François Englert&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Fred Alan Wolf&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Freeman Dyson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Friedwardt Winterberg&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Fritjof Capra&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Gabriele Veneziano&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Geoffrey Chew&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;George E. Smith&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;George Smoot&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;George Sterman&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;George W. Clark&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;George Zweig&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;Gerard &#39;t Hooft&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Giovanni Ciccotti&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;H. Dieter Zeh&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Hagen Kleinert&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Haim Harari&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Hans Georg Dehmelt&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Harold E. Puthoff&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Helen Quinn&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Henry Stapp&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Herbert Kroemer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Hiranmay Sen Gupta&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Holger Bech Nielsen&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Hubert Reeves&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Isaak Markovich Khalatnikov&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Isamu Akasaki&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ivar Giaever&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;J. Michael Kosterlitz&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jack Steinberger&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jacques Villain&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;James Bjorken&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;James E. Faller&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;James Glimm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jayant Narlikar&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jean Zinn-Justin&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jeffrey Goldstone&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jerome Isaac Friedman&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jocelyn Bell Burnell&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jogesh Pati&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John Ellis (physicist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John G. Cramer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John Gribbin&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John Henry Schwarz&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John Iliopoulos&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John L. Hall&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John Nye (scientist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John Polkinghorne&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;John Robert Schrieffer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Joseph H. Eberly&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Joseph Hooton Taylor Jr.&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Jürg Fröhlich&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Juris Upatnieks&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;K. Alex Müller&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Kip Thorne&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Klaus von Klitzing&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Kurt Binder&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Leo Esaki&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Leon Cooper&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Leon M. Lederman&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Leonard Susskind&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;Lev Gor&#39;kov&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Lowell S. Brown&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Luciano Maiani&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ludvig Faddeev&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;M. G. K. Menon&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Makoto Kobayashi (physicist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Manfred Eigen&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Mani Lal Bhaumik&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Martin Rees&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Martin Schadt&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Martinus J. G. Veltman&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Mary K. Gaillard&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Masatoshi Koshiba&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Menas Kafatos&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Michael Green (physicist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Michael Woolfson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Miguel Ángel Virasoro (physicist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Mitchell Feigenbaum&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Murray Gell-Mann&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Neil Ashby&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Nicolaas Bloembergen&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Paul Davies&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Paul Frampton&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Paul G. Hewitt&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Peter Freund&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Peter Goddard (physicist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Peter Grünberg&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Peter Higgs&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Peter Mansfield&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Peter van Nieuwenhuizen&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Philip Warren Anderson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Pierre Ramond&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Pran Nath&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Predrag Cvitanović&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Rafael Sorkin&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Rainer Weiss&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Rashid Sunyaev&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ratko Janev&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ray Mackintosh&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Riccardo Barbieri&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Riccardo Giacconi&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Richard A. Muller&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Richard E. Taylor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Richard H. Price&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Robert K. Logan&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Robert Woodrow Wilson&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Roger Penrose&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Roman Jackiw&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Roy J. Glauber&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Samuel C. C. Ting&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Samuel T. Durrance&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Serge Haroche&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Sergio Ferrara&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Sheldon Lee Glashow&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Sidney Drell&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Stanley Deser&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Stephen Hawking&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Stephen L. Adler&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Steven Frautschi&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Steven Weinberg&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Sumio Iijima&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Terence James Elkins&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Theodor W. Hänsch&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Toichiro Kinoshita&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Toshihide Maskawa&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Tsung-Dao Lee&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;V. Balakrishnan (physicist)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Valery Pokrovsky&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Vera Rubin&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Viktor Dilman&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Walter Lewin&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Ward Plummer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Werner Israel&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;William A. Bardeen&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Yuri Orlov&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Zhores Alferov&#39;</span>
+    <span class="p">])</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">expected_test_physicists</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
         <span class="s1">&#39;Adam Riess&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Adrian Melott&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Alain Aspect&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Alain Haché&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Alan Andrew Watson&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Alan Guth&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Albert Fert&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Alejandro Corichi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Alexander Animalu&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Alexander Markovich Polyakov&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Alexander R. Hamilton&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Alexander Zamolodchikov&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Alexei Alexeyevich Abrikosov&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Alexei Kitaev&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Alexei Yuryevich Smirnov&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ali Chamseddine&#39;</span><span class="p">,</span>
@@ -13721,367 +13914,180 @@ div#notebook {
         <span class="s1">&#39;Anja Cetti Andersen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ann Nelson&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Antal Jákli&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Anthony Ichiro Sanda&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Anthony James Leggett&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Anthony M. Johnson&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Anthony Zee&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Anton Zeilinger&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Antonino Zichichi&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Antony Garrett Lisi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Antony Hewish&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Archibald Howie&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Arno Allan Penzias&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Arthur B. McDonald&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ashok Das&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ashoke Sen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ashutosh Kotwal&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Asoke Nath Mitra&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ataç İmamoğlu&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ayşe Erzan&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ayyub Guliyev&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;B. Roy Frieden&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Barry Barish&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Barton Zwiebach&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Ben Roy Mottelson&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Bent Sørensen (physicist)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Bernard de Wit&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Bimla Buti&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Brandon Carter&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Brendan Scaife&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Brian Cox (physicist)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Brian Greene&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Brian Josephson&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Brian May&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Brian Schmidt&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Burton Richter&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;C. R. Hagen&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Carl M. Bender&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Carl Wieman&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Carlo Beenakker&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Carlo Rovelli&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Carlo Rubbia&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Carlos E.M. Wagner&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Charles K. Kao&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Charles Thorn&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Charlotte Riefenstahl&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Chen-Ning Yang&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Chennupati Jagadish&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Chris Lintott&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Christof Wetterich&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Christopher T. Hill&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Claude Cohen-Tannoudji&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Clemens C. J. Roothaan&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Colin Webb&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Cosmas Zachos&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Craige Schensted&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Cumrun Vafa&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Curtis Callan&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Đàm Thanh Sơn&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Daniel C. Tsui&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Daniel Friedan&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Daniel Greenberger&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Daniel Z. Freedman&#39;</span><span class="p">,</span>
         <span class="s1">&#39;David Albert&#39;</span><span class="p">,</span>
         <span class="s1">&#39;David Awschalom&#39;</span><span class="p">,</span>
         <span class="s1">&#39;David Carroll (physicist)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;David Deutsch&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;David Gross&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;David J. Griffiths&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;David J. Thouless&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;David J. Wineland&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;David Lee (physicist)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;David Lindley (physicist)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;David Merritt&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;David Ruelle&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Denis Evans&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Denis Weaire&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Derek Abbott&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Dimitri Nanopoulos&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Douglas Osheroff&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Duncan Haldane&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Durmus A. Demir&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;E. C. George Sudarshan&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Edward Witten&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Emil Wolf&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Eric Allin Cornell&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Eric Poisson&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Erik Verlinde&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Ernest Courant&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Eva Silverstein&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Evans Hayward&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Evgeny Velikhov&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ezra Getzler&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Ezra T. Newman&#39;</span><span class="p">,</span>
         <span class="s1">&#39;F. J. Duarte&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Félix Ynduráin Muñoz&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;François Englert&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Frank J. Tipler&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Frank Wilczek&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Fred Alan Wolf&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Freeman Dyson&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Friedwardt Winterberg&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Fritjof Capra&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Fulvio Melia&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Gabriele Veneziano&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Gaetano Vignola&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Geoffrey Chew&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Georg Bednorz&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;George E. Smith&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;George Smoot&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;George Sterman&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;George W. Clark&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;George Zweig&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Gerald B. Cleaver&#39;</span><span class="p">,</span>
-        <span class="s2">&quot;Gerard &#39;t Hooft&quot;</span><span class="p">,</span>
         <span class="s1">&#39;Gerd Binnig&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Gian Francesco Giudice&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Giorgio Parisi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Giovanni Ciccotti&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Goran Senjanović&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Gregory Jaczko&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;H. Dieter Zeh&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Hagen Kleinert&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Haim Harari&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Hans Georg Dehmelt&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Harald Fuchs&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Harold E. Puthoff&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Helen Quinn&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Henry Stapp&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Herbert Kroemer&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Hideo Ohno&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Hiranmay Sen Gupta&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Hiroshi Amano&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Holger Bech Nielsen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Horst Ludwig Störmer&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Howard Georgi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Hubert Reeves&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Hugh David Politzer&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Igor Klebanov&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Isaak Markovich Khalatnikov&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Isamu Akasaki&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Isidor Sauers&#39;</span><span class="p">,</span>
         <span class="s1">&#39;İsmail Hakkı Duru&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Ivar Giaever&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;J. Michael Kosterlitz&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jack Steinberger&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jacques Villain&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Jagadeesh Moodera&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Jainendra K. Jain&#39;</span><span class="p">,</span>
         <span class="s1">&#39;James Binney&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;James Bjorken&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;James E. Faller&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;James Glimm&#39;</span><span class="p">,</span>
         <span class="s1">&#39;James W. LaBelle&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Jan Zaanen&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jayant Narlikar&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Jean Dalibard&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jean Zinn-Justin&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Jean-Philippe Bouchaud&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jeffrey Goldstone&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jerome Isaac Friedman&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Jim Al-Khalili&#39;</span><span class="p">,</span>
         <span class="s1">&#39;João Magueijo&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jocelyn Bell Burnell&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jogesh Pati&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Johannes Fischer&#39;</span><span class="p">,</span>
         <span class="s1">&#39;John C. Mather&#39;</span><span class="p">,</span>
         <span class="s1">&#39;John Cardy&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John Ellis (physicist)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John G. Cramer&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John Gribbin&#39;</span><span class="p">,</span>
         <span class="s1">&#39;John Hartnett (physicist)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John Henry Schwarz&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John Iliopoulos&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John L. Hall&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John Nye (scientist)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John Polkinghorne&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;John Robert Schrieffer&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Jonathan Dowling&#39;</span><span class="p">,</span>
         <span class="s1">&#39;José W. F. Valle&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Joseph H. Eberly&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Joseph Hooton Taylor Jr.&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Joseph J. Romm&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Joseph Lykken&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Joseph Polchinski&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Juan Martín Maldacena&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Julia Yeomans&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jürg Fröhlich&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Juris Upatnieks&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;K. Alex Müller&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Kathryn Moler&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Kees Schouhamer Immink&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Kendal Nezan&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Kenneth Lane (physicist)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Kenneth Young&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Kip Thorne&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Klaus von Klitzing&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Konstantin Novoselov&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Kurt Binder&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Kyriakos Tamvakis&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Laura Mersini-Houghton&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Lawrence M. Krauss&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Lee Smolin&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Lene Hau&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Leo Esaki&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Leon Cooper&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Leon M. Lederman&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Leonard Susskind&#39;</span><span class="p">,</span>
-        <span class="s2">&quot;Lev Gor&#39;kov&quot;</span><span class="p">,</span>
         <span class="s1">&#39;Lisa Randall&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Lowell S. Brown&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Luboš Motl&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Luciano Maiani&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Ludvig Faddeev&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;M. G. K. Menon&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Makoto Kobayashi (physicist)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Manfred Eigen&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Mani Lal Bhaumik&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Marcela Carena&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Marcia Barbosa&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Maria Spiropulu&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Mark B. Wise&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Mark G. Raizen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Martin Bojowald&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Martin Rees&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Martin Schadt&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Martin Tajmar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Martinus J. G. Veltman&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Mary K. Gaillard&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Masatoshi Koshiba&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Matthew Koss&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Max Tegmark&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Maxim Chernodub&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Mehran Kardar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Menas Kafatos&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Michael Green (physicist)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Michael R. Douglas&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Michael Woolfson&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Michio Kaku&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Miguel Alcubierre&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Miguel Ángel Virasoro (physicist)&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Mikhail Shifman&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Mitchell Feigenbaum&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Moses H. W. Chan&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Murray Gell-Mann&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Naomi Ginsberg&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Nathan Seiberg&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Neil Ashby&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Neil deGrasse Tyson&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Neil Turok&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Nicola Spaldin&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Nicolaas Bloembergen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Nihat Berker&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Nima Arkani-Hamed&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Oleg Sushkov&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Pamela L. Gay&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Paul Crowell&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Paul Davies&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Paul Frampton&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Paul G. Hewitt&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Paul Steinhardt&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Paul Werbos&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Pervez Hoodbhoy&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Peter Freund&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Peter Goddard (physicist)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Peter Grünberg&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Peter Higgs&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Peter Mansfield&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Peter van Nieuwenhuizen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Peter Zoller&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Petr Paucek&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Philip Warren Anderson&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Pierre Ramond&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Pran Nath&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Predhiman Krishan Kaw&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Predrag Cvitanović&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Rafael Sorkin&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Rainer Weiss&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Raman Sundrum&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ramón E. López&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Rashid Sunyaev&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Ratko Janev&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Raúl Rabadan&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Ravi Gomatam&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Ray Mackintosh&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Riccardo Barbieri&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Riccardo Giacconi&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Riccardo Rattazzi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Richard A. Muller&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Richard Clegg&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Richard E. Taylor&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Richard H. Price&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Richard Keith Ellis&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Robbert Dijkgraaf&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Robert B. Laughlin&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Robert K. Logan&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Robert Woodrow Wilson&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Roger Penrose&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Roman Jackiw&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Roy J. Glauber&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Russell Alan Hulse&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Samuel C. C. Ting&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Samuel T. Durrance&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Sankar Das Sarma&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Saul Perlmutter&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Savas Dimopoulos&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Scott Diddams&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Serge Haroche&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Serge Rudaz&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Sergio Ferrara&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Serguei Krasnikov&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Seth Lloyd&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Sheldon Lee Glashow&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Shiraz Minwalla&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Shirley Ann Jackson&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Shuji Nakamura&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Sidney Drell&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Sidney Redner&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Sixto González&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Stanley Deser&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Stephen Hawking&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Stephen L. Adler&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Stephen Parke&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Stephen Wolfram&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Steve Hsu&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Steven Chu&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Steven Frautschi&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Steven Gubser&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Steven Weinberg&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Sumio Iijima&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Swapan Chattopadhyay&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Sylvester James Gates&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Takaaki Kajita&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Tanya Monro&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Tekin Dereli&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Terence James Elkins&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Thanu Padmanabhan&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Theodor W. Hänsch&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Thomas Curtright&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Toichiro Kinoshita&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Tom Baehr-Jones&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Tom Banks (physicist)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Toshihide Maskawa&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Tsung-Dao Lee&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;V. Balakrishnan (physicist)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Valery Pokrovsky&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Vera Rubin&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Viatcheslav Mukhanov&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Viktor Dilman&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Vlatko Vedral&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Walter Lewin&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Walter Selke&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Ward Plummer&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Werner Israel&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;William A. Bardeen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;William Daniel Phillips&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Willy Fischler&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Wojciech H. Zurek&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Wolfgang Ketterle&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Xiao-Gang Wen&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Yasunori Nomura&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Yoshinori Tokura&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Yuri Orlov&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Zhores Alferov&#39;</span>
+        <span class="s1">&#39;Yoshinori Tokura&#39;</span>
     <span class="p">])</span>
 </pre></div>
 
@@ -14092,13 +14098,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_train_test_split*&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_train_validation_test_split*&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">test_train_test_split_train</span><span class="p">(</span><span class="n">expected_train_physicists</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_train_validation_test_split_train</span><span class="p">(</span><span class="n">expected_train_physicists</span><span class="p">):</span>
     <span class="k">assert</span><span class="p">(</span>
         <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
         <span class="s1">&#39;../data/processed/train-physicists-from-1901.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
@@ -14106,7 +14112,16 @@ div#notebook {
     <span class="p">)</span>
     
 
-<span class="k">def</span> <span class="nf">test_train_test_split_test</span><span class="p">(</span><span class="n">expected_test_physicists</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_train_validation_test_split_validation</span><span class="p">(</span><span class="n">expected_validation_physicists</span><span class="p">):</span>
+    <span class="k">assert</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="s1">&#39;../data/processed/validation-physicists-from-1901.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_validation_physicists</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+
+<span class="k">def</span> <span class="nf">test_train_validation_test_split_test</span><span class="p">(</span><span class="n">expected_test_physicists</span><span class="p">):</span>
     <span class="k">assert</span><span class="p">(</span>
         <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
         <span class="s1">&#39;../data/processed/test-physicists-from-1901.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
@@ -14115,7 +14130,7 @@ div#notebook {
     
     
 <span class="n">ipytest</span><span class="o">.</span><span class="n">run_pytest</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../../tests/test_2.1-train-test-split.ipynb&#39;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../../tests/test_2.1-train-val-test-split.ipynb&#39;</span><span class="p">,</span>
     <span class="n">pytest_options</span><span class="o">=</span><span class="n">PYTEST_OPTIONS</span><span class="p">)</span>
 </pre></div>
 
@@ -14134,23 +14149,24 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre><span class="ansi-bold">============================================================== test session starts ==============================================================</span>
-platform win32 -- Python 3.6.5, pytest-3.8.2, py-1.7.0, pluggy-0.7.1 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
+platform win32 -- Python 3.6.5, pytest-3.9.3, py-1.7.0, pluggy-0.8.0 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
 cachedir: .pytest_cache
 rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 plugins: mock-1.10.0, cov-2.6.0
-<span class="ansi-bold">collecting ... </span>collected 2 items
+<span class="ansi-bold">collecting ... </span>collected 3 items
 
-..\..\tests\test_2.1-train-test-split.py::test_train_test_split_train &lt;- &lt;ipython-input-20-756be0865d52&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                            [ 50%]</span>
-..\..\tests\test_2.1-train-test-split.py::test_train_test_split_test &lt;- &lt;ipython-input-20-756be0865d52&gt; <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                             [100%]</span>
+..\..\tests\test_2.1-train-val-test-split.py::test_train_validation_test_split_train <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                [ 33%]</span>
+..\..\tests\test_2.1-train-val-test-split.py::test_train_validation_test_split_validation <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                           [ 66%]</span>
+..\..\tests\test_2.1-train-val-test-split.py::test_train_validation_test_split_test <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [100%]</span>
 
-<span class="ansi-green-intense-fg ansi-bold">=========================================================== 2 passed in 0.09 seconds ============================================================</span>
+<span class="ansi-green-intense-fg ansi-bold">=========================================================== 3 passed in 0.10 seconds ============================================================</span>
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[23]:</div>
 
 
 

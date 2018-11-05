@@ -13116,9 +13116,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Build-Features">Build Features<a class="anchor-link" href="#Build-Features">&#182;</a></h1><p>As a recap, the <a href="../data/processed/train-physicists-from-1901.csv">training data</a> and <a href="../data/processed/test-physicists-from-1901.csv">test data</a> contain information on physicists who were eligible to receive a Nobel Prize in Physics. That is, they were alive on and after 10 December 1901, the date the prize was first awarded.</p>
-<p>All of the physicists in the training data are deceased and all the physicists in the test data are alive (up to the last 6-18 months since this is the approximate length of time DBpedia data is behind Wikipedia articles). Since one of the goals of this project is to try to predict the next Physics Nobel Laureate(s). The data was purposely sampled in this way as the aim is to use the training set to build models that predict whether a physicist who is still alive has been awarded or is likely to be awarded the <em>Nobel Prize in Physics</em>.</p>
-<p>It is finally time to use the training and test data, along with the other various pieces of data (<a href="../data/raw/nobel-physics-prize-laureates.csv">Nobel Physics Laureates</a>, <a href="../data/raw/nobel-chemistry-prize-laureates.csv">Nobel Chemistry Laureates</a>, <a href="../data/processed/places.csv">Places</a> and <a href="../data/processed/Countries-List.csv">Countries</a>) that I have collected, in order to create features that may help in predicting <em>Nobel Laureates in Physics</em>.</p>
+<h1 id="Build-Features">Build Features<a class="anchor-link" href="#Build-Features">&#182;</a></h1><p>As a recap, the <a href="../data/processed/train-physicists-from-1901.csv">training data</a>, <a href="../data/processed/validation-physicists-from-1901.csv">validation data</a> and <a href="../data/processed/test-physicists-from-1901.csv">test data</a> contain information on physicists who were eligible to receive a Nobel Prize in Physics. That is, they were alive on and after 10 December 1901, the date the prize was first awarded.</p>
+<p>All of the physicists in the training data are deceased and all the physicists in the validation and test data are alive (up to the last 6-18 months as this is the approximate length of time DBpedia data is behind Wikipedia articles). Since one of the goals of this project is to try to predict the next Physics Nobel Laureate(s). The data was purposely sampled in this way as the aim is to use the training set to build models that predict whether a physicist who is still alive has been awarded or is likely to be awarded the <em>Nobel Prize in Physics</em>.</p>
+<p>It is finally time to use the training, validation and test data, along with the other various pieces of data (<a href="../data/raw/nobel-physics-prize-laureates.csv">Nobel Physics Laureates</a>, <a href="../data/raw/nobel-chemistry-prize-laureates.csv">Nobel Chemistry Laureates</a>, <a href="../data/processed/places.csv">Places</a> and <a href="../data/processed/Countries-List.csv">Countries</a>) that I have collected, in order to create features that may help in predicting <em>Nobel Laureates in Physics</em>.</p>
 
 </div>
 </div>
@@ -13195,7 +13195,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in the training and test data and the list of Nobel Physics laureates.</p>
+<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in the training, validation and test data and the list of Nobel Physics laureates.</p>
 
 </div>
 </div>
@@ -13404,9 +13404,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="s1">&#39;../data/processed/test-physicists-from-1901.csv&#39;</span><span class="p">)</span>
-<span class="n">test_physicists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../data/processed/validation-physicists-from-1901.csv&#39;</span><span class="p">)</span>
+<span class="n">validation_physicists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13516,6 +13516,157 @@ div#notebook {
     </tr>
     <tr>
       <th>2</th>
+      <td>Alan Andrew Watson, FRS, (born 26 September 19...</td>
+      <td>NaN</td>
+      <td>University of Edinburgh</td>
+      <td>NaN</td>
+      <td>1938-09-26</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1938 births|Academics of the University of Lee...</td>
+      <td>NaN</td>
+      <td>British</td>
+      <td>...</td>
+      <td>Watson</td>
+      <td>NaN</td>
+      <td>Physics of Condensation of Water Vapour</td>
+      <td>NaN</td>
+      <td>1964.0</td>
+      <td>http://commons.wikimedia.org/wiki/Special:File...</td>
+      <td>http://en.wikipedia.org/wiki/Alan_Andrew_Watso...</td>
+      <td>27458583</td>
+      <td>718263511</td>
+      <td>University of Leeds</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Albert Fert (born 7 March 1938) is a French ph...</td>
+      <td>NaN</td>
+      <td>École normale supérieure|University of Paris</td>
+      <td>CNRS Gold medal|Japan Prize|Nobel Prize in Phy...</td>
+      <td>1938-03-07</td>
+      <td>NaN</td>
+      <td>Aude|Carcassonne|France</td>
+      <td>1938 births|École Normale Supérieure alumni|Fr...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>Fert</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>http://commons.wikimedia.org/wiki/Special:File...</td>
+      <td>http://en.wikipedia.org/wiki/Albert_Fert?oldid...</td>
+      <td>1810816</td>
+      <td>743347991</td>
+      <td>Michigan State University|National Autonomous ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alexander Obiefoka Enukora Animalu is Professo...</td>
+      <td>NaN</td>
+      <td>University of Cambridge|University of Ibadan</td>
+      <td>NaN</td>
+      <td>1938-08-28</td>
+      <td>NaN</td>
+      <td>Nigeria|Oba-Igbomina</td>
+      <td>1938 births|Alumni of the University of Cambri...</td>
+      <td>NaN</td>
+      <td>Nigeria</td>
+      <td>...</td>
+      <td>Animalu</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>http://commons.wikimedia.org/wiki/Special:File...</td>
+      <td>http://en.wikipedia.org/wiki/Alexander_Animalu...</td>
+      <td>30213963</td>
+      <td>721399999</td>
+      <td>Drexel University|Massachusetts Institute of T...</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 43 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../data/processed/test-physicists-from-1901.csv&#39;</span><span class="p">)</span>
+<span class="n">test_physicists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>abstract</th>
+      <th>academicAdvisor</th>
+      <th>almaMater</th>
+      <th>award</th>
+      <th>birthDate</th>
+      <th>birthName</th>
+      <th>birthPlace</th>
+      <th>categories</th>
+      <th>child</th>
+      <th>citizenship</th>
+      <th>...</th>
+      <th>surname</th>
+      <th>theorized</th>
+      <th>thesisTitle</th>
+      <th>thesisUrl</th>
+      <th>thesisYear</th>
+      <th>thumbnail</th>
+      <th>wasDerivedFrom</th>
+      <th>wikiPageID</th>
+      <th>wikiPageRevisionID</th>
+      <th>workplaces</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
       <td>Adam Guy Riess (born December 24, 1979) is an ...</td>
       <td>NaN</td>
       <td>Harvard University|Massachusetts Institute of ...</td>
@@ -13539,7 +13690,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>3</th>
+      <th>1</th>
       <td>Adrian Lewis Melott (born January 7, 1947) is ...</td>
       <td>NaN</td>
       <td>University of Texas at Austin</td>
@@ -13563,7 +13714,7 @@ div#notebook {
       <td>NaN</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>2</th>
       <td>Alain Aspect (French: [aspɛ] ; born 15 June 19...</td>
       <td>NaN</td>
       <td>École normale supérieure de Cachan</td>
@@ -13586,6 +13737,54 @@ div#notebook {
       <td>739641015</td>
       <td>Centre national de la recherche scientifique|É...</td>
     </tr>
+    <tr>
+      <th>3</th>
+      <td>Alain Haché (born 14 December 1970, in Tracadi...</td>
+      <td>NaN</td>
+      <td>Université de Moncton|University of Toronto</td>
+      <td>NaN</td>
+      <td>1970-12-14</td>
+      <td>NaN</td>
+      <td>New Brunswick|Tracadie–Sheila</td>
+      <td>1970 births|Canada Research Chairs|Canadian ph...</td>
+      <td>NaN</td>
+      <td>Canadians</td>
+      <td>...</td>
+      <td>Haché</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>http://en.wikipedia.org/wiki/Alain_Haché?oldid...</td>
+      <td>14597914</td>
+      <td>742996887</td>
+      <td>Université de Moncton</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alan Harvey Guth (born February 27, 1947) is a...</td>
+      <td>NaN</td>
+      <td>Massachusetts Institute of Technology</td>
+      <td>Dirac Medal|Franklin Medal|Fundamental Physics...</td>
+      <td>1947-02-27</td>
+      <td>NaN</td>
+      <td>New Brunswick|New Brunswick, New Jersey</td>
+      <td>1947 births|American astronomers|American phys...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>Guth</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>http://commons.wikimedia.org/wiki/Special:File...</td>
+      <td>http://en.wikipedia.org/wiki/Alan_Guth?oldid=7...</td>
+      <td>454498</td>
+      <td>734702685</td>
+      <td>NaN</td>
+    </tr>
   </tbody>
 </table>
 <p>5 rows × 43 columns</p>
@@ -13600,7 +13799,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
@@ -13618,7 +13817,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13697,19 +13896,20 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>There are some variants of the name in the training and test data. Since I'll be searching for whether academic advisors, students, spouses, children etc. of a physicist are physics laureates, for convenience it's useful to merge the <code>name</code> field into <em>Nobel Physicists</em> dataframe.</p>
+<p>There are some variants of the name in the training, validation and test data. Since I'll be searching for whether academic advisors, students, spouses, children etc. of a physicist are physics laureates, for convenience it's useful to merge the <code>name</code> field into <em>Nobel Physicists</em> dataframe.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Laureate&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Country&#39;</span><span class="p">,</span> <span class="s1">&#39;Rationale&#39;</span><span class="p">]</span>
 <span class="n">nobel_physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nobel_physicists</span><span class="p">,</span>
-                            <span class="n">train_physicists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">),</span>
+                            <span class="n">train_physicists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">test_physicists</span><span class="p">),</span>
                             <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Laureate&#39;</span><span class="p">,</span>
                             <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;fullName&#39;</span><span class="p">)[</span><span class="n">nobel_columns</span><span class="p">]</span>
 <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -13725,7 +13925,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13817,11 +14017,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="s1">&#39;../data/raw/nobel-chemistry-prize-laureates.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/raw/nobel-chemistry-prize-laureates.csv&#39;</span><span class="p">)</span>
 <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -13835,7 +14034,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13921,10 +14120,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">train_physicists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">),</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">nobel_chemists</span><span class="p">,</span>
+                          <span class="n">train_physicists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                              <span class="n">test_physicists</span><span class="p">),</span>
                           <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Laureate&#39;</span><span class="p">,</span>
                           <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;fullName&#39;</span><span class="p">)[</span><span class="n">nobel_columns</span><span class="p">]</span>
 <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -13940,7 +14141,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -14032,7 +14233,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nobel_chemists</span><span class="p">[</span><span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">notna</span><span class="p">()]</span><span class="o">.</span><span class="n">name</span>
@@ -14048,7 +14249,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -14079,7 +14280,7 @@ Name: name, dtype: object</pre>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It is worth noting that if there are alternative names of Chemistry Nobel Laureates in the physicists dataframe other than those above, they will <em>not</em> be found. However, I do not expect many of these as at one point I got all the redirected URLS for the names and there were very few associated with laureates. In fact you can still see that some of these names are present in the <a href="../data/raw/dbpedia-redirects.csv">DBpedia redirects</a> (e.g. search for "Marie_Curie"). The reason I removed the imputing of these redirects for names when processing the physicist data earlier was that a few of them were plain wrong. For instance, Richard Feynman's children redirect back to him! (e.g. search for "Carl_Feynman" and "Michelle_Feynmann" in the DBpedia redirects or directly try in your browser <a href="http://dbpedia.org/page/Carl_Feynman">http://dbpedia.org/page/Carl_Feynman</a> or <a href="http://dbpedia.org/page/Michelle_Feynmann">http://dbpedia.org/page/Michelle_Feynmann</a>.</p>
-<p>Another interesting fact about this list is that the only one still alive is <em>Manfred Eigen</em>. So I would not expect to see many (if any) physicists in the test set who have Chemistry Nobel Laureate academic advisors, notable students, spouses etc. This is clearly a facet in which the training and test data is very different. Such differences make learning quite difficult.</p>
+<p>Another interesting fact about this list is that the only one still alive is <em>Manfred Eigen</em>. So I would not expect to see many (if any) physicists in the validation or test set who have Chemistry Nobel Laureate academic advisors, notable students, spouses etc. This is clearly a facet in which the training data is different from the validation and test data. Such differences make learning quite difficult.</p>
 <p>Now, let's read the places and nationalities data into a dataframe. It's important at this point to turn off the default behavior of <em>pandas</em> which is to treat the string literal 'NA' as a missing value. In the dataset, 'NA' is both the continent code of North America and the ISO 3166 alpha-2 country code of Namibia. I then have to impute the missing values since <em>pandas</em> replaces them with the empty string.</p>
 
 </div>
@@ -14087,11 +14288,10 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span>
-                     <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">places</span> <span class="o">=</span> <span class="n">places</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">places</span><span class="p">[</span>
     <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span> <span class="o">==</span> <span class="s1">&#39;USA&#39;</span><span class="p">][</span><span class="s1">&#39;continentCode&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s1">&#39;NA&#39;</span><span class="p">))</span>
@@ -14108,7 +14308,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14289,7 +14489,7 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/Countries-List.csv&#39;</span><span class="p">,</span>
@@ -14310,7 +14510,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -14695,7 +14895,7 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">build_features</span><span class="p">(</span><span class="n">physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span>
@@ -14949,7 +15149,7 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
@@ -14969,7 +15169,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -15150,14 +15350,14 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
-    <span class="n">test_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
+    <span class="n">validation_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -15170,7 +15370,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -15267,6 +15467,159 @@ Name: name, dtype: object</pre>
     </tr>
     <tr>
       <th>2</th>
+      <td>Alan Andrew Watson</td>
+      <td>male</td>
+      <td>80</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[GBR]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[University of Leeds]</td>
+      <td>1</td>
+      <td>[GBR]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Albert Fert</td>
+      <td>male</td>
+      <td>80</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[FRA]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Michigan State University, National Autonomou...</td>
+      <td>3</td>
+      <td>[FRA, MEX, USA]</td>
+      <td>3</td>
+      <td>[EU, NA]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alexander Animalu</td>
+      <td>male</td>
+      <td>80</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[GBR, NGA]</td>
+      <td>2</td>
+      <td>[AF, EU]</td>
+      <td>2</td>
+      <td>[Drexel University, Massachusetts Institute of...</td>
+      <td>7</td>
+      <td>[GBR, NGA, USA]</td>
+      <td>3</td>
+      <td>[AF, EU, NA]</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 52 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
+    <span class="n">test_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>num_years_lived</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_chemistry_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_chemistry_laureate_doctoral_advisors</th>
+      <th>...</th>
+      <th>alma_mater_country_alpha_3_codes</th>
+      <th>num_alma_mater_country_alpha_3_codes</th>
+      <th>alma_mater_continent_codes</th>
+      <th>num_alma_mater_continent_codes</th>
+      <th>workplaces</th>
+      <th>num_workplaces</th>
+      <th>workplaces_country_alpha_3_codes</th>
+      <th>num_workplaces_country_alpha_3_codes</th>
+      <th>workplaces_continent_codes</th>
+      <th>num_workplaces_continent_codes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
       <td>Adam Riess</td>
       <td>male</td>
       <td>48</td>
@@ -15290,7 +15643,7 @@ Name: name, dtype: object</pre>
       <td>0</td>
     </tr>
     <tr>
-      <th>3</th>
+      <th>1</th>
       <td>Adrian Melott</td>
       <td>male</td>
       <td>71</td>
@@ -15314,7 +15667,7 @@ Name: name, dtype: object</pre>
       <td>0</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>2</th>
       <td>Alain Aspect</td>
       <td>male</td>
       <td>71</td>
@@ -15337,6 +15690,54 @@ Name: name, dtype: object</pre>
       <td>[EU]</td>
       <td>1</td>
     </tr>
+    <tr>
+      <th>3</th>
+      <td>Alain Haché</td>
+      <td>male</td>
+      <td>47</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[CAN]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[Université de Moncton]</td>
+      <td>1</td>
+      <td>[CAN]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alan Guth</td>
+      <td>male</td>
+      <td>71</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[USA]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
   </tbody>
 </table>
 <p>5 rows × 52 columns</p>
@@ -15352,16 +15753,16 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now I one-hot encode the list features. Due to one-hot encoding there are less features in the test set than in the training set. This is because there are differing country codes, workplaces, educational institutions, etc. The majority of the differences are due to the way that the data was sampled. For instance, the <code>died_in_[country_code]</code> features cannot possibly appear in the test set features since these
+<p>Now I one-hot encode the list features. Due to one-hot encoding there are less features in the validation and test sets than in the training set. This is because there are differing country codes, workplaces, educational institutions, etc. The majority of the differences are due to the way that the data was sampled. For instance, the <code>died_in_[country_code]</code> features cannot possibly appear in the validation and test set features since these
 physicists are still alive. The rest of the few differences are due variability in the data.</p>
-<p>Since any machine models I build will be evaluated on the test set, the tempting thing to do is to reduce the features to the common set of features between the training and test sets. However, this would clearly be <em>data snooping</em> (cheating) since the test set is meant to be unseen data. The other issue is if some of the features in the training set are thrown away and new examples come along with those exact features, the model would not be able to leverage this information. So the only logical thing to do is to ensure that the test set features are identical to the training set features. I do this by "padding" the extra features in the test set with all "no" values. Let's go ahead and do this now.</p>
+<p>Any machine models I build will have parameters chosen using the validation set and be evaluated on the test set. Due to this the tempting thing to do is to reduce the features to the common set of features between the training, validation and test sets. However, this would clearly be <em>data snooping</em> (cheating) since the validation and test sets are meant to be unseen data. The other issue is if some of the features in the training set are thrown away and new examples come along with those exact features, the model would not be able to leverage this information. So the only logical thing to do is to ensure that the validation and test set features are identical to the training set features. I do this by "padding" the extra features in the validation and test sets with all "no" values. Let's go ahead and do this now.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -15375,8 +15776,8 @@ physicists are still alive. The rest of the few differences are due variability 
 <span class="sd">        features (pandas.DataFrame): Features dataframe.</span>
 <span class="sd">        train_features (pandas.DataFrame): Training features</span>
 <span class="sd">            dataframe. Pass this parameter when building features</span>
-<span class="sd">            for a test set so that that identical features are</span>
-<span class="sd">            created for the test set.</span>
+<span class="sd">            for a validation or test set so that that identical</span>
+<span class="sd">            features are created.</span>
 <span class="sd">        presence_threshold (float): For each category in a </span>
 <span class="sd">            categorical list feature, the fraction of</span>
 <span class="sd">            physicists for which the category is present will</span>
@@ -15471,7 +15872,7 @@ physicists are still alive. The rest of the few differences are due variability 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">presence_threshold</span> <span class="o">=</span> <span class="mf">0.01</span>
@@ -15492,7 +15893,7 @@ physicists are still alive. The rest of the few differences are due variability 
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -15673,15 +16074,15 @@ physicists are still alive. The rest of the few differences are due variability 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span>
-                                       <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">validation_features</span><span class="p">,</span>
+                                             <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
     <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
-<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -15694,7 +16095,7 @@ physicists are still alive. The rest of the few differences are due variability 
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
@@ -15728,16 +16129,16 @@ physicists are still alive. The rest of the few differences are due variability 
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>num_chemistry_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>died_in_GBR</th>
-      <th>died_in_AS</th>
-      <th>died_in_NA</th>
-      <th>citizen_of_POL</th>
+      <th>died_in_DEU</th>
       <th>died_in_SWE</th>
+      <th>lived_in_AUS</th>
+      <th>died_in_NA</th>
+      <th>citizen_of_SWE</th>
+      <th>died_in_EU</th>
+      <th>worked_at_University_of_Göttingen</th>
+      <th>died_in_NLD</th>
       <th>died_in_RUS</th>
-      <th>died_in_AUT</th>
-      <th>died_in_USA</th>
-      <th>worked_at_Manhattan_Project</th>
-      <th>worked_at_University_of_Würzburg</th>
+      <th>alumnus_of_Ludwig_Maximilian_University_of_Munich</th>
     </tr>
   </thead>
   <tbody>
@@ -15791,6 +16192,160 @@ physicists are still alive. The rest of the few differences are due variability 
     </tr>
     <tr>
       <th>2</th>
+      <td>Alan Andrew Watson</td>
+      <td>male</td>
+      <td>80</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Albert Fert</td>
+      <td>male</td>
+      <td>80</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alexander Animalu</td>
+      <td>male</td>
+      <td>80</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 187 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span>
+                                       <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>num_years_lived</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_chemistry_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_chemistry_laureate_doctoral_advisors</th>
+      <th>...</th>
+      <th>alumnus_of_University_of_Göttingen</th>
+      <th>alumnus_of_ETH_Zurich</th>
+      <th>died_in_SWE</th>
+      <th>died_in_NA</th>
+      <th>died_in_EU</th>
+      <th>worked_at_University_of_Göttingen</th>
+      <th>died_in_NLD</th>
+      <th>alumnus_of_Technical_University_of_Berlin</th>
+      <th>died_in_RUS</th>
+      <th>citizen_of_CHE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
       <td>Adam Riess</td>
       <td>male</td>
       <td>48</td>
@@ -15814,7 +16369,7 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
     </tr>
     <tr>
-      <th>3</th>
+      <th>1</th>
       <td>Adrian Melott</td>
       <td>male</td>
       <td>71</td>
@@ -15838,13 +16393,61 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>2</th>
       <td>Alain Aspect</td>
       <td>male</td>
       <td>71</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alain Haché</td>
+      <td>male</td>
+      <td>47</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alan Guth</td>
+      <td>male</td>
+      <td>71</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -15876,14 +16479,14 @@ physicists are still alive. The rest of the few differences are due variability 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now I convert the count features to ratio features by diving the cell values by the mean value of the feature. I also drop any features with zero counts in all the columns since they are uninformative.</p>
+<p>Now I convert the count features to ratio features by diving the cell values by the mean value of the feature in the training set. I also drop any features with zero counts in all the columns since they are uninformative.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">convert_counts_to_ratios</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -15896,8 +16499,8 @@ physicists are still alive. The rest of the few differences are due variability 
 <span class="sd">        features (pandas.DataFrame): Features dataframe.</span>
 <span class="sd">        train_features (pandas.DataFrame): Training features</span>
 <span class="sd">            dataframe. Pass this parameter when building features</span>
-<span class="sd">            for a test set so that the ratios can be created</span>
-<span class="sd">            from the test set data.</span>
+<span class="sd">            for a validation or test set so that the ratios can be</span>
+<span class="sd">            created using mean values in the training data.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        pandas.DataFrame: Features dataframe with counts replaced by ratios.</span>
@@ -15932,15 +16535,15 @@ physicists are still alive. The rest of the few differences are due variability 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span>
-                                         <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">184</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
-<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">validation_features</span><span class="p">,</span>
+                                               <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">184</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+<span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -15953,7 +16556,7 @@ physicists are still alive. The rest of the few differences are due variability 
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[22]:</div>
 
 
 
@@ -16015,13 +16618,13 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>4.354839</td>
-      <td>4.736842</td>
-      <td>0.967742</td>
-      <td>1.288783</td>
-      <td>1.395349</td>
+      <td>4.370968</td>
+      <td>4.754386</td>
+      <td>0.971326</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
       <td>0.000000</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
     </tr>
     <tr>
@@ -16039,18 +16642,18 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>4.354839</td>
-      <td>4.736842</td>
-      <td>2.903226</td>
-      <td>3.866348</td>
-      <td>1.395349</td>
-      <td>2.655738</td>
-      <td>6.77116</td>
-      <td>4.075472</td>
+      <td>4.370968</td>
+      <td>4.754386</td>
+      <td>2.913978</td>
+      <td>3.880668</td>
+      <td>1.400517</td>
+      <td>2.665574</td>
+      <td>6.796238</td>
+      <td>4.090566</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Adam Riess</td>
+      <td>Alan Andrew Watson</td>
       <td>male</td>
       <td>no</td>
       <td>no</td>
@@ -16063,42 +16666,18 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>4.354839</td>
-      <td>4.736842</td>
-      <td>2.903226</td>
-      <td>1.288783</td>
-      <td>1.395349</td>
-      <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.000000</td>
+      <td>4.370968</td>
+      <td>4.754386</td>
+      <td>0.971326</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>0.888525</td>
+      <td>1.699060</td>
+      <td>2.045283</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Adrian Melott</td>
-      <td>male</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.967742</td>
-      <td>1.288783</td>
-      <td>1.395349</td>
-      <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Alain Aspect</td>
+      <td>Albert Fert</td>
       <td>male</td>
       <td>no</td>
       <td>no</td>
@@ -16111,14 +16690,38 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>4.354839</td>
-      <td>4.736842</td>
-      <td>0.967742</td>
-      <td>1.288783</td>
-      <td>1.395349</td>
-      <td>2.655738</td>
-      <td>1.69279</td>
-      <td>2.037736</td>
+      <td>4.370968</td>
+      <td>4.754386</td>
+      <td>1.942652</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>2.665574</td>
+      <td>5.097179</td>
+      <td>4.090566</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alexander Animalu</td>
+      <td>male</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.942652</td>
+      <td>2.587112</td>
+      <td>2.801034</td>
+      <td>6.219672</td>
+      <td>5.097179</td>
+      <td>6.135849</td>
     </tr>
   </tbody>
 </table>
@@ -16134,7 +16737,209 @@ physicists are still alive. The rest of the few differences are due variability 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span>
+                                         <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">184</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[23]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>born_in_AUT</th>
+      <th>born_in_CAN</th>
+      <th>born_in_DEU</th>
+      <th>born_in_FRA</th>
+      <th>born_in_GBR</th>
+      <th>...</th>
+      <th>ratio_num_death_country_alpha_3_codes</th>
+      <th>ratio_num_death_continent_codes</th>
+      <th>ratio_num_residence_country_alpha_3_codes</th>
+      <th>ratio_num_residence_continent_codes</th>
+      <th>ratio_num_alma_mater</th>
+      <th>ratio_num_alma_mater_country_alpha_3_codes</th>
+      <th>ratio_num_alma_mater_continent_codes</th>
+      <th>ratio_num_workplaces</th>
+      <th>ratio_num_workplaces_country_alpha_3_codes</th>
+      <th>ratio_num_workplaces_continent_codes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Adam Riess</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.370968</td>
+      <td>4.754386</td>
+      <td>2.913978</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adrian Melott</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.971326</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Alain Aspect</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.370968</td>
+      <td>4.754386</td>
+      <td>0.971326</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>2.665574</td>
+      <td>1.69906</td>
+      <td>2.045283</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alain Haché</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.370968</td>
+      <td>4.754386</td>
+      <td>1.942652</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>0.888525</td>
+      <td>1.69906</td>
+      <td>2.045283</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alan Guth</td>
+      <td>male</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.370968</td>
+      <td>4.754386</td>
+      <td>0.971326</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 184 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
@@ -16155,7 +16960,7 @@ physicists are still alive. The rest of the few differences are due variability 
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[24]:</div>
 
 
 
@@ -16215,16 +17020,16 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>1.122661</td>
-      <td>1.148936</td>
+      <td>1.126819</td>
+      <td>1.153191</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.967742</td>
-      <td>1.288783</td>
-      <td>1.395349</td>
-      <td>3.540984</td>
-      <td>6.77116</td>
-      <td>4.075472</td>
+      <td>0.971326</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>3.554098</td>
+      <td>6.796238</td>
+      <td>4.090566</td>
     </tr>
     <tr>
       <th>1</th>
@@ -16239,15 +17044,15 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>1.122661</td>
-      <td>1.148936</td>
+      <td>1.126819</td>
+      <td>1.153191</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
     </tr>
     <tr>
@@ -16263,15 +17068,15 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>1.122661</td>
-      <td>1.148936</td>
+      <td>1.126819</td>
+      <td>1.153191</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>2.903226</td>
-      <td>2.577566</td>
-      <td>2.790698</td>
-      <td>0.885246</td>
-      <td>0.00000</td>
+      <td>2.913978</td>
+      <td>2.587112</td>
+      <td>2.801034</td>
+      <td>0.888525</td>
+      <td>0.000000</td>
       <td>0.000000</td>
     </tr>
     <tr>
@@ -16287,16 +17092,16 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>1.122661</td>
-      <td>1.148936</td>
+      <td>1.126819</td>
+      <td>1.153191</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.967742</td>
-      <td>1.288783</td>
-      <td>1.395349</td>
-      <td>0.885246</td>
-      <td>1.69279</td>
-      <td>2.037736</td>
+      <td>0.971326</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
+      <td>0.888525</td>
+      <td>1.699060</td>
+      <td>2.045283</td>
     </tr>
     <tr>
       <th>4</th>
@@ -16315,11 +17120,11 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.967742</td>
-      <td>1.288783</td>
-      <td>1.395349</td>
+      <td>0.971326</td>
+      <td>1.293556</td>
+      <td>1.400517</td>
       <td>0.000000</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.000000</td>
     </tr>
   </tbody>
@@ -16337,7 +17142,7 @@ physicists are still alive. The rest of the few differences are due variability 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The one-hot encoding has increased the dimensionality of the problem. There are now 183 features (excluding the <code>full_name</code>) for 540 observations in the training set and 387 observations in the test set. A model that is fit to such data could be prone to overfitting and a dimensionality reduction on this data may be warranted.</p>
+<p>The one-hot encoding has increased the dimensionality of the problem. There are now 183 features (excluding the <code>full_name</code>) for 542 observations in the training set, 192 observations in the validation set and 193 observations in the test set. A model that is fit to such data could be prone to overfitting and a dimensionality reduction on this data may be warranted.</p>
 
 </div>
 </div>
@@ -16345,14 +17150,14 @@ physicists are still alive. The rest of the few differences are due variability 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the training and test features dataframes I'll persist them for future use.</p>
+<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the training, validation and test features dataframes, I'll persist them for future use.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
@@ -16370,7 +17175,7 @@ physicists are still alive. The rest of the few differences are due variability 
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[21]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -16551,7 +17356,206 @@ physicists are still alive. The rest of the few differences are due variability 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">validation_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
+    <span class="nb">sorted</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+<span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[26]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>alumnus_in_**</th>
+      <th>alumnus_in_***</th>
+      <th>alumnus_in_AS</th>
+      <th>alumnus_in_AUS</th>
+      <th>alumnus_in_AUT</th>
+      <th>alumnus_in_CHE</th>
+      <th>alumnus_in_DEU</th>
+      <th>alumnus_in_EU</th>
+      <th>alumnus_in_FRA</th>
+      <th>alumnus_in_GBR</th>
+      <th>...</th>
+      <th>worked_in_DEU</th>
+      <th>worked_in_DNK</th>
+      <th>worked_in_EU</th>
+      <th>worked_in_FRA</th>
+      <th>worked_in_GBR</th>
+      <th>worked_in_ITA</th>
+      <th>worked_in_NA</th>
+      <th>worked_in_NLD</th>
+      <th>worked_in_RUS</th>
+      <th>worked_in_USA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 184 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">test_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
@@ -16569,7 +17573,7 @@ physicists are still alive. The rest of the few differences are due variability 
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[27]:</div>
 
 
 
@@ -16620,7 +17624,7 @@ physicists are still alive. The rest of the few differences are due variability 
       <th>0</th>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16643,24 +17647,24 @@ physicists are still alive. The rest of the few differences are due variability 
     <tr>
       <th>1</th>
       <td>no</td>
-      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
-      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>yes</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
     </tr>
@@ -16673,14 +17677,14 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
       <td>...</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16691,7 +17695,7 @@ physicists are still alive. The rest of the few differences are due variability 
     <tr>
       <th>3</th>
       <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16707,7 +17711,7 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16721,14 +17725,14 @@ physicists are still alive. The rest of the few differences are due variability 
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
-      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>...</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
-      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16750,10 +17754,11 @@ physicists are still alive. The rest of the few differences are due variability 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-features.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">validation_features</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/validation-features.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">test_features</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/test-features.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
