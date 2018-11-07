@@ -16129,16 +16129,16 @@ physicists are still alive. The rest of the few differences are due variability 
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>num_chemistry_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>died_in_DEU</th>
-      <th>died_in_SWE</th>
-      <th>lived_in_AUS</th>
-      <th>died_in_NA</th>
-      <th>citizen_of_SWE</th>
+      <th>lived_in_**</th>
+      <th>died_in_USA</th>
       <th>died_in_EU</th>
-      <th>worked_at_University_of_Göttingen</th>
+      <th>alumnus_of_Humboldt_University_of_Berlin</th>
+      <th>died_in_SWE</th>
+      <th>citizen_of_POL</th>
+      <th>died_in_IND</th>
+      <th>died_in_ITA</th>
+      <th>lived_in_OC</th>
       <th>died_in_NLD</th>
-      <th>died_in_RUS</th>
-      <th>alumnus_of_Ludwig_Maximilian_University_of_Munich</th>
     </tr>
   </thead>
   <tbody>
@@ -16331,16 +16331,16 @@ physicists are still alive. The rest of the few differences are due variability 
       <th>num_physics_laureate_doctoral_advisors</th>
       <th>num_chemistry_laureate_doctoral_advisors</th>
       <th>...</th>
-      <th>alumnus_of_University_of_Göttingen</th>
-      <th>alumnus_of_ETH_Zurich</th>
-      <th>died_in_SWE</th>
-      <th>died_in_NA</th>
+      <th>died_in_**</th>
+      <th>died_in_USA</th>
       <th>died_in_EU</th>
-      <th>worked_at_University_of_Göttingen</th>
+      <th>alumnus_of_Humboldt_University_of_Berlin</th>
+      <th>died_in_SWE</th>
+      <th>alumnus_of_University_of_Paris</th>
+      <th>citizen_of_POL</th>
+      <th>died_in_IND</th>
+      <th>died_in_ITA</th>
       <th>died_in_NLD</th>
-      <th>alumnus_of_Technical_University_of_Berlin</th>
-      <th>died_in_RUS</th>
-      <th>citizen_of_CHE</th>
     </tr>
   </thead>
   <tbody>
@@ -16543,6 +16543,7 @@ physicists are still alive. The rest of the few differences are due variability 
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)))</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">184</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
 <span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -16745,6 +16746,7 @@ physicists are still alive. The rest of the few differences are due variability 
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">184</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
 <span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -16947,6 +16949,7 @@ physicists are still alive. The rest of the few differences are due variability 
 <span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
     <span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
 <span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
