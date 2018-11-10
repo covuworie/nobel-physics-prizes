@@ -13128,6 +13128,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="k">import</span> <span class="n">DummyClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">accuracy_score</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">classification_report</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
@@ -13705,23 +13706,9 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">majority_class_predict</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
-    <span class="n">majority</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
-    <span class="n">predict</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">,),</span> <span class="n">majority</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">predict</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">majority_train_predict</span> <span class="o">=</span> <span class="n">majority_class_predict</span><span class="p">(</span><span class="n">train_target</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">majority</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;most_frequent&#39;</span><span class="p">)</span>
+<span class="n">majority</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_target</span><span class="p">)</span>
+<span class="n">majority_train_predict</span> <span class="o">=</span> <span class="n">majority</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">train_target</span><span class="p">)</span>
 <span class="n">majority_train_predict_mcc</span> <span class="o">=</span> <span class="n">matthews_corrcoef</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">train_target</span><span class="p">,</span>
                                                <span class="n">y_pred</span><span class="o">=</span><span class="n">majority_train_predict</span><span class="p">)</span>
 <span class="n">print_matthews_corrcoef</span><span class="p">(</span><span class="n">majority_train_predict_mcc</span><span class="p">,</span> <span class="s1">&#39;Majority class classifier&#39;</span><span class="p">,</span>
@@ -13764,7 +13751,7 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13824,10 +13811,10 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">majority_validation_predict</span> <span class="o">=</span> <span class="n">majority_class_predict</span><span class="p">(</span><span class="n">validation_target</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">majority_validation_predict</span> <span class="o">=</span> <span class="n">majority</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span>
 <span class="n">majority_validation_predict_mcc</span> <span class="o">=</span> <span class="n">matthews_corrcoef</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">validation_target</span><span class="p">,</span>
                                                     <span class="n">y_pred</span><span class="o">=</span><span class="n">majority_validation_predict</span><span class="p">)</span>
 <span class="n">print_matthews_corrcoef</span><span class="p">(</span><span class="n">majority_validation_predict_mcc</span><span class="p">,</span> <span class="s1">&#39;Majority class classifier&#39;</span><span class="p">,</span>
@@ -13861,7 +13848,7 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13929,7 +13916,7 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Majority class classifier accuracy (train):&#39;</span><span class="p">,</span>
@@ -13973,7 +13960,7 @@ Majority class classifier accuracy (validation): 0.68
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">experimental_physicist_train_predict_mcc</span> <span class="o">=</span> <span class="n">matthews_corrcoef</span><span class="p">(</span>
@@ -14007,7 +13994,7 @@ Majority class classifier accuracy (validation): 0.68
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -14067,7 +14054,7 @@ Majority class classifier accuracy (validation): 0.68
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">experimental_physicist_validation_predict_mcc</span> <span class="o">=</span> <span class="n">matthews_corrcoef</span><span class="p">(</span>
@@ -14102,7 +14089,7 @@ Majority class classifier accuracy (validation): 0.68
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -14171,7 +14158,7 @@ Majority class classifier accuracy (validation): 0.68
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">baseline_train_predict</span> <span class="o">=</span> <span class="n">baseline_model_predict</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
@@ -14205,7 +14192,7 @@ Majority class classifier accuracy (validation): 0.68
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14265,7 +14252,7 @@ Majority class classifier accuracy (validation): 0.68
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">baseline_validation_predict</span> <span class="o">=</span> <span class="n">baseline_model_predict</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span>
@@ -14299,7 +14286,7 @@ Majority class classifier accuracy (validation): 0.68
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -14367,7 +14354,7 @@ Majority class classifier accuracy (validation): 0.68
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">validation_target</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">baseline_validation_predict</span><span class="p">))</span>
