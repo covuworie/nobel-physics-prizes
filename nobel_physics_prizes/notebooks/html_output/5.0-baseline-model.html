@@ -13382,7 +13382,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-target.csv&#39;</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-target.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;full_name&#39;</span><span class="p">,</span>
+                           <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">train_target</span> <span class="o">=</span> <span class="n">convert_target_to_numerical</span><span class="p">(</span><span class="n">train_target</span><span class="p">)</span>
 <span class="n">train_target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -13403,11 +13404,12 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0    1
-1    0
-2    1
-3    0
-4    0
+<pre>full_name
+Aage Bohr            1
+Aaldert Wapstra      0
+Abdus Salam          1
+Abraham Alikhanov    0
+Abraham H. Taub      0
 Name: physics_laureate, dtype: int64</pre>
 </div>
 
@@ -13509,30 +13511,6 @@ Name: physics_laureate, dtype: int64</pre>
   </thead>
   <tbody>
     <tr>
-      <th>A. P. Balachandran</th>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
       <th>Abdul Qadeer Khan</th>
       <td>0</td>
       <td>1</td>
@@ -13557,6 +13535,30 @@ Name: physics_laureate, dtype: int64</pre>
       <td>0</td>
     </tr>
     <tr>
+      <th>Alain Haché</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
       <th>Alan Andrew Watson</th>
       <td>0</td>
       <td>0</td>
@@ -13574,6 +13576,30 @@ Name: physics_laureate, dtype: int64</pre>
       <td>1</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alan Guth</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -13604,30 +13630,6 @@ Name: physics_laureate, dtype: int64</pre>
       <td>0</td>
       <td>1</td>
     </tr>
-    <tr>
-      <th>Alexander Animalu</th>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
   </tbody>
 </table>
 <p>5 rows × 183 columns</p>
@@ -13645,7 +13647,8 @@ Name: physics_laureate, dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/validation-target.csv&#39;</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/validation-target.csv&#39;</span><span class="p">,</span>
+                                <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">validation_target</span> <span class="o">=</span> <span class="n">convert_target_to_numerical</span><span class="p">(</span><span class="n">validation_target</span><span class="p">)</span>
 <span class="n">validation_target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -13666,11 +13669,12 @@ Name: physics_laureate, dtype: int64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0    0
-1    0
-2    0
-3    1
-4    0
+<pre>full_name
+Abdul Qadeer Khan     0
+Alain Haché           0
+Alan Andrew Watson    0
+Alan Guth             0
+Albert Fert           1
 Name: physics_laureate, dtype: int64</pre>
 </div>
 
@@ -13684,7 +13688,7 @@ Name: physics_laureate, dtype: int64</pre>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Performance-Measure">Performance Measure<a class="anchor-link" href="#Performance-Measure">&#182;</a></h2><p>Before building a baseline classifier, I first need to address the issue of how to compare and assess the quality of different classifiers. A <em>performance measure</em> is clearly needed. But which one? <a href="https://en.wikipedia.org/wiki/Accuracy_and_precision">Accuracy</a> is affected by the probability of class membership of the target and therefore it is not a suitable metric for this problem due as there are many more non-laureates than laureates. In situations such as this, accuracy can be very misleading.</p>
-<p>The <a href="https://en.wikipedia.org/wiki/Matthews_correlation_coefficient">Matthews Correlation Coefficient</a> (MCC) is a suitable performance measure as it is generally regarded as a balanced measure of binary classification performance that can be used when there is a class imbalance. <a href="https://www.researchgate.net/publication/259354929_Predicting_Protein-Protein_Interaction_by_the_Mirrortree_Method_Possibilities_and_Limitations">Predicting Protein-Protein Interaction by the Mirrortree Method Possibilities and Limitations</a> says that "MCC is a more robust measure of effectiveness of binary classification methods than such measures as precision, recall, and F-measure because it takes into account in a balanced way of all four factors contributing to the effectiveness; true positives, false positives, true negatives and false negatives". The MCC can be calculated directly from the <a href="https://en.wikipedia.org/wiki/Confusion_matrix">confusion matrix</a> using the formula:</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Matthews_correlation_coefficient">Matthews Correlation Coefficient</a> (MCC) (also known as the <a href="https://en.wikipedia.org/wiki/Phi_coefficient">phi coefficient</a>) is a suitable performance measure as it is generally regarded as a balanced measure of binary classification performance that can be used when there is a class imbalance. <a href="https://www.researchgate.net/publication/259354929_Predicting_Protein-Protein_Interaction_by_the_Mirrortree_Method_Possibilities_and_Limitations">Predicting Protein-Protein Interaction by the Mirrortree Method Possibilities and Limitations</a> says that "MCC is a more robust measure of effectiveness of binary classification methods than such measures as precision, recall, and F-measure because it takes into account in a balanced way of all four factors contributing to the effectiveness; true positives, false positives, true negatives and false negatives". The MCC can be calculated directly from the <a href="https://en.wikipedia.org/wiki/Confusion_matrix">confusion matrix</a> using the formula:</p>
 \begin{equation}
 MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}}
 \end{equation}<p>where TP is the number of <a href="https://en.wikipedia.org/wiki/True_positive">true positives</a>, TN the number of true <a href="https://en.wikipedia.org/wiki/True_negative">negatives</a>, FP the number of <a href="https://en.wikipedia.org/wiki/False_positive">false positives</a> and FN the number of <a href="https://en.wikipedia.org/wiki/False_negative">false negatives</a>. If any of the four sums in the denominator is zero, the denominator can be arbitrarily set to one; this results in a Matthews correlation coefficient of zero, which can be shown to be the correct limiting value.</p>
@@ -13879,15 +13883,15 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
   <tbody>
     <tr>
       <th>Observed non-laureate</th>
-      <td>131</td>
+      <td>151</td>
       <td>0</td>
-      <td>131</td>
+      <td>151</td>
     </tr>
     <tr>
       <th>Observed laureate</th>
-      <td>61</td>
+      <td>41</td>
       <td>0</td>
-      <td>61</td>
+      <td>41</td>
     </tr>
     <tr>
       <th>Predicted total</th>
@@ -13941,7 +13945,7 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Majority class classifier accuracy (train): 0.77
-Majority class classifier accuracy (validation): 0.68
+Majority class classifier accuracy (validation): 0.79
 </pre>
 </div>
 </div>
@@ -14082,7 +14086,7 @@ Majority class classifier accuracy (validation): 0.68
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Experimental physicist classifier MCC (validation): 0.24
+<pre>Experimental physicist classifier MCC (validation): 0.29
 </pre>
 </div>
 </div>
@@ -14120,15 +14124,15 @@ Majority class classifier accuracy (validation): 0.68
   <tbody>
     <tr>
       <th>Observed non-laureate</th>
-      <td>128</td>
-      <td>3</td>
-      <td>131</td>
+      <td>147</td>
+      <td>4</td>
+      <td>151</td>
     </tr>
     <tr>
       <th>Observed laureate</th>
-      <td>52</td>
-      <td>9</td>
-      <td>61</td>
+      <td>33</td>
+      <td>8</td>
+      <td>41</td>
     </tr>
     <tr>
       <th>Predicted total</th>
@@ -14150,7 +14154,7 @@ Majority class classifier accuracy (validation): 0.68
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This classifier is better than the previous one. 0.59 MCC is a moderate correlation for the training set and 0.24 MCC is a low correlation for the validation set. Examination of the confusion matrices illustrates that this classifier is excellent at identifying the negative class, but not very good at identifying the positive class. In fact, on the validation set, it is appalling at predicting the laureates. As such, as a classifier it is also useless.</p>
+<p>This classifier is better than the previous one. The MCC for the training set is respectable but the MCC is low for the validation set. Examination of the confusion matrices illustrates that this classifier is excellent at identifying the negative class, but not very good at identifying the positive class. In fact, on the validation set, it is appalling at predicting the laureates. As such, as a classifier it is also useless.</p>
 <p>Also, recall during the exploratory data analysis, I saw that the ratio of the number of alma mater and the ratio of the number of workplaces appear to be reasonable predictors of the target as the median values are consistently higher for laureates than non-laureates. It seems reasonable to create a classifier that always predicts a physicist is a laureate when the value of either of these variables is above the lower quartile for laureates. This is a value of approximately 0.8 for the ratio of the number of alma mater and 0 for the ratio of the number of workplaces. OK let's go ahead and look at the performance of thi classifier.</p>
 
 </div>
@@ -14279,7 +14283,7 @@ Majority class classifier accuracy (validation): 0.68
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Baseline classifier MCC (validation): 0.38
+<pre>Baseline classifier MCC (validation): 0.31
 </pre>
 </div>
 </div>
@@ -14317,20 +14321,20 @@ Majority class classifier accuracy (validation): 0.68
   <tbody>
     <tr>
       <th>Observed negative</th>
-      <td>53</td>
-      <td>78</td>
-      <td>131</td>
+      <td>51</td>
+      <td>100</td>
+      <td>151</td>
     </tr>
     <tr>
       <th>Observed positive</th>
-      <td>2</td>
-      <td>59</td>
-      <td>61</td>
+      <td>0</td>
+      <td>41</td>
+      <td>41</td>
     </tr>
     <tr>
       <th>Predicted total</th>
-      <td>55</td>
-      <td>137</td>
+      <td>51</td>
+      <td>141</td>
       <td>192</td>
     </tr>
   </tbody>
@@ -14376,12 +14380,12 @@ Majority class classifier accuracy (validation): 0.68
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>              precision    recall  f1-score   support
 
-           0       0.96      0.40      0.57       131
-           1       0.43      0.97      0.60        61
+           0       1.00      0.34      0.50       151
+           1       0.29      1.00      0.45        41
 
-   micro avg       0.58      0.58      0.58       192
-   macro avg       0.70      0.69      0.58       192
-weighted avg       0.79      0.58      0.58       192
+   micro avg       0.48      0.48      0.48       192
+   macro avg       0.65      0.67      0.48       192
+weighted avg       0.85      0.48      0.49       192
 
 </pre>
 </div>
