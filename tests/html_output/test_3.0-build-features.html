@@ -13115,7 +13115,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ipytest</span>
@@ -13131,7 +13131,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">PYTEST_OPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--color=yes&#39;</span><span class="p">]</span>
@@ -13144,19 +13144,19 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_num_years_lived_dead</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">87</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;num_years_lived&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">expected_num_years_lived_dead_group</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;80-94&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;num_years_lived_group&#39;</span><span class="p">)</span>
 
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_num_years_lived_alive</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">55</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;num_years_lived&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">expected_num_years_lived_alive_group</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;50-64&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;num_years_lived_group&#39;</span><span class="p">)</span>
 
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
@@ -13382,41 +13382,6 @@ div#notebook {
     
     <span class="n">expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">expected</span>
-
-
-
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">train_counts</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Sheldon Cooper&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Amy Fowler&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Dexter&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="p">],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;count1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;count2&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;count3&#39;</span><span class="p">],</span>
-    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
-
-
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_count_ratios_train</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="s1">&#39;Sheldon Cooper&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;Amy Fowler&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;Dexter&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span>
-    <span class="p">],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;ratio_count1&#39;</span><span class="p">,</span> <span class="s1">&#39;ratio_count2&#39;</span><span class="p">],</span>
-    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
-
-
-
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">expected_count_ratios_test</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="s1">&#39;Albert Einstein&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;Emmy Noether&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;Michael Green&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span>
-    <span class="p">],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;ratio_count1&#39;</span><span class="p">,</span> <span class="s1">&#39;ratio_count2&#39;</span><span class="p">],</span>
-    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13426,13 +13391,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_build_features*&quot;</span><span class="p">)</span>
 <span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_binarize_list_features*&quot;</span><span class="p">)</span>
 <span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_get_alma_mater_or_workplaces*&quot;</span><span class="p">)</span>
-<span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_convert_counts_to_ratios*&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">test_build_features_full_name</span><span class="p">():</span>
@@ -13447,18 +13411,18 @@ div#notebook {
     <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">gender</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">gender</span><span class="p">))</span>    
 
 
-<span class="k">def</span> <span class="nf">test_build_features_years_lived_dead</span><span class="p">(</span><span class="n">expected_num_years_lived_dead</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_build_features_years_lived_dead</span><span class="p">(</span><span class="n">expected_num_years_lived_dead_group</span><span class="p">):</span>
     <span class="n">birth_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1908-11-12&#39;</span><span class="p">)</span>
     <span class="n">death_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1996-1-19&#39;</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_num_years_lived_dead</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_years_lived_group</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_num_years_lived_dead_group</span><span class="p">))</span>
     
     
-<span class="k">def</span> <span class="nf">test_build_features_years_lived_alive</span><span class="p">(</span><span class="n">expected_num_years_lived_alive</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_build_features_years_lived_alive</span><span class="p">(</span><span class="n">expected_num_years_lived_alive_group</span><span class="p">):</span>
     <span class="n">birth_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1963-05-07&#39;</span><span class="p">)</span>
     <span class="n">death_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_num_years_lived_alive</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_years_lived_group</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
+        <span class="n">expected_num_years_lived_alive_group</span><span class="p">))</span>
     
 
 <span class="k">def</span> <span class="nf">test_build_features_physics_subfield_categories</span><span class="p">(</span>
@@ -13807,29 +13771,6 @@ div#notebook {
         <span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">expected_binary_features_train</span><span class="p">)</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">binarize</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_binary_features_train</span><span class="p">))</span>     
 
-    
-<span class="k">def</span> <span class="nf">test_convert_counts_to_ratios_train</span><span class="p">(</span><span class="n">train_counts</span><span class="p">,</span>
-                                        <span class="n">expected_count_ratios_train</span><span class="p">):</span>
-    <span class="n">convert_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span>
-        <span class="n">train_counts</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">convert_features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_count_ratios_train</span><span class="p">))</span>
-    
-
-
-<span class="k">def</span> <span class="nf">test_convert_counts_to_ratios_test</span><span class="p">(</span><span class="n">train_counts</span><span class="p">,</span>
-                                       <span class="n">expected_count_ratios_test</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Albert Einstein&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Emmy Noether&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Michael Green&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="p">],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;count1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;count2&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;count3&#39;</span><span class="p">],</span>
-    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
-    
-    <span class="n">convert_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span>
-        <span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">train_counts</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">convert_features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_count_ratios_test</span><span class="p">))</span>
-    
 
 
 <span class="n">ipytest</span><span class="o">.</span><span class="n">run_pytest</span><span class="p">(</span>
@@ -13852,49 +13793,47 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre><span class="ansi-bold">============================================================== test session starts ==============================================================</span>
-platform win32 -- Python 3.6.5, pytest-3.9.3, py-1.7.0, pluggy-0.8.0 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
+platform win32 -- Python 3.6.5, pytest-4.0.0, py-1.7.0, pluggy-0.8.0 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
 cachedir: .pytest_cache
 rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
 plugins: mock-1.10.0, cov-2.6.0
-<span class="ansi-bold">collecting ... </span>collected 28 items
+<span class="ansi-bold">collecting ... </span>collected 26 items
 
 ..\..\tests\test_3.0-build-features.py::test_build_features_full_name <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                               [  3%]</span>
 ..\..\tests\test_3.0-build-features.py::test_build_features_gender <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                                  [  7%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                        [ 10%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                       [ 14%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                             [ 17%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                  [ 21%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                            [ 25%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                [ 28%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                           [ 32%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates_name <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                      [ 35%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_places_codes <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                            [ 39%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_endswith_comma_oxford <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                     [ 42%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_ends_with_comma_oxford <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                    [ 46%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_duplicate <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 50%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_no_oxford_cambridge <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                       [ 53%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_float <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                     [ 57%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_citizenship <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 60%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_nationality <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 64%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_description <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 67%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_multiple <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                    [ 71%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_not_found <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                   [ 75%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_no_threshold <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                              [ 78%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_threshold <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 82%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_test <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                            [ 85%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_pad_features <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                    [ 89%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_test_cols_equal <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                           [ 92%]</span>
-..\..\tests\test_3.0-build-features.py::test_convert_counts_to_ratios_train <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                         [ 96%]</span>
-..\..\tests\test_3.0-build-features.py::test_convert_counts_to_ratios_test <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                          [100%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                        [ 11%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                       [ 15%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                             [ 19%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                  [ 23%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                            [ 26%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                [ 30%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                           [ 34%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates_name <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                      [ 38%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_places_codes <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                            [ 42%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_endswith_comma_oxford <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                     [ 46%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_ends_with_comma_oxford <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                    [ 50%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_duplicate <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 53%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_no_oxford_cambridge <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                       [ 57%]</span>
+..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_float <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                     [ 61%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_citizenship <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 65%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_nationality <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 69%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_description <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 73%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_multiple <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                    [ 76%]</span>
+..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_not_found <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                   [ 80%]</span>
+..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_no_threshold <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                              [ 84%]</span>
+..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_threshold <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                 [ 88%]</span>
+..\..\tests\test_3.0-build-features.py::test_binarize_list_features_test <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                            [ 92%]</span>
+..\..\tests\test_3.0-build-features.py::test_binarize_list_features_pad_features <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                                    [ 96%]</span>
+..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_test_cols_equal <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                           [100%]</span>
 
-<span class="ansi-green-intense-fg ansi-bold">========================================================== 28 passed in 12.47 seconds ===========================================================</span>
+<span class="ansi-green-intense-fg ansi-bold">========================================================== 26 passed in 11.78 seconds ===========================================================</span>
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[35]:</div>
+    <div class="prompt output_prompt">Out[39]:</div>
 
 
 

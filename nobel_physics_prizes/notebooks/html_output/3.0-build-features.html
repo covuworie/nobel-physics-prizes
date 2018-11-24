@@ -13183,8 +13183,10 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">pycountry_convert</span> <span class="k">import</span> <span class="n">country_alpha2_to_continent_code</span>
 <span class="kn">from</span> <span class="nn">pycountry_convert</span> <span class="k">import</span> <span class="n">country_alpha3_to_country_alpha2</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">MultiLabelBinarizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">OneHotEncoder</span>
 
-<span class="kn">from</span> <span class="nn">src.data.country_utils</span> <span class="k">import</span> <span class="n">nationality_to_alpha2_code</span> 
+<span class="kn">from</span> <span class="nn">src.data.country_utils</span> <span class="k">import</span> <span class="n">nationality_to_alpha2_code</span>
+<span class="kn">from</span> <span class="nn">src.features.features_utils</span> <span class="k">import</span> <span class="n">rank_hot_encode</span>
 </pre></div>
 
     </div>
@@ -14671,159 +14673,159 @@ Name: name, dtype: object</pre>
 <td style="text-align:center">Is the physicist a theoretical physicist? (yes / no)</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_alma_mater</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of universities attended</td>
+<td style="text-align:center">num_alma_mater</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of universities attended</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_alma_mater_continent_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of continent codes of universities attended</td>
+<td style="text-align:center">num_alma_mater_continent_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of continent codes of universities attended</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_alma_mater_country_alpha_3_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of country codes of universities attended</td>
+<td style="text-align:center">num_alma_mater_country_alpha_3_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of country codes of universities attended</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_birth_continent_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of continent codes of birth countries</td>
+<td style="text-align:center">num_birth_continent_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of continent codes of birth countries</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_birth_country_alpha_3_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of birth country codes</td>
+<td style="text-align:center">num_birth_country_alpha_3_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of birth country codes</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_academic_advisors</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureate academic advisors</td>
+<td style="text-align:center">num_chemistry_laureate_academic_advisors</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureate academic advisors</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_children</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureate children</td>
+<td style="text-align:center">num_chemistry_laureate_children</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureate children</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_doctoral_advisors</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureate doctoral advisors</td>
+<td style="text-align:center">num_chemistry_laureate_doctoral_advisors</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureate doctoral advisors</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_doctoral_students</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureate doctoral students</td>
+<td style="text-align:center">num_chemistry_laureate_doctoral_students</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureate doctoral students</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_influenced</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureates the physicist influenced</td>
+<td style="text-align:center">num_chemistry_laureate_influenced</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureates the physicist influenced</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_influenced_by</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureates the physicist was influenced by</td>
+<td style="text-align:center">num_chemistry_laureate_influenced_by</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureates the physicist was influenced by</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_notable_students</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureate notable students</td>
+<td style="text-align:center">num_chemistry_laureate_notable_students</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureate notable students</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_parents</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureate parents</td>
+<td style="text-align:center">num_chemistry_laureate_parents</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureate parents</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_chemistry_laureate_spouses</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of chemistry laureate spouses</td>
+<td style="text-align:center">num_chemistry_laureate_spouses</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of chemistry laureate spouses</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_citizenship_continent_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. continent codes of countries of citizenship</td>
+<td style="text-align:center">num_citizenship_continent_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. continent codes of countries of citizenship</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_citizenship_country_alpha_3_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of country codes of citizenship</td>
+<td style="text-align:center">num_citizenship_country_alpha_3_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of country codes of citizenship</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_academic_advisors</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureate academic advisors</td>
+<td style="text-align:center">num_physics_laureate_academic_advisors</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureate academic advisors</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_children</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureate children</td>
+<td style="text-align:center">num_physics_laureate_children</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureate children</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_doctoral_advisors</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureate doctoral advisors</td>
+<td style="text-align:center">num_physics_laureate_doctoral_advisors</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureate doctoral advisors</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_doctoral_students</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureate doctoral students</td>
+<td style="text-align:center">num_physics_laureate_doctoral_students</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureate doctoral students</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_influenced</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureates the physicist influenced</td>
+<td style="text-align:center">num_physics_laureate_influenced</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureates the physicist influenced</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_influenced_by</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureates the physicist was influenced by</td>
+<td style="text-align:center">num_physics_laureate_influenced_by</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureates the physicist was influenced by</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_notable_students</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureate notable students</td>
+<td style="text-align:center">num_physics_laureate_notable_students</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureate notable students</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_parents</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureate parents</td>
+<td style="text-align:center">num_physics_laureate_parents</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureate parents</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_physics_laureate_spouses</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of physics laureate spouses</td>
+<td style="text-align:center">num_physics_laureate_spouses</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of physics laureate spouses</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_residence_continent_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of continent codes of residence countries</td>
+<td style="text-align:center">num_residence_continent_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of continent codes of residence countries</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_residence_country_alpha_3_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of residence country codes</td>
+<td style="text-align:center">num_residence_country_alpha_3_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of residence country codes</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_workplaces</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of workplaces</td>
+<td style="text-align:center">num_workplaces</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of workplaces</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_workplaces_continent_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of continent codes of countries of workplaces</td>
+<td style="text-align:center">num_workplaces_continent_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of continent codes of countries of workplaces</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_workplaces_country_alpha_3_codes</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of country codes of countries worked in</td>
+<td style="text-align:center">num_workplaces_country_alpha_3_codes</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of country codes of countries worked in</td>
 </tr>
 <tr>
-<td style="text-align:center">ratio_num_years_lived</td>
-<td style="text-align:center">Ratio</td>
-<td style="text-align:center">Ratio of no. of years lived</td>
+<td style="text-align:center">num_years_lived_group</td>
+<td style="text-align:center">Ordinal</td>
+<td style="text-align:center">No. of years lived group (18-24, 25-34, etc.)</td>
 </tr>
 <tr>
 <td style="text-align:center">residence_continent_codes</td>
@@ -14854,15 +14856,14 @@ Name: name, dtype: object</pre>
 </table>
 <p>Some comments are warranted with regards to the types of the feature variables also. As you can see, there are three types of variables:</p>
 <ol>
-<li><p><strong>Ratio</strong> variables of a <em>continuous</em>, <em>quantitative</em> nature.</p>
+<li><p><strong>Ordinal</strong> variables.</p>
 </li>
-<li><p><strong>Categorical</strong> variables of a qualitative nature.</p>
+<li><p><strong>Categorical</strong> variables.</p>
 </li>
-<li><p><strong>Binary</strong> (<strong>dichotomous</strong>) variables of a categorical nature.</p>
+<li><p><strong>Binary</strong> (<strong>dichotomous</strong>) variables.</p>
 </li>
 </ol>
-<p>Every ratio variable is to be calculated by dividing the <em>individual physicist count</em> by the <em>mean count in the training set</em> for a particular feature. So a ratio represents how much more or less than the average value a particular physicist is. Values above one indicate that the physicist is above the average whilst values below one indicate that s/he is below the average for a specific feature.  For instance, if <code>ratio_num_alma_mater_country_alpha_3_codes</code> = 2.5 for a particular physicist, it means that the physicist has attended two and a half times more universities than the typical physicist in the training set.</p>
-<p>The categorical variables are all lists of varying lengths of <em>places</em> and therefore are not in the appropriate form for machine learning. Once I create them I will actually <em>one-hot-encode</em> them into binary variables and discard the lists. You may ask why the one-hot-encoding is done with categorical yes / no values rather than 0 / 1 values? It is because the algorithms I will be processing the data with would treat 0 / 1 values as quantitive in nature which is clearly not what is desired. Essentially I will be left with two variable types, just binary variables and ratio variables. OK time to go ahead and create the features.</p>
+<p>The categorical variables are all lists of varying lengths of <em>places</em> and therefore are not in the appropriate form for machine learning. Once I create them I will actually encode them into binary variables and discard the lists. You may ask why the encoding is done with categorical yes / no values rather than 0 / 1 values? It is because the algorithms I will be processing the data with would treat 0 / 1 values as quantitive in nature which is clearly not what is desired. Essentially I will be left with two variable types, just binary variables and ordinal variables. OK time to go ahead and create the features.</p>
 
 </div>
 </div>
@@ -14891,7 +14892,7 @@ Name: name, dtype: object</pre>
     
     <span class="n">features</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">copy</span><span class="p">()[[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
         <span class="n">mapper</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fullName&#39;</span><span class="p">:</span> <span class="s1">&#39;full_name&#39;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_years_lived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_years_lived</span><span class="p">(</span>
+    <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_years_lived_group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_years_lived_group</span><span class="p">(</span>
         <span class="n">physicists</span><span class="o">.</span><span class="n">birthDate</span><span class="p">,</span> <span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="p">)</span>
     
     <span class="n">_build_physics_subfield_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">)</span>
@@ -14942,6 +14943,9 @@ Name: name, dtype: object</pre>
             <span class="n">physicists</span><span class="p">[</span><span class="n">relation</span><span class="p">],</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="n">features</span><span class="p">[</span><span class="s1">&#39;num_chemistry_&#39;</span> <span class="o">+</span> <span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">_build_num_laureates</span><span class="p">(</span>
             <span class="n">physicists</span><span class="p">[</span><span class="n">relation</span><span class="p">],</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="c1"># drop columns where the counts are all zeros</span>
+    <span class="n">non_zero</span> <span class="o">=</span> <span class="p">(</span><span class="n">features</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;rows&#39;</span><span class="p">)</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">non_zero</span><span class="p">[</span><span class="n">non_zero</span> <span class="o">==</span> <span class="kc">False</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
     
@@ -14994,12 +14998,32 @@ Name: name, dtype: object</pre>
         <span class="n">features</span><span class="o">.</span><span class="n">citizenship_continent_codes</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
 
 
-<span class="k">def</span> <span class="nf">_build_num_years_lived</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_build_num_years_lived_group</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">):</span>
     <span class="n">death_date_no_nan</span> <span class="o">=</span> <span class="n">death_date</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_date_no_nan</span><span class="p">)</span>
     <span class="n">birth_date_no_nan</span> <span class="o">=</span> <span class="n">birth_date</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_date_no_nan</span><span class="p">)</span>
     <span class="n">years_lived</span> <span class="o">=</span> <span class="p">((</span><span class="n">death_date_no_nan</span> <span class="o">-</span> <span class="n">birth_date_no_nan</span><span class="p">)</span> <span class="o">/</span>
                    <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">years_lived</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">years_lived</span> <span class="o">=</span> <span class="n">years_lived</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">)</span>
+    <span class="n">years_lived_group</span> <span class="o">=</span> <span class="n">years_lived</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_years_lived_group</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">years_lived_group</span>
+
+        
+<span class="k">def</span> <span class="nf">_years_lived_group</span><span class="p">(</span><span class="n">years_lived</span><span class="p">):</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">years_lived</span> <span class="o">&gt;=</span> <span class="mi">18</span> <span class="ow">and</span> <span class="n">years_lived</span> <span class="o">&lt;=</span> <span class="mi">120</span><span class="p">)</span>
+    
+    <span class="n">groups</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">25</span><span class="p">):</span> <span class="s1">&#39;18-24&#39;</span><span class="p">,</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">):</span> <span class="s1">&#39;25-34&#39;</span><span class="p">,</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">50</span><span class="p">):</span> <span class="s1">&#39;35-49&#39;</span><span class="p">,</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">65</span><span class="p">):</span> <span class="s1">&#39;50-64&#39;</span><span class="p">,</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">80</span><span class="p">):</span> <span class="s1">&#39;65-79&#39;</span><span class="p">,</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">95</span><span class="p">):</span> <span class="s1">&#39;80-94&#39;</span><span class="p">,</span>
+        <span class="nb">range</span><span class="p">(</span><span class="mi">95</span><span class="p">,</span> <span class="mi">121</span><span class="p">):</span> <span class="s1">&#39;95-120&#39;</span>
+    <span class="p">}</span>
+    
+    <span class="k">for</span> <span class="n">range_</span><span class="p">,</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">years_lived</span> <span class="ow">in</span> <span class="n">range_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">groups</span><span class="p">[</span><span class="n">range_</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">_build_physics_subfield</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">search_terms</span><span class="p">):</span>
@@ -15127,7 +15151,7 @@ Name: name, dtype: object</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
     <span class="n">train_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">48</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">45</span><span class="p">)</span>
 <span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -15166,7 +15190,7 @@ Name: name, dtype: object</pre>
       <th></th>
       <th>full_name</th>
       <th>gender</th>
-      <th>num_years_lived</th>
+      <th>num_years_lived_group</th>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
@@ -15192,7 +15216,7 @@ Name: name, dtype: object</pre>
       <th>0</th>
       <td>Aage Bohr</td>
       <td>male</td>
-      <td>87</td>
+      <td>80-94</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15216,7 +15240,7 @@ Name: name, dtype: object</pre>
       <th>1</th>
       <td>Aaldert Wapstra</td>
       <td>male</td>
-      <td>84</td>
+      <td>80-94</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15240,7 +15264,7 @@ Name: name, dtype: object</pre>
       <th>2</th>
       <td>Abdus Salam</td>
       <td>male</td>
-      <td>70</td>
+      <td>65-79</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
@@ -15264,7 +15288,7 @@ Name: name, dtype: object</pre>
       <th>3</th>
       <td>Abraham Alikhanov</td>
       <td>male</td>
-      <td>66</td>
+      <td>65-79</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15288,7 +15312,7 @@ Name: name, dtype: object</pre>
       <th>4</th>
       <td>Abraham H. Taub</td>
       <td>male</td>
-      <td>88</td>
+      <td>80-94</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15310,7 +15334,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 48 columns</p>
+<p>5 rows × 45 columns</p>
 </div>
 </div>
 
@@ -15328,7 +15352,7 @@ Name: name, dtype: object</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
     <span class="n">validation_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">37</span><span class="p">)</span>
 <span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -15367,14 +15391,14 @@ Name: name, dtype: object</pre>
       <th></th>
       <th>full_name</th>
       <th>gender</th>
-      <th>num_years_lived</th>
+      <th>num_years_lived_group</th>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
       <th>num_physics_laureate_academic_advisors</th>
-      <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
-      <th>num_chemistry_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_physics_laureate_notable_students</th>
       <th>...</th>
       <th>alma_mater_country_alpha_3_codes</th>
       <th>num_alma_mater_country_alpha_3_codes</th>
@@ -15393,7 +15417,7 @@ Name: name, dtype: object</pre>
       <th>0</th>
       <td>Abdul Qadeer Khan</td>
       <td>male</td>
-      <td>82</td>
+      <td>80-94</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
@@ -15417,7 +15441,7 @@ Name: name, dtype: object</pre>
       <th>1</th>
       <td>Alain Haché</td>
       <td>male</td>
-      <td>47</td>
+      <td>35-49</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15441,7 +15465,7 @@ Name: name, dtype: object</pre>
       <th>2</th>
       <td>Alan Andrew Watson</td>
       <td>male</td>
-      <td>80</td>
+      <td>80-94</td>
       <td>no</td>
       <td>no</td>
       <td>yes</td>
@@ -15465,7 +15489,7 @@ Name: name, dtype: object</pre>
       <th>3</th>
       <td>Alan Guth</td>
       <td>male</td>
-      <td>71</td>
+      <td>65-79</td>
       <td>yes</td>
       <td>no</td>
       <td>yes</td>
@@ -15489,7 +15513,7 @@ Name: name, dtype: object</pre>
       <th>4</th>
       <td>Albert Fert</td>
       <td>male</td>
-      <td>80</td>
+      <td>80-94</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15511,7 +15535,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 48 columns</p>
+<p>5 rows × 37 columns</p>
 </div>
 </div>
 
@@ -15529,7 +15553,7 @@ Name: name, dtype: object</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
     <span class="n">test_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">36</span><span class="p">)</span>
 <span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -15568,14 +15592,14 @@ Name: name, dtype: object</pre>
       <th></th>
       <th>full_name</th>
       <th>gender</th>
-      <th>num_years_lived</th>
+      <th>num_years_lived_group</th>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
       <th>num_physics_laureate_academic_advisors</th>
-      <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
-      <th>num_chemistry_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_physics_laureate_notable_students</th>
       <th>...</th>
       <th>alma_mater_country_alpha_3_codes</th>
       <th>num_alma_mater_country_alpha_3_codes</th>
@@ -15594,7 +15618,7 @@ Name: name, dtype: object</pre>
       <th>0</th>
       <td>A. P. Balachandran</td>
       <td>male</td>
-      <td>80</td>
+      <td>80-94</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
@@ -15618,7 +15642,7 @@ Name: name, dtype: object</pre>
       <th>1</th>
       <td>Adam Riess</td>
       <td>male</td>
-      <td>48</td>
+      <td>35-49</td>
       <td>no</td>
       <td>no</td>
       <td>yes</td>
@@ -15642,7 +15666,7 @@ Name: name, dtype: object</pre>
       <th>2</th>
       <td>Adrian Melott</td>
       <td>male</td>
-      <td>71</td>
+      <td>65-79</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15666,7 +15690,7 @@ Name: name, dtype: object</pre>
       <th>3</th>
       <td>Alain Aspect</td>
       <td>male</td>
-      <td>71</td>
+      <td>65-79</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -15690,7 +15714,7 @@ Name: name, dtype: object</pre>
       <th>4</th>
       <td>Alejandro Corichi</td>
       <td>male</td>
-      <td>50</td>
+      <td>50-64</td>
       <td>no</td>
       <td>no</td>
       <td>yes</td>
@@ -15712,7 +15736,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 48 columns</p>
+<p>5 rows × 36 columns</p>
 </div>
 </div>
 
@@ -15725,9 +15749,7 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now I one-hot encode the list features. Due to the one-hot encoding, there are a differing number of features in the training, test and validation sets. This is because there are differing country codes, workplaces, educational institutions, etc that the physicists are associated with. Some of the differences are due variability in the data and some are due to the selection bias that is introduced by the way that the data was sampled (remember that the training set consists only of deceased physicists). The latter issue is an important point that I will be returning to in a later notebook.</p>
-<p>Any machine models I build will have parameters chosen using the validation set and be evaluated on the test set. As a result the tempting thing to do is to reduce the features to the common set of features between the training, validation and test sets. I will do this for the training and validation sets as it seems a perfectly reasonable thing to do. However, this would clearly be <em>data snooping</em> (cheating) if the test set is used as it is meant to be unseen data, and as such, cannot be used to make any decisions during the modeling process. So to ensure that the test set features are identical to the training set features, I will "pad" the extra features in the test set with all "no" values.</p>
-<p>Note this is not as extreme as it seems because I will be using a <code>presence threshold</code> to group binary features that only appear in a few instances into an "other" category. This is intended to reduce the dimensionality of the feature space and help to prevent overfitting during the model building phase. Let's go ahead and do this now.</p>
+<p>So there are more features in the training set than in the validation and test sets. So what are these extra features? These are mainly related to the relationships physicists have with chemistry and physics laureates. Seems like the data is not so rich, especially with regards to more modern physicists.</p>
 
 </div>
 </div>
@@ -15737,11 +15759,518 @@ Name: name, dtype: object</pre>
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[17]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;num_chemistry_laureate_academic_advisors&#39;,
+ &#39;num_chemistry_laureate_doctoral_advisors&#39;,
+ &#39;num_chemistry_laureate_doctoral_students&#39;,
+ &#39;num_chemistry_laureate_influenced&#39;,
+ &#39;num_chemistry_laureate_influenced_by&#39;,
+ &#39;num_chemistry_laureate_notable_students&#39;,
+ &#39;num_chemistry_laureate_spouses&#39;,
+ &#39;num_physics_laureate_spouses&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[18]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;num_chemistry_laureate_academic_advisors&#39;,
+ &#39;num_chemistry_laureate_doctoral_advisors&#39;,
+ &#39;num_chemistry_laureate_doctoral_students&#39;,
+ &#39;num_chemistry_laureate_influenced&#39;,
+ &#39;num_chemistry_laureate_influenced_by&#39;,
+ &#39;num_chemistry_laureate_notable_students&#39;,
+ &#39;num_chemistry_laureate_spouses&#39;,
+ &#39;num_physics_laureate_influenced&#39;,
+ &#39;num_physics_laureate_influenced_by&#39;,
+ &#39;num_physics_laureate_spouses&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Any machine models I build will have parameters chosen using the validation set and be evaluated on the test set. As a result the tempting thing to do is to reduce the features to the common set of features,  between the training, validation and test sets, which have variability across all three datasets. I will do this for the training and validation sets as it seems a perfectly reasonable thing to do since these features are not useful for predictive models. However, this would clearly be <em>data snooping</em> (cheating) if the test set is used as it is meant to be unseen data, and as such, cannot be used to make any decisions during the modeling process. So to ensure that the test set features are identical to the training set features, I will "pad" the extra features in the test set with all "0" values and of course remove any extra features that are not present in the training set.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_cols</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">validation_features</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]))</span>
+<span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+<span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[19]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>num_years_lived_group</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_physics_laureate_notable_students</th>
+      <th>...</th>
+      <th>alma_mater_country_alpha_3_codes</th>
+      <th>num_alma_mater_country_alpha_3_codes</th>
+      <th>alma_mater_continent_codes</th>
+      <th>num_alma_mater_continent_codes</th>
+      <th>workplaces</th>
+      <th>num_workplaces</th>
+      <th>workplaces_country_alpha_3_codes</th>
+      <th>num_workplaces_country_alpha_3_codes</th>
+      <th>workplaces_continent_codes</th>
+      <th>num_workplaces_continent_codes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Aage Bohr</td>
+      <td>male</td>
+      <td>80-94</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[DNK]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Columbia University, Institute for Advanced S...</td>
+      <td>4</td>
+      <td>[CAN, DNK, GBR, USA]</td>
+      <td>4</td>
+      <td>[EU, NA]</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Aaldert Wapstra</td>
+      <td>male</td>
+      <td>80-94</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Abdus Salam</td>
+      <td>male</td>
+      <td>65-79</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[GBR, PAK]</td>
+      <td>2</td>
+      <td>[AS, EU]</td>
+      <td>2</td>
+      <td>[PAECSUPARCOPINSTECHPunjab UniversityImperial ...</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Abraham Alikhanov</td>
+      <td>male</td>
+      <td>65-79</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[RUS]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Institute for Theoretical and Experimental Ph...</td>
+      <td>1</td>
+      <td>[RUS]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Abraham H. Taub</td>
+      <td>male</td>
+      <td>80-94</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[USA]</td>
+      <td>1</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 37 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_cols</span> <span class="o">=</span> <span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">test_features</span> <span class="o">=</span> <span class="n">test_features</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span>
+<span class="n">test_features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_influenced&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">test_features</span><span class="p">[</span><span class="s1">&#39;num_physics_laureate_influenced_by&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>num_years_lived_group</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_physics_laureate_notable_students</th>
+      <th>...</th>
+      <th>alma_mater_continent_codes</th>
+      <th>num_alma_mater_continent_codes</th>
+      <th>workplaces</th>
+      <th>num_workplaces</th>
+      <th>workplaces_country_alpha_3_codes</th>
+      <th>num_workplaces_country_alpha_3_codes</th>
+      <th>workplaces_continent_codes</th>
+      <th>num_workplaces_continent_codes</th>
+      <th>num_physics_laureate_influenced</th>
+      <th>num_physics_laureate_influenced_by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A. P. Balachandran</td>
+      <td>male</td>
+      <td>80-94</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[AS]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adam Riess</td>
+      <td>male</td>
+      <td>35-49</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adrian Melott</td>
+      <td>male</td>
+      <td>65-79</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[NA]</td>
+      <td>1</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alain Aspect</td>
+      <td>male</td>
+      <td>65-79</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>[Centre national de la recherche scientifique,...</td>
+      <td>3</td>
+      <td>[FRA]</td>
+      <td>1</td>
+      <td>[EU]</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alejandro Corichi</td>
+      <td>male</td>
+      <td>50-64</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>[]</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 37 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now I binary encode the list features. Due to the binary encoding, there are a differing number of features in the training, test and validation sets. I'll be following a methodology analagous to the above in order to ensure that the features are the same in the training, validation and test sets.</p>
+<p>The differing features occur because there are differing country codes, workplaces, educational institutions, etc that the physicists are associated with. Some of the differences are due variability in the data and some are due to the selection bias that is introduced by the way that the data was sampled (remember that the training set consists only of deceased physicists). The latter issue is an important point that I will be returning to in a later notebook.</p>
+<p>I will also be using a <code>presence threshold</code> to group binary features that only appear in a few instances into an "other" category. This is intended to reduce the dimensionality of the feature space and help to prevent overfitting during the model building phase. Let's go ahead and "binarize" the list features now.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                            <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">pad_features</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Binarize list features.</span>
 <span class="sd">    </span>
-<span class="sd">    One-hot encode the list categorical features in the</span>
+<span class="sd">    Binary encode the list categorical features in the</span>
 <span class="sd">    features dataframe.</span>
 
 <span class="sd">    Args:</span>
@@ -15849,685 +16378,13 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">168</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">157</span><span class="p">)</span>
 <span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[18]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>full_name</th>
-      <th>gender</th>
-      <th>num_years_lived</th>
-      <th>is_theoretical_physicist</th>
-      <th>is_experimental_physicist</th>
-      <th>is_astronomer</th>
-      <th>num_physics_laureate_academic_advisors</th>
-      <th>num_chemistry_laureate_academic_advisors</th>
-      <th>num_physics_laureate_doctoral_advisors</th>
-      <th>num_chemistry_laureate_doctoral_advisors</th>
-      <th>...</th>
-      <th>citizen_of_POL</th>
-      <th>citizen_of_RUS</th>
-      <th>citizen_of_SWE</th>
-      <th>citizen_of_USA</th>
-      <th>citizen_of_***</th>
-      <th>citizen_in_AS</th>
-      <th>citizen_in_EU</th>
-      <th>citizen_in_NA</th>
-      <th>citizen_in_OC</th>
-      <th>citizen_in_**</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Aage Bohr</td>
-      <td>male</td>
-      <td>87</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Aaldert Wapstra</td>
-      <td>male</td>
-      <td>84</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Abdus Salam</td>
-      <td>male</td>
-      <td>70</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Abraham Alikhanov</td>
-      <td>male</td>
-      <td>66</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Abraham H. Taub</td>
-      <td>male</td>
-      <td>88</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 168 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">validation_features</span><span class="p">,</span>
-                                             <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">158</span><span class="p">)</span>
-<span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[19]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>full_name</th>
-      <th>gender</th>
-      <th>num_years_lived</th>
-      <th>is_theoretical_physicist</th>
-      <th>is_experimental_physicist</th>
-      <th>is_astronomer</th>
-      <th>num_physics_laureate_academic_advisors</th>
-      <th>num_chemistry_laureate_academic_advisors</th>
-      <th>num_physics_laureate_doctoral_advisors</th>
-      <th>num_chemistry_laureate_doctoral_advisors</th>
-      <th>...</th>
-      <th>citizen_of_NLD</th>
-      <th>citizen_of_RUS</th>
-      <th>citizen_of_SWE</th>
-      <th>citizen_of_USA</th>
-      <th>citizen_of_***</th>
-      <th>citizen_in_AS</th>
-      <th>citizen_in_EU</th>
-      <th>citizen_in_NA</th>
-      <th>citizen_in_OC</th>
-      <th>citizen_in_**</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Abdul Qadeer Khan</td>
-      <td>male</td>
-      <td>82</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Alain Haché</td>
-      <td>male</td>
-      <td>47</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Alan Andrew Watson</td>
-      <td>male</td>
-      <td>80</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Alan Guth</td>
-      <td>male</td>
-      <td>71</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Albert Fert</td>
-      <td>male</td>
-      <td>80</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 158 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So there are more features in the training set than in the validation set. So what are these extra features?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[20]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;alumnus_of_Humboldt_University_of_Berlin&#39;,
- &#39;alumnus_of_Victoria_University_of_Manchester&#39;,
- &#39;born_in_HUN&#39;,
- &#39;citizen_of_HUN&#39;,
- &#39;citizen_of_POL&#39;,
- &#39;worked_at_Humboldt_University_of_Berlin&#39;,
- &#39;worked_at_Manhattan_Project&#39;,
- &#39;worked_at_University_of_Göttingen&#39;,
- &#39;worked_at_University_of_Würzburg&#39;,
- &#39;worked_in_DNK&#39;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Working on the <em>Manhattan Project</em> certainly makes sense! OK let's reduce the training and validation set to the common set of features amongst them.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_cols</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">validation_features</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]))</span>
-<span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
-    <span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
-<span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[21]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>full_name</th>
-      <th>gender</th>
-      <th>num_years_lived</th>
-      <th>is_theoretical_physicist</th>
-      <th>is_experimental_physicist</th>
-      <th>is_astronomer</th>
-      <th>num_physics_laureate_academic_advisors</th>
-      <th>num_chemistry_laureate_academic_advisors</th>
-      <th>num_physics_laureate_doctoral_advisors</th>
-      <th>num_chemistry_laureate_doctoral_advisors</th>
-      <th>...</th>
-      <th>citizen_of_NLD</th>
-      <th>citizen_of_RUS</th>
-      <th>citizen_of_SWE</th>
-      <th>citizen_of_USA</th>
-      <th>citizen_of_***</th>
-      <th>citizen_in_AS</th>
-      <th>citizen_in_EU</th>
-      <th>citizen_in_NA</th>
-      <th>citizen_in_OC</th>
-      <th>citizen_in_**</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Aage Bohr</td>
-      <td>male</td>
-      <td>87</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Aaldert Wapstra</td>
-      <td>male</td>
-      <td>84</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Abdus Salam</td>
-      <td>male</td>
-      <td>70</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Abraham Alikhanov</td>
-      <td>male</td>
-      <td>66</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Abraham H. Taub</td>
-      <td>male</td>
-      <td>88</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 158 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>There are only 140 features in the test set so I must "pad" the remaining 18 binary features with "no" to ensure that the features are identical between the training and test sets.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">,</span>
-                                       <span class="n">pad_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
-    <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
-<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -16565,34 +16422,34 @@ Name: name, dtype: object</pre>
       <th></th>
       <th>full_name</th>
       <th>gender</th>
-      <th>num_years_lived</th>
+      <th>num_years_lived_group</th>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
       <th>num_physics_laureate_academic_advisors</th>
-      <th>num_chemistry_laureate_academic_advisors</th>
       <th>num_physics_laureate_doctoral_advisors</th>
-      <th>num_chemistry_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_physics_laureate_notable_students</th>
       <th>...</th>
-      <th>alumnus_of_Saint_Petersburg_State_University</th>
-      <th>worked_at_Leiden_University</th>
-      <th>alumnus_of_Technical_University_of_Berlin</th>
-      <th>citizen_in_**</th>
-      <th>alumnus_of_University_of_Vienna</th>
-      <th>alumnus_in_SWE</th>
-      <th>born_in_SWE</th>
+      <th>citizen_of_POL</th>
+      <th>citizen_of_RUS</th>
       <th>citizen_of_SWE</th>
-      <th>lived_in_RUS</th>
-      <th>worked_in_ITA</th>
+      <th>citizen_of_USA</th>
+      <th>citizen_of_***</th>
+      <th>citizen_in_AS</th>
+      <th>citizen_in_EU</th>
+      <th>citizen_in_NA</th>
+      <th>citizen_in_OC</th>
+      <th>citizen_in_**</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>A. P. Balachandran</td>
+      <td>Aage Bohr</td>
       <td>male</td>
-      <td>80</td>
-      <td>yes</td>
+      <td>80-94</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>0</td>
@@ -16606,19 +16463,19 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Adam Riess</td>
+      <td>Aaldert Wapstra</td>
       <td>male</td>
-      <td>48</td>
+      <td>80-94</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -16630,17 +16487,17 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Adrian Melott</td>
+      <td>Abdus Salam</td>
       <td>male</td>
-      <td>71</td>
-      <td>no</td>
+      <td>65-79</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>0</td>
@@ -16652,8 +16509,8 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16661,9 +16518,9 @@ Name: name, dtype: object</pre>
     </tr>
     <tr>
       <th>3</th>
-      <td>Alain Aspect</td>
+      <td>Abraham Alikhanov</td>
       <td>male</td>
-      <td>71</td>
+      <td>65-79</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16676,8 +16533,8 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16685,12 +16542,12 @@ Name: name, dtype: object</pre>
     </tr>
     <tr>
       <th>4</th>
-      <td>Alejandro Corichi</td>
+      <td>Abraham H. Taub</td>
       <td>male</td>
-      <td>50</td>
+      <td>80-94</td>
       <td>no</td>
       <td>no</td>
-      <td>yes</td>
+      <td>no</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -16699,17 +16556,17 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 158 columns</p>
+<p>5 rows × 157 columns</p>
 </div>
 </div>
 
@@ -16718,75 +16575,16 @@ Name: name, dtype: object</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now I convert the count features to ratio features by diving the cell values by the mean value of the feature in the training set. I also drop any features with zero counts in all the columns since they are uninformative.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">convert_counts_to_ratios</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Convert count features to ratios.</span>
-<span class="sd">    </span>
-<span class="sd">    Converts all counts features in the `features` dataframe to</span>
-<span class="sd">    ratios by dividing cell values by the mean value of the feature.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        features (pandas.DataFrame): Features dataframe.</span>
-<span class="sd">        train_features (pandas.DataFrame, optional): Defaults to None.</span>
-<span class="sd">            Training features dataframe. Pass this parameter when</span>
-<span class="sd">            building features for a validation or test set so that the</span>
-<span class="sd">            ratios can be created using mean values in the training data.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        pandas.DataFrame: Features dataframe with counts replaced by ratios.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">numerator</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span> 
-    <span class="k">if</span> <span class="n">train_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># drop columns in training features where the counts are all zero</span>
-        <span class="n">numerator</span> <span class="o">=</span> <span class="n">numerator</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">(</span><span class="n">numerator</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;rows&#39;</span><span class="p">)]</span>
-        <span class="n">denominator</span> <span class="o">=</span> <span class="n">numerator</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">non_zero_cols</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
-        <span class="n">non_zero_cols</span> <span class="o">=</span> <span class="n">non_zero_cols</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-            <span class="p">:,</span> <span class="p">(</span><span class="n">non_zero_cols</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;rows&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">columns</span>
-        <span class="n">numerator</span> <span class="o">=</span> <span class="n">numerator</span><span class="p">[</span><span class="n">non_zero_cols</span><span class="p">]</span>
-        <span class="n">denominator</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)[</span>
-            <span class="n">non_zero_cols</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
-    <span class="n">features_with_ratios</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-    <span class="n">ratio</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
-    <span class="n">ratio</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ratio_&#39;</span> <span class="o">+</span> <span class="n">col_name</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">ratio</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-    <span class="n">features_with_ratios</span> <span class="o">=</span> <span class="n">features_with_ratios</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">features_with_ratios</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">validation_features</span><span class="p">,</span>
-                                               <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">validation_features</span><span class="p">,</span>
+                                             <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">155</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">147</span><span class="p">)</span>
 <span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -16800,7 +16598,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[23]:</div>
 
 
 
@@ -16825,25 +16623,25 @@ Name: name, dtype: object</pre>
       <th></th>
       <th>full_name</th>
       <th>gender</th>
+      <th>num_years_lived_group</th>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
-      <th>born_in_AUT</th>
-      <th>born_in_CAN</th>
-      <th>born_in_CHE</th>
-      <th>born_in_DEU</th>
-      <th>born_in_FRA</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_physics_laureate_notable_students</th>
       <th>...</th>
-      <th>ratio_num_birth_country_alpha_3_codes</th>
-      <th>ratio_num_birth_continent_codes</th>
-      <th>ratio_num_residence_country_alpha_3_codes</th>
-      <th>ratio_num_residence_continent_codes</th>
-      <th>ratio_num_alma_mater</th>
-      <th>ratio_num_alma_mater_country_alpha_3_codes</th>
-      <th>ratio_num_alma_mater_continent_codes</th>
-      <th>ratio_num_workplaces</th>
-      <th>ratio_num_workplaces_country_alpha_3_codes</th>
-      <th>ratio_num_workplaces_continent_codes</th>
+      <th>citizen_of_NLD</th>
+      <th>citizen_of_RUS</th>
+      <th>citizen_of_SWE</th>
+      <th>citizen_of_USA</th>
+      <th>citizen_of_***</th>
+      <th>citizen_in_AS</th>
+      <th>citizen_in_EU</th>
+      <th>citizen_in_NA</th>
+      <th>citizen_in_OC</th>
+      <th>citizen_in_**</th>
     </tr>
   </thead>
   <tbody>
@@ -16851,30 +16649,39 @@ Name: name, dtype: object</pre>
       <th>0</th>
       <td>Abdul Qadeer Khan</td>
       <td>male</td>
+      <td>80-94</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>1.885217</td>
-      <td>1.044316</td>
-      <td>4.370968</td>
-      <td>4.754386</td>
-      <td>2.913978</td>
-      <td>3.880668</td>
-      <td>1.400517</td>
-      <td>2.665574</td>
-      <td>6.796238</td>
-      <td>4.090566</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Alain Haché</td>
       <td>male</td>
+      <td>35-49</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16882,72 +16689,71 @@ Name: name, dtype: object</pre>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
+      <td>yes</td>
       <td>no</td>
-      <td>...</td>
-      <td>0.942609</td>
-      <td>1.044316</td>
-      <td>4.370968</td>
-      <td>4.754386</td>
-      <td>1.942652</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>0.888525</td>
-      <td>1.699060</td>
-      <td>2.045283</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Alan Andrew Watson</td>
       <td>male</td>
+      <td>80-94</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>4.370968</td>
-      <td>4.754386</td>
-      <td>0.971326</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>0.888525</td>
-      <td>1.699060</td>
-      <td>2.045283</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Alan Guth</td>
       <td>male</td>
+      <td>65-79</td>
       <td>yes</td>
       <td>no</td>
       <td>yes</td>
-      <td>no</td>
-      <td>yes</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>...</td>
-      <td>1.885217</td>
-      <td>1.044316</td>
-      <td>4.370968</td>
-      <td>4.754386</td>
-      <td>0.971326</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Albert Fert</td>
       <td>male</td>
+      <td>80-94</td>
       <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
@@ -16955,21 +16761,13 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>yes</td>
-      <td>...</td>
-      <td>0.942609</td>
-      <td>1.044316</td>
-      <td>4.370968</td>
-      <td>4.754386</td>
-      <td>1.942652</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>2.665574</td>
-      <td>5.097179</td>
-      <td>4.090566</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 155 columns</p>
+<p>5 rows × 147 columns</p>
 </div>
 </div>
 
@@ -16978,20 +16776,77 @@ Name: name, dtype: object</pre>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So there are more features in the training set than in the validation set. So what are these extra features?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[24]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;alumnus_of_Humboldt_University_of_Berlin&#39;,
+ &#39;alumnus_of_Victoria_University_of_Manchester&#39;,
+ &#39;born_in_HUN&#39;,
+ &#39;citizen_of_HUN&#39;,
+ &#39;citizen_of_POL&#39;,
+ &#39;worked_at_Humboldt_University_of_Berlin&#39;,
+ &#39;worked_at_Manhattan_Project&#39;,
+ &#39;worked_at_University_of_Göttingen&#39;,
+ &#39;worked_at_University_of_Würzburg&#39;,
+ &#39;worked_in_DNK&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Working on the <em>Manhattan Project</em> certainly makes sense! OK let's reduce the training and validation set to the common set of features amongst them.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span>
-                                         <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_cols</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">validation_features</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]))</span>
+<span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
     <span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
-<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -17029,151 +16884,151 @@ Name: name, dtype: object</pre>
       <th></th>
       <th>full_name</th>
       <th>gender</th>
+      <th>num_years_lived_group</th>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
-      <th>born_in_AUT</th>
-      <th>born_in_CAN</th>
-      <th>born_in_CHE</th>
-      <th>born_in_DEU</th>
-      <th>born_in_FRA</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_physics_laureate_notable_students</th>
       <th>...</th>
-      <th>ratio_num_birth_country_alpha_3_codes</th>
-      <th>ratio_num_birth_continent_codes</th>
-      <th>ratio_num_residence_country_alpha_3_codes</th>
-      <th>ratio_num_residence_continent_codes</th>
-      <th>ratio_num_alma_mater</th>
-      <th>ratio_num_alma_mater_country_alpha_3_codes</th>
-      <th>ratio_num_alma_mater_continent_codes</th>
-      <th>ratio_num_workplaces</th>
-      <th>ratio_num_workplaces_country_alpha_3_codes</th>
-      <th>ratio_num_workplaces_continent_codes</th>
+      <th>citizen_of_NLD</th>
+      <th>citizen_of_RUS</th>
+      <th>citizen_of_SWE</th>
+      <th>citizen_of_USA</th>
+      <th>citizen_of_***</th>
+      <th>citizen_in_AS</th>
+      <th>citizen_in_EU</th>
+      <th>citizen_in_NA</th>
+      <th>citizen_in_OC</th>
+      <th>citizen_in_**</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>A. P. Balachandran</td>
+      <td>Aage Bohr</td>
       <td>male</td>
+      <td>80-94</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>...</td>
-      <td>1.885217</td>
-      <td>2.088632</td>
-      <td>4.370968</td>
-      <td>4.754386</td>
-      <td>0.971326</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.000000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Adam Riess</td>
+      <td>Aaldert Wapstra</td>
       <td>male</td>
+      <td>80-94</td>
       <td>no</td>
       <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
-      <td>...</td>
-      <td>0.942609</td>
-      <td>1.044316</td>
-      <td>4.370968</td>
-      <td>4.754386</td>
-      <td>2.913978</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.000000</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Adrian Melott</td>
+      <td>Abdus Salam</td>
       <td>male</td>
+      <td>65-79</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
-      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>...</td>
-      <td>0.942609</td>
-      <td>1.044316</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.971326</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.000000</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Alain Aspect</td>
+      <td>Abraham Alikhanov</td>
       <td>male</td>
+      <td>65-79</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>yes</td>
-      <td>...</td>
-      <td>0.942609</td>
-      <td>1.044316</td>
-      <td>4.370968</td>
-      <td>4.754386</td>
-      <td>0.971326</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>2.665574</td>
-      <td>1.69906</td>
-      <td>2.045283</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Alejandro Corichi</td>
+      <td>Abraham H. Taub</td>
       <td>male</td>
+      <td>80-94</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
       <td>no</td>
       <td>no</td>
       <td>yes</td>
       <td>no</td>
       <td>no</td>
       <td>no</td>
+      <td>yes</td>
       <td>no</td>
       <td>no</td>
-      <td>...</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.00000</td>
-      <td>0.000000</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 155 columns</p>
+<p>5 rows × 147 columns</p>
 </div>
 </div>
 
@@ -17182,19 +17037,26 @@ Name: name, dtype: object</pre>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are less features in the test set so I must "pad" the remaining binary features with "no" to ensure that the features are identical between the training and test sets.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">convert_counts_to_ratios</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
-    <span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
-<span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">,</span>
+                                       <span class="n">pad_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -17232,6 +17094,308 @@ Name: name, dtype: object</pre>
       <th></th>
       <th>full_name</th>
       <th>gender</th>
+      <th>num_years_lived_group</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>num_physics_laureate_academic_advisors</th>
+      <th>num_physics_laureate_doctoral_advisors</th>
+      <th>num_physics_laureate_doctoral_students</th>
+      <th>num_physics_laureate_notable_students</th>
+      <th>...</th>
+      <th>citizen_of_SWE</th>
+      <th>citizen_in_**</th>
+      <th>alumnus_of_ETH_Zurich</th>
+      <th>alumnus_in_SWE</th>
+      <th>lived_in_NLD</th>
+      <th>lived_in_**</th>
+      <th>born_in_SWE</th>
+      <th>worked_in_ITA</th>
+      <th>lived_in_RUS</th>
+      <th>alumnus_in_CHE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A. P. Balachandran</td>
+      <td>male</td>
+      <td>80-94</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adam Riess</td>
+      <td>male</td>
+      <td>35-49</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adrian Melott</td>
+      <td>male</td>
+      <td>65-79</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alain Aspect</td>
+      <td>male</td>
+      <td>65-79</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alejandro Corichi</td>
+      <td>male</td>
+      <td>50-64</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 147 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The features almost look good now, but there is one thing troubling me. The mix of binary and ordinal variables complicates matters when it comes to machine learning. There are issues related to the following:</p>
+<ul>
+<li><a href="https://stats.stackexchange.com/questions/69568/whether-to-rescale-indicator-binary-dummy-predictors-for-lasso">How to correctly scale features for machine learning algorithms that require this</a>?</li>
+<li><a href="https://andrewgelman.com/2009/07/11/when_to_standar/">Difficulty of interpretability of coefficients in generalized linear models</a>.</li>
+<li><a href="https://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/">Bias towards lower importance given towards binary variables in random forests</a>.</li>
+</ul>
+<p>I'd like to avoid these issues altogether.</p>
+<p>Seeing as the majority of the features are binary, it makes sense to convert the ordinal variables to binary variables. However, I do not want to lose the ordinal information that is present in these variables. The <a href="http://scottclowe.com/2016-03-05-rank-hot-encoder/">rank-hot encoder</a> is an encoding that converts ordinal variables to binary variables whilst maintaining the ordinal information. Scott C. Lowe explains that the "rank-hot encoder" is similar to a one-hot encoder, except every feature up to and including the current rank is hot." He illustrates this with the following example:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Satisfaction</th>
+      <th>Rank Index</th>
+      <th>One-Hot Encoding</th>
+      <th>Rank-Hot Encoding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Very bad</td>
+      <td>0</td>
+      <td><code class="highlighter-rouge">[1, 0, 0, 0, 0]</code></td>
+      <td><code class="highlighter-rouge">[0, 0, 0, 0]</code></td>
+    </tr>
+    <tr>
+      <td>Bad</td>
+      <td>1</td>
+      <td><code class="highlighter-rouge">[0, 1, 0, 0, 0]</code></td>
+      <td><code class="highlighter-rouge">[1, 0, 0, 0]</code></td>
+    </tr>
+    <tr>
+      <td>Neutral</td>
+      <td>2</td>
+      <td><code class="highlighter-rouge">[0, 0, 1, 0, 0]</code></td>
+      <td><code class="highlighter-rouge">[1, 1, 0, 0]</code></td>
+    </tr>
+    <tr>
+      <td>Good</td>
+      <td>3</td>
+      <td><code class="highlighter-rouge">[0, 0, 0, 1, 0]</code></td>
+      <td><code class="highlighter-rouge">[1, 1, 1, 0]</code></td>
+    </tr>
+    <tr>
+      <td>Very good</td>
+      <td>4</td>
+      <td><code class="highlighter-rouge">[0, 0, 0, 0, 1]</code></td>
+      <td><code class="highlighter-rouge">[1, 1, 1, 1]</code></td>
+    </tr>
+  </tbody>
+</table><p>He goes on to say, "Instead of answering the query “Is the satisfaction x?”, the entries in a rank-hot encoder tell us “Is the satisfaction level at least x?”. This representation of the data allows a linear model to explain the effect of a high-rank as the additive composition of the effect of each rank in turn."</p>
+<p>Sounds very useful doesn't it. Plus there are some other very nice properties of this encoding of ordinal variables that are explained in the blog link. The main cons of rank-hot encoding, which are shared with one-hot encoding, are:</p>
+<ul>
+<li>The feature space gets larger.</li>
+<li>Information is lost whenever a categorical value is observed in a new instance (i.e. in the test set) that was not observed in the training (or validation) set.</li>
+</ul>
+<p>However, I believe the benefits I mentioned earlier are so important that they outweigh these downsides. Plus there are ways of dealing with the increase in the feature space. OK so let's go ahead and rank-hot encode the ordinal features.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ordinal_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;num_&#39;</span><span class="p">)]</span>
+<span class="n">enc</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">enc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">[</span><span class="n">ordinal_cols</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">validation_features</span><span class="p">[</span><span class="n">ordinal_cols</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[27]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>OneHotEncoder(categorical_features=None, categories=&#39;auto&#39;, dtype=&#39;int64&#39;,
+       handle_unknown=&#39;ignore&#39;, n_values=None, sparse=False)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">rank_hot_encode</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">enc</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">ordinal_cols</span><span class="p">)</span>
+<span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span><span class="p">})</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">206</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
+<span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[28]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
       <th>is_theoretical_physicist</th>
       <th>is_experimental_physicist</th>
       <th>is_astronomer</th>
@@ -17241,16 +17405,16 @@ Name: name, dtype: object</pre>
       <th>born_in_DEU</th>
       <th>born_in_FRA</th>
       <th>...</th>
-      <th>ratio_num_birth_country_alpha_3_codes</th>
-      <th>ratio_num_birth_continent_codes</th>
-      <th>ratio_num_residence_country_alpha_3_codes</th>
-      <th>ratio_num_residence_continent_codes</th>
-      <th>ratio_num_alma_mater</th>
-      <th>ratio_num_alma_mater_country_alpha_3_codes</th>
-      <th>ratio_num_alma_mater_continent_codes</th>
-      <th>ratio_num_workplaces</th>
-      <th>ratio_num_workplaces_country_alpha_3_codes</th>
-      <th>ratio_num_workplaces_continent_codes</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_2</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_3</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_4</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_5</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_6</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_7</th>
+      <th>num_workplaces_continent_codes_at_least_1</th>
+      <th>num_workplaces_continent_codes_at_least_2</th>
+      <th>num_workplaces_continent_codes_at_least_3</th>
+      <th>num_workplaces_continent_codes_at_least_4</th>
     </tr>
   </thead>
   <tbody>
@@ -17267,16 +17431,16 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>0.942609</td>
-      <td>1.044316</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.971326</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>3.554098</td>
-      <td>6.796238</td>
-      <td>4.090566</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>1</th>
@@ -17291,16 +17455,16 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>2</th>
@@ -17315,16 +17479,16 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>2.827826</td>
-      <td>2.088632</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2.913978</td>
-      <td>2.587112</td>
-      <td>2.801034</td>
-      <td>0.888525</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>3</th>
@@ -17339,16 +17503,16 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>2.827826</td>
-      <td>2.088632</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.971326</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>0.888525</td>
-      <td>1.699060</td>
-      <td>2.045283</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
     <tr>
       <th>4</th>
@@ -17363,20 +17527,428 @@ Name: name, dtype: object</pre>
       <td>no</td>
       <td>no</td>
       <td>...</td>
-      <td>0.942609</td>
-      <td>1.044316</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.971326</td>
-      <td>1.293556</td>
-      <td>1.400517</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 155 columns</p>
+<p>5 rows × 206 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">rank_hot_encode</span><span class="p">(</span><span class="n">validation_features</span><span class="p">,</span> <span class="n">enc</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">ordinal_cols</span><span class="p">)</span>
+<span class="n">validation_features</span> <span class="o">=</span> <span class="n">validation_features</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span><span class="p">})</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">validation_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
+<span class="n">validation_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[29]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>born_in_AUT</th>
+      <th>born_in_CAN</th>
+      <th>born_in_CHE</th>
+      <th>born_in_DEU</th>
+      <th>born_in_FRA</th>
+      <th>...</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_2</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_3</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_4</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_5</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_6</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_7</th>
+      <th>num_workplaces_continent_codes_at_least_1</th>
+      <th>num_workplaces_continent_codes_at_least_2</th>
+      <th>num_workplaces_continent_codes_at_least_3</th>
+      <th>num_workplaces_continent_codes_at_least_4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Abdul Qadeer Khan</td>
+      <td>male</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Alain Haché</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Alan Andrew Watson</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alan Guth</td>
+      <td>male</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Albert Fert</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 206 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">rank_hot_encode</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span> <span class="n">enc</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">ordinal_cols</span><span class="p">)</span>
+<span class="n">test_features</span> <span class="o">=</span> <span class="n">test_features</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;yes&#39;</span><span class="p">})</span>
+<span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">notna</span><span class="p">()))</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[30]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>full_name</th>
+      <th>gender</th>
+      <th>is_theoretical_physicist</th>
+      <th>is_experimental_physicist</th>
+      <th>is_astronomer</th>
+      <th>born_in_AUT</th>
+      <th>born_in_CAN</th>
+      <th>born_in_CHE</th>
+      <th>born_in_DEU</th>
+      <th>born_in_FRA</th>
+      <th>...</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_2</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_3</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_4</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_5</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_6</th>
+      <th>num_workplaces_country_alpha_3_codes_at_least_7</th>
+      <th>num_workplaces_continent_codes_at_least_1</th>
+      <th>num_workplaces_continent_codes_at_least_2</th>
+      <th>num_workplaces_continent_codes_at_least_3</th>
+      <th>num_workplaces_continent_codes_at_least_4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A. P. Balachandran</td>
+      <td>male</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adam Riess</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adrian Melott</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alain Aspect</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Alejandro Corichi</td>
+      <td>male</td>
+      <td>no</td>
+      <td>no</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>...</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+      <td>no</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 206 columns</p>
 </div>
 </div>
 
@@ -17396,7 +17968,7 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
@@ -17412,7 +17984,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[27]:</div>
+    <div class="prompt output_prompt">Out[31]:</div>
 
 
 
@@ -17514,34 +18086,85 @@ Name: name, dtype: object</pre>
  &#39;lived_in_OC&#39;,
  &#39;lived_in_RUS&#39;,
  &#39;lived_in_USA&#39;,
- &#39;ratio_num_alma_mater&#39;,
- &#39;ratio_num_alma_mater_continent_codes&#39;,
- &#39;ratio_num_alma_mater_country_alpha_3_codes&#39;,
- &#39;ratio_num_birth_continent_codes&#39;,
- &#39;ratio_num_birth_country_alpha_3_codes&#39;,
- &#39;ratio_num_chemistry_laureate_academic_advisors&#39;,
- &#39;ratio_num_chemistry_laureate_doctoral_advisors&#39;,
- &#39;ratio_num_chemistry_laureate_doctoral_students&#39;,
- &#39;ratio_num_chemistry_laureate_influenced&#39;,
- &#39;ratio_num_chemistry_laureate_influenced_by&#39;,
- &#39;ratio_num_chemistry_laureate_notable_students&#39;,
- &#39;ratio_num_chemistry_laureate_spouses&#39;,
- &#39;ratio_num_citizenship_continent_codes&#39;,
- &#39;ratio_num_citizenship_country_alpha_3_codes&#39;,
- &#39;ratio_num_physics_laureate_academic_advisors&#39;,
- &#39;ratio_num_physics_laureate_children&#39;,
- &#39;ratio_num_physics_laureate_doctoral_advisors&#39;,
- &#39;ratio_num_physics_laureate_doctoral_students&#39;,
- &#39;ratio_num_physics_laureate_influenced&#39;,
- &#39;ratio_num_physics_laureate_influenced_by&#39;,
- &#39;ratio_num_physics_laureate_notable_students&#39;,
- &#39;ratio_num_physics_laureate_spouses&#39;,
- &#39;ratio_num_residence_continent_codes&#39;,
- &#39;ratio_num_residence_country_alpha_3_codes&#39;,
- &#39;ratio_num_workplaces&#39;,
- &#39;ratio_num_workplaces_continent_codes&#39;,
- &#39;ratio_num_workplaces_country_alpha_3_codes&#39;,
- &#39;ratio_num_years_lived&#39;,
+ &#39;num_alma_mater_at_least_1&#39;,
+ &#39;num_alma_mater_at_least_2&#39;,
+ &#39;num_alma_mater_at_least_3&#39;,
+ &#39;num_alma_mater_at_least_4&#39;,
+ &#39;num_alma_mater_at_least_5&#39;,
+ &#39;num_alma_mater_continent_codes_at_least_1&#39;,
+ &#39;num_alma_mater_continent_codes_at_least_2&#39;,
+ &#39;num_alma_mater_continent_codes_at_least_3&#39;,
+ &#39;num_alma_mater_country_alpha_3_codes_at_least_1&#39;,
+ &#39;num_alma_mater_country_alpha_3_codes_at_least_2&#39;,
+ &#39;num_alma_mater_country_alpha_3_codes_at_least_3&#39;,
+ &#39;num_alma_mater_country_alpha_3_codes_at_least_4&#39;,
+ &#39;num_birth_continent_codes_at_least_1&#39;,
+ &#39;num_birth_continent_codes_at_least_2&#39;,
+ &#39;num_birth_country_alpha_3_codes_at_least_1&#39;,
+ &#39;num_birth_country_alpha_3_codes_at_least_2&#39;,
+ &#39;num_birth_country_alpha_3_codes_at_least_3&#39;,
+ &#39;num_birth_country_alpha_3_codes_at_least_4&#39;,
+ &#39;num_birth_country_alpha_3_codes_at_least_7&#39;,
+ &#39;num_citizenship_continent_codes_at_least_1&#39;,
+ &#39;num_citizenship_continent_codes_at_least_2&#39;,
+ &#39;num_citizenship_continent_codes_at_least_3&#39;,
+ &#39;num_citizenship_country_alpha_3_codes_at_least_1&#39;,
+ &#39;num_citizenship_country_alpha_3_codes_at_least_2&#39;,
+ &#39;num_citizenship_country_alpha_3_codes_at_least_3&#39;,
+ &#39;num_citizenship_country_alpha_3_codes_at_least_4&#39;,
+ &#39;num_citizenship_country_alpha_3_codes_at_least_5&#39;,
+ &#39;num_physics_laureate_academic_advisors_at_least_1&#39;,
+ &#39;num_physics_laureate_academic_advisors_at_least_2&#39;,
+ &#39;num_physics_laureate_children_at_least_1&#39;,
+ &#39;num_physics_laureate_doctoral_advisors_at_least_1&#39;,
+ &#39;num_physics_laureate_doctoral_advisors_at_least_2&#39;,
+ &#39;num_physics_laureate_doctoral_students_at_least_1&#39;,
+ &#39;num_physics_laureate_doctoral_students_at_least_2&#39;,
+ &#39;num_physics_laureate_doctoral_students_at_least_3&#39;,
+ &#39;num_physics_laureate_influenced_at_least_1&#39;,
+ &#39;num_physics_laureate_influenced_at_least_2&#39;,
+ &#39;num_physics_laureate_influenced_at_least_3&#39;,
+ &#39;num_physics_laureate_influenced_by_at_least_1&#39;,
+ &#39;num_physics_laureate_influenced_by_at_least_2&#39;,
+ &#39;num_physics_laureate_notable_students_at_least_1&#39;,
+ &#39;num_physics_laureate_notable_students_at_least_2&#39;,
+ &#39;num_physics_laureate_notable_students_at_least_7&#39;,
+ &#39;num_residence_continent_codes_at_least_1&#39;,
+ &#39;num_residence_continent_codes_at_least_2&#39;,
+ &#39;num_residence_continent_codes_at_least_3&#39;,
+ &#39;num_residence_country_alpha_3_codes_at_least_1&#39;,
+ &#39;num_residence_country_alpha_3_codes_at_least_2&#39;,
+ &#39;num_residence_country_alpha_3_codes_at_least_3&#39;,
+ &#39;num_residence_country_alpha_3_codes_at_least_5&#39;,
+ &#39;num_workplaces_at_least_1&#39;,
+ &#39;num_workplaces_at_least_12&#39;,
+ &#39;num_workplaces_at_least_13&#39;,
+ &#39;num_workplaces_at_least_15&#39;,
+ &#39;num_workplaces_at_least_2&#39;,
+ &#39;num_workplaces_at_least_3&#39;,
+ &#39;num_workplaces_at_least_4&#39;,
+ &#39;num_workplaces_at_least_5&#39;,
+ &#39;num_workplaces_at_least_6&#39;,
+ &#39;num_workplaces_at_least_7&#39;,
+ &#39;num_workplaces_at_least_8&#39;,
+ &#39;num_workplaces_at_least_9&#39;,
+ &#39;num_workplaces_continent_codes_at_least_1&#39;,
+ &#39;num_workplaces_continent_codes_at_least_2&#39;,
+ &#39;num_workplaces_continent_codes_at_least_3&#39;,
+ &#39;num_workplaces_continent_codes_at_least_4&#39;,
+ &#39;num_workplaces_country_alpha_3_codes_at_least_1&#39;,
+ &#39;num_workplaces_country_alpha_3_codes_at_least_2&#39;,
+ &#39;num_workplaces_country_alpha_3_codes_at_least_3&#39;,
+ &#39;num_workplaces_country_alpha_3_codes_at_least_4&#39;,
+ &#39;num_workplaces_country_alpha_3_codes_at_least_5&#39;,
+ &#39;num_workplaces_country_alpha_3_codes_at_least_6&#39;,
+ &#39;num_workplaces_country_alpha_3_codes_at_least_7&#39;,
+ &#39;num_years_lived_group_at_least_25-34&#39;,
+ &#39;num_years_lived_group_at_least_35-49&#39;,
+ &#39;num_years_lived_group_at_least_50-64&#39;,
+ &#39;num_years_lived_group_at_least_65-79&#39;,
+ &#39;num_years_lived_group_at_least_80-94&#39;,
+ &#39;num_years_lived_group_at_least_95-120&#39;,
  &#39;worked_at_*&#39;,
  &#39;worked_at_Bell_Labs&#39;,
  &#39;worked_at_CERN&#39;,
@@ -17583,7 +18206,8 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The one-hot encoding has increased the dimensionality of the problem. There are now 154 features (excluding the <code>full_name</code>) for 542 observations in the training set, 192 observations in the validation set and 193 observations in the test set. A model that is fit to such data could be prone to overfitting and a dimensionality reduction on this data may be warranted.</p>
+<p>The binary encoding has increased the dimensionality of the problem. There are now 205
+features (excluding the <code>full_name</code>) for 542 observations in the training set, 192 observations in the validation set and 193 observations in the test set. A model that is fit to such data could be prone to overfitting and a dimensionality reduction on this data may be warranted.</p>
 
 </div>
 </div>
@@ -17598,7 +18222,7 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
@@ -17615,7 +18239,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[28]:</div>
+    <div class="prompt output_prompt">Out[32]:</div>
 
 
 
@@ -17784,7 +18408,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 155 columns</p>
+<p>5 rows × 206 columns</p>
 </div>
 </div>
 
@@ -17796,7 +18420,7 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">validation_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">validation_features</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
@@ -17814,7 +18438,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[29]:</div>
+    <div class="prompt output_prompt">Out[33]:</div>
 
 
 
@@ -17983,7 +18607,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 155 columns</p>
+<p>5 rows × 206 columns</p>
 </div>
 </div>
 
@@ -17995,7 +18619,7 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">test_features</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
@@ -18012,7 +18636,7 @@ Name: name, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[30]:</div>
+    <div class="prompt output_prompt">Out[34]:</div>
 
 
 
@@ -18181,7 +18805,7 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 155 columns</p>
+<p>5 rows × 206 columns</p>
 </div>
 </div>
 
@@ -18193,7 +18817,7 @@ Name: name, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-features.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
