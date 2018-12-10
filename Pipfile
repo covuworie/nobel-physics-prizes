@@ -21,6 +21,7 @@ reverse-geocoder = "*"
 scikit-learn = "*"
 prince = "*"
 seaborn = "*"
+corextopic = "*"
 
 [dev-packages]
 pytest = "*"
