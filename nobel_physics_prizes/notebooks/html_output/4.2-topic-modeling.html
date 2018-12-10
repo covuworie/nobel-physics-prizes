@@ -13381,7 +13381,7 @@ div#notebook {
     </tr>
   </tbody>
 </table>
-<p>5 rows × 205 columns</p>
+<p>5 rows × 202 columns</p>
 </div>
 </div>
 
@@ -13604,7 +13604,7 @@ div#notebook {
     </tr>
   </tbody>
 </table>
-<p>5 rows × 205 columns</p>
+<p>5 rows × 202 columns</p>
 </div>
 </div>
 
@@ -13827,38 +13827,12 @@ div#notebook {
     </tr>
   </tbody>
 </table>
-<p>5 rows × 205 columns</p>
+<p>5 rows × 202 columns</p>
 </div>
 </div>
 
 </div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># drop these variables which have zero values for all physicists.</span>
-<span class="c1"># need to fix the bug (probably in rank-hot encoding) that is in feature building.</span>
-<span class="n">train_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span>
-    <span class="s1">&#39;num_alma_mater_country_alpha_3_codes_at_least_4&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;num_physics_laureate_doctoral_advisors_at_least_2&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;num_alma_mater_continent_codes_at_least_3&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-<span class="n">validation_features</span> <span class="o">=</span> <span class="n">validation_features</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span>
-    <span class="s1">&#39;num_alma_mater_country_alpha_3_codes_at_least_4&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;num_physics_laureate_doctoral_advisors_at_least_2&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;num_alma_mater_continent_codes_at_least_3&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-<span class="n">test_features</span> <span class="o">=</span> <span class="n">test_features</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span>
-    <span class="s1">&#39;num_alma_mater_country_alpha_3_codes_at_least_4&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;num_physics_laureate_doctoral_advisors_at_least_2&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;num_alma_mater_continent_codes_at_least_3&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
 
@@ -13873,7 +13847,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">find_best_topic_model</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">num_topic_models</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_topics_range</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
@@ -13955,7 +13929,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_topics_range</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
@@ -13979,7 +13953,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 30 / 30 topics range |█████| 100% Elapsed Time: 0:22:44 Time:  0:22:44
+<pre>Running: 30 / 30 topics range |█████| 100% Elapsed Time: 0:05:17 Time:  0:05:17
 </pre>
 </div>
 </div>
@@ -13990,7 +13964,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of latent factors (topics) = &#39;</span><span class="p">,</span> <span class="n">topic_model</span><span class="o">.</span><span class="n">n_hidden</span><span class="p">)</span>
@@ -14032,7 +14006,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_topics_total_correlation_distribution</span><span class="p">(</span>
@@ -14068,7 +14042,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_topics_total_correlation_distribution</span><span class="p">(</span><span class="n">topic_model</span><span class="p">)</span>
@@ -14111,7 +14085,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_topics_total_correlation_cumulative_distribution</span><span class="p">(</span>
@@ -14154,7 +14128,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_topics_total_correlation_cumulative_distribution</span><span class="p">(</span><span class="n">topic_model</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
@@ -14205,7 +14179,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">latent_factors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;is_eu_worker&#39;</span><span class="p">:</span><span class="s1">&#39;European Workers&#39;</span><span class="p">,</span>
@@ -14243,7 +14217,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_topics</span><span class="p">(</span><span class="n">topic_model</span><span class="p">,</span> <span class="n">topic_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_features_per_topic</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
@@ -14292,7 +14266,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_topics</span><span class="p">(</span><span class="n">topic_model</span><span class="p">,</span> <span class="n">topic_labels</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">latent_factors</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">280</span><span class="p">),</span>
@@ -14329,7 +14303,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As you can see, the topic labels are self-explanatory and correspond mainly with the dominant features of each topic as measured by the mutual information. As I said, the features with very low mutual information are not really informative about the topic. The fact I could put a name to every topic shows just how discriminative the topic modeling is. It's impressive how coherent some of the topics are. The <em>North American Workers</em>, <em>North American Alumni</em>, <em>Workhorses</em> and <em>Studyholics</em> topics are exemplerary examples of such topics. The <em>Born</em> topic is definitely the least coherent topic and maybe suggests that the features in this topic were probably not so useful to begin with.</p>
+<p>As you can see, the topic labels are self-explanatory and correspond mainly with the dominant features of each topic as measured by the mutual information. As I said, the features with very low mutual information are not really informative about the topic. The fact I could put a name to every topic shows just how discriminative the topic modeling is. It's impressive how coherent some of the topics are. The <em>North American Workers</em>, <em>North American Alumni</em>, <em>Workhorses</em>, <em>Studyholics</em> and <em>French Citizens</em> topics are exemplerary examples of such topics. The <em>Born</em> topic is definitely the least coherent topic and maybe suggests that the features in this topic were probably not so useful to begin with.</p>
 
 </div>
 </div>
@@ -14345,7 +14319,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">topic_model</span><span class="o">.</span><span class="n">get_top_docs</span><span class="p">(</span><span class="n">n_docs</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">topic</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=</span><span class="s1">&#39;log_prob&#39;</span><span class="p">)</span>
@@ -14361,7 +14335,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -14415,7 +14389,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">topic_model</span><span class="o">.</span><span class="n">get_top_docs</span><span class="p">(</span><span class="n">n_docs</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">topic</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=</span><span class="s1">&#39;tc&#39;</span><span class="p">)</span>
@@ -14442,7 +14416,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -14496,7 +14470,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">topic_model</span><span class="o">.</span><span class="n">get_top_docs</span><span class="p">(</span><span class="n">n_docs</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">topic</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=</span><span class="s1">&#39;log_prob&#39;</span><span class="p">)</span>
@@ -14512,7 +14486,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -14566,7 +14540,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">topic_model</span><span class="o">.</span><span class="n">get_top_docs</span><span class="p">(</span><span class="n">n_docs</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">topic</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">sort_by</span><span class="o">=</span><span class="s1">&#39;log_prob&#39;</span><span class="p">)</span>
@@ -14582,7 +14556,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -14636,7 +14610,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">project_features_to_topic_space</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -14668,7 +14642,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span>
@@ -14686,7 +14660,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[21]:</div>
+    <div class="prompt output_prompt">Out[20]:</div>
 
 
 
@@ -14891,7 +14865,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span><span class="n">validation_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span>
@@ -14909,7 +14883,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[21]:</div>
 
 
 
@@ -15114,7 +15088,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span>
@@ -15132,7 +15106,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[23]:</div>
+    <div class="prompt output_prompt">Out[22]:</div>
 
 
 
@@ -15346,7 +15320,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">train_features_topics</span><span class="o">.</span><span class="n">is_eu_alumni</span> <span class="o">==</span> <span class="n">train_features</span><span class="o">.</span><span class="n">alumnus_in_EU</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
@@ -15363,7 +15337,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[23]:</div>
 
 
 
@@ -15380,7 +15354,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">train_features_topics</span><span class="o">.</span><span class="n">is_astronomer</span> <span class="o">==</span> <span class="n">train_features</span><span class="o">.</span><span class="n">is_astronomer</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
@@ -15397,7 +15371,7 @@ Total correlation =  16.8
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[24]:</div>
 
 
 
@@ -15422,7 +15396,7 @@ Total correlation =  16.8
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features_topics</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-features-topics.csv&#39;</span><span class="p">)</span>

@@ -13344,7 +13344,7 @@ div#notebook {
     </tr>
   </tbody>
 </table>
-<p>5 rows × 206 columns</p>
+<p>5 rows × 203 columns</p>
 </div>
 </div>
 
@@ -13440,7 +13440,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Suitability-of-Data-for-Factor-Analysis">Suitability of Data for Factor Analysis<a class="anchor-link" href="#Suitability-of-Data-for-Factor-Analysis">&#182;</a></h2><p>Any factor analysis always starts with the same question: <em>Is the data suitable for factor analysis?</em> There are a few issues to address here. The first are with regards to the <em>minimum sample size</em> and <em>subjects-to-variables</em> (STV) ratio. There are numerous rules of thumb and various researchers and empirical studies differ in their findings. An excellent review of these are given in chapter 3 of <a href="https://www.researchgate.net/publication/209835856_Best_Practices_in_Exploratory_Factor_Analysis_Four_Recommendations_for_Getting_the_Most_From_Your_Analysis">Best Practices in Exploratory Factor Analysis</a> and a very good short summary is given in <a href="https://www.encorewiki.org/display/~nzhao/The+Minimum+Sample+Size+in+Factor+Analysis">The Minimum Sample Size in Factor Analysis</a>. To cut a very long story short, basically, my sample size of <em>N = 542</em> is deemed sufficient by all researchers and even very good by some. However, my <em>STV ratio = 542 / 205 = 2.64</em> is considered unacceptable by many researchers. But it is important to mention that indeed both references give examples of succesful factor analyses for lower values than this.</p>
+<h2 id="Suitability-of-Data-for-Factor-Analysis">Suitability of Data for Factor Analysis<a class="anchor-link" href="#Suitability-of-Data-for-Factor-Analysis">&#182;</a></h2><p>Any factor analysis always starts with the same question: <em>Is the data suitable for factor analysis?</em> There are a few issues to address here. The first are with regards to the <em>minimum sample size</em> and <em>subjects-to-variables</em> (STV) ratio. There are numerous rules of thumb and various researchers and empirical studies differ in their findings. An excellent review of these are given in chapter 3 of <a href="https://www.researchgate.net/publication/209835856_Best_Practices_in_Exploratory_Factor_Analysis_Four_Recommendations_for_Getting_the_Most_From_Your_Analysis">Best Practices in Exploratory Factor Analysis</a> and a very good short summary is given in <a href="https://www.encorewiki.org/display/~nzhao/The+Minimum+Sample+Size+in+Factor+Analysis">The Minimum Sample Size in Factor Analysis</a>. To cut a very long story short, basically, my sample size of <em>N = 542</em> is deemed sufficient by all researchers and even very good by some. However, my <em>STV ratio = 542 / 202 = 2.68</em> is considered unacceptable by many researchers. But it is important to mention that indeed both references give examples of succesful factor analyses for lower values than this.</p>
 <p>The last issue concerns <em>factorability of the correlation matrix</em> itself. According to Wikiversity's article on <a href="https://en.wikiversity.org/wiki/Exploratory_factor_analysis">Exploratory Factor Analysis</a>, "Factorability is the assumption that there are at least some correlations amongst the variables so that coherent factors can be identified. Basically, there should be some degree of collinearity among the variables but not an extreme degree or singularity among the variables". There are in fact two statistical tests for this: <a href="https://en.wikipedia.org/wiki/Bartlett%27s_test">Bartlett’s test of sphericity</a> and the <a href="https://www.statisticshowto.datasciencecentral.com/kaiser-meyer-olkin/">Kaiser–Meyer–Olkin</a> (KMO). However, I'm not going to say too much about these as they are based on the assumption that the data is multivariate normal, which clearly isn't the case here.</p>
 <p>The article <a href="https://www.tandfonline.com/doi/pdf/10.1080/07481756.2017.1336931">Establishing Evidence for Internal Structure Using
 Exploratory Factor Analysis</a> suggests that "an intercorrelation matrix is deemed factorable when the majority of the correlation coefficients
@@ -13458,9 +13458,7 @@ before conducting an EFA (Field, 2013)". OK let's see if this is the case here m
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features_numerical</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-<span class="n">train_features_numerical</span> <span class="o">=</span> <span class="n">train_features_numerical</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span> <span class="k">else</span> <span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;male&#39;</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;female&#39;</span> <span class="k">else</span> <span class="n">x</span><span class="p">))</span>
+<span class="n">train_features_numerical</span> <span class="o">=</span> <span class="n">train_features_numerical</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;yes&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
 <span class="n">correlation</span> <span class="o">=</span> <span class="n">train_features_numerical</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
 <span class="n">correlation</span>
 </pre></div>
@@ -14988,7 +14986,7 @@ before conducting an EFA (Field, 2013)". OK let's see if this is the case here m
     </tr>
   </tbody>
 </table>
-<p>205 rows × 205 columns</p>
+<p>202 rows × 202 columns</p>
 </div>
 </div>
 
@@ -15004,8 +15002,8 @@ before conducting an EFA (Field, 2013)". OK let's see if this is the case here m
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Percent of correlations in range abs(0.2, 0.8): </span><span class="si">{0}</span><span class="s1"> %&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="mi">100</span> <span class="o">*</span> <span class="nb">round</span><span class="p">(((</span><span class="nb">abs</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.8</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span>
-                <span class="nb">len</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.8</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span>
+          <span class="nb">len</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 <span class="p">)</span>     
 </pre></div>
 
@@ -15023,7 +15021,7 @@ before conducting an EFA (Field, 2013)". OK let's see if this is the case here m
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Percent of correlations in range abs(0.2, 0.8): 6.0 %
+<pre>Percent of correlations in range abs(0.2, 0.8): 7.0 %
 </pre>
 </div>
 </div>
@@ -15109,7 +15107,7 @@ to utilise." Clearly, there are some correlations above an absolute value of 0.3
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYgAAAEWCAYAAAB8LwAVAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADl0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uIDMuMC4yLCBodHRwOi8vbWF0cGxvdGxpYi5vcmcvOIA7rQAAHBVJREFUeJzt3XucXWV97/HPd/ZcEiYJRBMCSZBrgKYcERgRxQsKbYNVwmmhwtF6OZSoB1QU6QFaLdLao6It2oOXFDGoCCdgralFsSIXX7RAhjsEAjFcMgRIuBhyIXP9nT/W2pmdnWdm9oRZ2XP5vl+v/drr8qy1f7MJ851nXZ6liMDMzKxaQ70LMDOz0ckBYWZmSQ4IMzNLckCYmVmSA8LMzJIcEGZmluSAMBslJC2R9Hf1rsOszAFh45Kkt0r6T0kbJL0o6TZJb6x3XSNFUkg6qN512PjWWO8CzEaapGnAz4CPA0uBZuBtQOcw99MYET0jX6HZ2OAehI1HBwNExNUR0RsRr0TELyPi/nIDSWdKeljSRkkrJB2ZL39C0v+WdD+wWVKjpNmSfixpvaTHJX2yYj8Nks6X9FtJL0haKuk1qaIkHSepQ9KFkp7PP+v9A/0QeY2r8h7QMkmz8+W35k3uk7RJ0vte/VdmtiMHhI1HjwK9kq6UdKKk6ZUrJZ0KXAR8EJgGnAS8UNHkdOCPgT2APuDfgPuAOcDxwDmS/ihv+0ngZOAdwGzgJeCyQWrbC5iR7+tDwGJJh1Q3kvQu4P8AfwbsDTwJXAMQEW/Pmx0eEVMi4v8N8X2Y7RQHhI07EfEy8FYggH8G1ud/gc/Km/wF8JWIWB6ZVRHxZMUuvhERayLiFeCNwMyIuDgiuiJidb7P0/K2HwX+KiI6IqKTLHhOkTTY4dvPRURnRNwC/DtZCFR7P3BFRNyd7/cC4M2S9hv2F2K2kxwQNi5FxMMR8eGImAscRvbX/aX56n2A3w6y+ZqK6X2B2ZJ+V34BFwKzKtb/pGLdw0BvxfpqL0XE5or5J/Paqs3O15V/nk1kvZw5g9RtNqJ8ktrGvYh4RNISsr/2IQuAAwfbpGJ6DfB4RMwboO0a4H9GxG01ljNdUmtFSLwOeDDRbi1Z+AAgqRV4LfB0jZ9j9qq5B2HjjqRDJZ0raW4+vw/ZeYXb8yaXA5+VdJQyB0nad4Dd3Qm8nJ+4niypJOmwiktmvw18sby9pJmSFg5R4hckNUt6G/Ae4NpEmx8BH5H0BkktwN8Dd0TEE/n654ADhvouzF4NB4SNRxuBNwF3SNpMFgwPAucCRMS1wBfJfglvBP4VSF55FBG9wHuBNwCPA8+TBczueZOvA8uAX0ramH/Wmwap7VmyE9lrgauAj0XEI4nPvRH4HPBj4BmyHs9pFU0uAq7MD22lzmGYvWryA4PMdg1JxwE/zM+LmI167kGYmVlSYQEh6QpJ6ySlTsCRH/v9Rn4j0P3lG5XMzGx0KLIHsQRYMMj6E4F5+WsR8K0CazGru4i42YeXbCwpLCAi4lbgxUGaLAS+n9+odDuwh6S9i6rHzMyGp573Qcxh+xuSOvJlz1Q3lLSIrJdBa2vrUYceeuguKdDMbLy46667no+ImcPZpp4BocSy5CVVEbEYWAzQ1tYW7e3tRdZlZjbuSHpy6Fbbq+dVTB1kQx6UzSW7NtzMzEaBegbEMuCD+dVMxwAbImKHw0tmZlYfhR1iknQ1cBwwQ1IH8DdAE0BEfBu4Hng3sArYAnykqFrMzGz4CguIiDh9iPUBnFXU55uZ2avjO6nNzCzJAWFmZkkOCDMzS3JAmJlZkgPCzMySHBBmZpbkgDAzsyQHhJmZJTkgzMwsyQFhZmZJDggzM0tyQJiZWZIDwszMkhwQZmaW5IAwM7MkB4SZmSU5IMzMLMkBYWZmSQ4IMzNLckCYmVmSA8LMzJIcEGZmluSAMDOzJAeEmZklOSDMzCzJAWFmZkkOCDMzS3JAmJlZkgPCzMySHBBmZpbkgDAzsyQHhJmZJTkgzMwsyQFhZmZJDggzM0sqNCAkLZC0UtIqSecn1r9O0k2S7pF0v6R3F1mPmZnVrrCAkFQCLgNOBOYDp0uaX9Xsr4GlEXEEcBrwzaLqMTOz4SmyB3E0sCoiVkdEF3ANsLCqTQDT8undgbUF1mNmZsNQZEDMAdZUzHfkyypdBHxAUgdwPfCJ1I4kLZLULql9/fr1RdRqZmZVigwIJZZF1fzpwJKImAu8G/iBpB1qiojFEdEWEW0zZ84soFQzM6tWZEB0APtUzM9lx0NIZwBLASLiv4BJwIwCazIzsxoVGRDLgXmS9pfUTHYSellVm6eA4wEk/R5ZQPgYkpnZKFBYQERED3A2cAPwMNnVSg9JuljSSXmzc4EzJd0HXA18OCKqD0OZmVkdNBa584i4nuzkc+Wyz1dMrwCOLbIGMzPbOb6T2szMkhwQZmaW5IAwM7MkB4SZmSU5IMzMLMkBYWZmSQ4IMzNLckCYmVmSA8LMzJIcEGZmluSAMDOzJAeEmZklOSDMzCzJAWFmZkkOCDMzS3JAmJlZkgPCzMySHBBmZpbkgDAzsyQHhJmZJTkgzMwsyQFhZmZJDggzM0tyQJiZWZIDwszMkhwQZmaW5IAwM7MkB4SZmSU5IMzMLMkBYWZmSQ4IMzNLGnZASGqQNK2IYszMbPSoKSAk/UjSNEmtwApgpaTzii3NzMzqqdYexPyIeBk4GbgeeB3w54VVZWZmdVdrQDRJaiILiJ9GRDcQQ20kaYGklZJWSTp/gDZ/JmmFpIck/aj20s3MrEiNNbb7DvAEcB9wq6R9gZcH20BSCbgM+AOgA1guaVlErKhoMw+4ADg2Il6StOfwfwQzMytCTT2IiPhGRMyJiHdH5kngnUNsdjSwKiJWR0QXcA2wsKrNmcBlEfFS/jnrhlm/mZkVpNaT1LMkfVfSz/P5+cCHhthsDrCmYr4jX1bpYOBgSbdJul3SggE+f5Gkdknt69evr6VkMzN7lWo9B7EEuAGYnc8/CpwzxDZKLKs+b9EIzAOOA04HLpe0xw4bRSyOiLaIaJs5c2aNJZuZ2atRa0DMiIilQB9ARPQAvUNs0wHsUzE/F1ibaPPTiOiOiMeBlWSBYWZmdVZrQGyW9FryHoCkY4ANQ2yzHJgnaX9JzcBpwLKqNv9Kfi5D0gyyQ06ra6zJzMwKVOtVTJ8h++V+oKTbgJnAKYNtEBE9ks4mOzRVAq6IiIckXQy0R8SyfN0fSlpB1iM5LyJe2MmfxczMRpAihrydIWsoNQKHkJ1bWJnfC7HLtbW1RXt7ez0+2sxszJJ0V0S0DWebmnoQkj5YtehISUTE94fzYWZmNnbUeojpjRXTk4DjgbsBB4SZ2ThVU0BExCcq5yXtDvygkIrMzGxU2NnnQWzBl6OamY1rtZ6D+Df6b3JrAOYDS4sqyszM6q/WcxBfrZjuAZ6MiI4C6jEzs1Gi1nMQtxRdiJmZjS6DBoSkjaSf+yAgIsKPHjUzG6cGDYiImLqrCjEzs9Gl1nMQAOQP9JlUno+Ip0a8IjMzGxVqfR7ESZIeAx4HbiF7utzPC6zLzMzqrNb7IP4WOAZ4NCL2J7uT+rbCqjIzs7qrNSC681FWGyQ1RMRNwBsKrMvMzOqs1nMQv5M0BbgVuErSOrL7IczMbJyqtQexkGx4jU8DvwB+C7y3qKLMzKz+au1BLAKuze+evrLAeszMbJSotQcxDbhB0m8knSVpVpFFmZlZ/dUUEBHxhYj4feAsYDZwi6RfFVqZmZnV1XCH+14HPAu8AOw58uWYmdloUeuNch+XdDNwIzADODMiXl9kYWZmVl+1nqTeFzgnIu4tshgzMxs9ah3u+3xJJUmzK7fxWExmZuNXrU+UOxu4CHgO6MsXB+DDTGZm41Sth5jOAQ7Jh9swM7MJoNarmNYAG4osxMzMRpdaexCrgZsl/TvQWV4YEf9QSFVmZlZ3tQbEU/mrOX+Zmdk4V+tVTF8AkNQaEZuLLcnMzEaDWm+Ue7OkFcDD+fzhkr5ZaGVmZlZXtZ6kvhT4I7IhNoiI+4C3F1WUmZnVX81jMUXEmqpFvSNci5mZjSK1nqReI+ktQEhqBj5JfrjJzMzGp1p7EB8jG+p7DtBB9jzqs4oqyszM6q/Wq5ieB95fcC1mZjaK1DoW0zcSizcA7RHx05EtyczMRoNaDzFNIjus9Fj+ej3wGuAMSZcOtJGkBZJWSlol6fxB2p0iKSS1DaN2MzMrUK0nqQ8C3hURPQCSvgX8EvgD4IHUBpJKwGV5mw5guaRlEbGiqt1UspPed+zUT2BmZoWotQcxB2itmG8FZkdELxVjM1U5GlgVEasjogu4BliYaPe3wFeArTXWYmZmu0CtAfEV4F5J35O0BLgH+KqkVuBXA2wzh2wU2LKOfNk2ko4A9omInw324ZIWSWqX1L5+/foaSzYzs1ej1quYvivperJegYALI2Jtvvq8ATZTalfbVkoNwD8CH67h8xcDiwHa2tpiiOZmZjYCBu1BSDo0fz8S2JusR/AUsFe+bDAdwD4V83OBtRXzU4HDyIYRfwI4BljmE9VmZqPDUD2Ic4Ezga8l1gXwrkG2XQ7Mk7Q/8DRwGvA/tm0csQGYUZ6XdDPw2Yhor6lyMzMr1KABERFn5u/vHO6OI6Inf5b1DUAJuCIiHpJ0Mdn9E8t2pmAzM9s1hjrE9JcV06dWrfv7oXYeEddHxMERcWBEfDFf9vlUOETEce49mJmNHkNdxXRaxfQFVesWjHAtZmY2igwVEBpgOjVvZmbjyFABEQNMp+bNzGwcGeoqpsMlvUzWW5icT5PPTyq0MjMzq6uhrmIq7apCzMxsdKn5kaNmZjaxOCDMzCzJAWFmZkkOCDMzS3JAmJlZkgPCzMySHBBmZpbkgDAzsyQHhJmZJTkgzMwsyQFhZmZJDggzM0tyQJiZWZIDwszMkhwQZmaW5IAwM7MkB4SZmSU5IMzMLMkBYWZmSQ4IMzNLckCYmVmSA8LMzJIcEGZmluSAMDOzJAeEmZklOSDMzCzJAWFmZkkOCDMzS3JAmJlZUqEBIWmBpJWSVkk6P7H+M5JWSLpf0o2S9i2yHjMzq11hASGpBFwGnAjMB06XNL+q2T1AW0S8HrgO+EpR9ZiZ2fAU2YM4GlgVEasjogu4BlhY2SAiboqILfns7cDcAusxM7NhKDIg5gBrKuY78mUDOQP4eWqFpEWS2iW1r1+/fgRLNDOzgRQZEEosi2RD6QNAG3BJan1ELI6Itohomzlz5giWaGZmA2kscN8dwD4V83OBtdWNJJ0A/BXwjojoLLAeMzMbhiJ7EMuBeZL2l9QMnAYsq2wg6QjgO8BJEbGuwFrMzGyYCguIiOgBzgZuAB4GlkbEQ5IulnRS3uwSYApwraR7JS0bYHdmZraLFXmIiYi4Hri+atnnK6ZPKPLzzcxs5/lOajMzS3JAmJlZkgPCzMySHBBmZpbkgDAzsyQHhJmZJTkgzMwsyQFhZmZJDggzM0tyQJiZWZIDwszMkhwQZmaW5IAwM7MkB4SZmSU5IMzMLMkBYWZmSQ4IMzNLckCYmVmSA8LMzJIcEGZmluSAMDOzpMZ6FzDWbHilmx/e/iSHzJrKIXtNZc4ek2loUL3LMjMbcQ6IYVq1bhOX3LBy23xrc4l5s6ZyyKypHLxX+X0KM6e0IDk4zGzsUkTUu4ZhaWtri/b29rrWsHFrN48+t4lHn9vIymc38uhz2ev5TV3b2kzfrYmD817GwbOmcuheU5k3ayq7T26qY+VmNlFJuisi2oazjXsQO2HqpCaO2nc6R+07fbvlz2/qzMLi2Y2szAPkJ3c/zcbOnm1t9t590nbBccisqRy05xQmN5d29Y9hZjYoB8QImjGlhRlTWnjLgTO2LYsI1m7YmofGxm3v//WfL9DV0weABPu+ZrdtPY3yoar9ZrTSVPJ1BGZWHw6Igklizh6TmbPHZN556J7blvf09vHUi1vyw1RZb+ORZ1/mxkfW0duXHfZrKokDZ07Zoccxd7pPjJtZ8RwQddJYauCAmVM4YOYUFhzWv3xrdy+r12/OgiPvcdz91Essu2/ttja75SfGZ+8+iebGBloaG2hubKC5VKKlqYHmUkP/e2MDLY2lbP12bRtoaSoN2rbkEDKb0BwQo8ykphLzZ09j/uxp2y3f1NnDY/nJ8EfyE+Or1m2iq7ePrp4+Onuy966ePrp6+0aklsYGpYMlD5GWxixkJjc10NrcyOTmEq0tjezWXMpfjdu9t7aUmNzUSGtL/7LJTSX3hsxGKQfEGDGlpZEjXjedI143fci2fX2RBUdvH53d5ffeZJh09vTSucOy/nXlwCnvp3qbDa9089yGXjZ39bClq5ctXT1s7R5eQE1uysOjuURrVajs1lxit5ZGdmvK35tLtFaub+kPmsogqwyxxgb5kmOzneCAGIcaGsSkhhKTmkowadd/fm9f8Ep3L1s6s9DY3NXDK129bO7qX7alq7yul1e6eqrWZeuf39S5XdstXb07VY9EFhyVh9UqekaVYTJQyKTnd1zXINEgKDUon1Y+nf13aZAoSTQ0sG2dRLZMytukt3fI2a7mgLARV2oQU1oamdIysv+8+srBs11o9LC5s5eteQ+puse0fc+n/Ordoae0pauHl7YM3IPq7q3//UISOwaM8oBp6A+Y8nmlSY0lJjVl4TWpqYFJTaX8VV5Wsbyxan1TiUmNpe32U7l+UqMPDU4EDggbMxoaRGtLI60tjUDLLv3s8mG7zu4+Ont7K4Jo+0Dqi6xtb1/QF+UX28339pFN9+XrIojItuntCyJftl2bqu3L7fuCfFn/+q6eYGtPL53dvWzt7mNrdy8bO7u3TXf25O/dr+581bYgqgiN8nS5N1VW7v2ILOj6p3dcDqpqs21p/7Sy+XKj8qaSKqazEK0OVpWnK3p11dNZ8JZ7cPk25Z6gUtsk9tFQ3kdV7VU/a//Pk/4ZKn9+tttH6jvd/nOo3HYnOCDMarDdYTvGz93wvX1BZ09/kGwth0pP77YQ2drdmwdOebqvv113b3L7V7p6Kfe5Itg2TT5yQ/RPEkT/dEXbylEesuWRbNO/7x2XR6TDuDJ0o3o6+qcnOgeE2QRWalB+wr/elYw+5SAp99DKYdMbQfT1T1eHTF+5h1jRgxwoDKuXDbQ86A/MynBlhzb9tW8f0MGxXx7+d1BoQEhaAHwdKAGXR8SXqta3AN8HjgJeAN4XEU8UWZOZWS2yQ1FQQjRN0JFwChvHQVIJuAw4EZgPnC5pflWzM4CXIuIg4B+Bncg4MzMrQpED/RwNrIqI1RHRBVwDLKxqsxC4Mp++DjhevpbPzGxUKPIQ0xxgTcV8B/CmgdpERI+kDcBrgecrG0laBCzKZzslPVhIxWPPDKq+qwnM30U/fxf9/F30O2S4GxQZEKmeQPV1AbW0ISIWA4sBJLUPd0zz8crfRT9/F/38XfTzd9FP0rAfpFPkIaYOYJ+K+bnA2oHaSGoEdgdeLLAmMzOrUZEBsRyYJ2l/Sc3AacCyqjbLgA/l06cAv46x9og7M7NxqrBDTPk5hbOBG8guc70iIh6SdDHQHhHLgO8CP5C0iqzncFoNu15cVM1jkL+Lfv4u+vm76Ofvot+wv4sx90xqMzPbNfw8SzMzS3JAmJlZ0pgKCEkLJK2UtErS+fWup14k7SPpJkkPS3pI0qfqXVM9SSpJukfSz+pdS71J2kPSdZIeyf99vLneNdWDpE/n/288KOlqSXV4Mkr9SLpC0rrKe8YkvUbSf0h6LH8f8uljYyYgahy6Y6LoAc6NiN8DjgHOmsDfBcCngIfrXcQo8XXgFxFxKHA4E/B7kTQH+CTQFhGHkV0kU8sFMOPJEmBB1bLzgRsjYh5wYz4/qDETENQ2dMeEEBHPRMTd+fRGsl8Cc+pbVX1Imgv8MXB5vWupN0nTgLeTXR1IRHRFxO/qW1XdNAKT8/urdmPHe7DGtYi4lR3vKasc2uhK4OSh9jOWAiI1dMeE/KVYSdJ+wBHAHfWtpG4uBf4S2Pkn34wfBwDrge/lh9wul9Ra76J2tYh4Gvgq8BTwDLAhIn5Z36pGhVkR8Qxkf2QCew61wVgKiJqG5ZhIJE0BfgycExEv17ueXU3Se4B1EXFXvWsZJRqBI4FvRcQRwGZqOIww3uTH1hcC+wOzgVZJH6hvVWPTWAqIWobumDAkNZGFw1UR8S/1rqdOjgVOkvQE2SHHd0n6YX1LqqsOoCMiyr3J68gCY6I5AXg8ItZHRDfwL8Bb6lzTaPCcpL0B8vd1Q20wlgKilqE7JoR8SPTvAg9HxD/Uu556iYgLImJuROxH9u/h1xExYf9SjIhngTWSyqN2Hg+sqGNJ9fIUcIyk3fL/V45nAp6sT6gc2uhDwE+H2mDMPHJ0oKE76lxWvRwL/DnwgKR782UXRsT1dazJRodPAFflf0StBj5S53p2uYi4Q9J1wN1kV/zdwwQbckPS1cBxwAxJHcDfAF8Clko6gyxETx1yPx5qw8zMUsbSISYzM9uFHBBmZpbkgDAzsyQHhJmZJTkgzMwsyQFho5akkPS1ivnPSrpohPa9RNIpI7GvIT7n1HxU1ZsS6y7JRxy9ZCf2e+HIVGg2MAeEjWadwJ9ImlHvQirlIwvX6gzgf0XEOxPrPgocGRHn7UQZwwoIZfz/uw2L/8HYaNZDdoPTp6tXVPcAJG3K34+TdIukpZIelfQlSe+XdKekByQdWLGbEyT9Jm/3nnz7Uv6X/XJJ90v6aMV+b5L0I+CBRD2n5/t/UNKX82WfB94KfLu6lyBpGdAK3CHpfZLeK+mOfJC9X0malbebIul7+b7vl/Snkr5ENlLpvZKuytt9Jv/sByWdky/bL++9fJPsprF98u/twXx/O3yvZtuJCL/8GpUvYBMwDXgC2B34LHBRvm4JcEpl2/z9OOB3wN5AC/A08IV83aeASyu2/wXZH0nzyMYxmgQsAv46b9MCtJMN+nYc2eB3+yfqnE12Z+pMstEJfg2cnK+7mey5BMmfr2J6Ov03rv4F8LV8+svlmsvtEtseRRZarcAU4CGyEX73Ixvl9piKdv9Rsd0e9f5v7NfofrkHYaNaZKPUfp/sATC1Wh7ZMzM6gd8C5aGeHyD7pVm2NCL6IuIxsmEpDgX+EPhgPoTJHcBryQIE4M6IeDzxeW8Ebo5scLge4Cqy5zIMx1zgBkkPAOcBv58vP4HsQVkARMRLiW3fCvwkIjZHxCaywenelq97MiJuz6dXAwdI+idJC4AJNwKwDY8DwsaCS8mO5Vc+26CH/N9vPiBbc8W6zorpvor5PrYff6x6nJkgG1b+ExHxhvy1f/Q/S2DzAPWlhqIfrn8C/m9E/DeycxPlR2QqUedwPn9bzXm4HE7WqzkLP2TJhuCAsFEvIl4ElpKFRNkTZIdMIBv7v2kndn2qpIb8vMQBwEqywSA/ng+njqSDa3jozh3AOyTNyE9gnw7cMsxadic7HAb9I25C1vs5uzxT8Rzh7nKNwK3Ayfnopa3Afwd+U/0B+cn+hoj4MfA5JuZQ4DYMDggbK74GVF7N9M9kv5TvBN7EwH/dD2Yl2S/ynwMfi4itZH9VrwDuVvbA9+8wxKjHkT2d6wLgJuA+4O6IGHIo5SoXAddK+g3wfMXyvwOm5yeW7wPKV0MtBu6XdFVkj59dAtxJFlaXR8Q9ic+YA9ycHz5bktdsNiCP5mpmZknuQZiZWZIDwszMkhwQZmaW5IAwM7MkB4SZmSU5IMzMLMkBYWZmSf8fHkldw1BciZkAAAAASUVORK5CYII=
+<img src="data:image/png;base64,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
 "
 >
 </div>
@@ -15232,91 +15230,91 @@ to utilise." Clearly, there are some correlations above an absolute value of 0.3
       <th>num_physics_laureate_influenced_by_at_least_2_yes</th>
       <td>-0.889814</td>
       <td>0.323431</td>
-      <td>-0.742079</td>
-      <td>0.356582</td>
-      <td>0.299326</td>
-      <td>-0.404294</td>
+      <td>-0.742081</td>
+      <td>0.356569</td>
+      <td>0.299303</td>
+      <td>-0.404309</td>
     </tr>
     <tr>
       <th>num_birth_continent_codes_at_least_1_no</th>
       <td>-0.880185</td>
-      <td>-0.086947</td>
+      <td>-0.086946</td>
       <td>0.041626</td>
-      <td>0.746398</td>
-      <td>0.065220</td>
-      <td>0.423516</td>
+      <td>0.746436</td>
+      <td>0.065377</td>
+      <td>0.423354</td>
     </tr>
     <tr>
       <th>num_birth_country_alpha_3_codes_at_least_1_no</th>
       <td>-0.880185</td>
-      <td>-0.086947</td>
+      <td>-0.086946</td>
       <td>0.041626</td>
-      <td>0.746398</td>
-      <td>0.065220</td>
-      <td>0.423516</td>
+      <td>0.746436</td>
+      <td>0.065377</td>
+      <td>0.423354</td>
     </tr>
     <tr>
       <th>num_alma_mater_at_least_1_no</th>
       <td>-0.816954</td>
       <td>0.090330</td>
       <td>-0.122130</td>
-      <td>0.650762</td>
-      <td>0.009095</td>
-      <td>0.273600</td>
+      <td>0.650760</td>
+      <td>0.009097</td>
+      <td>0.273610</td>
     </tr>
     <tr>
       <th>num_alma_mater_continent_codes_at_least_1_no</th>
       <td>-0.816610</td>
       <td>0.086167</td>
       <td>-0.118737</td>
-      <td>0.650062</td>
-      <td>0.009765</td>
-      <td>0.272694</td>
+      <td>0.650060</td>
+      <td>0.009766</td>
+      <td>0.272704</td>
     </tr>
     <tr>
       <th>num_alma_mater_country_alpha_3_codes_at_least_1_no</th>
       <td>-0.816610</td>
       <td>0.086167</td>
       <td>-0.118737</td>
-      <td>0.650062</td>
-      <td>0.009765</td>
-      <td>0.272694</td>
+      <td>0.650060</td>
+      <td>0.009766</td>
+      <td>0.272704</td>
     </tr>
     <tr>
       <th>num_workplaces_at_least_1_no</th>
       <td>-0.587743</td>
       <td>0.189324</td>
       <td>0.125054</td>
-      <td>0.227754</td>
-      <td>0.129868</td>
-      <td>-0.000426</td>
+      <td>0.227753</td>
+      <td>0.129866</td>
+      <td>-0.000431</td>
     </tr>
     <tr>
       <th>num_workplaces_continent_codes_at_least_1_no</th>
       <td>-0.579988</td>
       <td>0.188344</td>
       <td>0.131505</td>
-      <td>0.219811</td>
-      <td>0.117263</td>
-      <td>-0.006208</td>
+      <td>0.219810</td>
+      <td>0.117261</td>
+      <td>-0.006214</td>
     </tr>
     <tr>
       <th>num_workplaces_country_alpha_3_codes_at_least_1_no</th>
       <td>-0.579988</td>
       <td>0.188344</td>
       <td>0.131505</td>
-      <td>0.219811</td>
-      <td>0.117263</td>
-      <td>-0.006208</td>
+      <td>0.219810</td>
+      <td>0.117261</td>
+      <td>-0.006214</td>
     </tr>
     <tr>
       <th>worked_at_*_no</th>
       <td>-0.514795</td>
       <td>0.114371</td>
       <td>0.132220</td>
-      <td>0.166696</td>
+      <td>0.166694</td>
       <td>0.101416</td>
-      <td>0.007306</td>
+      <td>0.007304</td>
     </tr>
     <tr>
       <th>num_workplaces_at_least_2_no</th>
@@ -15324,44 +15322,44 @@ to utilise." Clearly, there are some correlations above an absolute value of 0.3
       <td>0.145870</td>
       <td>0.094774</td>
       <td>0.101749</td>
-      <td>0.083004</td>
-      <td>-0.004378</td>
+      <td>0.083001</td>
+      <td>-0.004382</td>
     </tr>
     <tr>
       <th>num_years_lived_group_at_least_35-49_no</th>
       <td>-0.450705</td>
-      <td>0.188886</td>
-      <td>-0.564393</td>
-      <td>0.339665</td>
-      <td>-0.294031</td>
-      <td>0.144060</td>
+      <td>0.188884</td>
+      <td>-0.564394</td>
+      <td>0.339632</td>
+      <td>-0.293536</td>
+      <td>0.144078</td>
     </tr>
     <tr>
       <th>num_citizenship_continent_codes_at_least_1_no</th>
       <td>-0.423258</td>
-      <td>0.010557</td>
-      <td>-0.000367</td>
-      <td>0.224260</td>
-      <td>-0.028068</td>
-      <td>0.105408</td>
+      <td>0.010559</td>
+      <td>-0.000358</td>
+      <td>0.224370</td>
+      <td>-0.028317</td>
+      <td>0.105010</td>
     </tr>
     <tr>
       <th>num_citizenship_country_alpha_3_codes_at_least_1_no</th>
       <td>-0.423258</td>
-      <td>0.010557</td>
-      <td>-0.000367</td>
-      <td>0.224260</td>
-      <td>-0.028068</td>
-      <td>0.105408</td>
+      <td>0.010559</td>
+      <td>-0.000358</td>
+      <td>0.224370</td>
+      <td>-0.028317</td>
+      <td>0.105010</td>
     </tr>
     <tr>
       <th>alumnus_of_Moscow_State_University_yes</th>
       <td>-0.422010</td>
       <td>0.578333</td>
-      <td>-0.692234</td>
-      <td>-0.255006</td>
-      <td>-0.450709</td>
-      <td>-0.553204</td>
+      <td>-0.692236</td>
+      <td>-0.255007</td>
+      <td>-0.450670</td>
+      <td>-0.553266</td>
     </tr>
   </tbody>
 </table>
@@ -15385,7 +15383,7 @@ to utilise." Clearly, there are some correlations above an absolute value of 0.3
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Discussion">Discussion<a class="anchor-link" href="#Discussion">&#182;</a></h2><p>I suspect that the factor analysis results may be invalid due to the STV ratio and / or sample size. Another theory I have is that the features are just too sparse for factor analysis to extract any meaningful information from the correlations in the data. There is some discussion in the context of PCA in <a href="https://stats.stackexchange.com/questions/4753/how-can-one-extract-meaningful-factors-from-a-sparse-matrix">how can one extract meaningful factors from a sparse matrix</a>. If you recall, earlier we saw that only 6% of the values in the correlation matrix had absolute values of correlation coefficients between 0.2 and 0.8. In fact most of the remaining 94% of the values have absolute values of correlation coefficients less than or equal to 0.2.</p>
+<h2 id="Discussion">Discussion<a class="anchor-link" href="#Discussion">&#182;</a></h2><p>I suspect that the factor analysis results may be invalid due to the STV ratio and / or sample size. Another theory I have is that the features are just too sparse for factor analysis to extract any meaningful information from the correlations in the data. There is some discussion in the context of PCA in <a href="https://stats.stackexchange.com/questions/4753/how-can-one-extract-meaningful-factors-from-a-sparse-matrix">how can one extract meaningful factors from a sparse matrix</a>. If you recall, earlier we saw that only 7% of the values in the correlation matrix had absolute values of correlation coefficients between 0.2 and 0.8. In fact most of the remaining 93% of the values have absolute values of correlation coefficients less than or equal to 0.2.</p>
 
 </div>
 </div>
@@ -15396,7 +15394,7 @@ to utilise." Clearly, there are some correlations above an absolute value of 0.3
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Percent of correlations less than or equal to abs(0.2): </span><span class="si">{0}</span><span class="s1"> %&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="mi">100</span> <span class="o">*</span> <span class="nb">round</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 <span class="p">)</span>     
 </pre></div>
 
@@ -15414,7 +15412,7 @@ to utilise." Clearly, there are some correlations above an absolute value of 0.3
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Percent of correlations less than or equal to abs(0.2): 90.0 %
+<pre>Percent of correlations less than or equal to abs(0.2): 93.0 %
 </pre>
 </div>
 </div>
@@ -15426,7 +15424,7 @@ to utilise." Clearly, there are some correlations above an absolute value of 0.3
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This sparsity was of course induced by the binary encoding of variables during feature construction. The point is that most physicists are only associated with a very small fraction of the features. Finding latent structure in such data is difficult. So where does this leave me now?</p>
+<p>This sparsity was of course induced by the binary encoding of variables during feature construction. The point is that most physicists are only associated with a very small fraction of the features. Finding latent structure in such data is difficult. So where does this leave us now?</p>
 
 </div>
 </div>
@@ -15444,7 +15442,8 @@ to utilise." Clearly, there are some correlations above an absolute value of 0.3
 <p>The approaches I have taken so far have been fruitless in achieving the two goals I set out to achieve at the outset of this EFA. However there are alternative approaches that can be taken. One such alternative is <a href="https://en.wikipedia.org/wiki/Multidimensional_scaling">Multidimensional scaling</a> (MDS). This would have to use a distance "metric" such as the <a href="https://stats.stackexchange.com/questions/15287/hierarchical-clustering-with-mixed-type-data-what-distance-similarity-to-use">Gower distance</a> since Euclidean distance is just not appropriate for such binary data types. There is no well established implementation in python, although a <a href="https://github.com/scikit-learn/scikit-learn/issues/5884">Gower Similarty Coefficient implementation in sklearn</a> may not be too far away. There is however a <a href="https://datascience.stackexchange.com/questions/8681/clustering-for-mixed-numeric-and-nominal-discrete-data">rudimentary Gower python implementation</a>, although according to the previous reference, it should be using the Jaccard coefficient for "present" vs "absent" binary variables. For the data, the Gower similarity would essentially reduce to a combination of the Jaccard and Dice coefficients, so coding it up would not be too difficult.</p>
 <p>Using (sklearn's) MDS is not actually viable for dimensionality reduction since <a href="https://stackoverflow.com/questions/21962204/sklearn-manifold-mds-has-no-transform-method">sklearn's MDS implementation has no <code>transform</code> method</a> which means that new data points cannot be projected onto the embedding space that the MDS was fit on. Not sure how far off in sklearn this is as the <a href="https://github.com/scikit-learn/scikit-learn/pull/6222">issue has been pending for a few years now</a>.</p>
 <p>Another <a href="https://stats.stackexchange.com/questions/87681/performing-pca-with-only-a-distance-matrix">approach that is closely related to the previous one</a> is to use <a href="https://en.wikipedia.org/wiki/Kernel_principal_component_analysis">kernel principal component analysis</a> with the Gower distance. This is possible in sklearn as <a href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.KernelPCA.html">sklearn's kernel PCA</a> implementation allows the use of  distance "metrics" other than Euclidean distance through the <code>precomputed</code> parameter. However, I am concerned about using any form of PCA to reduce the dimensionality of this binary data as PCA works with a centered gram matrix. Therefore PCA does not seem like a natural fit for binary data as there is <a href="https://stats.stackexchange.com/questions/16331/doing-principal-component-analysis-or-factor-analysis-on-binary-data">no reason to assume that the binary data is centered anywhere other than at the origin</a>.</p>
-<p>An approach of dimensionality reduction that seems more attractive for the data is <a href="https://en.wikipedia.org/wiki/Non-negative_matrix_factorization">Non-negative matrix factorization</a> (NMF) as the features matrix consists entirely of non-negative entries. Although, the general NMF is not suitable for the binary case as the approximation is not bounded from above, there is an extension of NMF to the binary case known as <a href="http://ranger.uta.edu/~chqding/papers/icdm07-binary.pdf">binary matrix factorization</a> (BMF). Hong LiangJie has performed <a href="http://www.hongliangjie.com/2011/03/15/reviews-on-binary-matrix-decomposition/">reviews on BMF</a> and states "In all, it seems that the performance advantages of specifically designed binary data models are small. However, the biggest advantage of these models is that they can give better interpretations sometimes." In the future, I will be exploring BMF models for dimensionality reduction due to the potential benefits of interpretability.</p>
+<p>An approach of dimensionality reduction that seems more attractive for the data is <a href="https://en.wikipedia.org/wiki/Non-negative_matrix_factorization">Non-negative matrix factorization</a> (NMF) as the features matrix consists entirely of non-negative entries. Although, the general NMF is not suitable for the binary case as the approximation is not bounded from above, there is an extension of NMF to the binary case known as <a href="http://ranger.uta.edu/~chqding/papers/icdm07-binary.pdf">binary matrix factorization</a> (BMF). Hong LiangJie has performed <a href="http://www.hongliangjie.com/2011/03/15/reviews-on-binary-matrix-decomposition/">reviews on BMF</a> and states "In all, it seems that the performance advantages of specifically designed binary data models are small. However, the biggest advantage of these models is that they can give better interpretations sometimes."</p>
+<p>I explored a <a href="http://nimfa.biolab.si/nimfa.methods.factorization.bmf.html">BMF model</a> for dimensionality reduction using the <a href="http://nimfa.biolab.si/">nimfa</a>, the only python implementation I could find. At first it seemed promising, however, I found two major roadblocks. The first was that the <em>penalty function method</em> implemented is only really appropriate for dense binary data. This is discussed by Zhang in <a href="http://ranger.uta.edu/~chqding/papers/icdm07-binary.pdf">Binary Matrix Factorization with Applications</a> along with the <em>thresholding algorithm</em>, which is more appropriate for sparse binary data. Unfortunately the <em>thresholding algorithm</em> is not implemented in <em>nimfa</em>. The second limitation is the same as that mentioned above for sklearn's MDS, there is no way of projecting new data points onto the embedding space that the model was fit on. As a last resort, I could have possibly <a href="https://github.com/marinkaz/nimfa/issues/43">altered the code to perform this projection</a>, however, this would require some testing and is not a completely satisfactory solution. In the end I have found another promising approach that is more powerful that I'll be discussing in the next notebook.</p>
 
 </div>
 </div>
