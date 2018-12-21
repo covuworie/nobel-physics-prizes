@@ -13131,10 +13131,12 @@ div#notebook {
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="k">import</span> <span class="n">SVC</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">matthews_corrcoef</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">ParameterGrid</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">ParameterSampler</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="k">import</span> <span class="n">SVC</span>
 
 <span class="kn">from</span> <span class="nn">src.data.progress_bar</span> <span class="k">import</span> <span class="n">progress_bar</span>
 <span class="kn">from</span> <span class="nn">src.features.features_utils</span> <span class="k">import</span> <span class="n">convert_categoricals_to_numerical</span>
@@ -14312,7 +14314,7 @@ Name: physics_laureate, dtype: int64</pre>
     <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">(),</span>
     <span class="n">param_grid</span><span class="o">=</span><span class="n">ParameterGrid</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mf">2.0</span><span class="p">))),</span>
     <span class="n">score_func</span><span class="o">=</span><span class="n">matthews_corrcoef</span><span class="p">,</span> <span class="n">greater_score_is_better</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span>
-    <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     
     <span class="k">if</span> <span class="n">progress_bar</span><span class="p">:</span>
         <span class="n">progress_bar</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -14337,6 +14339,12 @@ Name: physics_laureate, dtype: int64</pre>
                 <span class="n">C</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">kernel</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span> <span class="s1">&#39;rbf&#39;</span><span class="p">),</span>
                 <span class="n">gamma</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_deprecated&#39;</span><span class="p">),</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
                 <span class="n">class_weight</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;class_weight&#39;</span><span class="p">),</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">):</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+                <span class="n">n_estimators</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">,</span> <span class="s1">&#39;warn&#39;</span><span class="p">),</span>
+                <span class="n">max_features</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_features&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">),</span>
+                <span class="n">min_samples_leaf</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+                <span class="n">class_weight</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;class_weight&#39;</span><span class="p">),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
         <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
@@ -14362,8 +14370,9 @@ Name: physics_laureate, dtype: int64</pre>
     <span class="n">best_classifier</span> <span class="o">=</span> <span class="n">classifiers</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">best_params</span><span class="p">)]</span>
     
     <span class="c1"># return results</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;best_classifier&#39;</span><span class="p">:</span> <span class="n">best_classifier</span><span class="p">,</span> <span class="s1">&#39;best_params&#39;</span><span class="p">:</span> <span class="n">best_params</span><span class="p">,</span> <span class="s1">&#39;best_score&#39;</span><span class="p">:</span> <span class="n">best_score</span><span class="p">,</span>
-               <span class="s1">&#39;train_scores&#39;</span><span class="p">:</span> <span class="n">train_scores</span><span class="p">,</span> <span class="s1">&#39;validation_scores&#39;</span><span class="p">:</span> <span class="n">validation_scores</span><span class="p">}</span> 
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;best_classifier&#39;</span><span class="p">:</span> <span class="n">best_classifier</span><span class="p">,</span> <span class="s1">&#39;best_params&#39;</span><span class="p">:</span> <span class="n">best_params</span><span class="p">,</span>
+               <span class="s1">&#39;best_score&#39;</span><span class="p">:</span> <span class="n">best_score</span><span class="p">,</span> <span class="s1">&#39;train_scores&#39;</span><span class="p">:</span> <span class="n">train_scores</span><span class="p">,</span>
+               <span class="s1">&#39;validation_scores&#39;</span><span class="p">:</span> <span class="n">validation_scores</span><span class="p">}</span> 
     <span class="k">return</span> <span class="n">results</span>
 
 
@@ -14391,7 +14400,7 @@ Name: physics_laureate, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Logistic-Regression">Logistic Regression<a class="anchor-link" href="#Logistic-Regression">&#182;</a></h3><p>The hyperparameters to be selected for the logistic regression model are:</p>
+<h3 id="Logistic-Regression-(LR)">Logistic Regression (LR)<a class="anchor-link" href="#Logistic-Regression-(LR)">&#182;</a></h3><p>The hyperparameters to be selected for the logistic regression model are:</p>
 <ul>
 <li>The <code>penalty</code> which is used to specify whether the $L1$ or $L2$ norms are used in the regularization. The latter favors sparse solutions and naturally performs feature selection. </li>
 <li><code>C</code>, the inverse of regularization strength. Smaller values specify stronger regularization.</li>
@@ -14431,7 +14440,7 @@ Name: physics_laureate, dtype: int64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">logit_results</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
     <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span>
     <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">)</span>
-<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">logit_results</span><span class="p">,</span> <span class="s1">&#39;Logistic Regression&#39;</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">logit_results</span><span class="p">,</span> <span class="s1">&#39;LR&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14448,7 +14457,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:45 Time:  0:00:45
+<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:46 Time:  0:00:46
 </pre>
 </div>
 </div>
@@ -14459,7 +14468,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Logistic Regression
+<pre>LR
 Best params:  {&#39;C&#39;: 2.0, &#39;class_weight&#39;: {0: 0.1, 1: 0.9}, &#39;penalty&#39;: &#39;l2&#39;}
 Training score:  0.662
 Validation score:  0.494
@@ -14479,7 +14488,7 @@ Validation score:  0.494
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">logit_results_weights</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
     <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span>
     <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weights</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">)</span>
-<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">logit_results_weights</span><span class="p">,</span> <span class="s1">&#39;Logistic Regression + sample weights&#39;</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">logit_results_weights</span><span class="p">,</span> <span class="s1">&#39;LR + sample weights&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14496,7 +14505,7 @@ Validation score:  0.494
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:26 Time:  0:00:26</pre>
+<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:28 Time:  0:00:28</pre>
 </div>
 </div>
 
@@ -14506,7 +14515,7 @@ Validation score:  0.494
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Logistic Regression + sample weights
+<pre>LR + sample weights
 Best params:  {&#39;C&#39;: 16384.0, &#39;class_weight&#39;: {0: 0.15000000000000002, 1: 0.85}, &#39;penalty&#39;: &#39;l1&#39;}
 Training score:  0.723
 Validation score:  0.522
@@ -14526,7 +14535,7 @@ Validation score:  0.522
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">logit_results_topics</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
     <span class="n">X_train_topics</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation_topics</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
     <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">)</span>
-<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">logit_results_topics</span><span class="p">,</span> <span class="s1">&#39;Logistic Regression (topics)&#39;</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">logit_results_topics</span><span class="p">,</span> <span class="s1">&#39;LR (topics)&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14543,7 +14552,7 @@ Validation score:  0.522
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:23 Time:  0:00:23</pre>
+<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:22 Time:  0:00:22</pre>
 </div>
 </div>
 
@@ -14553,7 +14562,7 @@ Validation score:  0.522
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Logistic Regression (topics)
+<pre>LR (topics)
 Best params:  {&#39;C&#39;: 32.0, &#39;class_weight&#39;: {0: 0.2, 1: 0.8}, &#39;penalty&#39;: &#39;l1&#39;}
 Training score:  0.423
 Validation score:  0.494
@@ -14573,7 +14582,7 @@ Validation score:  0.494
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">logit_results_topics_weights</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
     <span class="n">X_train_topics</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation_topics</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
     <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weights_topics</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">)</span>
-<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">logit_results_topics_weights</span><span class="p">,</span> <span class="s1">&#39;Logistic Regression (topics) + sample weights&#39;</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">logit_results_topics_weights</span><span class="p">,</span> <span class="s1">&#39;LR (topics) + sample weights&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14600,7 +14609,7 @@ Validation score:  0.494
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Logistic Regression (topics) + sample weights
+<pre>LR (topics) + sample weights
 Best params:  {&#39;C&#39;: 512.0, &#39;class_weight&#39;: {0: 0.25, 1: 0.75}, &#39;penalty&#39;: &#39;l2&#39;}
 Training score:  0.398
 Validation score:  0.472
@@ -14682,7 +14691,7 @@ Validation score:  0.472
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 368 / 368 param sets |█████| 100% Elapsed Time: 0:00:33 Time:  0:00:33
+<pre>Running: 368 / 368 param sets |█████| 100% Elapsed Time: 0:00:32 Time:  0:00:32
 </pre>
 </div>
 </div>
@@ -14777,7 +14786,7 @@ Validation score:  0.557
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 368 / 368 param sets |█████| 100% Elapsed Time: 0:00:11 Time:  0:00:11</pre>
+<pre>Running: 368 / 368 param sets |█████| 100% Elapsed Time: 0:00:12 Time:  0:00:12</pre>
 </div>
 </div>
 
@@ -14807,7 +14816,7 @@ Validation score:  0.489
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">svm_results_topics_weights</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
     <span class="n">X_train_topics</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation_topics</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
     <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weights_topics</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
-<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">svm_results_topics_weights</span><span class="p">,</span> <span class="s1">&#39;SVM (topics) + weights&#39;</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">svm_results_topics_weights</span><span class="p">,</span> <span class="s1">&#39;SVM (topics) + sample weights&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14834,7 +14843,7 @@ Validation score:  0.489
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>SVM (topics) + weights
+<pre>SVM (topics) + sample weights
 Best params:  {&#39;C&#39;: 512.0, &#39;class_weight&#39;: &#39;balanced&#39;, &#39;kernel&#39;: &#39;linear&#39;}
 Training score:  0.386
 Validation score:  0.366
@@ -14854,6 +14863,250 @@ Validation score:  0.366
 <li>Once again, since none of the models selected uniform class weights, we can see that the choice of this hyperparamter is very important. Interestingly, the balanced class weight is chosen for the topics features.</li>
 <li>Again we see overfitting and underfitting of the models. However, for the classifiers fitted with the sample weights, the effect is far less pronounced than for the logistic regression models.</li>
 <li>The sample-weighted classifiers seem to favor larger values of C (smaller margin) whereas the unweighted ones facvor smaller values of C (larger margin). </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Random-Forest-(RF)">Random Forest (RF)<a class="anchor-link" href="#Random-Forest-(RF)">&#182;</a></h3><p>There are a multitude of hyperparameters that can be selected for a random forest model. The hyperparameters control the randomness of the forest. The aim is to set them such that reasonable predictive power of individual trees is achieved without excessive correlation between the trees (bias-variance trade-off). Based on the advice of Probst et al. in <a href="https://arxiv.org/pdf/1804.03515.pdf">Hyperparameters and Tuning Strategies for Random Forest</a>, we will restrict ourselves to the following most influential hyperparameters:</p>
+<ul>
+<li>The number of features <code>max_features</code> to consider when looking for the best split. Lower values lead to more diverse and less correlated trees, which results in more stable aggregation of predictions. However, lower values also lead to the individual trees being weaker predictors of the target variable.</li>
+<li>The minimum number of samples required to be at a leaf node <code>min_samples_leaf</code>. Lower values lead to
+trees of larger depth, which means that more splits are performed until the terminal nodes. More splits means the model is more complex and this can potentially lead to overfitting.</li>
+<li><code>class_weight</code>, as defined above for logistic regression.</li>
+</ul>
+<p>Note that the number of trees in the forest <code>n_estimators</code> will be fixed at 500. Following the recommendations of Probst et al., "the number of trees should be set high: the higher the number of trees, the better the results in terms of performance and precision of variable importances. However, the improvement obtained by adding trees diminishes as more and more trees are added." 500 trees in the forest seems like a reasonable compromise based on the stability of the solution and computational resources available.</p>
+<p>Let's perform the grid search now. Note that this takes a considerable amount of time due to the number of trees in the forest and the large hyperparameter space being searched. To reduce the computation time, we will perform a <em>random search</em> over one-quarter of the values in the hyperparameter space, by drawing randomly from a uniform distribution. Bergstra and Bengio show in <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">Random Search for Hyper-Parameter Optimization</a> that for neural networks random search is more efficient in searching good hyperparameter specifications than grid search.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">n_estimators</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">]</span>
+<span class="n">max_features</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;sqrt&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">min_samples_leaf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+
+<span class="n">class_weight</span> <span class="o">=</span> <span class="p">([{</span><span class="mi">0</span><span class="p">:</span> <span class="n">weight</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">weight</span><span class="p">}</span> <span class="k">for</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">11</span><span class="p">)]</span> <span class="o">+</span>
+                 <span class="p">[{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="s1">&#39;balanced_subsample&#39;</span><span class="p">])</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="n">max_features</span><span class="p">,</span>
+                  <span class="n">min_samples_leaf</span><span class="o">=</span><span class="n">min_samples_leaf</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weight</span><span class="p">)</span>
+<span class="n">param_grid_sampler</span> <span class="o">=</span> <span class="n">ParameterSampler</span><span class="p">(</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.25</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ParameterGrid</span><span class="p">(</span><span class="n">param_grid</span><span class="p">)))),</span>
+                                      <span class="n">random_state</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">clf</span><span class="o">=</span><span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="n">progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">param_grid_sampler</span><span class="p">),</span> <span class="n">banner_text_begin</span><span class="o">=</span><span class="s1">&#39;Running: &#39;</span><span class="p">,</span> <span class="n">banner_text_end</span><span class="o">=</span><span class="s1">&#39; param sets&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rf_results</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid_sampler</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+    <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">rf_results</span><span class="p">,</span> <span class="s1">&#39;RF&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:07:01 Time:  0:07:01
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>RF
+Best params:  {&#39;n_estimators&#39;: 500, &#39;min_samples_leaf&#39;: 2, &#39;max_features&#39;: 0.05, &#39;class_weight&#39;: {0: 0.1, 1: 0.9}}
+Training score:  0.76
+Validation score:  0.521
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rf_results_weights</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid_sampler</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weights</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">rf_results_weights</span><span class="p">,</span> <span class="s1">&#39;RF + sample weights&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:07:12 Time:  0:07:12</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>RF + sample weights
+Best params:  {&#39;n_estimators&#39;: 500, &#39;min_samples_leaf&#39;: 4, &#39;max_features&#39;: 0.49999999999999994, &#39;class_weight&#39;: {0: 0.1, 1: 0.9}}
+Training score:  0.757
+Validation score:  0.544
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rf_results_topics</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
+    <span class="n">X_train_topics</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation_topics</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid_sampler</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">rf_results_topics</span><span class="p">,</span> <span class="s1">&#39;RF (topics)&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:07:52 Time:  0:07:52</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>RF (topics)
+Best params:  {&#39;n_estimators&#39;: 500, &#39;min_samples_leaf&#39;: 2, &#39;max_features&#39;: 0.05, &#39;class_weight&#39;: {0: 0.1, 1: 0.9}}
+Training score:  0.419
+Validation score:  0.387
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rf_results_topics_weights</span> <span class="o">=</span> <span class="n">evaluate_classifier</span><span class="p">(</span>
+    <span class="n">X_train_topics</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_validation_topics</span><span class="p">,</span> <span class="n">y_validation</span><span class="p">,</span> <span class="n">clf</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid_sampler</span><span class="p">,</span>
+    <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weights_topics</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">bar</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
+<span class="n">print_best_classifier</span><span class="p">(</span><span class="n">rf_results_topics_weights</span><span class="p">,</span> <span class="s1">&#39;RF (topics) + sample weights&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:07:57 Time:  0:07:57</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>RF (topics) + sample weights
+Best params:  {&#39;n_estimators&#39;: 500, &#39;min_samples_leaf&#39;: 8, &#39;max_features&#39;: 0.2, &#39;class_weight&#39;: {0: 0.2, 1: 0.8}}
+Training score:  0.42
+Validation score:  0.388
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can make the following observations about the results:</p>
+<ul>
+<li>Once again, since none of the models selected uniform class weights, we can see that the choice of this hyperparamter is very important. In fact all four models select values for the weights which weights the laureate class much higher than the non-laureate class.</li>
+<li>The original features classifiers seem to favor lower values of <code>min_samples_leaf</code> (deeper trees) and are overfitting considerably.</li>
+<li>The <code>max_features</code> is low for the majority of the classifiers, which means the individual trees are diverse, but weak predictors.</li>
 </ul>
 
 </div>
