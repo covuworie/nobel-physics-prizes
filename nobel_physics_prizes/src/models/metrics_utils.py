@@ -82,9 +82,18 @@ def mcc_curve(y_true, y_score, pos_label=None, sample_weight=None, drop_intermed
             such that thresholds[-1] is equal to 0 (and the false positive and true positive rates are set to 1.0). 
 
     Returns:
-        mccs : array, shape = [>2]
+        mcc : array, shape = [>2]
             Matthews Correlation Coefficients such that element i is the MCC of predictions with
             score >= thresholds[i].
+
+        tnr : array, shape = [>2]
+            Decreasing true negative rates such that element i is the true negative rate (also known
+            as specificity or selectivity) (tnr = 1 - fpr where fpr is the false positive rate) of
+            predictions with score >= thresholds[i].
+
+        tpr : array, shape = [>2]
+            Increasing true positive rates such that element i is the true positive rate (also known as
+            sensitivity or recall) of predictions with score >= thresholds[i].
 
         thresholds : array, shape = [n_thresholds]
             Decreasing thresholds on the decision function used to compute MCC.
@@ -102,17 +111,18 @@ def mcc_curve(y_true, y_score, pos_label=None, sample_weight=None, drop_intermed
         fpr = np.append(fpr, 1.0)
         tpr = np.append(tpr, 1.0)
 
-    mccs = []
+    mcc = []
     with warnings.catch_warnings():  # ignore runtime warnings caused by zero MCC
         warnings.filterwarnings('ignore', category=RuntimeWarning)
         for threshold in thresholds:
             y_pred = binarize(y_score.reshape(-1, 1),
                               threshold=threshold).astype('int64')
-            mcc = matthews_corrcoef(
+            coef = matthews_corrcoef(
                 y_true, y_pred, sample_weight=sample_weight)
-            mccs.append(mcc)
+            mcc.append(coef)
 
-    return np.array(mccs), thresholds
+    tnr = 1.0 - fpr
+    return np.array(mcc), tnr, tpr, thresholds
 
 
 def mcc_auc_score(y_true, y_score, sample_weight=None, probability=True, normalize=True):
@@ -144,16 +154,16 @@ def mcc_auc_score(y_true, y_score, sample_weight=None, probability=True, normali
             Area under the curve.
     """
 
-    mccs, thresholds = mcc_curve(
+    mcc, _, _, thresholds = mcc_curve(
         y_true, y_score, sample_weight=sample_weight, probability=probability)
-    mcc_auc = auc(thresholds, mccs)
+    mcc_auc = auc(thresholds, mcc)
 
     if not normalize:
         return mcc_auc
 
-    mccs_ones = np.ones(2)
-    mcc_ones_auc = auc(np.array([thresholds[0], thresholds[-1]]), mccs_ones)
-    mcc_auc /= mcc_ones_auc
+    mcc_1_auc = auc(np.array([thresholds[0], thresholds[-1]]), np.ones(2))
+    mcc_auc /= mcc_1_auc
+
     if probability:
         assert(0.0 <= mcc_auc <= 1.0)
 

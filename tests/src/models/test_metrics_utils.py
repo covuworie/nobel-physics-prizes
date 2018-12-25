@@ -63,25 +63,27 @@ def expected_roc_curve_probability(expected_roc_curve):
 @pytest.fixture
 def expected_mcc_curve(y_true_y_score, expected_roc_curve):
     y_true, y_score = y_true_y_score
-    _, _, thresholds = expected_roc_curve
-    mccs = []
+    fpr, tpr, thresholds = expected_roc_curve
+    mcc = []
     for threshold in thresholds:
         y_pred = (y_score > threshold).astype('int64')
-        mcc = matthews_corrcoef(y_true, y_pred)
-        mccs.append(mcc)
-    return np.array(mccs), thresholds
+        coef = matthews_corrcoef(y_true, y_pred)
+        mcc.append(coef)
+    tnr = 1.0 - fpr
+    return np.array(mcc), tnr, tpr, thresholds
 
 
 @pytest.fixture
 def expected_mcc_curve_probability(y_true_y_score, expected_roc_curve_probability):
     y_true, y_score = y_true_y_score
-    _, _, thresholds = expected_roc_curve_probability
-    mccs = []
+    fpr, tpr, thresholds = expected_roc_curve_probability
+    mcc = []
     for threshold in thresholds:
         y_pred = (y_score > threshold).astype('int64')
-        mcc = matthews_corrcoef(y_true, y_pred)
-        mccs.append(mcc)
-    return np.array(mccs), thresholds
+        coef = matthews_corrcoef(y_true, y_pred)
+        mcc.append(coef)
+    tnr = 1.0 - fpr
+    return np.array(mcc), tnr, tpr, thresholds
 
 
 def test_confusion_matrix_to_dataframe_default_values(
@@ -109,28 +111,32 @@ def test_confusion_matrix_to_dataframe(
 @pytest.mark.filterwarnings('ignore::RuntimeWarning')
 def test_mcc_curve(y_true_y_score, expected_mcc_curve):
     y_true, y_score = y_true_y_score
-    expected_mccs, expected_thresholds = expected_mcc_curve
-    mccs, thresholds = mcc_curve(y_true, y_score, probability=False)
+    expected_mcc, expected_tnr, expected_tpr, expected_thresholds = expected_mcc_curve
+    mcc, tnr, tpr, thresholds = mcc_curve(y_true, y_score, probability=False)
     np.testing.assert_allclose(thresholds, expected_thresholds)
-    np.testing.assert_allclose(mccs, expected_mccs)
+    np.testing.assert_allclose(mcc, expected_mcc)
+    np.testing.assert_allclose(tnr, expected_tnr)
+    np.testing.assert_allclose(tpr, expected_tpr)
 
 
 @pytest.mark.filterwarnings('ignore::RuntimeWarning')
 def test_mcc_curve_probability(
         y_true_y_score, expected_mcc_curve_probability):
     y_true, y_score = y_true_y_score
-    expected_mccs, expected_thresholds = expected_mcc_curve_probability
-    mccs, thresholds = mcc_curve(y_true, y_score, probability=True)
+    expected_mcc, expected_tnr, expected_tpr, expected_thresholds = expected_mcc_curve_probability
+    mcc, tnr, tpr, thresholds = mcc_curve(y_true, y_score, probability=True)
     np.testing.assert_allclose(thresholds, expected_thresholds)
-    np.testing.assert_allclose(mccs, expected_mccs)
+    np.testing.assert_allclose(mcc, expected_mcc)
+    np.testing.assert_allclose(tnr, expected_tnr)
+    np.testing.assert_allclose(tpr, expected_tpr)
 
 
 @pytest.mark.filterwarnings('ignore::RuntimeWarning')
 def test_mcc_auc_score(y_true_y_score, expected_mcc_curve):
     y_true, y_score = y_true_y_score
-    mccs, thresholds = expected_mcc_curve
+    mcc, _, _, thresholds = expected_mcc_curve
 
-    expected_mcc_auc = auc(thresholds, mccs)
+    expected_mcc_auc = auc(thresholds, mcc)
     mcc_auc = mcc_auc_score(
         y_true, y_score, probability=False, normalize=False)
     np.testing.assert_allclose(mcc_auc, expected_mcc_auc)
@@ -138,16 +144,16 @@ def test_mcc_auc_score(y_true_y_score, expected_mcc_curve):
 
     normalized_thresholds = (
         (thresholds - np.min(thresholds)) / (np.max(thresholds) - np.min(thresholds)))
-    expected_mcc_auc = auc(normalized_thresholds, mccs)
+    expected_mcc_auc = auc(normalized_thresholds, mcc)
     np.testing.assert_allclose(mcc_auc, expected_mcc_auc)
 
 
 @pytest.mark.filterwarnings('ignore::RuntimeWarning')
 def test_mcc_auc_score_probability(y_true_y_score, expected_mcc_curve_probability):
     y_true, y_score = y_true_y_score
-    mccs, thresholds = expected_mcc_curve_probability
+    mcc, _, _, thresholds = expected_mcc_curve_probability
 
-    expected_mcc_auc = auc(thresholds, mccs)
+    expected_mcc_auc = auc(thresholds, mcc)
     mcc_auc = mcc_auc_score(y_true, y_score, probability=True, normalize=False)
     np.testing.assert_allclose(mcc_auc, expected_mcc_auc)
 
