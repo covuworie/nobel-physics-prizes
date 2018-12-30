@@ -13158,7 +13158,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier_params</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../models/LR_+_sample_weights.csv&#39;</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier_params</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../models/LR.csv&#39;</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">classifier_params</span>
 </pre></div>
 
@@ -13178,11 +13178,10 @@ div#notebook {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>estimator        &lt;class &#39;sklearn.linear_model.logistic.Logistic...
-params           {&#39;C&#39;: 16384.0, &#39;class_weight&#39;: {0: 0.150000000...
-threshold                                      0.04360633469555392
-sample_weight          ../models/train-features-sample-weights.csv
-Name: LR_+_sample_weights, dtype: object</pre>
+<pre>estimator    &lt;class &#39;sklearn.linear_model.logistic.Logistic...
+params       {&#39;C&#39;: 2.0, &#39;class_weight&#39;: {0: 0.1, 1: 0.9}, &#39;...
+threshold                                   0.5134529676865361
+Name: LR, dtype: object</pre>
 </div>
 
 </div>
@@ -13194,7 +13193,7 @@ Name: LR_+_sample_weights, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Next let's read in the training, validation and test features and targets as well as the sample weights we created for covariate shift adaptation. We make sure to convert the categorical fields to a numerical form that is suitable for building machine learning models.</p>
+<p>Next let's read in the training, validation and test features and targets. We make sure to convert the categorical fields to a numerical form that is suitable for building machine learning models.</p>
 
 </div>
 </div>
@@ -13427,89 +13426,6 @@ Name: LR_+_sample_weights, dtype: object</pre>
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sample_weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">classifier_params</span><span class="o">.</span><span class="n">sample_weight</span><span class="p">)</span>
-<span class="n">sample_weights</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[4]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>full_name</th>
-      <th>weight</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Aage Bohr</td>
-      <td>0.000252</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Aaldert Wapstra</td>
-      <td>2.662827</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Abdus Salam</td>
-      <td>0.000340</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Abraham Alikhanov</td>
-      <td>0.000700</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Abraham H. Taub</td>
-      <td>1.056121</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-target.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">convert_target_to_numerical</span><span class="p">(</span><span class="n">train_target</span><span class="p">)</span>
 <span class="n">y_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -13525,7 +13441,7 @@ Name: LR_+_sample_weights, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13548,7 +13464,7 @@ Name: physics_laureate, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/validation-features.csv&#39;</span><span class="p">)</span>
@@ -13566,7 +13482,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13771,7 +13687,7 @@ Name: physics_laureate, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/validation-target.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;full_name&#39;</span><span class="p">,</span>
@@ -13790,7 +13706,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13813,7 +13729,7 @@ Name: physics_laureate, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/test-features.csv&#39;</span><span class="p">)</span>
@@ -13831,7 +13747,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -14036,7 +13952,7 @@ Name: physics_laureate, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/test-target.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -14054,7 +13970,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -14078,14 +13994,14 @@ Name: physics_laureate, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Retraining-on-the-Training-and-Validation-Data">Retraining on the Training and Validation Data<a class="anchor-link" href="#Retraining-on-the-Training-and-Validation-Data">&#182;</a></h2><p>It makes sense to retrain the model on both the training and validation data so that we can obtain as good a predictive performance as possible. So let's combine the training and validation features and targets, reconstruct the classifier and retrain the model. We also must make sure to extend the sample weights vector so that the validation samples have an importance (density ratio) of one.</p>
+<h2 id="Retraining-on-the-Training-and-Validation-Data">Retraining on the Training and Validation Data<a class="anchor-link" href="#Retraining-on-the-Training-and-Validation-Data">&#182;</a></h2><p>It makes sense to retrain the model on both the training and validation data so that we can obtain as good a predictive performance as possible. So let's combine the training and validation features and targets, reconstruct the classifier and retrain the model.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_train_validation</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X_validation</span><span class="p">)</span>
@@ -14103,7 +14019,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -14308,7 +14224,7 @@ Name: physics_laureate, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_train_validation</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_validation</span><span class="p">)</span>
@@ -14326,7 +14242,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -14349,15 +14265,11 @@ Name: physics_laureate, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_sample_weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">y_validation</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">])</span>
-<span class="n">validation_sample_weights</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">sample_weights_all</span> <span class="o">=</span> <span class="n">sample_weights</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">sample_weights_all</span> <span class="o">=</span> <span class="n">sample_weights_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">validation_sample_weights</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_weights_all</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample_weights</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_sample_weights</span><span class="p">))</span>
-<span class="n">sample_weights_all</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="o">**</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">classifier_params</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_validation</span><span class="p">,</span> <span class="n">y_train_validation</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14370,101 +14282,16 @@ Name: physics_laureate, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>full_name</th>
-      <th>weight</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>729</th>
-      <td>William Daniel Phillips</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>730</th>
-      <td>Wolfgang Ketterle</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>731</th>
-      <td>Xiao-Gang Wen</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>732</th>
-      <td>Yasunori Nomura</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>733</th>
-      <td>Zhores Alferov</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">classifier</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">classifier_params</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
-<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_validation</span><span class="p">,</span> <span class="n">y_train_validation</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weights_all</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>LogisticRegression(C=16384.0, class_weight={0: 0.15000000000000002, 1: 0.85},
-          dual=False, fit_intercept=True, intercept_scaling=1,
-          max_iter=1000, multi_class=&#39;warn&#39;, n_jobs=None, penalty=&#39;l1&#39;,
-          random_state=1, solver=&#39;liblinear&#39;, tol=0.0001, verbose=0,
-          warm_start=False)</pre>
+<pre>LogisticRegression(C=2.0, class_weight={0: 0.1, 1: 0.9}, dual=False,
+          fit_intercept=True, intercept_scaling=1, max_iter=1000,
+          multi_class=&#39;warn&#39;, n_jobs=None, penalty=&#39;l2&#39;, random_state=0,
+          solver=&#39;liblinear&#39;, tol=0.0001, verbose=0, warm_start=False)</pre>
 </div>
 
 </div>
@@ -14483,7 +14310,7 @@ Name: physics_laureate, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">X_train_validation</span><span class="o">.</span><span class="n">num_workplaces_at_least_2</span>
@@ -14529,7 +14356,7 @@ Baseline Classifier MCC (test): 0.19
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">confusion_matrix_to_dataframe</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)))</span>
@@ -14633,7 +14460,7 @@ weighted avg       0.72      0.72      0.72       193
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_train_pred</span> <span class="o">=</span> <span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_train_validation</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span>
@@ -14642,9 +14469,8 @@ weighted avg       0.72      0.72      0.72       193
     <span class="n">classifier_params</span><span class="o">.</span><span class="n">threshold</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
 <span class="n">mcc_train_validation</span> <span class="o">=</span> <span class="n">matthews_corrcoef</span><span class="p">(</span><span class="n">y_train_validation</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
 <span class="n">mcc_test</span> <span class="o">=</span> <span class="n">matthews_corrcoef</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">classifier_params</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-<span class="n">print_matthews_corrcoef</span><span class="p">(</span><span class="n">mcc_train_validation</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data_label</span><span class="o">=</span><span class="s1">&#39;train + validation&#39;</span><span class="p">)</span>
-<span class="n">print_matthews_corrcoef</span><span class="p">(</span><span class="n">mcc_test</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data_label</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">print_matthews_corrcoef</span><span class="p">(</span><span class="n">mcc_train_validation</span><span class="p">,</span> <span class="n">classifier_params</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data_label</span><span class="o">=</span><span class="s1">&#39;train + validation&#39;</span><span class="p">)</span>
+<span class="n">print_matthews_corrcoef</span><span class="p">(</span><span class="n">mcc_test</span><span class="p">,</span> <span class="n">classifier_params</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data_label</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14661,8 +14487,8 @@ weighted avg       0.72      0.72      0.72       193
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>LR + sample weights MCC (train + validation): 0.55
-LR + sample weights MCC (test): 0.37
+<pre>LR MCC (train + validation): 0.64
+LR MCC (test): 0.36
 </pre>
 </div>
 </div>
@@ -14676,14 +14502,14 @@ LR + sample weights MCC (test): 0.37
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This classifier performs much better on the test data than the baseline classifier. Again you can see that by comparing it to the baseline classifier, I'm not actually saying whether it is a good or bad classifier. There is very little in the literature, even as a rule of thumb, saying what the expected MCC is for a "good performing classifier" as it is very dependent on the context and usage. As I said before, predicting Physics Nobel Laureates is a difficult task due to the many complex factors involved, so we certainly should not be expecting stellar performance from <em>any</em> classifier. This includes both machine classifiers, either machine-learning-based or rules-based, and human classifiers without inside knowledge. However, let me try and get off the fence just a little now.</p>
 <p>The MCC is a contingency matrix method of calculating the Pearson product-moment correlation coefficient and so it has the <a href="https://stats.stackexchange.com/questions/118219/how-to-interpret-matthews-correlation-coefficient-mcc">same interpretation</a>. If the values in the link are to be believed, then our classifier has a "moderate positive relationship" with the target. This <a href="https://statistics.laerd.com/statistical-guides/pearson-correlation-coefficient-statistical-guide.php">statistical guide</a> also seems to agree with this assessment. However, we can easily find examples that indicate there is a <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3576830/">low positive correlation</a> or a <a href="https://www.dummies.com/education/math/statistics/how-to-interpret-a-correlation-coefficient-r/">weak uphill (positive) linear relationship</a> between the classifier's predictions and the target.</p>
-<p>So should we conclude that the classifier has a low or moderate performance? Asking this question is missing the purpose of this study. Instead we should ask, based on the classifier's performance, would we be willing to make recommendations to the Nobel Committee, about any biases that may be present when deciding Physics Laureates?  We can see from the confusion matrix and classification report that although this classifier has good recall of laureates, it is contaminated by too many false postives. Or in other words, it is not precise enough. As a result, the answer to the question is very likely no.</p>
+<p>So should we conclude that the classifier has a low or moderate performance? Asking this question is missing the purpose of this study. Instead we should ask, based on the classifier's performance, would we be willing to make recommendations to the Nobel Committee, about any biases that may be present when deciding Physics Laureates?  We can see from the confusion matrix and classification report that although this classifier has reasonable recall of laureates, it is contaminated by too many false postives. Or in other words, it is not precise enough. As a result, the answer to the question is very likely no.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">confusion_matrix_to_dataframe</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)))</span>
@@ -14731,20 +14557,20 @@ LR + sample weights MCC (test): 0.37
   <tbody>
     <tr>
       <th>Observed negative</th>
-      <td>108</td>
-      <td>43</td>
+      <td>115</td>
+      <td>36</td>
       <td>151</td>
     </tr>
     <tr>
       <th>Observed positive</th>
-      <td>12</td>
-      <td>30</td>
+      <td>15</td>
+      <td>27</td>
       <td>42</td>
     </tr>
     <tr>
       <th>Predicted total</th>
-      <td>120</td>
-      <td>73</td>
+      <td>130</td>
+      <td>63</td>
       <td>193</td>
     </tr>
   </tbody>
@@ -14762,12 +14588,12 @@ LR + sample weights MCC (test): 0.37
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>              precision    recall  f1-score   support
 
-           0       0.90      0.72      0.80       151
-           1       0.41      0.71      0.52        42
+           0       0.88      0.76      0.82       151
+           1       0.43      0.64      0.51        42
 
-   micro avg       0.72      0.72      0.72       193
-   macro avg       0.66      0.71      0.66       193
-weighted avg       0.79      0.72      0.74       193
+   micro avg       0.74      0.74      0.74       193
+   macro avg       0.66      0.70      0.67       193
+weighted avg       0.79      0.74      0.75       193
 
 </pre>
 </div>

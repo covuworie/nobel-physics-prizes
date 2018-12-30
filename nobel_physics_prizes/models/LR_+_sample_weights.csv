@@ -1,5 +1,0 @@
-,LR_+_sample_weights
-estimator,<class 'sklearn.linear_model.logistic.LogisticRegression'>
-params,"{'C': 16384.0, 'class_weight': {0: 0.15000000000000002, 1: 0.85}, 'dual': False, 'fit_intercept': True, 'intercept_scaling': 1, 'max_iter': 1000, 'multi_class': 'warn', 'n_jobs': None, 'penalty': 'l1', 'random_state': 1, 'solver': 'liblinear', 'tol': 0.0001, 'verbose': 0, 'warm_start': False}"
-threshold,0.04360633469555392
-sample_weight,../models/train-features-sample-weights.csv
