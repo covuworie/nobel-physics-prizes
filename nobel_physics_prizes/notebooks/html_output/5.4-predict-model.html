@@ -14658,6 +14658,627 @@ weighted avg       0.79      0.74      0.75       193
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Prediction-of-2018-Physics-Nobel-Laureates">Prediction of 2018 Physics Nobel Laureates<a class="anchor-link" href="#Prediction-of-2018-Physics-Nobel-Laureates">&#182;</a></h2><p>We will now use the logistic regression model to predict the 2018 Physics Nobel Laureates. A maximum of three physicists can be awarded the prize in any one year, however, to give ourselves more of a fighting chance let's try to predict the ten most likely winners. Let's start by forming the feature and target dataframes of physicists who are alive as the Nobel Prize cannot be awarded posthumously. Remember that this is the union of the validation and test sets.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_validation_test</span> <span class="o">=</span> <span class="n">X_validation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_validation_test</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_validation</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+<span class="n">X_validation_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[17]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>alumnus_in_**</th>
+      <th>alumnus_in_***</th>
+      <th>alumnus_in_AS</th>
+      <th>alumnus_in_AUS</th>
+      <th>alumnus_in_AUT</th>
+      <th>alumnus_in_CHE</th>
+      <th>alumnus_in_DEU</th>
+      <th>alumnus_in_EU</th>
+      <th>alumnus_in_FRA</th>
+      <th>alumnus_in_GBR</th>
+      <th>...</th>
+      <th>worked_in_CHE</th>
+      <th>worked_in_DEU</th>
+      <th>worked_in_EU</th>
+      <th>worked_in_FRA</th>
+      <th>worked_in_GBR</th>
+      <th>worked_in_ITA</th>
+      <th>worked_in_NA</th>
+      <th>worked_in_NLD</th>
+      <th>worked_in_RUS</th>
+      <th>worked_in_USA</th>
+    </tr>
+    <tr>
+      <th>full_name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Abdul Qadeer Khan</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alain Haché</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alan Andrew Watson</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alan Guth</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Albert Fert</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 202 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_validation_test</span> <span class="o">=</span> <span class="n">y_validation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_validation_test</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_validation</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span>
+<span class="n">y_validation_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[18]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>full_name
+Abdul Qadeer Khan     0
+Alain Haché           0
+Alan Andrew Watson    0
+Alan Guth             0
+Albert Fert           1
+Name: physics_laureate, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Recall that John Bardeen is the only <a href="https://www.nobelprize.org/prizes/facts/facts-on-the-nobel-prize-in-physics/">double laureate in Physics</a>, so although it is possible to receive the Nobel Prize in Physics multiple times, it is extremely rare. So let's drop previous Physics Laureates from the dataframe. This will make the list far more interesting as it will not be polluted by previous laureates.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_eligible</span> <span class="o">=</span> <span class="n">X_validation_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">y_validation_test</span><span class="p">[</span><span class="n">y_validation_test</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_eligible</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_validation_test</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_validation_test</span><span class="p">[</span><span class="n">y_validation_test</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">X_eligible</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[19]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>alumnus_in_**</th>
+      <th>alumnus_in_***</th>
+      <th>alumnus_in_AS</th>
+      <th>alumnus_in_AUS</th>
+      <th>alumnus_in_AUT</th>
+      <th>alumnus_in_CHE</th>
+      <th>alumnus_in_DEU</th>
+      <th>alumnus_in_EU</th>
+      <th>alumnus_in_FRA</th>
+      <th>alumnus_in_GBR</th>
+      <th>...</th>
+      <th>worked_in_CHE</th>
+      <th>worked_in_DEU</th>
+      <th>worked_in_EU</th>
+      <th>worked_in_FRA</th>
+      <th>worked_in_GBR</th>
+      <th>worked_in_ITA</th>
+      <th>worked_in_NA</th>
+      <th>worked_in_NLD</th>
+      <th>worked_in_RUS</th>
+      <th>worked_in_USA</th>
+    </tr>
+    <tr>
+      <th>full_name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Abdul Qadeer Khan</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alain Haché</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alan Andrew Watson</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alan Guth</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alexander Animalu</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 202 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>According to our model, these are the ten most likely winners of 2018 Physics Nobel Prize:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicist_win_probabilites</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_eligible</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">X_eligible</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">physicist_win_probabilites</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>full_name
+John G. Cramer          0.933427
+Vera Rubin              0.906141
+Mani Lal Bhaumik        0.904835
+Jean Zinn-Justin        0.897373
+James Bjorken           0.896668
+Manfred Eigen           0.885248
+Jocelyn Bell Burnell    0.881359
+Henry Stapp             0.862043
+Evgeny Velikhov         0.854470
+Peter Mansfield         0.849085
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The list contains some great and very interesting physicists who have won numerous of the top prizes in physics. I'll leave you to check out their Wikipedia articles for some more information on them. However, a few are worth discussing now. My personal favorite and without doubt the most infamous is <a href="https://en.wikipedia.org/wiki/Jocelyn_Bell_Burnell">Jocelyn Bell Burnell</a> who, as a postgraduate student, co-discovered the first radio pulsars in 1967. Her Wikipedia article says:</p>
+<p>"The discovery was recognised by the award of the 1974 Nobel Prize in Physics, but despite the fact that she was the first to observe the pulsars, Bell was excluded from the recipients of the prize.</p>
+<p>The paper announcing the discovery of pulsars had five authors. Bell's thesis supervisor Antony Hewish was listed first, Bell second. Hewish was awarded the Nobel Prize, along with the astronomer Martin Ryle. Many prominent astronomers criticised Bell's omission, including Sir Fred Hoyle."</p>
+<p>You can read more about her in her Wikipedia article and further details about other <a href="https://en.wikipedia.org/wiki/Nobel_Prize_controversies#Physics">Nobel Physics Prize controversies</a>.</p>
+<p><a href="https://en.wikipedia.org/wiki/Vera_Rubin">Vera Rubin</a> was an American astronomer who's research provided evidence of the existence of <a href="https://en.wikipedia.org/wiki/Dark_matter">dark matter</a> and according to her Wikipedia article, she "never won the Nobel Prize, though physicists such as Lisa Randall and Emily Levesque have argued that this was an oversight." Unfortunately she died on 25 December 2016 and is no longer eligible for the award. Recall that the list contains some deceased physicists due to the lag in updates of dbPedia data from Wikipedia. Peter Mansfield, who is also on the list is deceased too.</p>
+<p><a href="https://en.wikipedia.org/wiki/Manfred_Eigen">Manfred Eigen</a> actually won the 1967 Nobel Prize in Chemistry for work on measuring fast chemical reactions.</p>
+<p>The actual winners of the <a href="https://www.nobelprize.org/prizes/physics/2018/summary/">2018 Nobel Prize in Physics</a> were <a href="https://en.wikipedia.org/wiki/G%C3%A9rard_Mourou">Gérard Mourou</a>, <a href="https://en.wikipedia.org/wiki/Arthur_Ashkin">Arthur Ashkin</a> and <a href="https://en.wikipedia.org/wiki/Donna_Strickland">Donna Strickland</a>. Our model actually had zero chance of predicting them as they were never in the original <a href="../data/raw/physicists.txt">list of physicists</a> derived from Wikipedia! Obviously they have been added to Wikipedia since.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="s1">&#39;Gérard Mourou&#39;</span> <span class="ow">in</span> <span class="n">physicist_win_probabilites</span><span class="p">,</span> 
+ <span class="s1">&#39;Arthur Ashkin&#39;</span> <span class="ow">in</span> <span class="n">physicist_win_probabilites</span><span class="p">,</span>
+ <span class="s1">&#39;Donna Strickland&#39;</span> <span class="ow">in</span> <span class="n">physicist_win_probabilites</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[21]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(False, False, False)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So should we declare this part of the study as an epic failure as we were unable to identify the winners? No not quite. Closer inspection reveals many interesting characteristics of the three winners that related to the top features in our predictive model:</p>
+<ul>
+<li>Gérard Mourou is an experimental physicist, a citizen of France, 74 years of age (years lived group 65-79), has at least one physics laureate doctoral student (Donna Strickland) and has 3 alma mater (which is at least 2).</li>
+<li>Arthur Ashkin is an experimental physicist, worked at Bell Labs and has 2 alma mater.</li>
+<li>Donna Strickland is an experimental physicist and has 2 alma mater.</li>
+</ul>
+<p>Maybe this is a pure coincidence, but more likely, there are patterns in the data that the model has found. Whether or not these characteristics can be attributed to biases in the Nobel Physics Prize nomination and selection process is another matter, as correlation does not necessarily imply causation.</p>
+<p>This section was a lot of fun and quite informative about the logistic regression classifier, however, it was not possible without cheating. Look closely to see if you can spot the cheating!</p>
+
+</div>
+</div>
+</div>
     </div>
   </div>
 </body>
