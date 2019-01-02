@@ -1,3 +1,4 @@
+import copy
 import sys
 from concurrent.futures import as_completed
 from random import random
@@ -205,7 +206,7 @@ def _parse_javascript(response):
 
 
 def _force_redirects(redirected_titles, forced_redirects):
-    redirects = redirected_titles.copy()
+    redirects = copy.deepcopy(redirected_titles)
 
     for key, value in redirected_titles.items():
         if value in forced_redirects:
