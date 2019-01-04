@@ -14,11 +14,11 @@ The [Nobel Prize in Physics](https://www.nobelprize.org/prizes/physics/) is wide
 
 The **Nobel Prize in Physics** is awarded by *The Royal Swedish Academy of Sciences*, Stockholm, Sweden. The [nomination and selection process](https://www.nobelprize.org/nomination/physics/) is a lengthy and complex process taking just over a year. Three of the key stages are:
 
-- September – Nomination forms are sent out. The *Nobel Committee* sends out confidential forms to around 3,000 people – selected professors at universities around the world, Nobel Laureates in Physics and Chemistry, and members of the *Royal Swedish Academy of Sciences*, among others.
+- September - Nomination forms are sent out. The *Nobel Committee* sends out confidential forms to around 3,000 people – selected professors at universities around the world, Nobel Laureates in Physics and Chemistry, and members of the *Royal Swedish Academy of Sciences*, among others.
 
-- March-May – Consultation with experts. The Nobel Committee sends the names of the preliminary candidates to specially appointed experts for their assessment of the candidates’ work.
+- March-May - Consultation with experts. The Nobel Committee sends the names of the preliminary candidates to specially appointed experts for their assessment of the candidates’ work.
 
-- October – Nobel Laureates are chosen. In early October, the Academy selects the Nobel Laureates in Physics through a majority vote. The decision is final and without appeal. The names of the Nobel Laureates are then announced.
+- October - Nobel Laureates are chosen. In early October, the Academy selects the Nobel Laureates in Physics through a majority vote. The decision is final and without appeal. The names of the Nobel Laureates are then announced.
 
 Furthermore, [details of the nominations](https://www.nobelprize.org/nomination/archive/list.php) are not made public until 50 years after. The nature of the selection process has led to claims that the selection process is dominated more by the demographics of the nominee and the nominators than by the quality of the nominee's work. For some more details, see this excellent five part series from **Physics Today** that examines the data and dives into the history of [physicists nominated for the Nobel Prize](https://physicstoday.scitation.org/do/10.1063/PT.6.4.20170925a/full/). This **PBS** article also describes [8 ways to win the Nobel Prize in Physics](http://www.pbs.org/wgbh/nova/blogs/physics/2013/10/8-ways-to-win-the-nobel-prize-in-physics/) of which 5 refer to demographics. Some of the nominee demographics mentioned in both articles include:
 
