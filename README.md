@@ -1,9 +1,11 @@
 # Predicting Nobel Physics Prize Winners
 ### *And the Nobel goes to ...*
 
+![alt text](https://spectrum.ieee.org/image/MzE0MzA3NA.jpeg "Illustration: Niklas Elmehad/Nobel Media")
+
 ## Background
 
-The [Nobel Prize in Physics](https://www.nobelprize.org/prizes/physics/) is widely regarded as the most prestigious award in Physics. It has been awarded to 207 Nobel Laureates between 1901 and 2017. *John Bardeen* is the only double Nobel Laureate meaning that 206 physicists have actually won the prize. The will of *Alfred Nobel* states that that the prize should be awarded to the "person who shall have made the most important discovery or invention within the field of physics". In fact, the prize can actually be awarded to a maximum of 3 people in any year and can be split for a maximum of 2 inventions or discoveries.
+The [Nobel Prize in Physics](https://www.nobelprize.org/prizes/physics/) is widely regarded as the most prestigious award in Physics. It has been awarded to 207 Nobel Laureates between 1901 and 2017. *John Bardeen* is the only double Nobel Laureate meaning that 206 physicists have actually won the prize. The will of *Alfred Nobel* states that that the prize should be awarded to the "person who shall have made the most important discovery or invention within the field of physics". In fact, the prize can actually be awarded to a maximum of 3 people in any year and can be split for a maximum of 2 inventions or discoveries. The prize is not awarded posthumously; however, if a person is awarded a prize and dies before receiving it, the prize may still be presented.
 
 ## Problem Statement
 
@@ -51,6 +53,6 @@ Lists of Nobel Prize Winners in both Physics and Chemistry from 1901-2017 will b
 
 These lists will be used to obtain *demographic* data in [JSON](https://www.json.org/) format for the physicists by sending HTTP requests to [DBpedia](https://wiki.dbpedia.org/about). **DBpedia** is a crowd-sourced community effort to extract structured content from the information created in various [Wikimedia](https://www.wikimedia.org/) projects. In this case, the JSON data is similar to the structured data in an *Infobox* on the top right side of the *Wikipedia* article for each physicist. The following are examples of data that is available for the physicists:
 
-- [John Bardeen](https://en.wikipedia.org/wiki/John_Bardeen) [JSON](http://dbpedia.org/data/John_Bardeen.json)
-- [Albert Einstein](https://en.wikipedia.org/wiki/Albert_Einstein) [JSON](http://dbpedia.org/data/Albert_Einstein.json)
-- [Emmy Noether](https://en.wikipedia.org/wiki/Emmy_Noether) [JSON](http://dbpedia.org/data/Emmy_Noether.json)
+- [John Bardeen](https://en.wikipedia.org/wiki/John_Bardeen) ([JSON](http://dbpedia.org/data/John_Bardeen.json))
+- [Albert Einstein](https://en.wikipedia.org/wiki/Albert_Einstein) ([JSON](http://dbpedia.org/data/Albert_Einstein.json))
+- [Emmy Noether](https://en.wikipedia.org/wiki/Emmy_Noether) ([JSON](http://dbpedia.org/data/Emmy_Noether.json))
