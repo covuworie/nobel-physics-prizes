@@ -2,7 +2,7 @@
 ### *And the Nobel goes to ...*
 
 ![alt text](https://spectrum.ieee.org/image/MzE0MzA3NA.jpeg "Illustration: Niklas Elmehad/Nobel Media")
-Illustration: Niklas Elmehad/Nobel Media
+Illustration: Niklas Elmehad/Nobel Media ([IEEE Spectrum](https://spectrum.ieee.org/tech-talk/semiconductors/optoelectronics/2018-nobel-physics-prize-for-laser-work))
 
 Winners of the Nobel Prize in Physics 2018
 
