@@ -13214,6 +13214,11 @@ Make sure to check the option "Add python 3.6 to PATH" during installation.</p>
 </ol>
 
 <pre><code>jupyter lab</code></pre>
+<h2 id="Tests">Tests<a class="anchor-link" href="#Tests">&#182;</a></h2><p>Tests are located under the <em>tests</em> directory. There are two sets of tests, tests for the notebooks located at <em>tests/notebooks</em> and tests for the scripts located at <em>tests/src</em>.</p>
+<p>Notebook tests use <a href="https://github.com/chmp/ipytest">ipytest</a>. The functions in the notebook they are testing need to loaded into the same <a href="https://ipython.org/">IPython</a> interactive namespace. There are a few different ways of doing this. However, the simplest way to do this is to use <em>JupyterLab</em> to connect both notebooks to the same <a href="http://jupyter.readthedocs.io/en/latest/architecture/how_jupyter_ipython_work.html#the-ipython-kernel">kernel</a>. This can be achieved through the <code>Kernel &gt; Change Kernel</code> option in the <em>JupyterLab</em> user interface. Please see the <a href="http://jupyterlab.readthedocs.io/en/stable/">JupyterLab documentation</a> for more information on <a href="http://jupyterlab.readthedocs.io/en/stable/user/running.html">managing kernels</a>.</p>
+<p>Script tests use <a href="https://docs.pytest.org/en/latest/">pytest</a> and can be run from within the <em>virtualenv</em> with the command:</p>
+
+<pre><code>pytest</code></pre>
 
 </div>
 

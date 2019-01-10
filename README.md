@@ -94,3 +94,15 @@ pipenv install --dev
 ```
 jupyter lab
 ```
+
+## Tests
+
+Tests are located under the *tests* directory. There are two sets of tests, tests for the notebooks located at *tests/notebooks* and tests for the scripts located at *tests/src*. 
+
+Notebook tests use [ipytest](https://github.com/chmp/ipytest). The functions in the notebook they are testing need to loaded into the same [IPython](https://ipython.org/) interactive namespace. There are a few different ways of doing this. However, the simplest way to do this is to use *JupyterLab* to connect both notebooks to the same [kernel](http://jupyter.readthedocs.io/en/latest/architecture/how_jupyter_ipython_work.html#the-ipython-kernel). This can be achieved through the `Kernel > Change Kernel` option in the *JupyterLab* user interface. Please see the [JupyterLab documentation](http://jupyterlab.readthedocs.io/en/stable/) for more information on [managing kernels](http://jupyterlab.readthedocs.io/en/stable/user/running.html).
+
+Script tests use [pytest](https://docs.pytest.org/en/latest/) and can be run from within the *virtualenv* with the command:
+
+```
+pytest
+```
