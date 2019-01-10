@@ -13126,9 +13126,10 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setting-up-the-Environment">Setting up the Environment<a class="anchor-link" href="#Setting-up-the-Environment">&#182;</a></h2><p>An initialization step is needed to setup the environment:</p>
+<h2 id="Setting-the-Environment">Setting the Environment<a class="anchor-link" href="#Setting-the-Environment">&#182;</a></h2><p>A few initialization steps are needed to setup the environment:</p>
 <ul>
-<li>The locale needs to be set for all categories to the user’s default setting (typically specified in the LANG environment variable) to enable correct sorting of words with accents.</li>
+<li>The locale needs to be set for all categories to the user’s default setting (typically specified in the LANG environment variable) to enable correct sorting of physicists names with accents.</li>
+<li>A bool constant <code>FETCH_JSON_DATA</code> needs to be set to decide whether to fetch the json data. Set to False so that the previously fetched data is used. In this case the results of the study are guaranteed be reproducible. Set to True so that the latest data is fetched. In this case it is possible that the results of the study will change.</li>
 </ul>
 
 </div>
@@ -13174,6 +13175,19 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">FETCH_JSON_DATA</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gzip</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
@@ -13205,7 +13219,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/physicists.csv&#39;</span><span class="p">)</span>
@@ -13222,7 +13236,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13403,11 +13417,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PLACES_FIELDS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;almaMater&#39;</span><span class="p">,</span> <span class="s1">&#39;birthPlace&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship&#39;</span><span class="p">,</span> <span class="s1">&#39;deathPlace&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="s1">&#39;residence&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PLACES_FIELDS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;almaMater&#39;</span><span class="p">,</span> <span class="s1">&#39;birthPlace&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship&#39;</span><span class="p">,</span> <span class="s1">&#39;deathPlace&#39;</span><span class="p">,</span> <span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="s1">&#39;residence&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;workplaces&#39;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13417,7 +13431,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">construct_urls</span><span class="p">(</span><span class="n">physicists</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -13461,7 +13475,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls_to_fetch</span> <span class="o">=</span> <span class="n">construct_urls</span><span class="p">(</span><span class="n">physicists</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">PLACES_FIELDS</span><span class="p">)</span>
@@ -13479,7 +13493,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13504,11 +13518,15 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_data</span> <span class="o">=</span> <span class="n">fetch_json_data</span><span class="p">(</span><span class="n">quoted_urls_to_fetch</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-                            <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_fetch</span><span class="p">)))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">jsonl_file</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/places.jsonl&#39;</span>
+<span class="k">if</span> <span class="n">FETCH_JSON_DATA</span><span class="p">:</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="n">fetch_json_data</span><span class="p">(</span><span class="n">quoted_urls_to_fetch</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+                                <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_fetch</span><span class="p">)))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="n">read_jsonl</span><span class="p">(</span><span class="n">jsonl_file</span> <span class="o">+</span> <span class="s1">&#39;.gz&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13525,7 +13543,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 1924 / 1924 urls |████████| 100% Elapsed Time: 0:00:41 Time:  0:00:41
+<pre>Fetching: 1924 / 1924 urls |████████| 100% Elapsed Time: 0:00:48 Time:  0:00:48
 </pre>
 </div>
 </div>
@@ -13544,15 +13562,17 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_data</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span>
-    <span class="n">json_data</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
-    <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">(</span><span class="n">unquote_url</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1924</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">FETCH_JSON_DATA</span><span class="p">:</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">locale</span><span class="o">.</span><span class="n">strxfrm</span><span class="p">(</span><span class="n">unquote_url</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1924</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1876</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13570,322 +13590,9 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>http://dbpedia.org/data/13th_arrondissement_of_Paris.json
+{&#39;http://dbpedia.org/resource/Pierre_Goldman&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Françoise_Cachin&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://en.wikipedia.org/wiki/13th_arrondissement_of_Paris&#39;: {&#39;http://xmlns.com/foaf/0.1/primaryTopic&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Henri_Virlogeux&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Irène_Joliot-Curie&#39;: {&#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Arnold_Jeannesson&#39;: {&#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/François_Delapierre&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Robert_Ancelin&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Yacine_Bammou&#39;: {&#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Roger_Ikor&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Panhard_et_Levassor_Dynamic&#39;: {&#39;http://dbpedia.org/ontology/assembly&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;: {&#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoPermanentlyLocatedEntity&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoGeoEntity&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/PhysicalEntity100001930&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Object100002684&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoLegalActorGeo&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q486972&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://schema.org/Place&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/PopulatedPlace&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Settlement&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Place&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Location&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/AdministrativeDistrict108491826&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Location100027167&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/District108552138&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Region108630985&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.w3.org/2002/07/owl#Thing&#39;}], &#39;http://www.w3.org/2000/01/rdf-schema#label&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13e arrondissement (Parijs)&#39;, &#39;lang&#39;: &#39;nl&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13.º arrondissement de Paris&#39;, &#39;lang&#39;: &#39;pt&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13. Arrondissement (Paris)&#39;, &#39;lang&#39;: &#39;de&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;XIII округ Парижа&#39;, &#39;lang&#39;: &#39;ru&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;XIII arrondissement di Parigi&#39;, &#39;lang&#39;: &#39;it&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;巴黎十三区&#39;, &#39;lang&#39;: &#39;zh&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13. dzielnica Paryża&#39;, &#39;lang&#39;: &#39;pl&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13区 (パリ)&#39;, &#39;lang&#39;: &#39;ja&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13e arrondissement de Paris&#39;, &#39;lang&#39;: &#39;fr&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;XIII Distrito de París&#39;, &#39;lang&#39;: &#39;es&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;الدائرة الثالثة عشرة في باريس&#39;, &#39;lang&#39;: &#39;ar&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13th arrondissement of Paris&#39;, &#39;lang&#39;: &#39;en&#39;}], &#39;http://www.w3.org/2000/01/rdf-schema#comment&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#34;巴黎十三区（法语：13e arrondissement de Paris）是法国首都巴黎市的20个区之一。该区处于巴黎左岸。十三区裡有巴黎的三个华人区之一。 \n* 法国国家图书馆（Bibliothèque François Mitterrand） \n* 奥斯特里茨车站（Gare d&#39;Austerlitz） \n* 巴黎唐人街（Quartier chinois de Paris） \n* 意大利广场（Place d&#39;Italie） \n* 鹌鹑之丘（Butte-aux-Cailles）&#34;, &#39;lang&#39;: &#39;zh&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#34;Le 13e arrondissement de Paris est un des vingt arrondissements de Paris. Il est situé sur la rive gauche de la Seine. Il est entouré par le 14e arrondissement à l&#39;ouest et le 5e arrondissement au nord. Au sud, il communique, au-delà du boulevard périphérique, avec les communes du Val-de-Marne, d&#39;ouest en est Gentilly, Le Kremlin-Bicêtre et Ivry-sur-Seine. La Seine borde l&#39;arrondissement à l&#39;est, le séparant du 12e arrondissement et de la rive droite.&#34;, &#39;lang&#39;: &#39;fr&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;El XIII Distrito de París (XIIIe arrondissement de Paris, en francés) es uno de los veinte distritos o arrondissements de París, Francia. Está situado en la margen izquierda del Sena. Es un distrito poco turístico y se trata de un antiguo barrio obrero. Hoy sobre todo es conocido por su barrio asiático, así como por la instalación en los años 90 de la Biblioteca Nacional de Francia.&#39;, &#39;lang&#39;: &#39;es&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;パリの13区  (13く、仏：13e arrondissement de Paris) は、フランスの首都・パリ市を構成する20の行政区のひとつである 。第13区、パリ13区ともいう。市の南部に位置しており、セーヌ川の南岸に面している。&#39;, &#39;lang&#39;: &#39;ja&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Das 13. Pariser Arrondissement, das Arrondissement des Gobelins, ist eines von 20 Pariser Arrondissements. Dieses ehemalige Arbeiterviertel hat nur eine geringe touristische Bedeutung. Heutzutage ist es hauptsächlich bekannt für sein Quartier asiatique (dt. asiatisches Viertel) und für die im Jahre 1990 angesiedelte französische Nationalbibliothek.&#39;, &#39;lang&#39;: &#39;de&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;The 13th arrondissement of Paris (also known as &#34;arrondissement des Gobelins&#34;) is one of the 20 arrondissements (administrative districts) of the capital city of France. Situated on the Left Bank of the River Seine, it is home to Paris\&#39;s principal Asian community, the Quartier Asiatique, located in the southeast of the arrondissement in an area that contains many high-rise apartment buildings. The neighborhood features a high concentration of ethnic Chinese and Vietnamese businesses. The current mayor is Jérôme Coumet (Socialist), who was re-elected by the arrondissement council on 29 March 2008 after the list which he headed gained 70% of the votes cast in the second round of the French municipal elections, 2008.&#39;, &#39;lang&#39;: &#39;en&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;الدائرة الثالثة عشرة في باريس هي واحدة من 20 دائرة (مقاطعة إدارية) في مدينة باريس الفرنسية.&#39;, &#39;lang&#39;: &#39;ar&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Het 13e arrondissement is een van de 20 arrondissementen van Parijs en een van de drie Parijse Chinatowns (Frans: Quartier chinois de Paris). In dit arrondissement, dat gezien kan worden als een migrantenwijk, wonen zeer veel Chinezen, Chinese Vietnamezen, Chinese Cambodjanen, Chinese Laotianen andere volken uit Zuidoost-Azië. Deze overzeese Chinezen worden samen Chinese Fransen genoemd. Het wordt daarom door veel mensen beschouwd als een Chinatown. Chinees nieuwjaar wordt hier zeer uitbundig gevierd, de Chinese kranten noemen het zelfs het grootste Chinese spektakel in Europa van het jaar.&#39;, &#39;lang&#39;: &#39;nl&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13-й округ Парижа, Arrondissement des Gobelins — один из двадцати округов Парижа.Ранее здесь проживали в основном семьи рабочих, сейчас округ известен парижским чайна-тауном, множеством многоэтажек и мало интересен туристам. 13-й округ также знаменит новыми зданиями Национальной библиотеки Франции и недавно отстроенным деловым кварталом Paris Rive Gauche.&#39;, &#39;lang&#39;: &#39;ru&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Il XIII arrondissement di Parigi copre una vasta zona del sud-est della città sulla rive gauche. Al confine coi comuni di Gentilly, Le Kremlin-Bicêtre e Ivry-sur-Seine, il quartiere ha una scarsa vocazione turistica e si compone di aree una volta operaie ed ora per lo più riqualificate e dense di nuove costruzioni.&#39;, &#39;lang&#39;: &#39;it&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;O 13.º arrondissement de Paris é um dos 20 arrondissements de Paris, situado na margem esquerda do rio Sena.&#39;, &#39;lang&#39;: &#39;pt&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13. dzielnica Paryża (fr. 13e arrondissement de Paris) – jedna z 20 dzielnic Paryża o powierzchni wynoszącej 7,15 km² usytuowana na lewym brzegu Sekwany. Obecnie na terenie 13. dzielnicy znajduje się Chinatown, chińskie miasteczko zbudowane przez społeczność chińską w południowo-wschodniej części dzielnicy. Do najbardziej znanych budowli 13. dzielnicy zalicza się budynek Francuskiej Biblioteki Narodowej, a także nowoczesna strefa biurowców, Paris Rive Gauche. 13. dzielnica Paryża dzieli się na cztery mniejsze dzielnice (quartier):&#39;, &#39;lang&#39;: &#39;pl&#39;}], &#39;http://www.w3.org/2002/07/owl#sameAs&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://de.dbpedia.org/resource/13._Arrondissement_(Paris)&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://nl.dbpedia.org/resource/13e_arrondissement_(Parijs)&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://pl.dbpedia.org/resource/13._dzielnica_Paryża&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://eu.dbpedia.org/resource/Parisko_13._barrutia&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://wikidata.dbpedia.org/resource/Q175129&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q175129&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://pt.dbpedia.org/resource/13.º_arrondissement_de_Paris&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://es.dbpedia.org/resource/XIII_Distrito_de_París&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://fr.dbpedia.org/resource/13e_arrondissement_de_Paris&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://ko.dbpedia.org/resource/파리_13구&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://d-nb.info/gnd/4481650-9&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://cs.dbpedia.org/resource/13._pařížský_obvod&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://it.dbpedia.org/resource/XIII_arrondissement_di_Parigi&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://yago-knowledge.org/resource/13th_arrondissement_of_Paris&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://sws.geonames.org/3015772/&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://sws.geonames.org/6618619/&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://rdf.freebase.com/ns/m.01r5vk&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://ja.dbpedia.org/resource/13区_(パリ)&#39;}], &#39;http://purl.org/dc/terms/subject&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:13th_arrondissement_of_Paris&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Chinatowns_in_Europe&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Little_Saigons&#39;}], &#39;http://xmlns.com/foaf/0.1/name&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13th arrondissement ofParis&#39;, &#39;lang&#39;: &#39;en&#39;}], &#39;http://www.w3.org/2003/01/geo/wgs84_pos#lat&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 48.83222198486328, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#float&#39;}], &#39;http://www.w3.org/2003/01/geo/wgs84_pos#long&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 2.355555534362793, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#float&#39;}], &#39;http://xmlns.com/foaf/0.1/depiction&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://commons.wikimedia.org/wiki/Special:FilePath/Paris_13e_arr_jms.gif&#39;}], &#39;http://xmlns.com/foaf/0.1/isPrimaryTopicOf&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://en.wikipedia.org/wiki/13th_arrondissement_of_Paris&#39;}], &#39;http://www.w3.org/2003/01/geo/wgs84_pos#geometry&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;POINT(2.3555555343628 48.832221984863)&#39;, &#39;datatype&#39;: &#39;http://www.openlinksw.com/schemas/virtrdf#Geometry&#39;}], &#39;http://dbpedia.org/ontology/populationAsOf&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;1999-03-08&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#date&#39;}], &#39;http://dbpedia.org/ontology/leaderName&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Jérôme_Coumet&#39;}], &#39;http://www.w3.org/ns/prov#wasDerivedFrom&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://en.wikipedia.org/wiki/13th_arrondissement_of_Paris?oldid=741918596&#39;}], &#39;http://www.georss.org/georss/point&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;48.83222222222222 2.3555555555555556&#39;}], &#39;http://dbpedia.org/property/footnotes&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Population sans doubles comptes: single count of residents of multiple communes .&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}], &#39;http://dbpedia.org/property/eu&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 2.9, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}], &#39;http://dbpedia.org/property/censusYear&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 1999, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}], &#39;http://dbpedia.org/property/collectivityName&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;the 13th arrondissement&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}], &#39;http://dbpedia.org/property/foreignFrench&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 4.5, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}], &#39;http://dbpedia.org/property/metropolitanFrance&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 76.2, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}], &#39;http://dbpedia.org/property/nonEu&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 14.6, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}], &#39;http://dbpedia.org/property/outsideMetropolitanFrance&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 23.8, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}], &#39;http://dbpedia.org/property/overseasFrance&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 1.8, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}], &#39;http://dbpedia.org/property/coordinatesRegion&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;FR&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}], &#39;http://dbpedia.org/property/imageCaption&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;The Bibliothèque nationale de France in the 13th arrondissement.&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}], &#39;http://dbpedia.org/ontology/abstract&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Das 13. Pariser Arrondissement, das Arrondissement des Gobelins, ist eines von 20 Pariser Arrondissements. Dieses ehemalige Arbeiterviertel hat nur eine geringe touristische Bedeutung. Heutzutage ist es hauptsächlich bekannt für sein Quartier asiatique (dt. asiatisches Viertel) und für die im Jahre 1990 angesiedelte französische Nationalbibliothek.&#39;, &#39;lang&#39;: &#39;de&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Il XIII arrondissement di Parigi copre una vasta zona del sud-est della città sulla rive gauche. Al confine coi comuni di Gentilly, Le Kremlin-Bicêtre e Ivry-sur-Seine, il quartiere ha una scarsa vocazione turistica e si compone di aree una volta operaie ed ora per lo più riqualificate e dense di nuove costruzioni.&#39;, &#39;lang&#39;: &#39;it&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;الدائرة الثالثة عشرة في باريس هي واحدة من 20 دائرة (مقاطعة إدارية) في مدينة باريس الفرنسية.&#39;, &#39;lang&#39;: &#39;ar&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#34;El XIII Distrito de París (XIIIe arrondissement de Paris, en francés) es uno de los veinte distritos o arrondissements de París, Francia. Está situado en la margen izquierda del Sena. Es un distrito poco turístico y se trata de un antiguo barrio obrero. Hoy sobre todo es conocido por su barrio asiático, así como por la instalación en los años 90 de la Biblioteca Nacional de Francia. El Alcalde del distrito es desde marzo de 2001 al 12 de julio de 2007 Serge Blisko, al cual sucede tras su elección como diputado Jérôme Coumet. El XIII Distrito cuenta con dos diputados (del Partido Socialista): Jean-Marie Le Guen (9ª circunscripción, al Este de la Avenue des Gobelins y de la Avenue d&#39;Italie) y Serge Blisko (10ª circunscripción, a caballo entre los distritos XIII y XIV).&#34;, &#39;lang&#39;: &#39;es&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;パリの13区  (13く、仏：13e arrondissement de Paris) は、フランスの首都・パリ市を構成する20の行政区のひとつである 。第13区、パリ13区ともいう。市の南部に位置しており、セーヌ川の南岸に面している。&#39;, &#39;lang&#39;: &#39;ja&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;The 13th arrondissement of Paris (also known as &#34;arrondissement des Gobelins&#34;) is one of the 20 arrondissements (administrative districts) of the capital city of France. Situated on the Left Bank of the River Seine, it is home to Paris\&#39;s principal Asian community, the Quartier Asiatique, located in the southeast of the arrondissement in an area that contains many high-rise apartment buildings. The neighborhood features a high concentration of ethnic Chinese and Vietnamese businesses. The current mayor is Jérôme Coumet (Socialist), who was re-elected by the arrondissement council on 29 March 2008 after the list which he headed gained 70% of the votes cast in the second round of the French municipal elections, 2008. The 13th arrondissement also hosts the Bibliothèque François Mitterrand and the newly built business district of Paris Rive Gauche.&#39;, &#39;lang&#39;: &#39;en&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#34;巴黎十三区（法语：13e arrondissement de Paris）是法国首都巴黎市的20个区之一。该区处于巴黎左岸。十三区裡有巴黎的三个华人区之一。 \n* 法国国家图书馆（Bibliothèque François Mitterrand） \n* 奥斯特里茨车站（Gare d&#39;Austerlitz） \n* 巴黎唐人街（Quartier chinois de Paris） \n* 意大利广场（Place d&#39;Italie） \n* 鹌鹑之丘（Butte-aux-Cailles）&#34;, &#39;lang&#39;: &#39;zh&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#34;Le 13e arrondissement de Paris est un des vingt arrondissements de Paris. Il est situé sur la rive gauche de la Seine. Il est entouré par le 14e arrondissement à l&#39;ouest et le 5e arrondissement au nord. Au sud, il communique, au-delà du boulevard périphérique, avec les communes du Val-de-Marne, d&#39;ouest en est Gentilly, Le Kremlin-Bicêtre et Ivry-sur-Seine. La Seine borde l&#39;arrondissement à l&#39;est, le séparant du 12e arrondissement et de la rive droite. Arrondissement relativement peu touristique, le 13e arrondissement est un ancien quartier ouvrier. Aujourd&#39;hui, il est surtout connu pour son quartier asiatique, le quartier de la Butte-aux-Cailles ainsi que pour l&#39;implantation dans les années 1990 de la Bibliothèque nationale de France sur les quais de Seine. Du fait de la présence de nombreuses tours et d&#39;immeubles d&#39;habitation de construction récente, l&#39;arrondissement présente un urbanisme original dans la capitale, qui s&#39;exprime notamment à l&#39;heure actuelle dans le projet Paris Rive Gauche. L&#39;arrondissement abrite, outre le site Tolbiac de la Bibliothèque nationale de France dite Bibliothèque François-Mitterrand, la gare d&#39;Austerlitz, la manufacture des Gobelins et l&#39;hôpital de la Pitié-Salpêtrière. Aux termes de l&#39;article R2512-1 du Code général des collectivités territoriales (partie réglementaire), il porte également le nom d&#39;« arrondissement des Gobelins », mais cette appellation est rarement employée dans la vie courante.&#34;, &#39;lang&#39;: &#39;fr&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Het 13e arrondissement is een van de 20 arrondissementen van Parijs en een van de drie Parijse Chinatowns (Frans: Quartier chinois de Paris). In dit arrondissement, dat gezien kan worden als een migrantenwijk, wonen zeer veel Chinezen, Chinese Vietnamezen, Chinese Cambodjanen, Chinese Laotianen andere volken uit Zuidoost-Azië. Deze overzeese Chinezen worden samen Chinese Fransen genoemd. Het wordt daarom door veel mensen beschouwd als een Chinatown. Chinees nieuwjaar wordt hier zeer uitbundig gevierd, de Chinese kranten noemen het zelfs het grootste Chinese spektakel in Europa van het jaar. \n* Oppervlakte: 7,146 km²&#39;, &#39;lang&#39;: &#39;nl&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;O 13.º arrondissement de Paris é um dos 20 arrondissements de Paris, situado na margem esquerda do rio Sena.&#39;, &#39;lang&#39;: &#39;pt&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13-й округ Парижа, Arrondissement des Gobelins — один из двадцати округов Парижа.Ранее здесь проживали в основном семьи рабочих, сейчас округ известен парижским чайна-тауном, множеством многоэтажек и мало интересен туристам. 13-й округ также знаменит новыми зданиями Национальной библиотеки Франции и недавно отстроенным деловым кварталом Paris Rive Gauche.&#39;, &#39;lang&#39;: &#39;ru&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13. dzielnica Paryża (fr. 13e arrondissement de Paris) – jedna z 20 dzielnic Paryża o powierzchni wynoszącej 7,15 km² usytuowana na lewym brzegu Sekwany. Obecnie na terenie 13. dzielnicy znajduje się Chinatown, chińskie miasteczko zbudowane przez społeczność chińską w południowo-wschodniej części dzielnicy. Do najbardziej znanych budowli 13. dzielnicy zalicza się budynek Francuskiej Biblioteki Narodowej, a także nowoczesna strefa biurowców, Paris Rive Gauche. Swoją siedzibę ma tutaj Télécom Paris Tech (dawniejsza École Nationale Supérieure des Télécommunications de Paris - ENST) - jedna z francuskich Grandes Ecoles specjalizująca się w telekomunikacji i informatyce. 13. dzielnica Paryża dzieli się na cztery mniejsze dzielnice (quartier): \n*  Quartier de la Salpetriere (49. dzielnica Paryża) \n*  Quartier de la Gare (50. dzielnica Paryża)  \n*  Quartier de la Maison-Blanche (51. dzielnica Paryża) \n*  Quartier Croulebarbe (52. dzielnica Paryża).&#39;, &#39;lang&#39;: &#39;pl&#39;}], &#39;http://dbpedia.org/ontology/thumbnail&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://commons.wikimedia.org/wiki/Special:FilePath/Paris_13e_arr_jms.gif?width=300&#39;}], &#39;http://dbpedia.org/ontology/wikiPageRevisionID&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 741918596, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}], &#39;http://dbpedia.org/ontology/wikiPageID&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 295543, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}], &#39;http://dbpedia.org/ontology/country&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/France&#39;}], &#39;http://dbpedia.org/ontology/PopulatedPlace/areaTotal&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;7.15&#39;, &#39;datatype&#39;: &#39;http://dbpedia.org/datatype/squareKilometre&#39;}], &#39;http://dbpedia.org/ontology/areaTotal&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 7150000, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}], &#39;http://dbpedia.org/ontology/isPartOf&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Île-de-France_(région)&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Paris&#39;}], &#39;http://dbpedia.org/ontology/leaderTitle&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Mayor&#39;, &#39;lang&#39;: &#39;en&#39;}], &#39;http://dbpedia.org/ontology/populationTotal&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;171533&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#nonNegativeInteger&#39;}], &#39;http://dbpedia.org/ontology/type&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Municipal_arrondissements_of_France&#39;}], &#39;http://dbpedia.org/property/imageMap&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;paris_13e_arr_jms.gif&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}], &#39;http://dbpedia.org/property/mapCaption&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Paris and its closest suburbs&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}], &#39;http://dbpedia.org/property/popEstAsOf&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 2005, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}], &#39;http://dbpedia.org/property/populationDensityKm&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;auto&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}], &#39;http://dbpedia.org/property/populationEst&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: 181300, &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}], &#39;http://dbpedia.org/property/subdivisionType&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Departments_of_France&#39;}, {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Country&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Communes_of_France&#39;}, {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Regions_of_France&#39;}], &#39;http://dbpedia.org/property/unitPref&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Metric&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}], &#39;http://purl.org/linguistics/gold/hypernym&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Arrondissements&#39;}], &#39;http://dbpedia.org/property/areaCodeType&#39;: [{&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;Area code&#39;, &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}]}, &#39;http://dbpedia.org/resource/François_Roche&#39;: {&#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Michel_Rocard&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/Paris_13e&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/13eme_arrondissement,_Paris&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/13ème_arrondissement,_Paris&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/13th_arrondissement,_Paris&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/XIIIe_arrondissement_(Paris)&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/75013&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/The_13th_arrondissement_of_Paris&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}, &#39;http://dbpedia.org/resource/13th_arrondissement&#39;: {&#39;http://dbpedia.org/ontology/wikiPageDisambiguates&#39;: [{&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}}
 </pre>
 </div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[8]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;http://dbpedia.org/resource/Robert_Ancelin&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Roger_Ikor&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Panhard_et_Levassor_Dynamic&#39;: {&#39;http://dbpedia.org/ontology/assembly&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/François_Delapierre&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Yacine_Bammou&#39;: {&#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;: {&#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q486972&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Location100027167&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/AdministrativeDistrict108491826&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Region108630985&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoGeoEntity&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoPermanentlyLocatedEntity&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Location&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Place&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/PopulatedPlace&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/District108552138&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/ontology/Settlement&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/class/yago/PhysicalEntity100001930&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/Object100002684&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/class/yago/YagoLegalActorGeo&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.w3.org/2002/07/owl#Thing&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://schema.org/Place&#39;}],
-  &#39;http://www.w3.org/2000/01/rdf-schema#label&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;13th arrondissement of Paris&#39;,
-    &#39;lang&#39;: &#39;en&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;XIII arrondissement di Parigi&#39;, &#39;lang&#39;: &#39;it&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13区 (パリ)&#39;, &#39;lang&#39;: &#39;ja&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13. Arrondissement (Paris)&#39;, &#39;lang&#39;: &#39;de&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;الدائرة الثالثة عشرة في باريس&#39;, &#39;lang&#39;: &#39;ar&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;XIII округ Парижа&#39;, &#39;lang&#39;: &#39;ru&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13e arrondissement (Parijs)&#39;, &#39;lang&#39;: &#39;nl&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13e arrondissement de Paris&#39;, &#39;lang&#39;: &#39;fr&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13.º arrondissement de Paris&#39;, &#39;lang&#39;: &#39;pt&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;13. dzielnica Paryża&#39;, &#39;lang&#39;: &#39;pl&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;XIII Distrito de París&#39;, &#39;lang&#39;: &#39;es&#39;},
-   {&#39;type&#39;: &#39;literal&#39;, &#39;value&#39;: &#39;巴黎十三区&#39;, &#39;lang&#39;: &#39;zh&#39;}],
-  &#39;http://www.w3.org/2000/01/rdf-schema#comment&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;O 13.º arrondissement de Paris é um dos 20 arrondissements de Paris, situado na margem esquerda do rio Sena.&#39;,
-    &#39;lang&#39;: &#39;pt&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;El XIII Distrito de París (XIIIe arrondissement de Paris, en francés) es uno de los veinte distritos o arrondissements de París, Francia. Está situado en la margen izquierda del Sena. Es un distrito poco turístico y se trata de un antiguo barrio obrero. Hoy sobre todo es conocido por su barrio asiático, así como por la instalación en los años 90 de la Biblioteca Nacional de Francia.&#39;,
-    &#39;lang&#39;: &#39;es&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#34;巴黎十三区（法语：13e arrondissement de Paris）是法国首都巴黎市的20个区之一。该区处于巴黎左岸。十三区裡有巴黎的三个华人区之一。 \n* 法国国家图书馆（Bibliothèque François Mitterrand） \n* 奥斯特里茨车站（Gare d&#39;Austerlitz） \n* 巴黎唐人街（Quartier chinois de Paris） \n* 意大利广场（Place d&#39;Italie） \n* 鹌鹑之丘（Butte-aux-Cailles）&#34;,
-    &#39;lang&#39;: &#39;zh&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Il XIII arrondissement di Parigi copre una vasta zona del sud-est della città sulla rive gauche. Al confine coi comuni di Gentilly, Le Kremlin-Bicêtre e Ivry-sur-Seine, il quartiere ha una scarsa vocazione turistica e si compone di aree una volta operaie ed ora per lo più riqualificate e dense di nuove costruzioni.&#39;,
-    &#39;lang&#39;: &#39;it&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#34;Le 13e arrondissement de Paris est un des vingt arrondissements de Paris. Il est situé sur la rive gauche de la Seine. Il est entouré par le 14e arrondissement à l&#39;ouest et le 5e arrondissement au nord. Au sud, il communique, au-delà du boulevard périphérique, avec les communes du Val-de-Marne, d&#39;ouest en est Gentilly, Le Kremlin-Bicêtre et Ivry-sur-Seine. La Seine borde l&#39;arrondissement à l&#39;est, le séparant du 12e arrondissement et de la rive droite.&#34;,
-    &#39;lang&#39;: &#39;fr&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Das 13. Pariser Arrondissement, das Arrondissement des Gobelins, ist eines von 20 Pariser Arrondissements. Dieses ehemalige Arbeiterviertel hat nur eine geringe touristische Bedeutung. Heutzutage ist es hauptsächlich bekannt für sein Quartier asiatique (dt. asiatisches Viertel) und für die im Jahre 1990 angesiedelte französische Nationalbibliothek.&#39;,
-    &#39;lang&#39;: &#39;de&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;13. dzielnica Paryża (fr. 13e arrondissement de Paris) – jedna z 20 dzielnic Paryża o powierzchni wynoszącej 7,15 km² usytuowana na lewym brzegu Sekwany. Obecnie na terenie 13. dzielnicy znajduje się Chinatown, chińskie miasteczko zbudowane przez społeczność chińską w południowo-wschodniej części dzielnicy. Do najbardziej znanych budowli 13. dzielnicy zalicza się budynek Francuskiej Biblioteki Narodowej, a także nowoczesna strefa biurowców, Paris Rive Gauche. 13. dzielnica Paryża dzieli się na cztery mniejsze dzielnice (quartier):&#39;,
-    &#39;lang&#39;: &#39;pl&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Het 13e arrondissement is een van de 20 arrondissementen van Parijs en een van de drie Parijse Chinatowns (Frans: Quartier chinois de Paris). In dit arrondissement, dat gezien kan worden als een migrantenwijk, wonen zeer veel Chinezen, Chinese Vietnamezen, Chinese Cambodjanen, Chinese Laotianen andere volken uit Zuidoost-Azië. Deze overzeese Chinezen worden samen Chinese Fransen genoemd. Het wordt daarom door veel mensen beschouwd als een Chinatown. Chinees nieuwjaar wordt hier zeer uitbundig gevierd, de Chinese kranten noemen het zelfs het grootste Chinese spektakel in Europa van het jaar.&#39;,
-    &#39;lang&#39;: &#39;nl&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;The 13th arrondissement of Paris (also known as &#34;arrondissement des Gobelins&#34;) is one of the 20 arrondissements (administrative districts) of the capital city of France. Situated on the Left Bank of the River Seine, it is home to Paris\&#39;s principal Asian community, the Quartier Asiatique, located in the southeast of the arrondissement in an area that contains many high-rise apartment buildings. The neighborhood features a high concentration of ethnic Chinese and Vietnamese businesses. The current mayor is Jérôme Coumet (Socialist), who was re-elected by the arrondissement council on 29 March 2008 after the list which he headed gained 70% of the votes cast in the second round of the French municipal elections, 2008.&#39;,
-    &#39;lang&#39;: &#39;en&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;13-й округ Парижа, Arrondissement des Gobelins — один из двадцати округов Парижа.Ранее здесь проживали в основном семьи рабочих, сейчас округ известен парижским чайна-тауном, множеством многоэтажек и мало интересен туристам. 13-й округ также знаменит новыми зданиями Национальной библиотеки Франции и недавно отстроенным деловым кварталом Paris Rive Gauche.&#39;,
-    &#39;lang&#39;: &#39;ru&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;パリの13区  (13く、仏：13e arrondissement de Paris) は、フランスの首都・パリ市を構成する20の行政区のひとつである 。第13区、パリ13区ともいう。市の南部に位置しており、セーヌ川の南岸に面している。&#39;,
-    &#39;lang&#39;: &#39;ja&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;الدائرة الثالثة عشرة في باريس هي واحدة من 20 دائرة (مقاطعة إدارية) في مدينة باريس الفرنسية.&#39;,
-    &#39;lang&#39;: &#39;ar&#39;}],
-  &#39;http://www.w3.org/2002/07/owl#sameAs&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://sws.geonames.org/3015772/&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://de.dbpedia.org/resource/13._Arrondissement_(Paris)&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://ko.dbpedia.org/resource/파리_13구&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://cs.dbpedia.org/resource/13._pařížský_obvod&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://es.dbpedia.org/resource/XIII_Distrito_de_París&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://ja.dbpedia.org/resource/13区_(パリ)&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://pl.dbpedia.org/resource/13._dzielnica_Paryża&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://sws.geonames.org/6618619/&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://nl.dbpedia.org/resource/13e_arrondissement_(Parijs)&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://it.dbpedia.org/resource/XIII_arrondissement_di_Parigi&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://fr.dbpedia.org/resource/13e_arrondissement_de_Paris&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://pt.dbpedia.org/resource/13.º_arrondissement_de_Paris&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://yago-knowledge.org/resource/13th_arrondissement_of_Paris&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://d-nb.info/gnd/4481650-9&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://www.wikidata.org/entity/Q175129&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://wikidata.dbpedia.org/resource/Q175129&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://eu.dbpedia.org/resource/Parisko_13._barrutia&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://rdf.freebase.com/ns/m.01r5vk&#39;}],
-  &#39;http://purl.org/dc/terms/subject&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Chinatowns_in_Europe&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:Little_Saigons&#39;},
-   {&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Category:13th_arrondissement_of_Paris&#39;}],
-  &#39;http://xmlns.com/foaf/0.1/name&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;13th arrondissement ofParis&#39;,
-    &#39;lang&#39;: &#39;en&#39;}],
-  &#39;http://www.w3.org/2003/01/geo/wgs84_pos#lat&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 48.83222198486328,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#float&#39;}],
-  &#39;http://www.w3.org/2003/01/geo/wgs84_pos#long&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 2.355555534362793,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#float&#39;}],
-  &#39;http://xmlns.com/foaf/0.1/depiction&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://commons.wikimedia.org/wiki/Special:FilePath/Paris_13e_arr_jms.gif&#39;}],
-  &#39;http://xmlns.com/foaf/0.1/isPrimaryTopicOf&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://en.wikipedia.org/wiki/13th_arrondissement_of_Paris&#39;}],
-  &#39;http://www.w3.org/2003/01/geo/wgs84_pos#geometry&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;POINT(2.3555555343628 48.832221984863)&#39;,
-    &#39;datatype&#39;: &#39;http://www.openlinksw.com/schemas/virtrdf#Geometry&#39;}],
-  &#39;http://www.w3.org/ns/prov#wasDerivedFrom&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://en.wikipedia.org/wiki/13th_arrondissement_of_Paris?oldid=741918596&#39;}],
-  &#39;http://www.georss.org/georss/point&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;48.83222222222222 2.3555555555555556&#39;}],
-  &#39;http://dbpedia.org/ontology/isPartOf&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Île-de-France_(région)&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Paris&#39;}],
-  &#39;http://dbpedia.org/ontology/leaderName&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Jérôme_Coumet&#39;}],
-  &#39;http://dbpedia.org/property/coordinatesRegion&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;FR&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/property/footnotes&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Population sans doubles comptes: single count of residents of multiple communes .&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/property/popEstAsOf&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 2005,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
-  &#39;http://dbpedia.org/property/populationEst&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 181300,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
-  &#39;http://dbpedia.org/property/subdivisionType&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Departments_of_France&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Communes_of_France&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Country&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;},
-   {&#39;type&#39;: &#39;uri&#39;, &#39;value&#39;: &#39;http://dbpedia.org/resource/Regions_of_France&#39;}],
-  &#39;http://dbpedia.org/property/unitPref&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Metric&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/property/populationDensityKm&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;auto&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/ontology/PopulatedPlace/areaTotal&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;7.15&#39;,
-    &#39;datatype&#39;: &#39;http://dbpedia.org/datatype/squareKilometre&#39;}],
-  &#39;http://dbpedia.org/ontology/areaTotal&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 7150000,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}],
-  &#39;http://dbpedia.org/ontology/leaderTitle&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Mayor&#39;,
-    &#39;lang&#39;: &#39;en&#39;}],
-  &#39;http://dbpedia.org/ontology/populationTotal&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;171533&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#nonNegativeInteger&#39;}],
-  &#39;http://dbpedia.org/property/imageMap&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;paris_13e_arr_jms.gif&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/ontology/abstract&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#34;Le 13e arrondissement de Paris est un des vingt arrondissements de Paris. Il est situé sur la rive gauche de la Seine. Il est entouré par le 14e arrondissement à l&#39;ouest et le 5e arrondissement au nord. Au sud, il communique, au-delà du boulevard périphérique, avec les communes du Val-de-Marne, d&#39;ouest en est Gentilly, Le Kremlin-Bicêtre et Ivry-sur-Seine. La Seine borde l&#39;arrondissement à l&#39;est, le séparant du 12e arrondissement et de la rive droite. Arrondissement relativement peu touristique, le 13e arrondissement est un ancien quartier ouvrier. Aujourd&#39;hui, il est surtout connu pour son quartier asiatique, le quartier de la Butte-aux-Cailles ainsi que pour l&#39;implantation dans les années 1990 de la Bibliothèque nationale de France sur les quais de Seine. Du fait de la présence de nombreuses tours et d&#39;immeubles d&#39;habitation de construction récente, l&#39;arrondissement présente un urbanisme original dans la capitale, qui s&#39;exprime notamment à l&#39;heure actuelle dans le projet Paris Rive Gauche. L&#39;arrondissement abrite, outre le site Tolbiac de la Bibliothèque nationale de France dite Bibliothèque François-Mitterrand, la gare d&#39;Austerlitz, la manufacture des Gobelins et l&#39;hôpital de la Pitié-Salpêtrière. Aux termes de l&#39;article R2512-1 du Code général des collectivités territoriales (partie réglementaire), il porte également le nom d&#39;« arrondissement des Gobelins », mais cette appellation est rarement employée dans la vie courante.&#34;,
-    &#39;lang&#39;: &#39;fr&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#34;巴黎十三区（法语：13e arrondissement de Paris）是法国首都巴黎市的20个区之一。该区处于巴黎左岸。十三区裡有巴黎的三个华人区之一。 \n* 法国国家图书馆（Bibliothèque François Mitterrand） \n* 奥斯特里茨车站（Gare d&#39;Austerlitz） \n* 巴黎唐人街（Quartier chinois de Paris） \n* 意大利广场（Place d&#39;Italie） \n* 鹌鹑之丘（Butte-aux-Cailles）&#34;,
-    &#39;lang&#39;: &#39;zh&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;パリの13区  (13く、仏：13e arrondissement de Paris) は、フランスの首都・パリ市を構成する20の行政区のひとつである 。第13区、パリ13区ともいう。市の南部に位置しており、セーヌ川の南岸に面している。&#39;,
-    &#39;lang&#39;: &#39;ja&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;The 13th arrondissement of Paris (also known as &#34;arrondissement des Gobelins&#34;) is one of the 20 arrondissements (administrative districts) of the capital city of France. Situated on the Left Bank of the River Seine, it is home to Paris\&#39;s principal Asian community, the Quartier Asiatique, located in the southeast of the arrondissement in an area that contains many high-rise apartment buildings. The neighborhood features a high concentration of ethnic Chinese and Vietnamese businesses. The current mayor is Jérôme Coumet (Socialist), who was re-elected by the arrondissement council on 29 March 2008 after the list which he headed gained 70% of the votes cast in the second round of the French municipal elections, 2008. The 13th arrondissement also hosts the Bibliothèque François Mitterrand and the newly built business district of Paris Rive Gauche.&#39;,
-    &#39;lang&#39;: &#39;en&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#34;El XIII Distrito de París (XIIIe arrondissement de Paris, en francés) es uno de los veinte distritos o arrondissements de París, Francia. Está situado en la margen izquierda del Sena. Es un distrito poco turístico y se trata de un antiguo barrio obrero. Hoy sobre todo es conocido por su barrio asiático, así como por la instalación en los años 90 de la Biblioteca Nacional de Francia. El Alcalde del distrito es desde marzo de 2001 al 12 de julio de 2007 Serge Blisko, al cual sucede tras su elección como diputado Jérôme Coumet. El XIII Distrito cuenta con dos diputados (del Partido Socialista): Jean-Marie Le Guen (9ª circunscripción, al Este de la Avenue des Gobelins y de la Avenue d&#39;Italie) y Serge Blisko (10ª circunscripción, a caballo entre los distritos XIII y XIV).&#34;,
-    &#39;lang&#39;: &#39;es&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;13-й округ Парижа, Arrondissement des Gobelins — один из двадцати округов Парижа.Ранее здесь проживали в основном семьи рабочих, сейчас округ известен парижским чайна-тауном, множеством многоэтажек и мало интересен туристам. 13-й округ также знаменит новыми зданиями Национальной библиотеки Франции и недавно отстроенным деловым кварталом Paris Rive Gauche.&#39;,
-    &#39;lang&#39;: &#39;ru&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;الدائرة الثالثة عشرة في باريس هي واحدة من 20 دائرة (مقاطعة إدارية) في مدينة باريس الفرنسية.&#39;,
-    &#39;lang&#39;: &#39;ar&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;O 13.º arrondissement de Paris é um dos 20 arrondissements de Paris, situado na margem esquerda do rio Sena.&#39;,
-    &#39;lang&#39;: &#39;pt&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;13. dzielnica Paryża (fr. 13e arrondissement de Paris) – jedna z 20 dzielnic Paryża o powierzchni wynoszącej 7,15 km² usytuowana na lewym brzegu Sekwany. Obecnie na terenie 13. dzielnicy znajduje się Chinatown, chińskie miasteczko zbudowane przez społeczność chińską w południowo-wschodniej części dzielnicy. Do najbardziej znanych budowli 13. dzielnicy zalicza się budynek Francuskiej Biblioteki Narodowej, a także nowoczesna strefa biurowców, Paris Rive Gauche. Swoją siedzibę ma tutaj Télécom Paris Tech (dawniejsza École Nationale Supérieure des Télécommunications de Paris - ENST) - jedna z francuskich Grandes Ecoles specjalizująca się w telekomunikacji i informatyce. 13. dzielnica Paryża dzieli się na cztery mniejsze dzielnice (quartier): \n*  Quartier de la Salpetriere (49. dzielnica Paryża) \n*  Quartier de la Gare (50. dzielnica Paryża)  \n*  Quartier de la Maison-Blanche (51. dzielnica Paryża) \n*  Quartier Croulebarbe (52. dzielnica Paryża).&#39;,
-    &#39;lang&#39;: &#39;pl&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Het 13e arrondissement is een van de 20 arrondissementen van Parijs en een van de drie Parijse Chinatowns (Frans: Quartier chinois de Paris). In dit arrondissement, dat gezien kan worden als een migrantenwijk, wonen zeer veel Chinezen, Chinese Vietnamezen, Chinese Cambodjanen, Chinese Laotianen andere volken uit Zuidoost-Azië. Deze overzeese Chinezen worden samen Chinese Fransen genoemd. Het wordt daarom door veel mensen beschouwd als een Chinatown. Chinees nieuwjaar wordt hier zeer uitbundig gevierd, de Chinese kranten noemen het zelfs het grootste Chinese spektakel in Europa van het jaar. \n* Oppervlakte: 7,146 km²&#39;,
-    &#39;lang&#39;: &#39;nl&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Das 13. Pariser Arrondissement, das Arrondissement des Gobelins, ist eines von 20 Pariser Arrondissements. Dieses ehemalige Arbeiterviertel hat nur eine geringe touristische Bedeutung. Heutzutage ist es hauptsächlich bekannt für sein Quartier asiatique (dt. asiatisches Viertel) und für die im Jahre 1990 angesiedelte französische Nationalbibliothek.&#39;,
-    &#39;lang&#39;: &#39;de&#39;},
-   {&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Il XIII arrondissement di Parigi copre una vasta zona del sud-est della città sulla rive gauche. Al confine coi comuni di Gentilly, Le Kremlin-Bicêtre e Ivry-sur-Seine, il quartiere ha una scarsa vocazione turistica e si compone di aree una volta operaie ed ora per lo più riqualificate e dense di nuove costruzioni.&#39;,
-    &#39;lang&#39;: &#39;it&#39;}],
-  &#39;http://dbpedia.org/ontology/thumbnail&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://commons.wikimedia.org/wiki/Special:FilePath/Paris_13e_arr_jms.gif?width=300&#39;}],
-  &#39;http://dbpedia.org/ontology/wikiPageRevisionID&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 741918596,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
-  &#39;http://dbpedia.org/ontology/wikiPageID&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 295543,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
-  &#39;http://dbpedia.org/ontology/country&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/France&#39;}],
-  &#39;http://dbpedia.org/property/eu&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 2.9,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}],
-  &#39;http://dbpedia.org/property/censusYear&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 1999,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#integer&#39;}],
-  &#39;http://dbpedia.org/property/collectivityName&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;the 13th arrondissement&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/property/foreignFrench&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 4.5,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}],
-  &#39;http://dbpedia.org/property/metropolitanFrance&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 76.2,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}],
-  &#39;http://dbpedia.org/property/nonEu&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 14.6,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}],
-  &#39;http://dbpedia.org/property/outsideMetropolitanFrance&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 23.8,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}],
-  &#39;http://dbpedia.org/property/overseasFrance&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: 1.8,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#double&#39;}],
-  &#39;http://dbpedia.org/ontology/populationAsOf&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;1999-03-08&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/2001/XMLSchema#date&#39;}],
-  &#39;http://purl.org/linguistics/gold/hypernym&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Arrondissements&#39;}],
-  &#39;http://dbpedia.org/ontology/type&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/Municipal_arrondissements_of_France&#39;}],
-  &#39;http://dbpedia.org/property/mapCaption&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Paris and its closest suburbs&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/property/imageCaption&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;The Bibliothèque nationale de France in the 13th arrondissement.&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}],
-  &#39;http://dbpedia.org/property/areaCodeType&#39;: [{&#39;type&#39;: &#39;literal&#39;,
-    &#39;value&#39;: &#39;Area code&#39;,
-    &#39;datatype&#39;: &#39;http://www.w3.org/1999/02/22-rdf-syntax-ns#langString&#39;}]},
- &#39;http://dbpedia.org/resource/Henri_Virlogeux&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/75013&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://en.wikipedia.org/wiki/13th_arrondissement_of_Paris&#39;: {&#39;http://xmlns.com/foaf/0.1/primaryTopic&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/The_13th_arrondissement_of_Paris&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/13th_arrondissement&#39;: {&#39;http://dbpedia.org/ontology/wikiPageDisambiguates&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/13ème_arrondissement,_Paris&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Michel_Rocard&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Pierre_Goldman&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Françoise_Cachin&#39;: {&#39;http://dbpedia.org/ontology/deathPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/François_Roche&#39;: {&#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Arnold_Jeannesson&#39;: {&#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/XIIIe_arrondissement_(Paris)&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/13th_arrondissement,_Paris&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Irène_Joliot-Curie&#39;: {&#39;http://dbpedia.org/ontology/birthPlace&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/13eme_arrondissement,_Paris&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]},
- &#39;http://dbpedia.org/resource/Paris_13e&#39;: {&#39;http://dbpedia.org/ontology/wikiPageRedirects&#39;: [{&#39;type&#39;: &#39;uri&#39;,
-    &#39;value&#39;: &#39;http://dbpedia.org/resource/13th_arrondissement_of_Paris&#39;}]}}</pre>
-</div>
-
 </div>
 
 </div>
@@ -13902,13 +13609,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls_to_drop</span> <span class="o">=</span> <span class="p">[</span><span class="n">unquote_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="ow">in</span> <span class="n">json_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">]</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_drop</span><span class="p">)</span> <span class="o">==</span> <span class="mi">48</span><span class="p">)</span>
-<span class="n">urls_to_drop</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">FETCH_JSON_DATA</span><span class="p">:</span>
+    <span class="n">urls_to_drop</span> <span class="o">=</span> <span class="p">[</span><span class="n">unquote_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="ow">in</span> <span class="n">json_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">]</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_drop</span><span class="p">)</span> <span class="o">==</span> <span class="mi">48</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">urls_to_drop</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13921,12 +13629,12 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt"></div>
 
 
 
 
-<div class="output_text output_subarea output_execute_result">
+<div class="output_text output_subarea ">
 <pre>[&#39;http://dbpedia.org/data/A.U.B,_Lebanon;_IHÉS,_France.json&#39;,
  &#39;http://dbpedia.org/data/Afshona,_Peshkunskiy,_Bukhara,_Samanid_Empire.json&#39;,
  &#39;http://dbpedia.org/data/AustraliaUnited_Kingdom.json&#39;,
@@ -13985,11 +13693,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">json_data</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">data</span><span class="p">]</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1876</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">FETCH_JSON_DATA</span><span class="p">:</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">json_data</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">data</span><span class="p">]</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1876</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14007,12 +13716,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">jsonl_file</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/places.jsonl&#39;</span>
-<span class="k">with</span> <span class="n">jsonlines</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">write_all</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">FETCH_JSON_DATA</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">jsonlines</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">write_all</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14030,11 +13739,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_lines</span> <span class="o">=</span> <span class="n">read_jsonl</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1876</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">FETCH_JSON_DATA</span><span class="p">:</span>
+    <span class="n">json_lines</span> <span class="o">=</span> <span class="n">read_jsonl</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1876</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14052,12 +13762,13 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">,</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jsonl_file</span> <span class="o">+</span> <span class="s1">&#39;.gz&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dest</span><span class="p">:</span>
-    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">FETCH_JSON_DATA</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">,</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">jsonl_file</span> <span class="o">+</span> <span class="s1">&#39;.gz&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dest</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">jsonl_file</span><span class="p">)</span>
 </pre></div>
 
     </div>

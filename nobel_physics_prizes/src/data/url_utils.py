@@ -117,7 +117,7 @@ def fetch_json_data(urls_to_fetch, max_workers=2, timeout=10,
 
         for url in urls_to_fetch:
             future = session.get(url, timeout=timeout,
-                                 background_callback=_parse_json)
+                                 hooks=dict(response=_parse_json))
             futures[future] = url
 
         data = {}
@@ -140,9 +140,8 @@ def fetch_json_data(urls_to_fetch, max_workers=2, timeout=10,
     return data
 
 
-def _parse_json(session, response):
-    if response.status_code == requests.codes.ok:
-        response.data = response.json()
+def _parse_json(response, *args, **kwargs):
+    response.data = response.json()
 
 
 def urls_progress_bar(num_urls_to_check, banner_text='Fetching: ', marker='█'):
