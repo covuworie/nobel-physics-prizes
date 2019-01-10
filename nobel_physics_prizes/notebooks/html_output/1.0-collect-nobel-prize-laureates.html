@@ -13116,7 +13116,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Collect-Nobel-Prize-Laureates">Collect Nobel Prize Laureates<a class="anchor-link" href="#Collect-Nobel-Prize-Laureates">&#182;</a></h1><p>It is essential for this project to know who the <em>Nobel Laureates in Physics</em> are. I will scrape a list of <a href="https://en.wikipedia.org/w/index.php?title=List_of_Nobel_laureates_in_Physics&amp;oldid=862097595">Nobel Laureates in Physics (1901 - 2017)</a> from Wikipedia. <em>Nobel Laureates in Chemistry</em> are included in the nomination process for the <em>Nobel Prize in Physics</em> and some of them were academic advisors or associated with Physics Nobel Laureates. Therefore, to examine how these relationships possibly affect the awarding of the <em>Nobel Prize in Physics</em>, I will also scrape a list of <a href="https://en.wikipedia.org/w/index.php?title=List_of_Nobel_laureates_in_Chemistry&amp;oldid=860639110">Nobel Laureates in Chemistry (1901 - 2017)</a> from Wikipedia.  You should at least recognize a few of the more famous names on both lists even if you do not recognize them all. You may also be wondering why some famous names in physics are not on the list. OK time to get scraping.</p>
+<h1 id="Collect-Nobel-Prize-Laureates">Collect Nobel Prize Laureates<a class="anchor-link" href="#Collect-Nobel-Prize-Laureates">&#182;</a></h1><p>We will begin by scraping a <a href="https://en.wikipedia.org/wiki/Main_Page">Wikipedia</a> list of <a href="https://en.wikipedia.org/w/index.php?title=List_of_Nobel_laureates_in_Physics&amp;oldid=862097595">Nobel Laureates in Physics from 1901 - 2017</a>. Nobel Laureates in Chemistry are included in the nomination process for the Nobel Prize in Physics. Some of them had or have a professional or personal relationship with one or more Physics Nobel Laureates. Therefore, to examine how these relationships possibly affect the awarding of the Nobel Prize in Physics, we will also scrape a Wikipedia list of <a href="https://en.wikipedia.org/w/index.php?title=List_of_Nobel_laureates_in_Chemistry&amp;oldid=860639110">Nobel Laureates in Chemistry from 1901 - 2017</a>. You should recognize a few of the more famous names on both lists, even if you do not recognize them all. OK time to get scraping.</p>
 
 </div>
 </div>
@@ -13126,7 +13126,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Setting-up-the-Environment">Setting up the Environment<a class="anchor-link" href="#Setting-up-the-Environment">&#182;</a></h2><p>An initialization step is needed to setup the environment:</p>
 <ul>
-<li>An environment variable needs to be set to disable loading of <code>user-config.py</code> for <em>pywikibot</em>.</li>
+<li>An environment variable needs to be set to disable loading of <code>user-config.py</code> for <a href="https://github.com/wikimedia/pywikibot">pywikibot</a>.</li>
 </ul>
 
 </div>
@@ -13208,8 +13208,8 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Scraping-the-Nobel-Physics-Laureates">Scraping the Nobel Physics Laureates<a class="anchor-link" href="#Scraping-the-Nobel-Physics-Laureates">&#182;</a></h2><p>I use a combination of <em>pywikibot</em> and <em>wikitextparser</em> to scrape the table from the Wikipedia page and create a <em>pandas</em> dataframe. As described previously, I use <em>requests</em> to send HTTP requests to fetch the pages associated with the Nobel Laureates as some of them are redirected to different URLs. The really tricky part is that the redirects are done via javascript so they are not detected by requests. As a result I use <em>beautifulsoup</em> to parse the javascript to find the redirect link.</p>
-<p>Even after all of this, some of the redirected Wikipedia links are not in sync with the DBpedia links. This means that when I later try to fetch the data from DBpedia, the links resolve the the wrong resource. So I force these redirects manually here.</p>
+<h2 id="Scraping-the-Nobel-Physics-Laureates">Scraping the Nobel Physics Laureates<a class="anchor-link" href="#Scraping-the-Nobel-Physics-Laureates">&#182;</a></h2><p>We will use a combination of <a href="https://github.com/wikimedia/pywikibot">pywikibot</a> and <a href="https://github.com/5j9/wikitextparser">wikitextparser</a> to scrape the laureates data from the tables in the Wikipedia pages above and store it in a <a href="https://pandas.pydata.org/">pandas</a> dataframe. In the future we will need to fetch data about the physicists from <a href="https://wiki.dbpedia.org/about">DBpedia</a> using the links in the table, so <a href="http://docs.python-requests.org/en/master/">requests</a> and <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">beautifulsoup</a> will be used to obtain these. An important point to note is that we will actually need to send HTTP requests to fetch the linked pages as some of them redirect to different URLs. The tricky part is that the redirects are done via javascript, so they are not detected by requests. As a result, we will have to parse the javascript to find the redirect link. Even after all of this, some of the redirected Wikipedia links do not match the DBpedia links, resulting in the wrong resource being retrieved. To avoid this, we manually force the correct redirects now.</p>
+<p>Let's start with the physics laureates.</p>
 
 </div>
 </div>
@@ -13269,8 +13269,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physics_laureates</span> <span class="o">=</span> <span class="n">get_nobel_laureates</span><span class="p">(</span>
-    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;List of Nobel laureates in Physics&#39;</span><span class="p">,</span> <span class="n">oldid</span><span class="o">=</span><span class="mi">862097595</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physics_laureates</span> <span class="o">=</span> <span class="n">get_nobel_laureates</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;List of Nobel laureates in Physics&#39;</span><span class="p">,</span> <span class="n">oldid</span><span class="o">=</span><span class="mi">862097595</span><span class="p">)</span>
 <span class="n">physics_laureates</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 
@@ -13711,8 +13710,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">NUM_URLS</span> <span class="o">=</span> <span class="mi">213</span>
-<span class="n">physics_laureates</span> <span class="o">=</span> <span class="n">clean_laureates_dataframe</span><span class="p">(</span><span class="n">physics_laureates</span><span class="p">,</span> 
-                                              <span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
+<span class="n">physics_laureates</span> <span class="o">=</span> <span class="n">clean_laureates_dataframe</span><span class="p">(</span><span class="n">physics_laureates</span><span class="p">,</span> <span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -13729,7 +13727,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 213 / 213 urls |██████████| 100% Elapsed Time: 0:00:14 Time:  0:00:14
+<pre>Fetching: 213 / 213 urls |██████████| 100% Elapsed Time: 0:00:15 Time:  0:00:15
 </pre>
 </div>
 </div>
@@ -15292,7 +15290,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This looks much better, but let's do a sanity check. The <em>Nobel Prize in Physics</em>:</p>
+<p>This looks much better, but let's do a sanity check. The Nobel Prize in Physics:</p>
 <ul>
 <li>Has been awarded 111 times between 1901 and 2017</li>
 <li>to 207 Nobel Laureates (206 distinct individuals)</li>
@@ -15308,14 +15306,11 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">Year</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="o">==</span> <span class="mi">111</span><span class="p">))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">Year</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
-                      <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1901</span><span class="p">,</span> <span class="mi">2018</span><span class="p">))))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">Year</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1901</span><span class="p">,</span> <span class="mi">2018</span><span class="p">))))</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="mi">207</span><span class="p">))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-    <span class="n">physics_laureates</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="s1">&#39;John Bardeen&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span>
-    <span class="n">physics_laureates</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-        <span class="n">physics_laureates</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="s1">&#39;John Bardeen&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Year</span><span class="p">,</span> <span class="p">[</span><span class="mi">1956</span><span class="p">,</span> <span class="mi">1972</span><span class="p">]))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="s1">&#39;John Bardeen&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="s1">&#39;John Bardeen&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Year</span><span class="p">,</span>
+                      <span class="p">[</span><span class="mi">1956</span><span class="p">,</span> <span class="mi">1972</span><span class="p">]))</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">Laureate</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="o">==</span> <span class="mi">206</span><span class="p">))</span>
 </pre></div>
 
@@ -15337,8 +15332,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/raw/nobel-physics-prize-laureates.csv&#39;</span><span class="p">,</span>
-                         <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">physics_laureates</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/raw/nobel-physics-prize-laureates.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15359,8 +15353,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chemistry_laureates</span> <span class="o">=</span> <span class="n">get_nobel_laureates</span><span class="p">(</span>
-    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;List of Nobel laureates in Chemistry&#39;</span><span class="p">,</span> <span class="n">oldid</span><span class="o">=</span><span class="mi">860639110</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chemistry_laureates</span> <span class="o">=</span> <span class="n">get_nobel_laureates</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;List of Nobel laureates in Chemistry&#39;</span><span class="p">,</span> <span class="n">oldid</span><span class="o">=</span><span class="mi">860639110</span><span class="p">)</span>
 <span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 
@@ -15693,8 +15686,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">NUM_URLS</span> <span class="o">=</span> <span class="mi">186</span>
-<span class="n">chemistry_laureates</span> <span class="o">=</span> <span class="n">clean_laureates_dataframe</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="p">,</span>
-                                                <span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
+<span class="n">chemistry_laureates</span> <span class="o">=</span> <span class="n">clean_laureates_dataframe</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="p">,</span> <span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -15711,7 +15703,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 186 / 186 urls |██████████| 100% Elapsed Time: 0:00:11 Time:  0:00:11
+<pre>Fetching: 186 / 186 urls |██████████| 100% Elapsed Time: 0:00:12 Time:  0:00:12
 </pre>
 </div>
 </div>
@@ -17085,7 +17077,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This looks good, but let's do a sanity check. The <em>Nobel Prize in Chemistry</em>:</p>
+<p>This looks good, but let's do a sanity check. The Nobel Prize in Chemistry:</p>
 <ul>
 <li>Has been awarded 109 times between 1901 and 2017</li>
 <li>to 178 Nobel Laureates (177 distinct individuals)</li>
@@ -17101,14 +17093,11 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">Year</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="o">==</span> <span class="mi">109</span><span class="p">))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">Year</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
-                      <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1901</span><span class="p">,</span> <span class="mi">2018</span><span class="p">))))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">Year</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1901</span><span class="p">,</span> <span class="mi">2018</span><span class="p">))))</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="mi">178</span><span class="p">))</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-    <span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="s1">&#39;Frederick Sanger&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))</span>
-<span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span>
-    <span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-        <span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="s1">&#39;Frederick Sanger&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Year</span><span class="p">,</span> <span class="p">[</span><span class="mi">1958</span><span class="p">,</span> <span class="mi">1980</span><span class="p">]))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="s1">&#39;Frederick Sanger&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">Laureate</span> <span class="o">==</span> <span class="s1">&#39;Frederick Sanger&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">Year</span><span class="p">,</span>
+                      <span class="p">[</span><span class="mi">1958</span><span class="p">,</span> <span class="mi">1980</span><span class="p">]))</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">Laureate</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="o">==</span> <span class="mi">177</span><span class="p">))</span>
 </pre></div>
 
@@ -17130,8 +17119,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/raw/nobel-chemistry-prize-laureates.csv&#39;</span><span class="p">,</span>
-                           <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chemistry_laureates</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/raw/nobel-chemistry-prize-laureates.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>

@@ -41,6 +41,7 @@ FORCED_REDIRECTS = {
     'James Jeans': 'James Hopwood Jeans',
     'Kenneth Young (physicist)': 'Kenneth Young',
     'Lawrence Bragg': 'William Lawrence Bragg',
+    'Maria Goeppert Mayer': 'Maria Goeppert-Mayer',
     'Raúl Rabadán': 'Raúl Rabadan',
     "Shin'ichirō Tomonaga": "Sin'ichirō Tomonaga",
     'Thales of Miletus': 'Thales',

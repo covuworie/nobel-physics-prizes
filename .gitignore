@@ -106,6 +106,7 @@ venv.bak/
 # pywikibot
 apicache-py3/
 throttle.ctrl
+pywikibot.lwp
 
 # Visual Studio Code
 .vscode
