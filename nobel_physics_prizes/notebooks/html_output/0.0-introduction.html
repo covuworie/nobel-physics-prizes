@@ -13184,6 +13184,36 @@ Illustration: Niklas Elmehad/Nobel Media (<a href="https://spectrum.ieee.org/tec
 <li><a href="https://en.wikipedia.org/wiki/Albert_Einstein">Albert Einstein</a> (<a href="http://dbpedia.org/data/Albert_Einstein.json">JSON</a>)</li>
 <li><a href="https://en.wikipedia.org/wiki/Emmy_Noether">Emmy Noether</a> (<a href="http://dbpedia.org/data/Emmy_Noether.json">JSON</a>)</li>
 </ul>
+<h2 id="Environment">Environment<a class="anchor-link" href="#Environment">&#182;</a></h2><p>An <strong>environment</strong> for <em>computational reproducibility</em> of this project can be setup by following these simple steps:</p>
+<ol>
+<li><p>Download and install <code>python 3.6.5 (64-bit)</code> (any 3.6.x version should be ok) for your operating system from <a href="https://www.python.org/downloads/">python.org</a> or <a href="https://www.anaconda.com/download/">anaconda</a>.
+Make sure to check the option "Add python 3.6 to PATH" during installation.</p>
+</li>
+<li><p>Download and install the latest version (any version should be ok) of <a href="https://git-scm.com/downloads">git-scm</a> for your operating system.</p>
+</li>
+<li><p>Clone the <a href="https://github.com/">github</a> repository:</p>
+</li>
+</ol>
+
+<pre><code>git clone https://github.com/covuworie/nobel-physics-prizes.git</code></pre>
+<ol>
+<li><p>Create a .env file at the root where you cloned the repo. See <a href=".env-example">.env-example</a> for an example.</p>
+</li>
+<li><p>Use <a href="https://pipenv.readthedocs.io/en/latest/">pipenv</a> to spawn a shell with the <a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> activated (this will also load the .env environment variables):</p>
+</li>
+</ol>
+
+<pre><code>pipenv shell</code></pre>
+<ol>
+<li>Install all packages from the <a href="https://github.com/pypa/pipfile">Pipfile</a> (both <em>develop</em> and <em>default</em> packages):</li>
+</ol>
+
+<pre><code>pipenv install --dev</code></pre>
+<ol>
+<li>Launch the <a href="https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html">JupyterLab</a> application in your default browser:</li>
+</ol>
+
+<pre><code>jupyter lab</code></pre>
 
 </div>
 

@@ -59,3 +59,38 @@ These lists will be used to obtain *demographic* data in [JSON](https://www.json
 - [John Bardeen](https://en.wikipedia.org/wiki/John_Bardeen) ([JSON](http://dbpedia.org/data/John_Bardeen.json))
 - [Albert Einstein](https://en.wikipedia.org/wiki/Albert_Einstein) ([JSON](http://dbpedia.org/data/Albert_Einstein.json))
 - [Emmy Noether](https://en.wikipedia.org/wiki/Emmy_Noether) ([JSON](http://dbpedia.org/data/Emmy_Noether.json))
+
+## Environment
+
+An **environment** for *computational reproducibility* of this project can be setup by following these simple steps:
+
+1. Download and install `python 3.6.5 (64-bit)` (any 3.6.x version should be ok) for your operating system from [python.org](https://www.python.org/downloads/) or [anaconda](https://www.anaconda.com/download/).
+Make sure to check the option "Add python 3.6 to PATH" during installation.
+
+2. Download and install the latest version (any version should be ok) of [git-scm](https://git-scm.com/downloads) for your operating system.
+
+3. Clone the [github](https://github.com/) repository:
+
+```
+git clone https://github.com/covuworie/nobel-physics-prizes.git
+```
+
+4. Create a .env file at the root where you cloned the repo. See [.env-example](.env-example) for an example.
+
+5. Use [pipenv](https://pipenv.readthedocs.io/en/latest/) to spawn a shell with the [virtualenv](https://virtualenv.pypa.io/en/latest/) activated (this will also load the .env environment variables):
+
+```
+pipenv shell
+```
+
+6. Install all packages from the [Pipfile](https://github.com/pypa/pipfile) (both *develop* and *default* packages):
+
+```
+pipenv install --dev
+```
+
+7. Launch the [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html) application in your default browser:
+
+```
+jupyter lab
+```
