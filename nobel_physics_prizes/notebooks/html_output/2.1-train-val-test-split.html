@@ -13116,8 +13116,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Train-Validation-Test-Split">Train-Validation-Test Split<a class="anchor-link" href="#Train-Validation-Test-Split">&#182;</a></h1><p>The <a href="../data/interim/physicists.csv">physicists dataframe</a> consists of a list of great physicists from the Ancient Greeks to modern times. I would like to reduce this to a list of modern physicists who have lived in years when the <em>Nobel Prize in Physics</em> has been awarded. To be more precise, the Nobel Prize in Physics was first awarded on <em>10 December 1901</em> on the anniversary of Alfred Nobel's death. The prize has been awarded on the anniversary of his death every year since, excluding the few years in which no prize was awarded. Essentially, I would like a list of physicists who were alive on and after this date. Many of these physicists have died and many of them are still alive.</p>
-<p>Since the Nobel Prize in Physics cannot be awarded posthumously and the goal is to develop a model to predict Physics Laureates, it makes sense to form a <em>training set</em> that consists of physicists who have died and <em>test and validation sets</em> that consist of physicists who are still alive. Due to this "pseudo-time component" of the data, cross-validation is not appropriate for model selection as it is not indicative of how the model would be used in "production". Naturally, there will be a mixture of laureates and non-laureates in all the sets.</p>
+<h1 id="Train-Validation-Test-Split">Train-Validation-Test Split<a class="anchor-link" href="#Train-Validation-Test-Split">&#182;</a></h1><p>The <a href="../data/interim/physicists.csv">physicists dataframe</a> consists of a list of great physicists from the Ancient Greeks to modern times. We would like to reduce this to a list of modern physicists who were eligible to be awarded the Nobel Prize in Physics. To be more precise, the Nobel Prize in Physics was first awarded on <strong>10 December 1901</strong> on the anniversary of <em>Alfred Nobel's</em> death. The prize has been awarded on the anniversary of his death every year since, excluding the few years in which no prize was awarded. Essentially, we would like a list of physicists who were alive on and after this date. Some of these physicists are deceased and some are alive.</p>
+<p>Since the Nobel Prize in Physics cannot be awarded posthumously and the goal is to develop a model to predict laureates, it makes sense to form a <strong>training set</strong> that consists of deceased physicists and a <strong>test set</strong> and <strong>validation set</strong> that both consist of living physicists. We choose to use a validation set for model selection instead of cross-validation as the later is not appropriate due to this "pseudo-time component" of the data.</p>
 
 </div>
 </div>
@@ -13946,12 +13946,11 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I can see that there are two issues:</p>
+<p>We can see that there are two issues:</p>
 <ol>
 <li>Missing birth and death dates.</li>
 <li>Death dates equal to birth dates.</li>
 </ol>
-<p>The second issue is due to poor validation of data in dbPedia and since these physicists are dead, the death dates just need to be corrected.</p>
 
 </div>
 </div>
@@ -14237,12 +14236,13 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For the first issue, let's examine exactly whose birth dates are missing. Interestingly, Pythagoras is the only name I know here so it's likely that this is a list of modern physicists. Reading some of the abstracts in the dataframe and performing a Google search on some of these physicists confirms my suspicions. Rather than just dropping them and losing valuable data, I would like to see if I can find out their dates of birth. A combination of the following allows me to <em>impute</em> exact or fairly accurate approximate values for most of the missing birth and death dates for the physicists:</p>
+<p>The second issue is due to poor validation of data in DBpedia. Since these physicists are deceased, the death dates just need to be corrected.</p>
+<p>For the first issue, let's examine exactly whose birth dates are missing. Interestingly, <em>Pythagoras</em> is the most famous name here, so it's likely that this is a list of modern physicists. Reading some of the abstracts in the dataframe and performing a Google search on some of these physicists confirms the suspicion. Rather than just dropping them and losing valuable data, we would like to see if we can find out their dates of birth. A combination of the following allows us to <em>impute</em> exact or sufficiently accurate approximate values for most of the missing birth and death dates for the physicists:</p>
 <ul>
-<li>Searching the abstract field of the dataframe</li>
-<li>Looking at the <em>Google Knowledge Graph</em> results provided from a Google search</li>
-<li>Looking to see if an approximate value is provided in the <a href="https://en.wikipedia.org/w/index.php?title=List_of_physicists&amp;oldid=864677795">list of physicists</a> or <a href="https://en.wikipedia.org/w/index.php?title=List_of_theoretical_physicists&amp;oldid=855745137">list of theoretical physicists</a></li>
-<li>Examining their homepages and resumes for dates or birth or dates of first degrees </li>
+<li>Searching the <strong>abstract field</strong> of the dataframe</li>
+<li>Looking at the <strong>Google Knowledge Graph</strong> results provided from a Google search</li>
+<li>Looking to see if an <strong>approximate date</strong> is provided in the <a href="https://en.wikipedia.org/w/index.php?title=List_of_physicists&amp;oldid=864677795">list of physicists</a> or <a href="https://en.wikipedia.org/w/index.php?title=List_of_theoretical_physicists&amp;oldid=855745137">list of theoretical physicists</a></li>
+<li>Examining their online <strong>homepages</strong> and <strong>resumes</strong> for <em>dates or birth</em> or <em>dates of degrees</em> </li>
 </ul>
 
 </div>
@@ -14433,7 +14433,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Down to only 3. That's good. <em>Pythagoras</em> is clearly dead! Wikipedia tells me that <em>Karl-Heinrich Riewe</em> dissapeared in controversial circumstances. The less said on that the better. And further research in fact reveals that <em>William R. Kanne</em> died a long time ago. So let's drop these 3 from the list.</p>
+<p>Down to only 3. That's a big improvement. Well <em>Pythagoras</em> is clearly dead! Wikipedia tells us that <em>Karl-Heinrich Riewe</em> dissapeared in controversial circumstances. The less said on that the better! And further research in fact reveals that <em>William R. Kanne</em> died a long time ago. So let's drop these 3 from the list.</p>
 
 </div>
 </div>
@@ -14456,7 +14456,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So now every physicist in the list has a birth date. Before I can examine the death dates to remove those who died before the Nobel Prize in Physics was first awarded, I must first deal with a <code>datetime</code> python technicality. Python's <code>datetime</code> cannot deal with dates before the year 1000 so I remove all physicists born before this date as they are dead.</p>
+<p>So now every physicist in the list has a birth date. Before we can examine the death dates to remove those who died before the Nobel Prize in Physics was first awarded, we must first deal with a <code>datetime</code> python technicality. Python's <code>datetime</code> cannot deal with dates before the year 1000 so let's remove all physicists born before this date as they too, like <em>Pythagoras</em>, are clearly deceased.</p>
 
 </div>
 </div>
@@ -14610,7 +14610,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now I can convert the <code>birthDate</code> and <code>deathDate</code> variables to <code>datetime</code> and perform the arithmetic to find those physicists who died before the first Nobel Prize in Physics was awarded.</p>
+<p>Now we can convert the <code>birthDate</code> and <code>deathDate</code> variables to the <code>datetime</code> type and perform the arithmetic to find those physicists who died before the first Nobel Prize in Physics was awarded.</p>
 
 </div>
 </div>
@@ -15408,7 +15408,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So let's drop these great physicists as they were never eligible to have been awarded a Nobel prize due to the era that they lived in.</p>
+<p>So let's drop these great physicists who were never eligible to have been awarded a Nobel.</p>
 
 </div>
 </div>
@@ -15420,8 +15420,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">physicists</span> <span class="o">=</span> <span class="n">physicists</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">physicists_died_before_prize</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">927</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">|</span>
-       <span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span> <span class="o">&gt;</span> <span class="n">date_prize_first_awarded</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">|</span> <span class="p">(</span><span class="n">physicists</span><span class="o">.</span><span class="n">deathDate</span> <span class="o">&gt;</span> <span class="n">date_prize_first_awarded</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -15432,7 +15431,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Training-Set">Training Set<a class="anchor-link" href="#Training-Set">&#182;</a></h2><p>Now I form the training set from the remaining physicists who are dead, but were still alive, after the Nobel Prize in Physics was first awarded.</p>
+<h2 id="Training-Set">Training Set<a class="anchor-link" href="#Training-Set">&#182;</a></h2><p>Now we can form the training set from the remaining physicists who are deceased, but were still alive, after the Nobel Prize in Physics was first awarded.</p>
 
 </div>
 </div>
@@ -18753,7 +18752,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Validation-and-Test-Sets">Validation and Test Sets<a class="anchor-link" href="#Validation-and-Test-Sets">&#182;</a></h2><p>Now let's form a dataframe of the remaining physicists who are still alive.</p>
+<h2 id="Validation-and-Test-Sets">Validation and Test Sets<a class="anchor-link" href="#Validation-and-Test-Sets">&#182;</a></h2><p>Now let's form a dataframe of the remaining living physicists.</p>
 
 </div>
 </div>
@@ -19188,7 +19187,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now I will randomly sample this dataframe to ensure that there is approximately a 50-50 split between physicists in the validation and test sets.</p>
+<p>Now we can randomly sample this dataframe to ensure that there is approximately a 50-50 split between physicists in the validation and test sets.</p>
 
 </div>
 </div>
@@ -21629,7 +21628,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You may have noticed that there are some dead physicists (including laureates) in these dataframes. I have spotted <em>Stephen Hawking</em>, <em>Nicolaas Bloembergen</em>, <em>Emil Wolf</em> and <em>Hans Georg Dehmelt</em>. As I mentioned previously, the DBpedia data is 6-18 months behind the Wikipedia data, so recent deaths are not reflected in DBpedia yet. Due to this there may be a few other dead physicists in the dataframes that I do not know of. It's not a big issue, I will just treat them as still alive for the purposes of this study. But it is important to remember what I mentioned earlier, the Nobel Prize in Physics cannot be awarded posthumously.</p>
+<p>You may have noticed that there are some deceased physicists (including laureates) in these dataframes. Examples include <em>Stephen Hawking</em>, <em>Nicolaas Bloembergen</em>, <em>Emil Wolf</em> and <em>Hans Georg Dehmelt</em>. As was mentioned previously, the DBpedia data is 6-18 months behind the Wikipedia data, so recent deaths are not reflected in the data yet. Due to this there may be a few other dead physicists in the dataframes. It's not a big issue, we will just treat them as still living for the purposes of this study. However, it is important to remember that the Nobel Prize in Physics cannot be awarded posthumously.</p>
 <p>Let's do the following quick sanity checks to ensure:</p>
 <ol>
 <li>The correct total number of physicists. </li>
@@ -21644,14 +21643,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)</span> <span class="o">==</span>
-       <span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">))</span>
-<span class="k">assert</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
-    <span class="nb">set</span><span class="p">(</span><span class="n">validation_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
-    <span class="nb">set</span><span class="p">(</span><span class="n">test_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)))</span>
-<span class="k">assert</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">validation_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
-    <span class="nb">set</span><span class="p">(</span><span class="n">test_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">))</span>
+<span class="k">assert</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">validation_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">test_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)))</span>
+<span class="k">assert</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">validation_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">test_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -21675,11 +21670,8 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">training_fraction</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span>
 <span class="n">validation_fraction</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_physicists</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span>
 <span class="n">test_fraction</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">physicists</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">training_fraction</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">validation_fraction</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-          <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">test_fraction</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
-    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Training %&#39;</span><span class="p">,</span> <span class="s1">&#39;Validation %&#39;</span><span class="p">,</span> <span class="s1">&#39;Test %&#39;</span><span class="p">]</span>
-<span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">training_fraction</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">validation_fraction</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">test_fraction</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Training %&#39;</span><span class="p">,</span> <span class="s1">&#39;Validation %&#39;</span><span class="p">,</span> <span class="s1">&#39;Test %&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -21721,7 +21713,7 @@ dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Training,-Validation-and-Test-Data">Persisting the Training, Validation and Test Data<a class="anchor-link" href="#Persisting-the-Training,-Validation-and-Test-Data">&#182;</a></h2><p>Now I have the training, validation and test dataframes, I'd like to persist them for later analysis. So I'll write out the contents to a csv file.</p>
+<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now we have the training, validation and test dataframes, let's persist them for later analysis by writing their contents to a csv file.</p>
 
 </div>
 </div>
@@ -21731,12 +21723,9 @@ dtype: float64</pre>
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-physicists-from-1901.csv&#39;</span><span class="p">,</span>
-                        <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">validation_physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/validation-physicists-from-1901.csv&#39;</span><span class="p">,</span>
-                             <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">test_physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/test-physicists-from-1901.csv&#39;</span><span class="p">,</span>
-                       <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/train-physicists-from-1901.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">validation_physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/validation-physicists-from-1901.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">test_physicists</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/test-physicists-from-1901.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
