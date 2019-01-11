@@ -13116,8 +13116,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Collect-Physicists">Collect Physicists<a class="anchor-link" href="#Collect-Physicists">&#182;</a></h1><p>For this project, I need a list of physicists who are notable for their achievements. Wikipedia contains two such lists, one general <a href="https://en.wikipedia.org/w/index.php?title=List_of_physicists&amp;oldid=864677795">list of physicists</a> and another <a href="https://en.wikipedia.org/w/index.php?title=List_of_theoretical_physicists&amp;oldid=855745137">list of theoretical physicists</a>. I will scrape these lists, combine them with the list of <a href="../data/raw/nobel-physics-prize-laureates.csv">Nobel Physics Laureates</a> and unify them into a single list.</p>
-<p>It is important to recognize that some of these physicists have won the <em>Nobel Prize</em> and some have not and also that some are <em>dead</em> and some are <em>alive</em>. You should at least recognize a few of the more famous names in the list even if you do not recognize them all. The entire analysis of this project will be based on the data that is acquired on these physicists. OK time to get scraping.</p>
+<h1 id="Collect-Physicists">Collect Physicists<a class="anchor-link" href="#Collect-Physicists">&#182;</a></h1><p>As well as the list of <a href="../data/raw/nobel-physics-prize-laureates.csv">Nobel Physics Laureates</a>, we will need a list of physicists who are notable for their achievements, but have not won the Nobel Prize in Physics. Wikipedia contains two lists of physicists who are notable for their achievements - one general <a href="https://en.wikipedia.org/w/index.php?title=List_of_physicists&amp;oldid=864677795">list of physicists</a> and another <a href="https://en.wikipedia.org/w/index.php?title=List_of_theoretical_physicists&amp;oldid=855745137">list of theoretical physicists</a>. We will scrape these lists, combine them with the list of laureates and unify all of the physicists into a single list. The entire analysis of this project will be based on the data that is acquired on these physicists. OK time to get scraping.</p>
 
 </div>
 </div>
@@ -13197,7 +13196,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in the Nobel Physics Laureates into a <em>pandas</em> dataframe, remove the missing values and convert this to a list of laureate names.</p>
+<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in the Nobel Physics Laureates into a <a href="https://pandas.pydata.org/">pandas</a> dataframe, remove the missing values and convert this to a list of laureate names.</p>
 
 </div>
 </div>
@@ -13541,8 +13540,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Scraping-the-Physicists">Scraping the Physicists<a class="anchor-link" href="#Scraping-the-Physicists">&#182;</a></h2><p>I use a combination of <em>requests</em> and <em>beautifulsoup</em> to scrape the links from the Wikipedia pages. I filter the list of links down to only those containing physicist names. The important point to note is that I actually need to send HTTP requests to fetch the pages associated with these links as some of them are redirected to different URLs. The really tricky part is that the redirects are done via javascript so they are not detected by <em>requests</em>. As a result I have to parse the javascript to find the redirect link.</p>
-<p>Even after all of this, some of the redirected Wikipedia links are not in sync with the DBpedia links. This means that when I later try to fetch the data from DBpedia, the links resolve the the wrong resource. So I force these redirects manually here.</p>
+<h2 id="Scraping-the-Physicists">Scraping the Physicists<a class="anchor-link" href="#Scraping-the-Physicists">&#182;</a></h2><p>We will use a combination of <a href="http://docs.python-requests.org/en/master/">requests</a> and <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">beautifulsoup</a> to scrape the links of physicist names from the Wikipedia pages above. In the future we will need these links in order to fetch data about the physicists from <a href="https://wiki.dbpedia.org/about">DBpedia</a>. An important point to note is that we will actually need to send HTTP requests to fetch the linked pages as some of them redirect to different URLs. The tricky part is that the redirects are done via javascript, so they are not detected by requests. As a result, we will have to parse the javascript to find the redirect link. Even after all of this, some of the redirected Wikipedia links do not match the DBpedia links, resulting in the wrong resource being retrieved. To avoid this, we manually force the correct redirects now.</p>
 
 </div>
 </div>
@@ -13609,8 +13607,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">NUM_URLS</span> <span class="o">=</span> <span class="mi">1127</span>
-<span class="n">notable_physicists</span> <span class="o">=</span> <span class="n">get_notable_physicists</span><span class="p">(</span><span class="n">physics_laureates</span><span class="p">,</span>
-                                            <span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
+<span class="n">notable_physicists</span> <span class="o">=</span> <span class="n">get_notable_physicists</span><span class="p">(</span><span class="n">physics_laureates</span><span class="p">,</span> <span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -13627,7 +13624,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 1127 / 1127 urls |████████| 100% Elapsed Time: 0:00:48 Time:  0:00:48
+<pre>Fetching: 1127 / 1127 urls |████████| 100% Elapsed Time: 0:01:21 Time:  0:01:21
 </pre>
 </div>
 </div>
@@ -13650,6 +13647,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1069</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">))</span>
 <span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)</span>
 </pre></div>
 
@@ -13678,40 +13676,6 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">))</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">notable_physicists</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[8]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>1069</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13722,7 +13686,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../data/raw/physicists.txt&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -13736,7 +13700,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pycat</span> ../data/raw/physicists.txt

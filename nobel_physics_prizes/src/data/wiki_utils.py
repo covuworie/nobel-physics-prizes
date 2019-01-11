@@ -47,6 +47,7 @@ FORCED_REDIRECTS = {
     'Thales of Miletus': 'Thales',
     'William Fuller Brown Jr.': 'William Fuller Brown, Jr.',
     'Yakov Alpert': 'Yakov Lvovich Alpert',
+    'Yakov Zeldovich': "Yakov Borisovich Zel'dovich",
     'Yang Chen-Ning': 'Chen-Ning Yang',
     'Yulii Khariton': 'Yulii Borisovich Khariton'
 }
