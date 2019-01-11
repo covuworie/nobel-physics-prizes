@@ -13116,8 +13116,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Process-Places-Raw-Data">Process Places Raw Data<a class="anchor-link" href="#Process-Places-Raw-Data">&#182;</a></h1><p>Now I aim to convert the JSON lines format <a href="../data/raw/places.jsonl.gz">places raw data</a> into an intermediate format <em>pandas dataframe</em> that is more convenient to work with. This intermediate format will be close to the final format of the data that I'll be working with for analysis.</p>
-<p>My goal is to parse the JSON data in order to extract the interesting fields of information such as <em>latitude</em>, <em>longitude</em>, <em>city</em>, <em>country</em>, etc. As mentioned previously, these fields will be useful for constructing features based on the country that the place is located in. In particular, for places with a latitude and longitude (<em>locations</em>), I will be able to map from locations to identifiable countries.</p>
+<h1 id="Process-Places-Raw-Data">Process Places Raw Data<a class="anchor-link" href="#Process-Places-Raw-Data">&#182;</a></h1><p>Here we will convert the JSON lines <a href="../data/raw/places.jsonl.gz">places raw data</a> into a pandas dataframe that is more convenient to work with. We will refer to this as an intermediate format as it will not be the final format of the data that we will be working with for analysis.</p>
+<p>The goal is to parse the JSON data in order to extract the interesting fields of information such as <em>latitude</em>, <em>longitude</em>, <em>city</em>, <em>country</em>, etc. These fields will be useful for constructing features based on the country that a <strong>place</strong> is located in. In particular, for <strong>places</strong> with a <em>latitude</em> and <em>longitude</em> (i.e. <strong>locations</strong>), we will be able to map from <strong>locations</strong> to identifiable countries.</p>
 
 </div>
 </div>
@@ -13138,7 +13138,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">locale</span>
     
 <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 </pre></div>
@@ -13170,7 +13171,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -13205,7 +13206,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">json_lines</span> <span class="o">=</span> <span class="n">read_jsonl</span><span class="p">(</span><span class="s1">&#39;../data/raw/places.jsonl.gz&#39;</span><span class="p">)</span>
@@ -13222,7 +13223,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13541,7 +13542,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Defining-the-Fields-of-Interest">Defining the Fields of Interest<a class="anchor-link" href="#Defining-the-Fields-of-Interest">&#182;</a></h2><p>Here I define the keys and values that I wish to extract from the JSON lines data and also some that I explicitly wish to exclude. These keys and values are in the form of <em>semantic URLs</em> which allows anyone to visit the resource in a web browser and see their meaning. The URLs are in 5 namespaces:</p>
+<h2 id="Defining-the-Fields-of-Interest">Defining the Fields of Interest<a class="anchor-link" href="#Defining-the-Fields-of-Interest">&#182;</a></h2><p>Now we define the list of keys and values that we wish to extract from the JSON lines data. Also, we define some that we explicitly wish to exclude. These keys and values are in the form of <a href="https://en.wikipedia.org/wiki/Clean_URL">semantic URLs</a>, which makes them easy to read and interpret. It also allows anyone to visit the resource in a web browser and see their meaning. The URLs are in 5 namespaces:</p>
 <ul>
 <li><a href="https://wiki.dbpedia.org/services-resources/ontology">DBpedia Ontology</a></li>
 <li>DBpedia Property</li>
@@ -13555,7 +13556,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">DBPEDIA_JSON_KEYS</span> <span class="o">=</span> <span class="p">[</span>
@@ -13600,9 +13601,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Creating-the-Places-Dictionaries">Creating the Places Dictionaries<a class="anchor-link" href="#Creating-the-Places-Dictionaries">&#182;</a></h2><p>Now I parse the JSON lines data to create dictionaries. The following rules apply when creating the dictionaries:</p>
+<h2 id="Creating-the-Places-Dictionaries">Creating the Places Dictionaries<a class="anchor-link" href="#Creating-the-Places-Dictionaries">&#182;</a></h2><p>Now we will parse the JSON lines data to create dictionaries. The following rules apply when creating the dictionaries:</p>
 <ol>
-<li><p>Values in the DBpedia Ontology namespace takes precedence over those in the DBpedia Property namespace since, as described in section 4.3 of <a href="https://wiki.dbpedia.org/services-resources/datasets/dbpedia-datasets">DBpedia datasets</a>, it contains the cleanest data. Property namespace values are only used when there are no corresponding ontology namespace values.</p>
+<li><p>Values in the DBpedia Ontology namespace takes precedence over those in the DBpedia Property namespace since, as described in section 4.3 of <a href="https://wiki.dbpedia.org/services-resources/datasets/dbpedia-datasets#h434-10">DBpedia datasets</a>, it contains the cleanest data. Property namespace values are only used when there are no corresponding ontology namespace values.</p>
 </li>
 <li><p>Some of the fields (e.g. the <em>abstract</em>) is multilingual. In such cases, only the English is extracted.</p>
 </li>
@@ -13613,15 +13614,14 @@ div#notebook {
 </ul>
 </li>
 </ol>
-<p>I will handle some of these issues now and some of them later prior to and when generating features for machine learning.</p>
-<p>OK let's now generate the dictionaries and take a look at the first entry.</p>
+<p>We will handle some of these issues now and some of them later, prior to and when generating features for machine learning. OK let's now generate the dictionaries and take a look at the first entry.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">create_place_data</span><span class="p">(</span><span class="n">json_line</span><span class="p">):</span>
@@ -13656,7 +13656,7 @@ div#notebook {
 
 
 <span class="k">def</span> <span class="nf">_clean_country</span><span class="p">(</span><span class="n">dict_</span><span class="p">):</span>
-    <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">dict_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">cleaned_dict</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">dict_</span><span class="p">)</span>
 
     <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;country&#39;</span>
     <span class="n">key_present</span> <span class="o">=</span> <span class="n">cleaned_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -13679,7 +13679,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bar</span> <span class="o">=</span> <span class="n">progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">json_lines</span><span class="p">),</span> <span class="n">banner_text_begin</span><span class="o">=</span><span class="s1">&#39;Creating: &#39;</span><span class="p">,</span>
@@ -13709,7 +13709,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Creating: 1876 / 1876 dicts |███████| 100% Elapsed Time: 0:01:50 Time:  0:01:50
+<pre>Creating: 1876 / 1876 dicts |███████| 100% Elapsed Time: 0:01:58 Time:  0:01:58
 </pre>
 </div>
 </div>
@@ -13720,7 +13720,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -13736,7 +13736,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13770,7 +13770,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You can see that many of the values in the dictionary contain lists of semantic URLs which are each meant to refer to a unique "thing" such as a person or a place. If the URL is redirected, it is important to know where it is redirected to so that identical "things" in fact resolve to the same URL. It is very important to do this so that the machine learning models have clean data in order to differentiate signal from noise.</p>
+<p>You can see that many of the values in the dictionary contain lists of semantic URLs which are each meant to refer to a unique "thing" such as a person or a place. If the URL is redirected, it is important to know where it is redirected to so that identical "things" in fact resolve to the same URL.</p>
 
 </div>
 </div>
@@ -13780,9 +13780,9 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Imputing-Redirects-in-the-Places-Dictionaries">Imputing Redirects in the Places Dictionaries<a class="anchor-link" href="#Imputing-Redirects-in-the-Places-Dictionaries">&#182;</a></h2><p>In order to impute redirects in the dictionaries I need to perform the following steps:</p>
 <ol>
-<li><em>Parse the dictionaries to obtain a list of all URLs</em>. These are either resource URLs or URLs constructed in an <em>ad hoc</em> manner from the free form text in the hope that they resolve to a genuine resource URL. The aim is to resolve as many items as possible in the fields to semantic URLs. I restrict URL selection and construction to the following impute keys: <code>categories</code>, <code>city</code>, <code>country</code> and <code>type</code> as these are fields of interest involving URLs that features may be extracted from.</li>
-<li><em>Submit HTTP requests to fetch the URLs and determine their redirect URLs.</em> A cache is kept mapping the URLs to the redirect URLs and as a consequence a HTTP request is only made to fetch a URL if it is not found in the cache. This greatly helps with performance. Note that I reutilize the <a href="../data/raw/dbpedia-redirects.csv">dbpedia redirects cache</a> created in notebook <a href="2.0-process-physicists-raw-data.ipynb">2.0-process-physicists-raw-data.ipynb</a>.</li>
-<li><em>Replace the URLs in the dictionaries with the redirect URLs.</em> In fact I use just the filename since the paths are identical for every URL.</li>
+<li><strong>Parse the dictionaries to obtain a list of all URLs</strong>. These are either resource URLs or URLs constructed in an <em>ad hoc</em> manner from the free form text in the hope that they resolve to a genuine resource URL. The aim is to resolve as many items as possible in the fields to semantic URLs. We restrict URL selection and construction to the following impute keys: <code>categories</code>, <code>city</code>, <code>country</code> and <code>type</code> as these are fields of interest involving URLs that features may be extracted from.</li>
+<li><strong>Submit HTTP requests to fetch the URLs and determine their redirects</strong>. A cache is kept mapping the URLs to their redirects. As a consequence a HTTP request is only made to fetch a URL if it is not found in the cache.  This greatly helps with performance, as does the fact that the code is asynchronous. Note that we reutilize the <a href="../data/raw/dbpedia-redirects.csv">dbpedia redirects cache</a> created in <a href="2.0-process-physicists-raw-data.ipynb">2.0-process-physicists-raw-data.ipynb</a>.</li>
+<li><strong>Replace the URLs in the dictionaries with their redirects</strong>. In fact we use just the filename since the paths are identical for every URL.</li>
 </ol>
 
 </div>
@@ -13790,7 +13790,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls_to_check</span> <span class="o">=</span> <span class="n">construct_resource_urls</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">PLACES_IMPUTE_KEYS</span><span class="p">)</span>
@@ -13807,7 +13807,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13824,13 +13824,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">url_cache_path</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/dbpedia-redirects.csv&#39;</span>
 <span class="n">redirects</span> <span class="o">=</span> <span class="n">get_redirect_urls</span><span class="p">(</span>
     <span class="n">urls_to_check</span><span class="p">,</span> <span class="n">url_cache_path</span><span class="o">=</span><span class="n">url_cache_path</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
     <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">progress_bar</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">urls_to_check</span><span class="p">)))</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">redirects</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13840,27 +13841,6 @@ div#notebook {
 <div class="output_wrapper">
 <div class="output">
 
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Czech_Republic_were_formally_parts_of_Prussia.
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -13879,10 +13859,31 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>404 Client Error: Not found for url: http://dbpedia.org/page/United_States%2C
-404 Client Error: Not found for url: http://dbpedia.org/page/Poland_since_1945
-404 Client Error: Not found for url: http://dbpedia.org/page/Western_North_of_Africa
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre></pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>404 Client Error: Not found for url: http://dbpedia.org/page/Czech_Republic_were_formally_parts_of_Prussia.
 404 Client Error: Not found for url: http://dbpedia.org/page/NZL-cats
+404 Client Error: Not found for url: http://dbpedia.org/page/Western_North_of_Africa
 404 Client Error: Not found for url: http://dbpedia.org/page/Prussia_than_since_1466_Polish-Lithuanian_Commonwealth._From_1772_in_Kingdom_of_Prussia
+404 Client Error: Not found for url: http://dbpedia.org/page/Poland_since_1945
 </pre>
 </div>
 </div>
@@ -13898,29 +13899,9 @@ div#notebook {
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">redirects</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13938,15 +13919,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You can see that many a few of the requested URLs were not found. This is to be expected as there is free form text in the fields that do not map to a semantic URL in DBpedia. However, my <em>ad hoc</em> approach of constructing URLs from free form texts is very successful in finding legitimate URLs in many instances.</p>
-<p>Now I sort and persist the URL cache to disk in case any new URLs are found.</p>
+<p>You can see that many a few of the requested URLs were not found. This is to be expected as there is free form text in the fields that do not map to a semantic URL in DBpedia. However, the <em>ad hoc</em> approach of constructing URLs from free form texts is very successful in finding legitimate URLs in many instances. Now we sort and persist the URL cache to disk in case any new URLs are found.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dbpedia_redirects</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -13963,14 +13943,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now I replace the URLs in the dictionaries with the redirect URLs making sure to just use the filename since the paths are identical for every URL.</p>
+<p>Now we replace the URLs in the dictionaries with the redirect URLs making sure to just use the filename since the paths are identical for every URL.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">impute_redirect_filenames</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">PLACES_IMPUTE_KEYS</span><span class="p">,</span> <span class="n">redirects</span><span class="p">)</span>
@@ -13987,7 +13967,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14028,7 +14008,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
@@ -14046,7 +14026,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -14215,18 +14195,17 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Impute-Missing-Latitudes-and-Longitudes-from-Cities">Impute Missing Latitudes and Longitudes from Cities<a class="anchor-link" href="#Impute-Missing-Latitudes-and-Longitudes-from-Cities">&#182;</a></h2><p>Let's see what percentage of places we can define as locations, namely, the number that have a value for both latitude and a longitude.</p>
+<h2 id="Impute-Missing-Latitudes-and-Longitudes-from-Cities">Impute Missing Latitudes and Longitudes from Cities<a class="anchor-link" href="#Impute-Missing-Latitudes-and-Longitudes-from-Cities">&#182;</a></h2><p>Let's see what percentage of <strong>places</strong> we can define as <strong>locations</strong>, namely, the number that have a value for both latitude and a longitude.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="nb">round</span><span class="p">((</span>
-    <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">places</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="nb">round</span><span class="p">((</span><span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">places</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14255,14 +14234,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Despite this being a healthy percentage, it is possible to do better as there is extra information in the <code>city</code> field that is not being utilized. The places below do not have a latitude and longitude defined but do have a city.</p>
+<p>Despite this being a reasonably healthy percentage, it is possible to do better as there is extra information in the <code>city</code> field that is not being utilized. The places below do not have a latitude and longitude defined but do have a city.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">places</span><span class="o">.</span><span class="n">city</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span>
@@ -14279,7 +14258,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -14519,14 +14498,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now for each place, I will attempt to automatically impute the missing latitude and longitude values based on their values for the associated city. For the few cities that are not present in the dataframe, I manually impute the values from the corresponding JSON file instead of making further HTTP requests to obtain the data.</p>
+<p>Now for each place, we will attempt to automatically impute the missing latitude and longitude values based on their values for the associated city. For the few cities that are not present in the dataframe, we can manually impute the values from the corresponding JSON file instead of making further HTTP requests to obtain the data.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">impute_lat_long</span><span class="p">(</span><span class="n">places</span><span class="p">):</span>
@@ -14601,7 +14580,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">imputed_places</span>  <span class="o">=</span> <span class="n">impute_lat_long</span><span class="p">(</span><span class="n">places</span><span class="p">)</span>
@@ -14618,7 +14597,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -14786,12 +14765,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="nb">round</span><span class="p">((</span>
-    <span class="o">~</span><span class="n">imputed_places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">imputed_places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">imputed_places</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="nb">round</span><span class="p">((</span><span class="o">~</span><span class="n">imputed_places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">imputed_places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                  <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">imputed_places</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14820,18 +14798,17 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>OK I've managed to convert a further 2% of the places to locations. Not too shabby! And there are still further places with mostly well defined countries that can be utilized for feature construction.</p>
+<p>OK we have managed to convert a further 2% of the places to locations. Not too shabby! And there are still further places with mostly well defined countries that can be utilized for feature construction.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">imputed_places</span><span class="p">[</span><span class="n">imputed_places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">imputed_places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
-               <span class="o">&amp;</span> <span class="o">~</span><span class="n">imputed_places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">imputed_places</span><span class="p">[</span><span class="n">imputed_places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">imputed_places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">&amp;</span> <span class="o">~</span><span class="n">imputed_places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span>
     <span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">,</span> <span class="s1">&#39;long&#39;</span><span class="p">]]</span>
 </pre></div>
 
@@ -14845,7 +14822,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -15317,14 +15294,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the dataframe, I'd like to persist it for later analysis. So I'll write out the contents to a csv file.</p>
+<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now we have the dataframe, let's persist it for later analysis by writing the contents to a csv file.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">imputed_places</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/places.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
