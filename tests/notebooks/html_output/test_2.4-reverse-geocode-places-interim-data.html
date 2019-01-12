@@ -13115,11 +13115,13 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ipytest</span>
 <span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="n">ipytest</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rewrite_asserts</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 
     </div>
@@ -13129,20 +13131,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PYTEST_OPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--color=yes&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
@@ -13179,12 +13168,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_reverse_geocode*&quot;</span><span class="p">)</span>
-<span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_country_to_alpha2_code*&quot;</span><span class="p">)</span>
-<span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_alpha2_to_codes_names*&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">test_reverse_geocode</span><span class="p">(</span><span class="n">expected_reverse_geocode_places</span><span class="p">):</span>
@@ -13227,10 +13214,10 @@ div#notebook {
     <span class="k">assert</span><span class="p">(</span><span class="n">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
         <span class="n">expected_alpha2_to_codes_names</span><span class="p">))</span>
 
-
-<span class="n">ipytest</span><span class="o">.</span><span class="n">run_pytest</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../../tests/test_2.4-reverse-geocode-places-interim-data.ipynb&#39;</span><span class="p">,</span>
-    <span class="n">pytest_options</span><span class="o">=</span><span class="n">PYTEST_OPTIONS</span><span class="p">)</span>
+<span class="c1"># Not using magics here with the __file__ attribute set as `reverse_geocoder` seems to be saving some</span>
+<span class="c1"># state when it is loaded. Changing the __file__ attribute causes `test_reverse_geocode` above to fail</span>
+<span class="n">ipytest</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--color=yes&#39;</span><span class="p">,</span>
+            <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../../tests/notebooks/test_2.4-reverse-geocode-places-interim-data.ipynb&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13247,37 +13234,24 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>============================================================== test session starts ==============================================================
-platform win32 -- Python 3.6.5, pytest-3.8.2, py-1.7.0, pluggy-0.7.1 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-0xramlz2\scripts\python.exe
+<pre>================================================= test session starts =================================================
+platform win32 -- Python 3.6.5, pytest-4.1.0, py-1.7.0, pluggy-0.8.0 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-_amdi93u\scripts\python.exe
 cachedir: .pytest_cache
-rootdir: C:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
-plugins: mock-1.10.0, cov-2.6.0
+rootdir: D:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
+plugins: mock-1.10.0, cov-2.6.1
 collecting ... collected 7 items
 
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_reverse_geocode &lt;- &lt;ipython-input-31-1552e3cf7087&gt; PASSED                [ 14%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_single_country &lt;- &lt;ipython-input-31-1552e3cf7087&gt; PASSED [ 28%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_multiple_country_sorted &lt;- &lt;ipython-input-31-1552e3cf7087&gt; PASSED [ 42%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_unknown_country &lt;- &lt;ipython-input-31-1552e3cf7087&gt; PASSED [ 57%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_single_gpe &lt;- &lt;ipython-input-31-1552e3cf7087&gt; PASSED [ 71%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_multiple_gpe &lt;- &lt;ipython-input-31-1552e3cf7087&gt; PASSED [ 85%]
-..\..\tests\test_2.4-reverse-geocode-places-interim-data.py::test_alpha2_to_codes_names &lt;- &lt;ipython-input-31-1552e3cf7087&gt; PASSED          [100%]
+..\..\tests\notebooks\test_2.4-reverse-geocode-places-interim-data.py::test_reverse_geocode PASSED               [ 14%]
+..\..\tests\notebooks\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_single_country PASSED [ 28%]
+..\..\tests\notebooks\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_multiple_country_sorted PASSED [ 42%]
+..\..\tests\notebooks\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_unknown_country PASSED [ 57%]
+..\..\tests\notebooks\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_single_gpe PASSED [ 71%]
+..\..\tests\notebooks\test_2.4-reverse-geocode-places-interim-data.py::test_country_to_alpha2_code_multiple_gpe PASSED [ 85%]
+..\..\tests\notebooks\test_2.4-reverse-geocode-places-interim-data.py::test_alpha2_to_codes_names PASSED         [100%]
 
-=========================================================== 7 passed in 1.29 seconds ============================================================
+============================================== 7 passed in 0.87 seconds ===============================================
 </pre>
 </div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[31]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0</pre>
-</div>
-
 </div>
 
 </div>

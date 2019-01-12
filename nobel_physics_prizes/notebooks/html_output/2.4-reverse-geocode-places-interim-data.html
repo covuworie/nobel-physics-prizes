@@ -13116,9 +13116,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Reverse-Geocode-Places-Interim-Data">Reverse Geocode Places Interim Data<a class="anchor-link" href="#Reverse-Geocode-Places-Interim-Data">&#182;</a></h1><p>The <a href="../data/interim/places.csv">places interim dataframe</a> consists of many places with a <em>latitude</em> and a <em>longitude</em> and some with only a <em>country</em> defined. Futhermore, there are some places which are actually nationalities and have none of these defined. My goal here is obtain identifiable <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha 2 country codes</a>, <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO 3166-1 alpha 3 country codes</a> and <em>continent codes</em> for these places which can be used further down the line for feature construction. The process of mapping from a latitude and longitude to a location is known as <a href="https://en.wikipedia.org/wiki/Reverse_geocoding">reverse geocoding</a> and here I used the <em>python</em> library <a href="https://github.com/thampiman/reverse-geocoder">reverse-geocoder</a> to help me with that.</p>
-<p>As mentioned, some places do not have a latitude or longitude, but do have a country defined. For places of this type I will use the python library <a href="https://github.com/TuneLab/pycountry-convert">pycountry-convert</a> to convert between the <em>country name</em> and <em>country codes</em>. This certainly will not work in all instances due to some free form text in the country variable and in such cases I will resort to <a href="https://en.wikipedia.org/wiki/Named-entity_recognition">named entity recognition</a> to extract <a href="https://en.wiktionary.org/wiki/geopolitical_entity">geopolicatal entities</a>. For this task, I will use the excellent natural language processing library <a href="https://spacy.io/usage/linguistic-features#section-named-entities">spacy</a>.</p>
-<p>For places which are nationalities I will <a href="https://t2a.io/blog/normalising-nationalities-via-a-good-iso-3166-country-list/">normalize nationalities via a ISO 3166-1 alpha 2 country codes list</a> to convert from nationalities to country codes.  It is important to note that some of the places do not have a latitude, longitude, country or nationality defined. In such cases, I'll have to get creative. OK enough said, time to go on a mapping frenzy!</p>
+<h1 id="Reverse-Geocode-Places-Interim-Data">Reverse Geocode Places Interim Data<a class="anchor-link" href="#Reverse-Geocode-Places-Interim-Data">&#182;</a></h1><p>The <a href="../data/interim/places.csv">places interim dataframe</a> consists of many <strong>places</strong> with a <strong>latitude</strong> and a <strong>longitude</strong> and some with only a <strong>country</strong> defined. Futhermore, there are some places which are actually nationalities and have none of these defined. Our goal here is obtain identifiable <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha 2 country codes</a>, <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO 3166-1 alpha 3 country codes</a> and <strong>continent codes</strong> for places, which can be used during feature construction. The process of mapping from a latitude and longitude to a location is known as <a href="https://en.wikipedia.org/wiki/Reverse_geocoding">reverse geocoding</a>. We will use the python library <a href="https://github.com/thampiman/reverse-geocoder">reverse-geocoder</a> to help me with this task.</p>
+<p>As mentioned, some places do not have a latitude or longitude, but do have a country defined. For places of this type we will use the python library <a href="https://github.com/TuneLab/pycountry-convert">pycountry-convert</a> to convert between the <strong>country name</strong> and <strong>country codes</strong>. This will fail in some instances due to some free form text in the country variable. In such cases, we will resort to <a href="https://en.wikipedia.org/wiki/Named-entity_recognition">named entity recognition</a>, to extract <a href="https://en.wiktionary.org/wiki/geopolitical_entity">geopolicatal entities</a>. For this task we will use the excellent natural language processing library <a href="https://spacy.io/usage/linguistic-features#section-named-entities">spacy</a>.</p>
+<p>For places which are actually nationalities, we will convert them to country codes by <a href="https://t2a.io/blog/normalising-nationalities-via-a-good-iso-3166-country-list/">normalizing nationalities via an ISO 3166-1 alpha 2 country codes list</a>. It is important to note that some of the places do not have a latitude, longitude, country or nationality defined. In such cases, we will have to get creative! More on that later. OK enough babble for now. Time to go on a mapping frenzy!</p>
 
 </div>
 </div>
@@ -13137,7 +13137,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">locale</span>
@@ -13155,7 +13155,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -13185,7 +13185,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/interim/places.csv&#39;</span><span class="p">)</span>
@@ -13203,7 +13203,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13394,17 +13394,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of places: &#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">places</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with lat / long: &#39;</span><span class="p">,</span>
-      <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with lat / long: &#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 <span class="k">assert</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with country: &#39;</span><span class="p">,</span>
-      <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with neither: &#39;</span><span class="p">,</span> 
-      <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with country: &#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number with neither: &#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13455,7 +13452,7 @@ Number with neither:  249
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">reverse_geocode</span><span class="p">(</span><span class="n">places</span><span class="p">):</span>
@@ -13476,8 +13473,8 @@ Number with neither:  249
     <span class="n">rg_places</span> <span class="o">=</span> <span class="n">places</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     
     <span class="n">coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="p">))</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">coord</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-              <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">coord</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+
     <span class="n">ccs</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;cc&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">rg</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">coords</span><span class="p">)]</span>
     <span class="n">coords_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
         <span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">long</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span><span class="p">]</span>
@@ -13497,7 +13494,7 @@ Number with neither:  249
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">reverse_geocode</span><span class="p">(</span><span class="n">places</span><span class="p">)</span>
@@ -13527,7 +13524,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13732,14 +13729,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>reverse_geocoder</code> seems to be quite accurate, but I do notice one error. Adelaide is not in Japan (JP)! Let's investigate this further.</p>
+<p><code>reverse_geocoder</code> seems to be quite accurate, but we can see that there is one error here. Adelaide is not in Japan (JP)! Let's investigate this further.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rg</span><span class="o">.</span><span class="n">search</span><span class="p">([(</span><span class="mf">34.929001</span><span class="p">,</span> <span class="mf">138.600998</span><span class="p">)])</span>
@@ -13755,7 +13752,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13778,14 +13775,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The above confirms the value in the dataframe above and matches with the <a href="http://www.w3.org/2003/01/geo/wgs84_pos#lat">lat</a> and <a href="http://www.w3.org/2003/01/geo/wgs84_pos#long">long</a> values in the source: <a href="http://dbpedia.org/data/Adelaide.json">http://dbpedia.org/data/Adelaide.json</a>. So what's wrong? A little trial and error reveals that there is an input error in the source. The latitude value is missing a minus sign.</p>
+<p>The above confirms the value in the dataframe above and matches with the <a href="http://www.w3.org/2003/01/geo/wgs84_pos#lat">lat</a> and <a href="http://www.w3.org/2003/01/geo/wgs84_pos#long">long</a> values in the <a href="http://dbpedia.org/data/Adelaide.json">source JSON file</a>. So what's wrong? A little trial and error reveals that there is an input error in the source. The latitude value is missing a minus sign.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">rg</span><span class="o">.</span><span class="n">search</span><span class="p">([(</span><span class="o">-</span><span class="mf">34.929001</span><span class="p">,</span> <span class="mf">138.600998</span><span class="p">)])</span>
@@ -13801,7 +13798,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13824,15 +13821,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>OK nice to know it's not a reverse geocoding error. However, it does further raise some questions as to the accuracy of DBpedia data. A quick scan through the data though does reveal that this type of issue is rare though.</p>
-<p>Time to move on now and check how many places have values for the country but not a country alpha 2 code.</p>
+<p>OK nice to know it's not a reverse geocoding error. However, it does further raise some questions as to the accuracy of DBpedia data. Athough not particularly rigorous, a quick scan through the data reveals that this type of issue is rare. Time to move on now and check how many places have values for the country but not a country alpha 2 code.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -13848,7 +13844,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13874,14 +13870,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Converting-Countries-to-Alpha-2-Country-Codes">Converting Countries to Alpha-2 Country Codes<a class="anchor-link" href="#Converting-Countries-to-Alpha-2-Country-Codes">&#182;</a></h2><p>I'm now going to convert the remaining places with only countries to their associated alpha-2 country codes.</p>
+<h2 id="Converting-Countries-to-Alpha-2-Country-Codes">Converting Countries to Alpha-2 Country Codes<a class="anchor-link" href="#Converting-Countries-to-Alpha-2-Country-Codes">&#182;</a></h2><p>We are now going to convert the remaining places with only countries to their associated alpha-2 country codes.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">country_to_alpha2_code</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
@@ -13930,7 +13926,7 @@ Number with neither:  249
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_countries</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span>
@@ -13950,7 +13946,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14491,7 +14487,7 @@ Number with neither:  249
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
@@ -14507,7 +14503,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -15041,31 +15037,28 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I will now read in the nationality list that will help me in converting these nationalities to their associated alpha-2 country codes. It's important at this point to turn off the default behavior of <em>pandas</em> which is to treat the string literal 'NA' as a missing value. In the dataset, 'NA' is the ISO 3166 alpha-2 country code of Namibia. I then have to impute the missing values since <em>pandas</em> replaces them with the empty string.</p>
+<p>We will now read in the nationality list that will help us to convert these nationalities to their associated alpha-2 country codes. It's important at this point to turn off the default behavior of pandas which is to treat the string literal 'NA' as a missing value. In the dataset, 'NA' is the ISO 3166 alpha-2 country code of Namibia. We then have to remember to impute the missing values since pandas replaces them with the empty string.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
     <span class="c1"># NB: I have manually fixed the csv to have &#39;NA&#39; as the country code</span>
     <span class="c1"># for Namibia. The author of the file clearly did not realize that by</span>
     <span class="c1"># default &#39;NA&#39; in a field is treated as NAN by pandas.</span>
-    <span class="n">nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/external/Countries-List.csv&#39;</span><span class="p">,</span>
-                                <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/external/Countries-List.csv&#39;</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">nationalities</span> <span class="o">=</span> <span class="n">nationalities</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-    <span class="n">nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-        <span class="s1">&#39;https://t2a.io/blog/wp-content/uploads/2014/03/Countries-List.csv&#39;</span><span class="p">,</span>
-        <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">)</span>
+    <span class="n">nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://t2a.io/blog/wp-content/uploads/2014/03/Countries-List.csv&#39;</span><span class="p">,</span>
+                                <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">)</span>
     <span class="n">nationalities</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/external/Countries-List.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="k">assert</span><span class="p">(</span><span class="n">nationalities</span><span class="p">[</span>
-    <span class="n">nationalities</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="s1">&#39;Namibia&#39;</span><span class="p">][</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s1">&#39;NA&#39;</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">nationalities</span><span class="p">[</span><span class="n">nationalities</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="s1">&#39;Namibia&#39;</span><span class="p">][</span><span class="s1">&#39;ISO 3166 Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s1">&#39;NA&#39;</span><span class="p">)</span>
 <span class="n">nationalities</span>
 </pre></div>
 
@@ -15079,7 +15072,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[13]:</div>
 
 
 
@@ -15613,14 +15606,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I'll manually add some commonly used names and demonyms to the dataframe. Despite these being neither countries or nationalities, they either are or were in common use.</p>
+<p>We will now manually add some commonly used names and demonyms to the dataframe. Despite these being neither countries or nationalities, they either are or were in common use.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">other_nationalities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -15654,7 +15647,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[15]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -16188,23 +16181,20 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I'm now going to convert the remaining places which are nationalities to their associated alpha-2 country codes.</p>
+<p>Now let's convert the remaining places which are nationalities to their associated alpha-2 country codes.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_nationalities</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
-    <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_nationalities</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
 <span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_nationalities</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">places_nationalities</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">nationality_to_alpha2_code</span><span class="p">,</span>
-                                        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,)))</span>
-<span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span>
-       <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">notna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
+    <span class="n">places_nationalities</span><span class="o">.</span><span class="n">fullName</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">nationality_to_alpha2_code</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,)))</span>
+<span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">notna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -16217,7 +16207,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -16751,14 +16741,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Please take note that although this is process is very accurate it is not perfect as it can result in a few false positives. For instance, <em>Scottish Church Collegiate School</em> is actually in India and not Scotland and <em>Petit Luxembourg</em> is a hotel in Paris and not in Luxembourg. But since the quantity of true positives far outweigh the false positives I'll go with it. Now I'm left with just the following places without a country code. They are a mix of companies, educational institutions, cities and some plain random stuff.</p>
+<p>Please take note that although this is process is very accurate, it is not perfect, as it can result in a few false positives. For instance, <em>Scottish Church Collegiate School</em> is actually in India and not Scotland and <em>Petit Luxembourg</em> is a hotel in Paris and not in Luxembourg. However, since the quantity of true positives far outweigh the false positives, we will go with it. Now we are left with just the following places without a country code. They are a mix of companies, educational institutions, cities and some plain random stuff.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
@@ -16774,7 +16764,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -17308,18 +17298,17 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Interestingly, examining the <em>categories</em> column of the false positive above gives me the idea of applying the <code>nationality_to_alpha2_code</code> function to it also since the correct information is available there.</p>
+<p>Interestingly, examining the <em>categories</em> column of the false positives above gives us the idea of applying the <code>nationality_to_alpha2_code</code> function to it also, since the correct information is available there.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span>
-    <span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Scottish Church Collegiate School&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Scottish Church Collegiate School&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Petit Luxembourg&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </pre></div>
@@ -17352,14 +17341,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>However, rather than blindly applying the function to all the "nationalities" in the places dataframe which would give many false positives, such as the following:</p>
+<p>However, rather than blindly applying the function to all nationalities in the places dataframe which would give many false positives, such as the following:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Albanians&#39;</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
@@ -17395,23 +17384,19 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I'll be conservative and now apply it to only the categories column of the remaining places without a country code. That is to the mix of companies, educational institutions, cities and some plain random stuff shown in the dataframe above.</p>
+<p>We will be conservative and only apply it to the <em>categories</em> column of the remaining places without a country code. That is to the mix of companies, educational institutions, cities and plain random stuff shown in the dataframe above.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_others</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
-    <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;categories&#39;</span><span class="p">,</span>
-                                      <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
-<span class="n">places_others</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">places_others</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][[</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]]</span>
 <span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_others</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;countryAlpha2Code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">places_others</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">nationality_to_alpha2_code</span><span class="p">,</span>
-                                   <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,)))</span>
+    <span class="n">places_others</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">nationality_to_alpha2_code</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nationalities</span><span class="p">,)))</span>
 <span class="n">places</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">places_others</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="n">place_cols</span><span class="p">]</span>
 </pre></div>
 
@@ -17425,7 +17410,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
@@ -17959,14 +17944,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Again the success rate is so high that it is definitely sufficient to proceed with this. However, as usual there are few false positives. A clear example of this is <em>Cape Canaveral</em> which is of course located in the United States and not India. This is due to the fact that it is situated near the <em>Indian</em> River Lagoon.</p>
+<p>Again the success rate is so high that it is definitely sufficient to proceed with this. However, as usual there are few false positives. A clear example of this is <em>Cape Canaveral</em> which of course is located in the United States and not India. This is due to the fact that it is situated near the <em>Indian</em> River Lagoon.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">fullName</span> <span class="o">==</span> <span class="s1">&#39;Cape Canaveral&#39;</span><span class="p">][</span><span class="n">place_cols</span><span class="p">])</span>
@@ -18054,7 +18039,7 @@ Number with neither:  249
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()][</span><span class="n">place_cols</span><span class="p">]</span>
@@ -18070,7 +18055,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[21]:</div>
 
 
 
@@ -18475,14 +18460,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Very few indeed. In fact many of these are not even "places". I have managed to map nearly all of the places to country codes so it's time to move on.</p>
+<p>Very few indeed. In fact many of these are not even <strong>places</strong>. We have managed to map nearly all of the places to country codes, so it's time to move on.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Percentage of places mapped to country codes:&#39;</span><span class="p">,</span>
@@ -18516,14 +18501,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Mapping-Alpha-2-Country-Codes-to-Other-Codes-and-Names">Mapping Alpha-2 Country Codes to Other Codes and Names<a class="anchor-link" href="#Mapping-Alpha-2-Country-Codes-to-Other-Codes-and-Names">&#182;</a></h2><p>Finally, I can now use <code>pycountry-convert</code> to map from all the alpha-2 country codes to alpha-3 country codes, continent codes, country names and continent names.</p>
+<h2 id="Mapping-Alpha-2-Country-Codes-to-Other-Codes-and-Names">Mapping Alpha-2 Country Codes to Other Codes and Names<a class="anchor-link" href="#Mapping-Alpha-2-Country-Codes-to-Other-Codes-and-Names">&#182;</a></h2><p>Finally, we can now use <code>pycountry-convert</code> to map from all the alpha-2 country codes to alpha-3 country codes, continent codes, country names and continent names.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">):</span>
@@ -18589,14 +18574,12 @@ Number with neither:  249
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">alpha2_to_codes_names</span><span class="p">(</span><span class="n">places</span><span class="p">)</span>
-<span class="k">assert</span><span class="p">((</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> 
-        <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">place_cols</span> <span class="o">=</span> <span class="n">place_cols</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;countryAlpha3Code&#39;</span><span class="p">,</span> <span class="s1">&#39;countryName&#39;</span><span class="p">,</span>
-                           <span class="s1">&#39;continentCode&#39;</span><span class="p">,</span> <span class="s1">&#39;continentName&#39;</span><span class="p">]</span>
+<span class="k">assert</span><span class="p">((</span><span class="n">places</span><span class="o">.</span><span class="n">countryAlpha2Code</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">places</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">place_cols</span> <span class="o">=</span> <span class="n">place_cols</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;countryAlpha3Code&#39;</span><span class="p">,</span> <span class="s1">&#39;countryName&#39;</span><span class="p">,</span> <span class="s1">&#39;continentCode&#39;</span><span class="p">,</span> <span class="s1">&#39;continentName&#39;</span><span class="p">]</span>
 <span class="n">places</span><span class="p">[</span><span class="n">place_cols</span><span class="p">]</span>
 </pre></div>
 
@@ -18610,7 +18593,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[24]:</div>
 
 
 
@@ -19392,14 +19375,14 @@ Number with neither:  249
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the places and nationalities dataframes, I'll persist them for future use in feature construction.</p>
+<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now we have the places and nationalities dataframes, we will persist them for future use in feature construction.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="n">places</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">places</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
@@ -19416,7 +19399,7 @@ Number with neither:  249
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[26]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -19957,7 +19940,7 @@ Number with neither:  249
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">places</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/processed/places.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
