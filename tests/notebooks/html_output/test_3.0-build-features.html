@@ -13119,9 +13119,14 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ipytest</span>
+<span class="kn">import</span> <span class="nn">ipytest.magics</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="n">ipytest</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rewrite_asserts</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="vm">__file__</span> <span class="o">=</span> <span class="s1">&#39;../../tests/notebooks/test_3.0-build-features.ipynb&#39;</span>
 </pre></div>
 
     </div>
@@ -13132,19 +13137,6 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[41]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PYTEST_OPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--color=yes&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
@@ -13391,391 +13383,382 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_build_features*&quot;</span><span class="p">)</span>
-<span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_binarize_list_features*&quot;</span><span class="p">)</span>
-<span class="n">ipytest</span><span class="o">.</span><span class="n">clean_tests</span><span class="p">(</span><span class="s2">&quot;test_get_alma_mater_or_workplaces*&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">run_pytest</span>[clean] -v --color=yes
 
-
-<span class="k">def</span> <span class="nf">test_build_features_full_name</span><span class="p">():</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> 
-                              <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">full_name</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">fullName</span><span class="p">))</span>
+def test_build_features_full_name():
+    features = build_features(train_physicists, nobel_physicists, 
+                              nobel_chemists, places, nationalities)
+    assert(features.full_name.equals(train_physicists.fullName))
 
     
-<span class="k">def</span> <span class="nf">test_build_features_gender</span><span class="p">():</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> 
-                              <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">gender</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">train_physicists</span><span class="o">.</span><span class="n">gender</span><span class="p">))</span>    
+def test_build_features_gender():
+    features = build_features(train_physicists, nobel_physicists, 
+                              nobel_chemists, places, nationalities)
+    assert(features.gender.equals(train_physicists.gender))    
 
 
-<span class="k">def</span> <span class="nf">test_build_features_years_lived_dead</span><span class="p">(</span><span class="n">expected_num_years_lived_dead_group</span><span class="p">):</span>
-    <span class="n">birth_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1908-11-12&#39;</span><span class="p">)</span>
-    <span class="n">death_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1996-1-19&#39;</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_years_lived_group</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_num_years_lived_dead_group</span><span class="p">))</span>
+def test_build_features_years_lived_dead(expected_num_years_lived_dead_group):
+    birth_date = pd.Series(&#39;1908-11-12&#39;)
+    death_date = pd.Series(&#39;1996-1-19&#39;)
+    assert(_build_num_years_lived_group(birth_date, death_date).equals(
+        expected_num_years_lived_dead_group))
     
     
-<span class="k">def</span> <span class="nf">test_build_features_years_lived_alive</span><span class="p">(</span><span class="n">expected_num_years_lived_alive_group</span><span class="p">):</span>
-    <span class="n">birth_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1963-05-07&#39;</span><span class="p">)</span>
-    <span class="n">death_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_years_lived_group</span><span class="p">(</span><span class="n">birth_date</span><span class="p">,</span> <span class="n">death_date</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_num_years_lived_alive_group</span><span class="p">))</span>
+def test_build_features_years_lived_alive(expected_num_years_lived_alive_group):
+    birth_date = pd.Series(&#39;1963-05-07&#39;)
+    death_date = pd.Series(np.nan)
+    assert(_build_num_years_lived_group(birth_date, death_date).equals(
+        expected_num_years_lived_alive_group))
     
 
-<span class="k">def</span> <span class="nf">test_build_features_physics_subfield_categories</span><span class="p">(</span>
-    <span class="n">expected_is_theoretical_physicist_categories</span><span class="p">):</span>
-    <span class="n">categories</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Nuclear Physicist|Theoretical physicists&#39;</span><span class="p">,</span>
-                            <span class="s1">&#39;1932 deaths|American physicists&#39;</span><span class="p">])</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
-        <span class="n">categories</span><span class="p">,</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">),</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">),</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">),</span>
-        <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_is_theoretical_physicist_categories</span><span class="p">))</span>
+def test_build_features_physics_subfield_categories(
+    expected_is_theoretical_physicist_categories):
+    categories = pd.Series([&#39;Nuclear Physicist|Theoretical physicists&#39;,
+                            &#39;1932 deaths|American physicists&#39;])
+    assert(_build_physics_subfield(
+        categories,
+        pd.Series(dtype=str),
+        pd.Series(dtype=str),
+        pd.Series(dtype=str),
+        {&#39;categories&#39;: &#39;Theoretical physicists&#39;,
+         &#39;others&#39;: &#39;theoretical physic&#39;}).equals(
+        expected_is_theoretical_physicist_categories))
     
     
-<span class="k">def</span> <span class="nf">test_build_features_physics_subfield_field</span><span class="p">(</span>
-    <span class="n">expected_is_theoretical_physicist_field</span><span class="p">):</span>
-    <span class="n">field</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;physics|Theoretical physics&#39;</span><span class="p">,</span>
-                       <span class="s1">&#39;Philosophy|Mathematics|Quantum field theory&#39;</span><span class="p">,</span>
-                       <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">field</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
-        <span class="n">field</span><span class="p">,</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">field</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
-        <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Theoretical physicists&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;theoretical physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_is_theoretical_physicist_field</span><span class="p">))</span>
+def test_build_features_physics_subfield_field(
+    expected_is_theoretical_physicist_field):
+    field = pd.Series([&#39;physics|Theoretical physics&#39;,
+                       &#39;Philosophy|Mathematics|Quantum field theory&#39;,
+                       np.nan])
+    assert(_build_physics_subfield(
+        pd.Series(dtype=str, index=field.index),
+        field,
+        pd.Series(np.full(len(field), np.nan)),
+        pd.Series(np.full(len(field), np.nan)),
+        {&#39;categories&#39;: &#39;Theoretical physicists&#39;,
+         &#39;others&#39;: &#39;theoretical physic&#39;}).equals(
+        expected_is_theoretical_physicist_field))
                      
 
-<span class="k">def</span> <span class="nf">test_build_features_physics_subfield_description</span><span class="p">(</span>
-    <span class="n">expected_is_experimental_physicist_description</span><span class="p">):</span>
-    <span class="n">description</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Marie Curie was chair of experimental physics&#39;</span><span class="p">,</span>
-                             <span class="s1">&#39;Lise Meitner was a nuclear physicist&#39;</span><span class="p">,</span>
-                             <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">description</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">description</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
-        <span class="n">description</span><span class="p">,</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">description</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
-        <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;Experimental physicists&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;experimental physic&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_is_experimental_physicist_description</span><span class="p">))</span>
+def test_build_features_physics_subfield_description(
+    expected_is_experimental_physicist_description):
+    description = pd.Series([&#39;Marie Curie was chair of experimental physics&#39;,
+                             &#39;Lise Meitner was a nuclear physicist&#39;,
+                             np.nan])
+    assert(_build_physics_subfield(
+        pd.Series(dtype=str, index=description.index),
+        pd.Series(np.full(len(description), np.nan)),
+        description,
+        pd.Series(np.full(len(description), np.nan)),
+        {&#39;categories&#39;: &#39;Experimental physicists&#39;,
+         &#39;others&#39;: &#39;experimental physic&#39;}).equals(
+        expected_is_experimental_physicist_description))
     
 
-<span class="k">def</span> <span class="nf">test_build_features_physics_subfield_comment</span><span class="p">(</span>
-    <span class="n">expected_is_astronomer_comment</span><span class="p">):</span>
-    <span class="n">comment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Antony Hewish was an astronomer&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;Jocelyn Bell Burnell is an Astrophysicist&#39;</span><span class="p">,</span>
-                         <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_physics_subfield</span><span class="p">(</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">comment</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">comment</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
-        <span class="n">comment</span><span class="p">,</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">comment</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
-        <span class="p">{</span><span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="s1">&#39;astronomers&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;others&#39;</span><span class="p">:</span> <span class="s1">&#39;astronom&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_is_astronomer_comment</span><span class="p">))</span>
+def test_build_features_physics_subfield_comment(
+    expected_is_astronomer_comment):
+    comment = pd.Series([&#39;Antony Hewish was an astronomer&#39;,
+                         &#39;Jocelyn Bell Burnell is an Astrophysicist&#39;,
+                         np.nan])
+    assert(_build_physics_subfield(
+        pd.Series(dtype=str, index=comment.index),
+        pd.Series(np.full(len(comment), np.nan)),
+        comment,
+        pd.Series(np.full(len(comment), np.nan)),
+        {&#39;categories&#39;: &#39;astronomers&#39;,
+         &#39;others&#39;: &#39;astronom&#39;}).equals(
+        expected_is_astronomer_comment))
     
     
-<span class="k">def</span> <span class="nf">test_build_features_num_laureates</span><span class="p">(</span><span class="n">expected_num_laureates</span><span class="p">):</span>
-    <span class="n">academic_advisors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;J. J. Thomson|William Henry Bragg&#39;</span><span class="p">,</span>
-                                   <span class="s1">&#39;Joe Bloggs&#39;</span><span class="p">,</span>
-                                   <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_laureates</span><span class="p">(</span>
-        <span class="n">academic_advisors</span><span class="p">,</span>
-        <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>
-        <span class="n">nobel_physicists</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_num_laureates</span><span class="p">))</span>
-    
-
-<span class="k">def</span> <span class="nf">test_build_features_num_laureates_name</span><span class="p">(</span><span class="n">expected_num_laureates_name</span><span class="p">):</span>
-    <span class="n">spouses</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Marie Skłodowska-Curie&#39;</span><span class="p">,</span>
-                         <span class="s1">&#39;Pierre Curie&#39;</span><span class="p">])</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_num_laureates</span><span class="p">(</span>
-        <span class="n">spouses</span><span class="p">,</span>
-        <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">Laureate</span><span class="p">,</span>
-        <span class="n">nobel_chemists</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span>
-        <span class="n">expected_num_laureates_name</span><span class="p">))</span> 
-
-    
-<span class="k">def</span> <span class="nf">test_build_features_places_codes</span><span class="p">(</span><span class="n">expected_places_codes</span><span class="p">):</span>
-    <span class="n">birth_places</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span>
-        <span class="s1">&#39;Copenhagen&#39;</span><span class="p">,</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
-        <span class="s1">&#39;Jhang|Presidencies and provinces of British India|Punjab Province (British India)&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Elisabethpol Governorate|Ganja, Azerbaijan|Russian Empire|Tbilisi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;California Institute of Technology|Institute for Advanced Study|&#39;</span>
-        <span class="s1">&#39;Kharkiv Polytechnic Institute|Leipzig University|&#39;</span>
-        <span class="s1">&#39;Los Angeles Bureau of Power and Light|University of Cincinnati|Xavier University&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;No possible chance of being found in places dataframe&#39;</span>
-    <span class="p">])</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">_build_places_codes</span><span class="p">(</span>
-        <span class="n">birth_places</span><span class="p">,</span>
-        <span class="n">places</span><span class="o">.</span><span class="n">fullName</span><span class="p">,</span>
-        <span class="n">places</span><span class="o">.</span><span class="n">countryAlpha3Code</span><span class="p">)</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_places_codes</span><span class="p">))</span>
-    
-    
-<span class="k">def</span> <span class="nf">test_get_alma_mater_or_workplaces_endswith_comma_oxford</span><span class="p">():</span>
-    <span class="n">places_in_cell</span> <span class="o">=</span> <span class="s1">&#39;Harvard University|Pembroke College, Oxford&#39;</span>
-    <span class="n">places</span> <span class="o">=</span> <span class="n">_get_alma_mater_or_workplaces</span><span class="p">(</span><span class="n">places_in_cell</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">places</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;Harvard University&#39;</span><span class="p">,</span> <span class="s1">&#39;University of Oxford&#39;</span><span class="p">])</span>
-    
-    
-<span class="k">def</span> <span class="nf">test_get_alma_mater_or_workplaces_ends_with_comma_oxford</span><span class="p">():</span>
-    <span class="n">places_in_cell</span> <span class="o">=</span> <span class="s1">&#39;Pembroke College, Cambridge|University of Bristol&#39;</span>
-    <span class="n">places</span> <span class="o">=</span> <span class="n">_get_alma_mater_or_workplaces</span><span class="p">(</span><span class="n">places_in_cell</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">places</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;University of Bristol&#39;</span><span class="p">,</span> <span class="s1">&#39;University of Cambridge&#39;</span><span class="p">])</span>
+def test_build_features_num_laureates(expected_num_laureates):
+    academic_advisors = pd.Series([&#39;J. J. Thomson|William Henry Bragg&#39;,
+                                   &#39;Joe Bloggs&#39;,
+                                   np.nan])
+    assert(_build_num_laureates(
+        academic_advisors,
+        nobel_physicists.Laureate,
+        nobel_physicists.name).equals(
+        expected_num_laureates))
     
 
-<span class="k">def</span> <span class="nf">test_get_alma_mater_or_workplaces_duplicate</span><span class="p">():</span>
-    <span class="n">places_in_cell</span> <span class="o">=</span> <span class="s1">&#39;Pembroke College, Cambridge|University of Cambridge&#39;</span>
-    <span class="n">places</span> <span class="o">=</span> <span class="n">_get_alma_mater_or_workplaces</span><span class="p">(</span><span class="n">places_in_cell</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">places</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;University of Cambridge&#39;</span><span class="p">])</span>
+def test_build_features_num_laureates_name(expected_num_laureates_name):
+    spouses = pd.Series([&#39;Marie Skłodowska-Curie&#39;,
+                         &#39;Pierre Curie&#39;])
+    assert(_build_num_laureates(
+        spouses,
+        nobel_chemists.Laureate,
+        nobel_chemists.name).equals(
+        expected_num_laureates_name)) 
 
-
-<span class="k">def</span> <span class="nf">test_get_alma_mater_or_workplaces_no_oxford_cambridge</span><span class="p">():</span>
-    <span class="n">places_in_cell</span> <span class="o">=</span> <span class="s1">&#39;University of Dublin&#39;</span>
-    <span class="n">places</span> <span class="o">=</span> <span class="n">_get_alma_mater_or_workplaces</span><span class="p">(</span><span class="n">places_in_cell</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">places</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;University of Dublin&#39;</span><span class="p">])</span>
-
-
-<span class="k">def</span> <span class="nf">test_get_alma_mater_or_workplaces_float</span><span class="p">():</span>
-    <span class="n">places_in_cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-    <span class="n">places</span> <span class="o">=</span> <span class="n">_get_alma_mater_or_workplaces</span><span class="p">(</span><span class="n">places_in_cell</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">places</span> <span class="o">==</span> <span class="nb">list</span><span class="p">())</span>
+    
+def test_build_features_places_codes(expected_places_codes):
+    birth_places = pd.Series([
+        &#39;Copenhagen&#39;,
+        np.nan,
+        &#39;Jhang|Presidencies and provinces of British India|Punjab Province (British India)&#39;,
+        &#39;Elisabethpol Governorate|Ganja, Azerbaijan|Russian Empire|Tbilisi&#39;,
+        &#39;California Institute of Technology|Institute for Advanced Study|&#39;
+        &#39;Kharkiv Polytechnic Institute|Leipzig University|&#39;
+        &#39;Los Angeles Bureau of Power and Light|University of Cincinnati|Xavier University&#39;,
+        &#39;No possible chance of being found in places dataframe&#39;
+    ])
+    assert(_build_places_codes(
+        birth_places,
+        places.fullName,
+        places.countryAlpha3Code).equals(expected_places_codes))
+    
+    
+def test_get_alma_mater_or_workplaces_endswith_comma_oxford():
+    places_in_cell = &#39;Harvard University|Pembroke College, Oxford&#39;
+    places = _get_alma_mater_or_workplaces(places_in_cell)
+    assert(places == [&#39;Harvard University&#39;, &#39;University of Oxford&#39;])
+    
+    
+def test_get_alma_mater_or_workplaces_ends_with_comma_oxford():
+    places_in_cell = &#39;Pembroke College, Cambridge|University of Bristol&#39;
+    places = _get_alma_mater_or_workplaces(places_in_cell)
+    assert(places == [&#39;University of Bristol&#39;, &#39;University of Cambridge&#39;])
     
 
-<span class="k">def</span> <span class="nf">test_build_features_citizenship_citizenship</span><span class="p">(</span>
-    <span class="n">expected_citizenship_codes_citizenship</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+def test_get_alma_mater_or_workplaces_duplicate():
+    places_in_cell = &#39;Pembroke College, Cambridge|University of Cambridge&#39;
+    places = _get_alma_mater_or_workplaces(places_in_cell)
+    assert(places == [&#39;University of Cambridge&#39;])
+
+
+def test_get_alma_mater_or_workplaces_no_oxford_cambridge():
+    places_in_cell = &#39;University of Dublin&#39;
+    places = _get_alma_mater_or_workplaces(places_in_cell)
+    assert(places == [&#39;University of Dublin&#39;])
+
+
+def test_get_alma_mater_or_workplaces_float():
+    places_in_cell = np.nan
+    places = _get_alma_mater_or_workplaces(places_in_cell)
+    assert(places == list())
     
-    <span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="s1">&#39;American&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;British nationality law|Citizenship of United States|Nazi Germany&#39;</span><span class="p">,</span>
-         <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
-         <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]</span>
-    <span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;citizenship&#39;</span><span class="p">,</span> <span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">])</span>
+
+def test_build_features_citizenship_citizenship(
+    expected_citizenship_codes_citizenship):
+    features = pd.DataFrame()
+    
+    physicists = pd.DataFrame([
+        [&#39;American&#39;, np.nan, np.nan],
+        [&#39;United States&#39;, np.nan, np.nan],
+        [&#39;British nationality law|Citizenship of United States|Nazi Germany&#39;,
+         np.nan,
+         np.nan]
+    ], columns=[&#39;citizenship&#39;, &#39;nationality&#39;, &#39;description&#39;])
         
-    <span class="n">_build_citizenship_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_citizenship_codes_citizenship</span><span class="p">))</span>
+    _build_citizenship_features(features, physicists, nationalities)
+    assert(features.equals(expected_citizenship_codes_citizenship))
     
 
-<span class="k">def</span> <span class="nf">test_build_features_citizenship_nationality</span><span class="p">(</span>
-    <span class="n">expected_citizenship_codes_nationality</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+def test_build_features_citizenship_nationality(
+    expected_citizenship_codes_nationality):
+    features = pd.DataFrame()
     
-    <span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Indian people&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
-        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Soviet Union&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
-        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
-         <span class="s1">&#39;Iranian Americans|No chance in hell&#39;</span><span class="p">,</span>
-         <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]</span>
-    <span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;citizenship&#39;</span><span class="p">,</span> <span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">])</span>
+    physicists = pd.DataFrame([
+        [np.nan, &#39;Indian people&#39;, np.nan],
+        [np.nan, &#39;Soviet Union&#39;, np.nan],
+        [np.nan,
+         &#39;Iranian Americans|No chance in hell&#39;,
+         np.nan]
+    ], columns=[&#39;citizenship&#39;, &#39;nationality&#39;, &#39;description&#39;])
         
-    <span class="n">_build_citizenship_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_citizenship_codes_nationality</span><span class="p">))</span>
+    _build_citizenship_features(features, physicists, nationalities)
+    assert(features.equals(expected_citizenship_codes_nationality))
     
     
-<span class="k">def</span> <span class="nf">test_build_features_citizenship_description</span><span class="p">(</span>
-    <span class="n">expected_citizenship_codes_description</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+def test_build_features_citizenship_description(
+    expected_citizenship_codes_description):
+    features = pd.DataFrame()
     
-    <span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Scottish physicist&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;British physicist and discovered the atom.&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
-         <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
-         <span class="s1">&#39;German-American physicist and founder of relativity theory.&#39;</span><span class="p">]</span>
-    <span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;citizenship&#39;</span><span class="p">,</span> <span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">])</span>
+    physicists = pd.DataFrame([
+        [np.nan, np.nan, &#39;Scottish physicist&#39;],
+        [np.nan, np.nan, &#39;British physicist and discovered the atom.&#39;],
+        [np.nan,
+         np.nan,
+         &#39;German-American physicist and founder of relativity theory.&#39;]
+    ], columns=[&#39;citizenship&#39;, &#39;nationality&#39;, &#39;description&#39;])
         
-    <span class="n">_build_citizenship_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_citizenship_codes_description</span><span class="p">))</span>
+    _build_citizenship_features(features, physicists, nationalities)
+    assert(features.equals(expected_citizenship_codes_description))
     
     
-<span class="k">def</span> <span class="nf">test_build_features_citizenship_multiple</span><span class="p">(</span>
-    <span class="n">expected_citizenship_codes_multiple</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+def test_build_features_citizenship_multiple(
+    expected_citizenship_codes_multiple):
+    features = pd.DataFrame()
     
-    <span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Australian-British theoretical physicist&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;British&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;French born mathematician&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Soviet Union&#39;</span><span class="p">,</span> <span class="s1">&#39;Soviet-Ukrainian optical physicist&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;Colombian&#39;</span><span class="p">,</span> <span class="s1">&#39;Colombian-Spanish&#39;</span><span class="p">,</span> <span class="s1">&#39;Colombian born physicist living in &#39;</span>
-         <span class="s1">&#39;the United States of America&#39;</span><span class="p">],</span>
+    physicists = pd.DataFrame([
+        [&#39;Australia&#39;, &#39;Australian-British theoretical physicist&#39;, np.nan],
+        [&#39;British&#39;, np.nan, &#39;French born mathematician&#39;],
+        [np.nan, &#39;Soviet Union&#39;, &#39;Soviet-Ukrainian optical physicist&#39;],
+        [&#39;Colombian&#39;, &#39;Colombian-Spanish&#39;, &#39;Colombian born physicist living in &#39;
+         &#39;the United States of America&#39;],
         
-    <span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;citizenship&#39;</span><span class="p">,</span> <span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">])</span>
+    ], columns=[&#39;citizenship&#39;, &#39;nationality&#39;, &#39;description&#39;])
         
-    <span class="n">_build_citizenship_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_citizenship_codes_multiple</span><span class="p">))</span>
+    _build_citizenship_features(features, physicists, nationalities)
+    assert(features.equals(expected_citizenship_codes_multiple))
     
     
-<span class="k">def</span> <span class="nf">test_build_features_citizenship_not_found</span><span class="p">(</span>
-    <span class="n">expected_citizenship_codes_not_found</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+def test_build_features_citizenship_not_found(
+    expected_citizenship_codes_not_found):
+    features = pd.DataFrame()
     
-    <span class="n">physicists</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
-        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Wakanda&#39;</span><span class="p">,</span> <span class="s1">&#39;physicist&#39;</span><span class="p">],</span>
-    <span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;citizenship&#39;</span><span class="p">,</span> <span class="s1">&#39;nationality&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">])</span>
+    physicists = pd.DataFrame([
+        [np.nan, &#39;Wakanda&#39;, &#39;physicist&#39;],
+    ], columns=[&#39;citizenship&#39;, &#39;nationality&#39;, &#39;description&#39;])
         
-    <span class="n">_build_citizenship_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">physicists</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_citizenship_codes_not_found</span><span class="p">))</span>
+    _build_citizenship_features(features, physicists, nationalities)
+    assert(features.equals(expected_citizenship_codes_not_found))
     
     
-<span class="k">def</span> <span class="nf">test_binarize_list_features_train_no_threshold</span><span class="p">(</span>
-    <span class="n">expected_binary_features_train</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">[[</span><span class="s1">&#39;GBR&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Stanford University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;NZL&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AU&#39;</span><span class="p">,</span> <span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">]],</span>
-            <span class="p">[[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span>
-             <span class="p">[</span><span class="s1">&#39;RIKEN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">]],</span>
-        <span class="p">],</span>
-        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater&#39;</span><span class="p">,</span> <span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship_continent_codes&#39;</span>
-        <span class="p">])</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+def test_binarize_list_features_train_no_threshold(
+    expected_binary_features_train):
+    features = pd.DataFrame(
+        [
+            [[&#39;GBR&#39;], [&#39;EU&#39;], [&#39;GBR&#39;, &#39;USA&#39;], [&#39;EU&#39;, &#39;NA&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;], [&#39;USA&#39;], [&#39;NA&#39;],
+             [&#39;Columbia University&#39;, &#39;Stanford University&#39;], [&#39;USA&#39;], [&#39;NA&#39;],
+             [&#39;GBR&#39;, &#39;NZL&#39;, &#39;USA&#39;], [&#39;AU&#39;, &#39;EU&#39;, &#39;NA&#39;]],
+            [[&#39;JPN&#39;], [&#39;AS&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;], [], [],
+             [&#39;RIKEN&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;JPN&#39;], [&#39;AS&#39;]],
+        ],
+        columns = [
+            &#39;birth_country_alpha_3_codes&#39;, &#39;birth_continent_codes&#39;,
+            &#39;residence_country_alpha_3_codes&#39;, &#39;residence_continent_codes&#39;,
+            &#39;alma_mater&#39;, &#39;alma_mater_country_alpha_3_codes&#39;,
+            &#39;alma_mater_continent_codes&#39;, &#39;workplaces&#39;,
+            &#39;workplaces_country_alpha_3_codes&#39;, &#39;workplaces_continent_codes&#39;,
+            &#39;citizenship_country_alpha_3_codes&#39;, &#39;citizenship_continent_codes&#39;
+        ])
+    features.index = [1, 2]
     
-    <span class="n">binarize</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">binarize</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_binary_features_train</span><span class="p">))</span>
+    binarize = binarize_list_features(features, presence_threshold=0.0)
+    assert(binarize.equals(expected_binary_features_train))
 
     
-<span class="k">def</span> <span class="nf">test_binarize_list_features_train_threshold</span><span class="p">(</span>
-    <span class="n">expected_binary_features_train_threshold</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">[[</span><span class="s1">&#39;GBR&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Stanford University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;NZL&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AU&#39;</span><span class="p">,</span> <span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">]],</span>
-            <span class="p">[[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span>
-             <span class="p">[</span><span class="s1">&#39;RIKEN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">]],</span>
-        <span class="p">],</span>
-        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater&#39;</span><span class="p">,</span> <span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship_continent_codes&#39;</span>
-        <span class="p">])</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+def test_binarize_list_features_train_threshold(
+    expected_binary_features_train_threshold):
+    features = pd.DataFrame(
+        [
+            [[&#39;GBR&#39;], [&#39;EU&#39;], [&#39;GBR&#39;, &#39;USA&#39;], [&#39;EU&#39;, &#39;NA&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;], [&#39;USA&#39;], [&#39;NA&#39;],
+             [&#39;Columbia University&#39;, &#39;Stanford University&#39;], [&#39;USA&#39;], [&#39;NA&#39;],
+             [&#39;GBR&#39;, &#39;NZL&#39;, &#39;USA&#39;], [&#39;AU&#39;, &#39;EU&#39;, &#39;NA&#39;]],
+            [[&#39;JPN&#39;], [&#39;AS&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;], [], [],
+             [&#39;RIKEN&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;JPN&#39;], [&#39;AS&#39;]],
+        ],
+        columns = [
+            &#39;birth_country_alpha_3_codes&#39;, &#39;birth_continent_codes&#39;,
+            &#39;residence_country_alpha_3_codes&#39;, &#39;residence_continent_codes&#39;,
+            &#39;alma_mater&#39;, &#39;alma_mater_country_alpha_3_codes&#39;,
+            &#39;alma_mater_continent_codes&#39;, &#39;workplaces&#39;,
+            &#39;workplaces_country_alpha_3_codes&#39;, &#39;workplaces_continent_codes&#39;,
+            &#39;citizenship_country_alpha_3_codes&#39;, &#39;citizenship_continent_codes&#39;
+        ])
+    features.index = [1, 2]
     
-    <span class="n">binarize</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">binarize</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_binary_features_train_threshold</span><span class="p">))</span>    
+    binarize = binarize_list_features(features, presence_threshold=1.0)
+    assert(binarize.equals(expected_binary_features_train_threshold))    
     
     
-<span class="k">def</span> <span class="nf">test_binarize_list_features_test</span><span class="p">(</span>
-    <span class="n">expected_binary_features_test</span><span class="p">,</span> <span class="n">expected_binary_features_train</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">[[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;XXX&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">,</span> <span class="s1">&#39;XXX University&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Stanford University&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;NZL&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AU&#39;</span><span class="p">,</span> <span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">]],</span>
-            <span class="p">[[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">,</span> <span class="s1">&#39;YYY University&#39;</span><span class="p">],</span>
-             <span class="p">[],</span> <span class="p">[],</span> <span class="p">[</span><span class="s1">&#39;RIKEN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">,</span> <span class="s1">&#39;XX&#39;</span><span class="p">]],</span>
-        <span class="p">],</span>
-        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater&#39;</span><span class="p">,</span> <span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship_continent_codes&#39;</span>
-        <span class="p">])</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+def test_binarize_list_features_test(
+    expected_binary_features_test, expected_binary_features_train):
+    features = pd.DataFrame(
+        [
+            [[&#39;GBR&#39;, &#39;XXX&#39;], [&#39;EU&#39;], [&#39;GBR&#39;, &#39;USA&#39;], [&#39;EU&#39;, &#39;NA&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;, &#39;XXX University&#39;],
+             [&#39;USA&#39;], [&#39;NA&#39;], [&#39;Columbia University&#39;, &#39;Stanford University&#39;],
+             [&#39;USA&#39;], [&#39;NA&#39;], [&#39;GBR&#39;, &#39;NZL&#39;, &#39;USA&#39;], [&#39;AU&#39;, &#39;EU&#39;, &#39;NA&#39;]],
+            [[&#39;JPN&#39;], [&#39;AS&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;, &#39;YYY University&#39;],
+             [], [], [&#39;RIKEN&#39;], [&#39;JPN&#39;], [&#39;AS&#39;], [&#39;JPN&#39;], [&#39;AS&#39;, &#39;XX&#39;]],
+        ],
+        columns = [
+            &#39;birth_country_alpha_3_codes&#39;, &#39;birth_continent_codes&#39;,
+            &#39;residence_country_alpha_3_codes&#39;, &#39;residence_continent_codes&#39;,
+            &#39;alma_mater&#39;, &#39;alma_mater_country_alpha_3_codes&#39;,
+            &#39;alma_mater_continent_codes&#39;, &#39;workplaces&#39;,
+            &#39;workplaces_country_alpha_3_codes&#39;, &#39;workplaces_continent_codes&#39;,
+            &#39;citizenship_country_alpha_3_codes&#39;, &#39;citizenship_continent_codes&#39;
+        ])
+    features.index = [1, 2]
     
-    <span class="n">binarize</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span>
-        <span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">expected_binary_features_train</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">binarize</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_binary_features_test</span><span class="p">))</span>
+    binarize = binarize_list_features(
+        features, train_features=expected_binary_features_train)
+    assert(binarize.equals(expected_binary_features_test))
     
-    <span class="n">binarize_ignore_threshold</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span>
-        <span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">expected_binary_features_train</span><span class="p">,</span>
-        <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">binarize_ignore_threshold</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">binarize</span><span class="p">))</span>
+    binarize_ignore_threshold = binarize_list_features(
+        features, train_features=expected_binary_features_train,
+        presence_threshold=0.6)
+    assert(binarize_ignore_threshold.equals(binarize))
 
     
-<span class="k">def</span> <span class="nf">test_binarize_list_features_pad_features</span><span class="p">(</span>
-    <span class="n">expected_binary_features_train</span><span class="p">,</span>
-    <span class="n">expected_binary_features_test_less_categories_than_train</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">[[],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">],</span>  <span class="c1"># GBR removed as birth country</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Stanford University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;NZL&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AU&#39;</span><span class="p">,</span> <span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">]],</span>
-            <span class="p">[[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span>
-             <span class="p">[</span><span class="s1">&#39;RIKEN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">]],</span>
-        <span class="p">],</span>
-        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater&#39;</span><span class="p">,</span> <span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship_continent_codes&#39;</span>
-        <span class="p">])</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+def test_binarize_list_features_pad_features(
+    expected_binary_features_train,
+    expected_binary_features_test_less_categories_than_train):
+    features = pd.DataFrame(
+        [
+            [[], [&#39;EU&#39;], [&#39;GBR&#39;, &#39;USA&#39;], [&#39;EU&#39;, &#39;NA&#39;],  # GBR removed as birth country
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;], [&#39;USA&#39;], [&#39;NA&#39;],
+             [&#39;Columbia University&#39;, &#39;Stanford University&#39;], [&#39;USA&#39;], [&#39;NA&#39;],
+             [&#39;GBR&#39;, &#39;NZL&#39;, &#39;USA&#39;], [&#39;AU&#39;, &#39;EU&#39;, &#39;NA&#39;]],
+            [[&#39;JPN&#39;], [&#39;AS&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;], [], [],
+             [&#39;RIKEN&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;JPN&#39;], [&#39;AS&#39;]],
+        ],
+        columns = [
+            &#39;birth_country_alpha_3_codes&#39;, &#39;birth_continent_codes&#39;,
+            &#39;residence_country_alpha_3_codes&#39;, &#39;residence_continent_codes&#39;,
+            &#39;alma_mater&#39;, &#39;alma_mater_country_alpha_3_codes&#39;,
+            &#39;alma_mater_continent_codes&#39;, &#39;workplaces&#39;,
+            &#39;workplaces_country_alpha_3_codes&#39;, &#39;workplaces_continent_codes&#39;,
+            &#39;citizenship_country_alpha_3_codes&#39;, &#39;citizenship_continent_codes&#39;
+        ])
+    features.index = [1, 2]
     
-    <span class="n">binarize</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span>
-        <span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">expected_binary_features_train</span><span class="p">,</span> <span class="n">pad_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">binarize</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_binary_features_test_less_categories_than_train</span><span class="p">))</span>    
+    binarize = binarize_list_features(
+        features, train_features=expected_binary_features_train, pad_features=True)
+    assert(binarize.equals(expected_binary_features_test_less_categories_than_train))    
 
     
-<span class="k">def</span> <span class="nf">test_binarize_list_features_train_test_cols_equal</span><span class="p">(</span>
-    <span class="n">expected_binary_features_train</span><span class="p">):</span>
-    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">[[</span><span class="s1">&#39;GBR&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Stanford University&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;NA&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;NZL&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AU&#39;</span><span class="p">,</span> <span class="s1">&#39;EU&#39;</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">]],</span>
-            <span class="p">[[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;Columbia University&#39;</span><span class="p">,</span> <span class="s1">&#39;Harvard University&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span>
-             <span class="p">[</span><span class="s1">&#39;RIKEN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">],</span>
-             <span class="p">[</span><span class="s1">&#39;JPN&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;AS&#39;</span><span class="p">]],</span>
-        <span class="p">],</span>
-        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;birth_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;birth_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;residence_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;residence_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater&#39;</span><span class="p">,</span> <span class="s1">&#39;alma_mater_country_alpha_3_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;alma_mater_continent_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;workplaces_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;workplaces_continent_codes&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;citizenship_country_alpha_3_codes&#39;</span><span class="p">,</span> <span class="s1">&#39;citizenship_continent_codes&#39;</span>
-        <span class="p">])</span>
-    <span class="n">features</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+def test_binarize_list_features_train_test_cols_equal(
+    expected_binary_features_train):
+    features = pd.DataFrame(
+        [
+            [[&#39;GBR&#39;], [&#39;EU&#39;], [&#39;GBR&#39;, &#39;USA&#39;], [&#39;EU&#39;, &#39;NA&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;], [&#39;USA&#39;], [&#39;NA&#39;],
+             [&#39;Columbia University&#39;, &#39;Stanford University&#39;], [&#39;USA&#39;], [&#39;NA&#39;],
+             [&#39;GBR&#39;, &#39;NZL&#39;, &#39;USA&#39;], [&#39;AU&#39;, &#39;EU&#39;, &#39;NA&#39;]],
+            [[&#39;JPN&#39;], [&#39;AS&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;Columbia University&#39;, &#39;Harvard University&#39;], [], [],
+             [&#39;RIKEN&#39;], [&#39;JPN&#39;], [&#39;AS&#39;],
+             [&#39;JPN&#39;], [&#39;AS&#39;]],
+        ],
+        columns = [
+            &#39;birth_country_alpha_3_codes&#39;, &#39;birth_continent_codes&#39;,
+            &#39;residence_country_alpha_3_codes&#39;, &#39;residence_continent_codes&#39;,
+            &#39;alma_mater&#39;, &#39;alma_mater_country_alpha_3_codes&#39;,
+            &#39;alma_mater_continent_codes&#39;, &#39;workplaces&#39;,
+            &#39;workplaces_country_alpha_3_codes&#39;, &#39;workplaces_continent_codes&#39;,
+            &#39;citizenship_country_alpha_3_codes&#39;, &#39;citizenship_continent_codes&#39;
+        ])
+    features.index = [1, 2]
     
-    <span class="n">binarize</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span>
-        <span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">expected_binary_features_train</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">binarize</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">expected_binary_features_train</span><span class="p">))</span>     
-
-
-
-<span class="n">ipytest</span><span class="o">.</span><span class="n">run_pytest</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;../../tests/test_3.0-build-features.ipynb&#39;</span><span class="p">,</span>
-    <span class="n">pytest_options</span><span class="o">=</span><span class="n">PYTEST_OPTIONS</span><span class="p">)</span>
+    binarize = binarize_list_features(
+        features, train_features=expected_binary_features_train)
+    assert(binarize.equals(expected_binary_features_train))
 </pre></div>
 
     </div>
@@ -13792,77 +13775,43 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-bold">================================================= test session starts =================================================</span></pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>ipytest.run_pytest is deprecated, prefer ipytest.run.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-platform win32 -- Python 3.6.5, pytest-4.0.1, py-1.7.0, pluggy-0.8.0 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-_amdi93u\scripts\python.exe
+<pre><span class="ansi-bold">================================================= test session starts =================================================</span>
+platform win32 -- Python 3.6.5, pytest-4.1.0, py-1.7.0, pluggy-0.8.0 -- c:\users\covuworie\.virtualenvs\nobel-physics-prizes-_amdi93u\scripts\python.exe
 cachedir: .pytest_cache
 rootdir: D:\Users\covuworie\D-Drive\nobel-physics-prizes, inifile:
-plugins: mock-1.10.0, cov-2.6.0
+plugins: mock-1.10.0, cov-2.6.1
 <span class="ansi-bold">collecting ... </span>collected 26 items
 
-..\..\tests\test_3.0-build-features.py::test_build_features_full_name <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                     [  3%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_gender <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                        [  7%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_dead <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                              [ 11%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_years_lived_alive <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                             [ 15%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_categories <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                   [ 19%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_field <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                        [ 23%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_description <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                  [ 26%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_physics_subfield_comment <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                      [ 30%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                 [ 34%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_num_laureates_name <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                            [ 38%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_places_codes <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                  [ 42%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_endswith_comma_oxford <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">           [ 46%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_ends_with_comma_oxford <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">          [ 50%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_duplicate <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                       [ 53%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_no_oxford_cambridge <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 57%]</span>
-..\..\tests\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_float <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                           [ 61%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_citizenship <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                       [ 65%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_nationality <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                       [ 69%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_description <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                       [ 73%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_multiple <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                          [ 76%]</span>
-..\..\tests\test_3.0-build-features.py::test_build_features_citizenship_not_found <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                         [ 80%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_no_threshold <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                    [ 84%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_threshold <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                       [ 88%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_test <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                                  [ 92%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_pad_features <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                          [ 96%]</span>
-..\..\tests\test_3.0-build-features.py::test_binarize_list_features_train_test_cols_equal <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                 [100%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_full_name <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                           [  3%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_gender <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                              [  7%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_years_lived_dead <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                    [ 11%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_years_lived_alive <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                   [ 15%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_physics_subfield_categories <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">         [ 19%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_physics_subfield_field <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">              [ 23%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_physics_subfield_description <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">        [ 26%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_physics_subfield_comment <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">            [ 30%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_num_laureates <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                       [ 34%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_num_laureates_name <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                  [ 38%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_places_codes <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                        [ 42%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_endswith_comma_oxford <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 46%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_ends_with_comma_oxford <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg"> [ 50%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_duplicate <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 53%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_no_oxford_cambridge <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">   [ 57%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_get_alma_mater_or_workplaces_float <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                 [ 61%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_citizenship_citizenship <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 65%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_citizenship_nationality <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 69%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_citizenship_description <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 73%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_citizenship_multiple <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                [ 76%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_build_features_citizenship_not_found <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">               [ 80%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_binarize_list_features_train_no_threshold <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">          [ 84%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_binarize_list_features_train_threshold <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">             [ 88%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_binarize_list_features_test <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                        [ 92%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_binarize_list_features_pad_features <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">                [ 96%]</span>
+..\..\tests\notebooks\test_3.0-build-features.py::test_binarize_list_features_train_test_cols_equal <span class="ansi-green-fg">PASSED</span><span class="ansi-cyan-fg">       [100%]</span>
 
-<span class="ansi-green-intense-fg ansi-bold">============================================= 26 passed in 11.83 seconds ==============================================</span>
+<span class="ansi-green-intense-fg ansi-bold">============================================= 26 passed in 12.18 seconds ==============================================</span>
 </pre>
 </div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[43]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0</pre>
-</div>
-
 </div>
 
 </div>

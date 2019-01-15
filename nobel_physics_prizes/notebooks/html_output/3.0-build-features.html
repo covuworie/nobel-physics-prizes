@@ -13117,8 +13117,8 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Build-Features">Build Features<a class="anchor-link" href="#Build-Features">&#182;</a></h1><p>As a recap, the <a href="../data/processed/train-physicists-from-1901.csv">training data</a>, <a href="../data/processed/validation-physicists-from-1901.csv">validation data</a> and <a href="../data/processed/test-physicists-from-1901.csv">test data</a> contain information on physicists who were eligible to receive a Nobel Prize in Physics. That is, they were alive on and after 10 December 1901, the date the prize was first awarded.</p>
-<p>All of the physicists in the training data are deceased and all the physicists in the validation and test data are alive (up to the last 6-18 months as this is the approximate length of time DBpedia data is behind Wikipedia articles). Since one of the goals of this project is to try to predict the next Physics Nobel Laureate(s). The data was purposely sampled in this way as the aim is to use the training set to build models that predict whether a physicist who is still alive has been awarded or is likely to be awarded the <em>Nobel Prize in Physics</em>.</p>
-<p>It is finally time to use the training, validation and test data, along with the other various pieces of data (<a href="../data/raw/nobel-physics-prize-laureates.csv">Nobel Physics Laureates</a>, <a href="../data/raw/nobel-chemistry-prize-laureates.csv">Nobel Chemistry Laureates</a>, <a href="../data/processed/places.csv">Places</a> and <a href="../data/processed/Countries-List.csv">Countries</a>) that I have collected, in order to create features that may help in predicting <em>Nobel Laureates in Physics</em>.</p>
+<p>All of the physicists in the training data are deceased and all the physicists in the validation and test data are alive. Recall that the Nobel Prize in Physics cannot be awarded posthumously and one of the goals of this project is to try to predict the next Physics Nobel Laureates. As a result, the data was purposely sampled in this way, so that the training set can be used to build models, which predict whether a living physicist is likely to be awarded the Nobel Prize in Physics.</p>
+<p>It is time to use the training, validation and test data, along with the other various pieces of data: <a href="../data/raw/nobel-physics-prize-laureates.csv">Nobel Physics Laureates</a>, <a href="../data/raw/nobel-chemistry-prize-laureates.csv">Nobel Chemistry Laureates</a>, <a href="../data/processed/places.csv">Places</a> and <a href="../data/processed/Countries-List.csv">Countries</a>, to create features that may help in predicting Physics Nobel Laureates.</p>
 
 </div>
 </div>
@@ -13197,7 +13197,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in the training, validation and test data and the list of Nobel Physics laureates.</p>
+<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in the training, validation and test data and the list of Nobel Physics Laureates.</p>
 
 </div>
 </div>
@@ -13894,7 +13894,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>There are some variants of the name in the training, validation and test data. Since I'll be searching for whether academic advisors, students, spouses, children etc. of a physicist are physics laureates, for convenience it's useful to merge the <code>name</code> field into <em>Nobel Physicists</em> dataframe.</p>
+<p>There are some variants of laureate names in the training, validation and test data. As we will be searching for whether academic advisors, students, spouses, children, etc. of a physicist are physics laureates, for convenience it's useful to merge the <code>name</code> field into Nobel Physicists dataframe.</p>
 
 </div>
 </div>
@@ -14007,7 +14007,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now let's read in the list of Nobel Chemistry laureates.</p>
+<p>Now let's read in the list of Nobel Chemistry Laureates.</p>
 
 </div>
 </div>
@@ -14110,7 +14110,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Again, I'll be searching for whether academic advisors, students, spouses, children etc. of a physicist are chemistry laureates. So for convenience it's useful to merge the <code>name</code> field into <em>Nobel Chemists</em> dataframe.</p>
+<p>Again, we will be searching for whether academic advisors, students, spouses, children, etc. of a physicist are chemistry laureates. So for convenience it's useful to merge the <code>name</code> field into Nobel Chemists dataframe.</p>
 
 </div>
 </div>
@@ -14222,7 +14222,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>These are essentially physicists who are <em>Chemistry Nobel Laureates</em>. Surpringly there are quite a few of them. Of course, as noted previously, <em>Marie Curie</em> is the only double laureate in Physics and Chemistry.</p>
+<p>These are essentially physicists who are Chemistry Nobel Laureates. Surpringly there are quite a few of them. Of course, as noted previously, <em>Marie Curie</em> is the only double laureate in Physics and Chemistry.</p>
 
 </div>
 </div>
@@ -14275,9 +14275,9 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It is worth noting that if there are alternative names of Chemistry Nobel Laureates in the physicists dataframe other than those above, they will <em>not</em> be found. However, I do not expect many of these as at one point I got all the redirected URLS for the names and there were very few associated with laureates. In fact you can still see that some of these names are present in the <a href="../data/raw/dbpedia-redirects.csv">DBpedia redirects</a> (e.g. search for "Marie_Curie"). The reason I removed the imputing of these redirects for names when processing the physicist data earlier was that a few of them were plain wrong. For instance, Richard Feynman's children redirect back to him! (e.g. search for "Carl_Feynman" and "Michelle_Feynmann" in the DBpedia redirects or directly try in your browser <a href="http://dbpedia.org/page/Carl_Feynman">http://dbpedia.org/page/Carl_Feynman</a> or <a href="http://dbpedia.org/page/Michelle_Feynmann">http://dbpedia.org/page/Michelle_Feynmann</a>.</p>
-<p>Another interesting fact about this list is that the only one still alive is <em>Manfred Eigen</em>. So I would not expect to see many (if any) physicists in the validation or test set who have Chemistry Nobel Laureate academic advisors, notable students, spouses etc. This is clearly a facet in which the training data is different from the validation and test data. Such differences make learning quite difficult.</p>
-<p>Now, let's read the places and nationalities data into a dataframe. It's important at this point to turn off the default behavior of <em>pandas</em> which is to treat the string literal 'NA' as a missing value. In the dataset, 'NA' is both the continent code of North America and the ISO 3166 alpha-2 country code of Namibia. I then have to impute the missing values since <em>pandas</em> replaces them with the empty string.</p>
+<p>It is worth noting that if there are alternative names of Chemistry Nobel Laureates in the physicists dataframe other than those above, they will <em>not</em> be found. However, we do not expect many of these, as at one point all the redirected URLS for the names were retrieved and very few were associated with laureates. In fact you can still see that some of these names are present in the <a href="../data/raw/dbpedia-redirects.csv">DBpedia redirects</a> (e.g. search for "Marie_Curie"). When processing the physicist data earlier, the imputing of these redirects was removed for the names as a few of them were wrong. For instance, <em>Richard Feynman's</em> children redirect back to him! (e.g. search for "Carl_Feynman" and "Michelle_Feynmann" in the DBpedia redirects or directly try <a href="http://dbpedia.org/page/Carl_Feynman">http://dbpedia.org/page/Carl_Feynman</a> or <a href="http://dbpedia.org/page/Michelle_Feynmann">http://dbpedia.org/page/Michelle_Feynmann</a> in your browser.</p>
+<p>Another interesting observation is that the only one in this list still alive is <em>Manfred Eigen</em>. So we should not expect to see many, if any, physicists in the validation or test set who have Chemistry Nobel Laureate academic advisors, notable students, spouses etc. This is clearly a facet in which the training data is different from the validation and test data. Such differences can make learning difficult.</p>
+<p>Now, let's read the places and nationalities data into a dataframe. It's important at this point to turn off the default behavior of pandas which is to treat the string literal 'NA' as a missing value. In the dataset, 'NA' is both the continent code of North America and the ISO 3166 alpha-2 country code of Namibia. We then have to impute the missing values since pandas replaces them with the empty string.</p>
 
 </div>
 </div>
@@ -14588,7 +14588,7 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, with all the data read in, I can now move on to the bulk of the work, which is creating the features.</p>
+<p>Finally, with all the data read in, we can now move on to the real work, creating the features.</p>
 
 </div>
 </div>
@@ -14596,16 +14596,16 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Creating-the-Features">Creating the Features<a class="anchor-link" href="#Creating-the-Features">&#182;</a></h2><p>It is now time to create the features from the data I have collected. The <em>features</em> I am going to create are listed in the table below along with their <em>type</em> and <em>description</em>. The features can be grouped into three main groups, with the bulk of features falling in the first group, then the second group and so on:</p>
+<h2 id="Creating-the-Features">Creating the Features<a class="anchor-link" href="#Creating-the-Features">&#182;</a></h2><p>It is now time to create the features from the collected data. The features we will create are listed in the table below along with their type and description. The features can be grouped into three main groups, with the bulk of features falling in the first group, then the second group and so on:</p>
 <ol>
-<li><p>Features related to <em>professional and personal relationships</em> that the physicists have to <em>physics or chemistry laureates</em>, <em>educational institutions</em>, <em>work institutions</em>, <em>countries</em> / <em>continents</em>.</p>
+<li><p>Features related to <em>professional and personal relationships</em> that the physicists have to <em>physics or chemistry laureates</em>, <em>educational institutions</em>, <em>work institutions</em>, <em>countries</em> and <em>continents</em>.</p>
 </li>
-<li><p>Features related to the subfield of focus of the physicist denoting whether s/he is a <em>experimental physicist</em>, <em>theoretical physicist</em> and / or an <em>astronomer</em>.</p>
+<li><p>Features related to the subfield of focus of the physicist denoting whether s/he is a <em>experimental physicist</em>, <em>theoretical physicist</em> or an <em>astronomer</em>.</p>
 </li>
 <li><p>Features related to personal characteristics of the physicist, namely, <em>gender</em> and <em>number of years lived</em>.</p>
 </li>
 </ol>
-<p>Remember that in the first group, there are people and institutions from different countries / continents that are directly involved in the <a href="https://www.nobelprize.org/nomination/physics/">selection and voting process for the Nobel Prize in Physics</a> and therefore have a direct influence on those who become laureates. The second group is connected to subjective biases that may or may not exist concerning the major subfield of research of the physicist. Whilst the third group is connected to subjective biases that may or may not exist concerning the gender and age of a physicist. Although the latter is also related to the invention or discovery "standing the test of time".</p>
+<p>Remember that in the first group, there are people and institutions from different countries and continents that are directly involved in the <a href="https://www.nobelprize.org/nomination/physics/">selection and voting process for the Nobel Prize in Physics</a> and therefore have a direct influence on those who become laureates. The second group is connected to subjective biases that may or may not exist concerning the major subfield of research of the physicist. While the third group is connected to subjective biases that may or may not exist concerning the gender and age of a physicist. Although the latter is also related to the invention or discovery "standing the test of time".</p>
 <table>
 <thead><tr>
 <th style="text-align:center">Feature</th>
@@ -14851,7 +14851,7 @@ Name: name, dtype: object</pre>
 </tr>
 </tbody>
 </table>
-<p>Some comments are warranted with regards to the types of the feature variables also. As you can see, there are three types of variables:</p>
+<p>Some comments are also warranted with regards to the types of the feature variables. As you can see, there are three types of variables:</p>
 <ol>
 <li><p><strong>Ordinal</strong> variables.</p>
 </li>
@@ -14860,7 +14860,7 @@ Name: name, dtype: object</pre>
 <li><p><strong>Binary</strong> (<strong>dichotomous</strong>) variables.</p>
 </li>
 </ol>
-<p>The categorical variables are all lists of varying lengths of <em>places</em> and therefore are not in the appropriate form for machine learning. Once I create them I will actually encode them into binary variables and discard the lists. You may ask why the encoding is done with categorical yes / no values rather than 0 / 1 values? It is because the algorithms I will be processing the data with would treat 0 / 1 values as quantitive in nature which is clearly not what is desired. Essentially I will be left with two variable types, just binary variables and ordinal variables. OK time to go ahead and create the features.</p>
+<p>The categorical variables are all lists of varying lengths of <strong>places</strong> and therefore are not in the appropriate form for machine learning. Once we create them they will be encoded into binary variables and the lists will be discarded. You may ask why the encoding is done with categorical yes / no values rather than 0 / 1 values? It is because the algorithms that we will be processing the data with would treat 0 / 1 values as quantitive in nature, which clearly is not desired. Essentially, we will be left with two variable types, binary variables and ordinal variables. OK time to create the features.</p>
 
 </div>
 </div>
@@ -15144,8 +15144,7 @@ Name: name, dtype: object</pre>
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
-    <span class="n">train_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_physicists</span><span class="p">)))</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">45</span><span class="p">)</span>
 <span class="n">train_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -15546,8 +15545,7 @@ Name: name, dtype: object</pre>
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span>
-    <span class="n">test_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">build_features</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">,</span> <span class="n">nobel_physicists</span><span class="p">,</span> <span class="n">nobel_chemists</span><span class="p">,</span> <span class="n">places</span><span class="p">,</span> <span class="n">nationalities</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_physicists</span><span class="p">)))</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">36</span><span class="p">)</span>
 <span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -15745,7 +15743,7 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So there are more features in the training set than in the validation and test sets. So what are these extra features? These are mainly related to the relationships physicists have with chemistry and physics laureates. Seems like the data is not so rich, especially with regards to more modern physicists.</p>
+<p>So there are more features in the training set than in the validation and test sets. So what are these extra features? These are mainly related to the relationships physicists have with chemistry and physics laureates. It seems like the data is not so rich, especially with regards to more modern physicists.</p>
 
 </div>
 </div>
@@ -15835,7 +15833,7 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Any machine models I build will have parameters chosen using the validation set and be evaluated on the test set. As a result the tempting thing to do is to reduce the features to the common set of features,  between the training, validation and test sets, which have variability across all three datasets. I will do this for the training and validation sets as it seems a perfectly reasonable thing to do since these features are not useful for predictive models. However, this would clearly be <em>data snooping</em> (cheating) if the test set is used as it is meant to be unseen data, and as such, cannot be used to make any decisions during the modeling process. So to ensure that the test set features are identical to the training set features, I will "pad" the extra features in the test set with all "0" values and of course remove any extra features that are not present in the training set.</p>
+<p>Any machine models that we build will have parameters chosen using the validation set and be evaluated on the test set. The tempting thing to do is to reduce the features to the common set of features between the training, validation and test sets, which have variability across all three datasets. We will do this for the training and validation sets as it seems a perfectly reasonable thing to do. However, using the test set would clearly be <em>data snooping</em> (cheating) as it is meant to be unseen data, and as such, cannot be used to make any decisions during the modeling process. So to ensure that the test set features are identical to the training set features, we will "pad" the extra features in the test set with all "0" values and remove any extra features that are not present in the training set.</p>
 
 </div>
 </div>
@@ -16248,9 +16246,9 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now I binary encode the list features. Due to the binary encoding, there are a differing number of features in the training, test and validation sets. I'll be following a methodology analagous to the above in order to ensure that the features are the same in the training, validation and test sets.</p>
-<p>The differing features occur because there are differing country codes, workplaces, educational institutions, etc that the physicists are associated with. Some of the differences are due variability in the data and some are due to the selection bias that is introduced by the way that the data was sampled (remember that the training set consists only of deceased physicists). The latter issue is an important point that I will be returning to in a later notebook.</p>
-<p>I will also be using a <code>presence threshold</code> to group binary features that only appear in a few instances into an "other" category. This is intended to reduce the dimensionality of the feature space and help to prevent overfitting during the model building phase. Let's go ahead and "binarize" the list features now.</p>
+<p>Now we will binary encode the list features. Due to the binary encoding there will be a differing number of features in the training, test and validation sets. We will follow a methodology analagous to the above in order to ensure that the features are identical in the training, validation and test sets.</p>
+<p>The differing features occur due to the differing <em>country codes</em>, <em>workplaces</em>, <em>educational institutions</em>, etc. that the physicists are associated with. Some of the differences are due variability in the data and some are caused by the <strong>selection</strong> bias that we deliberately introduced in our data sampling process. The latter issue is an important one that we will return to in a later notebook.</p>
+<p>We will also be using a <code>presence_threshold</code> to group binary features that only appear in a few instances into an "other" category. This is intended to reduce the dimensionality of the feature space and help to prevent overfitting during the model building phase. Let's go ahead and "binarize" the list features now.</p>
 
 </div>
 </div>
@@ -16260,8 +16258,7 @@ Name: name, dtype: object</pre>
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                           <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">pad_features</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">binarize_list_features</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">presence_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">pad_features</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Binarize list features.</span>
 <span class="sd">    </span>
 <span class="sd">    Binary encode the list categorical features in the</span>
@@ -16821,7 +16818,7 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Working on the <em>Manhattan Project</em> certainly makes sense! OK let's reduce the training and validation set to the common set of features amongst them.</p>
+<p>Working on the Manhattan Project certainly makes sense! OK let's reduce the training and validation set to the common set of features amongst them.</p>
 
 </div>
 </div>
@@ -17031,7 +17028,7 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>There are less features in the test set so I must "pad" the remaining binary features with "no" to ensure that the features are identical between the training and test sets.</p>
+<p>There are less features in the test set so let's "pad" the remaining binary features with "no" to ensure that the features are identical between the training and test sets.</p>
 
 </div>
 </div>
@@ -17041,8 +17038,7 @@ Name: name, dtype: object</pre>
 <div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">,</span>
-                                       <span class="n">pad_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features</span> <span class="o">=</span> <span class="n">binarize_list_features</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span> <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">,</span> <span class="n">pad_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">assert</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">test_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">train_features</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
 <span class="n">test_features</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -17091,16 +17087,16 @@ Name: name, dtype: object</pre>
       <th>num_physics_laureate_doctoral_students</th>
       <th>num_physics_laureate_notable_students</th>
       <th>...</th>
+      <th>alumnus_in_CHE</th>
       <th>citizen_of_SWE</th>
-      <th>alumnus_of_University_of_Vienna</th>
-      <th>alumnus_of_University_of_Paris</th>
       <th>worked_at_Leiden_University</th>
-      <th>alumnus_in_**</th>
-      <th>alumnus_of_ETH_Zurich</th>
-      <th>lived_in_**</th>
-      <th>alumnus_of_Technical_University_of_Berlin</th>
+      <th>born_in_SWE</th>
       <th>alumnus_of_Saint_Petersburg_State_University</th>
+      <th>alumnus_of_Ludwig_Maximilian_University_of_Munich</th>
+      <th>alumnus_in_SWE</th>
+      <th>lived_in_RUS</th>
       <th>citizen_in_**</th>
+      <th>alumnus_in_**</th>
     </tr>
   </thead>
   <tbody>
@@ -17239,14 +17235,14 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The features almost look good now, but there is one thing troubling me. The mix of binary and ordinal variables complicates matters when it comes to machine learning. There are issues related to the following:</p>
+<p>The features almost look good now, but there is one thing that is troubling. The mix of binary and ordinal variables complicates matters when it comes to machine learning. There are issues related to the following:</p>
 <ul>
-<li><a href="https://stats.stackexchange.com/questions/69568/whether-to-rescale-indicator-binary-dummy-predictors-for-lasso">How to correctly scale features for machine learning algorithms that require this</a>?</li>
-<li><a href="https://andrewgelman.com/2009/07/11/when_to_standar/">Difficulty of interpretability of coefficients in generalized linear models</a>.</li>
-<li><a href="https://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/">Bias towards lower importance given towards binary variables in random forests</a>.</li>
+<li><a href="https://stats.stackexchange.com/questions/69568/whether-to-rescale-indicator-binary-dummy-predictors-for-lasso">How to correctly scale features for machine learning algorithms</a>?</li>
+<li><a href="https://andrewgelman.com/2009/07/11/when_to_standar/">Difficulty of interpretability of coefficients in generalized linear models</a></li>
+<li><a href="https://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/">The bias introduced by lower importance given towards binary variables in random forests</a></li>
 </ul>
-<p>I'd like to avoid these issues altogether.</p>
-<p>Seeing as the majority of the features are binary, it makes sense to convert the ordinal variables to binary variables. However, I do not want to lose the ordinal information that is present in these variables. The <a href="http://scottclowe.com/2016-03-05-rank-hot-encoder/">rank-hot encoder</a> is an encoding that converts ordinal variables to binary variables whilst maintaining the ordinal information. Scott C. Lowe explains that the "rank-hot encoder" is similar to a one-hot encoder, except every feature up to and including the current rank is hot." He illustrates this with the following example:</p>
+<p>We would like to avoid these issues altogether.</p>
+<p>Seeing as the majority of the features are binary, it makes sense to convert the ordinal variables to binary variables. However, we do not want to lose the ordinal information that is present in these variables. The <a href="http://scottclowe.com/2016-03-05-rank-hot-encoder/">rank-hot encoder</a> is an encoding that converts ordinal variables to binary variables whilst maintaining the ordinal information. <em>Scott C. Lowe</em>, PhD student studying neuroinformatics at the University of Edinburgh, explains that "the <strong>rank-hot encoder</strong> is similar to a <em>one-hot encoder</em>, except every feature up to and including the current rank is hot." He illustrates this with the following example:</p>
 <table>
   <thead>
     <tr>
@@ -17289,12 +17285,12 @@ Name: name, dtype: object</pre>
     </tr>
   </tbody>
 </table><p>He goes on to say, "Instead of answering the query “Is the satisfaction x?”, the entries in a rank-hot encoder tell us “Is the satisfaction level at least x?”. This representation of the data allows a linear model to explain the effect of a high-rank as the additive composition of the effect of each rank in turn."</p>
-<p>Sounds very useful doesn't it. Plus there are some other very nice properties of this encoding of ordinal variables that are explained in the blog link. The main cons of rank-hot encoding, which are shared with one-hot encoding, are:</p>
+<p>Sounds very useful doesn't it! Plus there are some other very nice properties of this encoding scheme that are explained in the blog. The main cons of rank-hot encoding, which are shared with one-hot encoding, are:</p>
 <ul>
 <li>The feature space gets larger.</li>
 <li>Information is lost whenever a categorical value is observed in a new instance (i.e. in the test set) that was not observed in the training (or validation) set.</li>
 </ul>
-<p>However, I believe the benefits I mentioned earlier are so important that they outweigh these downsides. Plus there are ways of dealing with the increase in the size of the feature space. OK so let's go ahead and rank-hot encode the ordinal features.</p>
+<p>However, the benefits mentioned earlier are so important that they outweigh these downsides. Plus there are ways of dealing with the increase in the size of the feature space. OK let's go ahead and <strong>rank-hot encode</strong> the ordinal features.</p>
 
 </div>
 </div>
@@ -17944,7 +17940,7 @@ Name: name, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>There following columns in the training features have no variation in the values. Nothing can be learnt from these features, so we drop them.</p>
+<p>The following columns in the training features have no variation in the values. Nothing can be learnt from these features, so let's drop them.</p>
 
 </div>
 </div>
@@ -18848,7 +18844,7 @@ features (excluding the <code>full_name</code>) for 542 observations in the trai
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the training, validation and test features dataframes, I'll persist them for future use.</p>
+<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now we have the training, validation and test features dataframes, let's persist them for future use.</p>
 
 </div>
 </div>
