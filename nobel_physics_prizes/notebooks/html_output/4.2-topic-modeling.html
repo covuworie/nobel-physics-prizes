@@ -13116,23 +13116,22 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Topic-Modeling">Topic Modeling<a class="anchor-link" href="#Topic-Modeling">&#182;</a></h1><p>If you recall, the goals of the unsuccessful <a href="4.1-exploratory-factor-analysis.ipynb">exploratory factor analysis</a> were:</p>
+<h1 id="Topic-Modeling">Topic Modeling<a class="anchor-link" href="#Topic-Modeling">&#182;</a></h1><p>If you recall, the goals of the unsuccessful <a href="4.1-exploratory-factor-analysis.ipynb">exploratory factor analysis</a> were to:</p>
 <ol>
-<li>Reduce the dimensionality of the feature space to help prevent overfitting during model building.</li>
-<li>Find a representation of the "measured" variables in a lower dimensional space of "unobserved" latent factors that span them. Reducing the variables to factors helps with interpretability of models.</li>
+<li><strong>Reduce the dimensionality of the feature space</strong> to help prevent overfitting when building models.</li>
+<li><strong>Find a representation of the observed variables in a lower dimensional latent space</strong>. Reducing the variables to <strong>latent factors</strong> helps with interpretability of models.</li>
 </ol>
-<p>I still believe I can achieve these goals with a different approach and this is the aim of this notebook.</p>
-<p>A <a href="https://en.wikipedia.org/wiki/Topic_model">topic model</a> is an unsupervised method in natural language processing for discovering latent <em>topics</em> in a corpus of documents. A topic is essentially a collection of words that statistically co-occur frequently together in documents. So in the topic modeling framework, a document consists of topics and topics are composed of words.</p>
-<p>It is important to understand that topic modeling is not only restricted to words and can be used for any discrete data. In this case, the discrete data (words) are the binary features and the corpus of documents are the physicists. I will use topic modeling to discover latent topics, analogous to the latent factors in factor analysis, that underlie the physicists data. The number of topics is specified <em>a priori</em> and is expected to correspond to the intrinsic dimensionality of the data. As such it is expected to be much lower than the dimensionality of feature data.</p>
-<p><a href="https://www.transacl.org/ojs/index.php/tacl/article/view/1244/275">Correlation Explanation</a> (<em>CorEx</em>) is a discriminative and information-theoretic approach to learning latent topics over documents. It is different from most topic models as it does not assume an underlying generative model for the data. It instead learns maximally informative topics through an information-theoretic framework. The <em>CorEx</em> topic model seeks to maximally explain the dependencies of words in documents through latent topics. <em>CorEx</em> does this by maximizing a lower bound on the <a href="https://en.wikipedia.org/wiki/Total_correlation">total correlation</a> (multivariate <a href="https://en.wikipedia.org/wiki/Mutual_information">mutual information</a>) of the words and topics.</p>
+<p>The aim of this notebook is to achieve these goals through a <strong>topic modeling approach</strong>. A <a href="https://en.wikipedia.org/wiki/Topic_model">topic model</a> is an unsupervised method in <a href="https://en.wikipedia.org/wiki/Natural_language_processing">natural language processing</a> for discovering <strong>latent topics</strong> in a <em>corpus</em> of documents. A topic is essentially a collection of words that statistically co-occur frequently together in documents. So in the topic modeling framework, a document consists of topics and topics are composed of words.</p>
+<p>It is important to understand that topic modeling is not only restricted to words and can be used for any discrete data. In our case, the discrete data (words) are the binary features and the corpus of documents are the physicists. We will use topic modeling to discover <strong>latent topics</strong>, analogous to the <strong>latent factors</strong> in factor analysis, that underlie the physicists data. The number of topics is specified <em>a priori</em> and is expected to correspond to the intrinsic dimensionality of the data. As such it is expected to be much lower than the dimensionality of feature data.</p>
+<p><a href="https://www.transacl.org/ojs/index.php/tacl/article/view/1244/275">Correlation Explanation</a> (<strong>CorEx</strong>) is a discriminative and information-theoretic approach to learning latent topics over documents. It is different from most topic models as it does not assume an underlying generative model for the data. It instead learns maximally informative topics through an information-theoretic framework. The CorEx topic model seeks to maximally explain the dependencies of words in documents through latent topics. CorEx does this by maximizing a lower bound on the <a href="https://en.wikipedia.org/wiki/Total_correlation">total correlation</a> (multivariate <a href="https://en.wikipedia.org/wiki/Mutual_information">mutual information</a>) of the words and topics.</p>
 <p>There are many advantages of the CorEx model that make it particularly attractive. The most relevant ones for this study are:</p>
 <ul>
-<li>No generative model is assumed for the data, which means means no validation of assumptions that may or may not be true. The latent topics are learnt entirely from the data. This makes the model extremely flexible and powerful.</li>
-<li>The method can be used for any sparse binary dataset and its algorithm naturally and efficiently takes advantage of the sparsity in the data.</li>
-<li>Binary latent topics are learnt, which leads to highly interpretable models. A document can consist of no topics, all topics, or any number of topics in between.</li>
-<li>No tuning of numerous hyperparameters. There is only one hyperparameter, the <em>number of topics</em>, and there is a principled way to choose this.</li>
+<li><strong>No generative model is assumed for the data</strong>, which means means no validation of assumptions that may or may not be true. The latent topics are learnt entirely from the data. This makes the model extremely flexible and powerful.</li>
+<li>The method can be used for any <strong>sparse binary dataset</strong> and its algorithm naturally and efficiently takes advantage of the sparsity in the data.</li>
+<li>Binary latent topics are learnt, which leads to <strong>highly interpretable models</strong>. A document can consist of no topics, all topics, or any number of topics in between.</li>
+<li><strong>No tuning of numerous hyperparameters</strong>. There is only one hyperparameter, the <em>number of topics</em>, and there is a principled way to choose this.</li>
 </ul>
-<p>More details on the mathematical and implementation details of the <em>CorEx</em> model can be found in section 2 of <a href="https://www.transacl.org/ojs/index.php/tacl/article/view/1244/275">Anchored Correlation Explanation: Topic Modeling with Minimal Domain Knowledge</a> by Gallagher et al. I will be using the python implementation <a href="https://github.com/gregversteeg/corex_topic">corextopic</a> for the topic modeling.</p>
+<p>More details on the mathematical and implementation details of the CorEx model can be found in section 2 of <a href="https://www.transacl.org/ojs/index.php/tacl/article/view/1244/275">Anchored Correlation Explanation: Topic Modeling with Minimal Domain Knowledge</a> by Gallagher et al. We will be using the python implementation <a href="https://github.com/gregversteeg/corex_topic">corextopic</a> for the topic modeling.</p>
 
 </div>
 </div>
@@ -13840,7 +13839,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Model-Selection">Model Selection<a class="anchor-link" href="#Model-Selection">&#182;</a></h2><p>There is a principled way for choosing the <em>number of topics</em>. Gallagher et al. state that "Since each topic explains a certain portion of the overall total correlation, we may choose the number of topics by observing diminishing returns to the objective. Furthermore, since the CorEx implementation depends on a random initialization (as described shortly), one may restart the CorEx topic model several times and choose the one that explains the most total correlation." Following this suggestion, I have written a function that fits a CorEx topic model over a <em>number of topics range</em>. For each <em>number of topics</em>, the function fits a specified <em>number of topic models</em> and selects the topic model with the highest total correlation (TC). Finally, the topic model with the <em>number of topics</em> corresponding to the overall highest TC is chosen (namely, the model that produces topics that are most informative about the documents). This function takes a few minutes to run as it is doing an exhaustive search over a wide range of the number of topics, so feel free grab a coffee.</p>
+<h2 id="Model-Selection">Model Selection<a class="anchor-link" href="#Model-Selection">&#182;</a></h2><p>There is a principled way for choosing the <em>number of topics</em>. Gallagher et al. state that "Since each topic explains a certain portion of the overall total correlation, we may choose the number of topics by observing diminishing returns to the objective. Furthermore, since the CorEx implementation depends on a random initialization (as described shortly), one may restart the CorEx topic model several times and choose the one that explains the most total correlation." Following this suggestion, we have written a function that fits a CorEx topic model over a <em>number of topics range</em>. For each <em>number of topics</em>, the function fits a specified <em>number of topic models</em> and selects the topic model with the highest total correlation (TC). Finally, the topic model with the <em>number of topics</em> corresponding to the overall highest TC is chosen (i.e. the model that produces topics that are most informative about the documents). This function takes a few minutes to run as it is doing an exhaustive search over a wide range of the number of topics, so feel free grab a coffee.</p>
 
 </div>
 </div>
@@ -13850,8 +13849,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">find_best_topic_model</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">num_topic_models</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_topics_range</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
-                          <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">find_best_topic_model</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">num_topic_models</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_topics_range</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+                          <span class="n">eps</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;Find the best topic model as measured by total correlation (TC).</span>
 <span class="sd">    </span>
 <span class="sd">    Fits a CorEx topic model over a number of topics range. For each number of topics,</span>
@@ -13953,7 +13953,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 30 / 30 topics range |█████| 100% Elapsed Time: 0:05:17 Time:  0:05:17
+<pre>Running: 30 / 30 topics range |█████| 100% Elapsed Time: 0:05:02 Time:  0:05:02
 </pre>
 </div>
 </div>
@@ -13998,7 +13998,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So the optimal number of topics is 25. Note that I have tuned the <code>num_topic_models</code> so that this number is stable. If for instance the <code>num_topic_models</code> is reduced to 10, then the value of the optimal number of topics will change due to the random initializations of the CorEx topic model.</p>
+<p>So the optimal number of topics is 25. Note that we have tuned the <code>num_topic_models</code> so that this number is stable. If for instance the <code>num_topic_models</code> is reduced to 10, then the value of the optimal number of topics will change due to the random initializations of the CorEx topic model.</p>
 <p>Let's now observe the distribution of TCs for each topic to see how much each additional topic contributes to the overall TC. We should keep adding topics until additional topics do not significantly contribute to the overall TC.</p>
 
 </div>
@@ -14078,7 +14078,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Looking at the plot, you can see that this statement is fairly subjective. Should we take 10, 12, 15, 18 or 22 topics? To me a slightly more principled way would be to look at the cumulative distribution and select the minimum number of topics that explains say 95% of the overall topics total correlation. This is similar to an explained variance cut-off value in principal component analysis. The plot is shown below.</p>
+<p>Looking at the plot, you can see that this statement is fairly subjective. Should we take 10, 12, 15, 18 or 22 topics? A slightly more principled way would be to look at the cumulative distribution and select the minimum number of topics that explains say 95% of the overall topics total correlation. This is similar to an explained variance cut-off value in principal component analysis. The plot is shown below.</p>
 
 </div>
 </div>
@@ -14089,10 +14089,9 @@ Total correlation =  16.8
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_topics_total_correlation_cumulative_distribution</span><span class="p">(</span>
-    <span class="n">topic_model</span><span class="p">,</span>
-    <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span>
-    <span class="n">cutoff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Topics total correlation cumulative distribution&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Topic number&#39;</span><span class="p">):</span>
+    <span class="n">topic_model</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="n">cutoff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Topics total correlation cumulative distribution&#39;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Topic number&#39;</span><span class="p">):</span>
+    
     <span class="sd">&quot;&quot;&quot;Plot the total correlation cumulative distribution of a CorEx topic model.</span>
 
 <span class="sd">    Args:</span>
@@ -14164,7 +14163,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Using this criteria suggests that 18 topics would be appropriate. However, again this is fairly subjective. Should we choose a cut-off of 90%, 95% or 99%? All of these different values would change the conclusion of the number of topics to retain. To me since there are so few topics anyway it makes sense to retain all 25 topics and not lose any further information. You will also see shortly that there is some interesting information in the tail of the topics.</p>
+<p>Using this criteria suggests that 18 topics would be appropriate. However, again this is fairly subjective. Should we choose a cut-off of 90%, 95% or 99%? All of these different values would change the conclusion of the number of topics to retain. As there are so few topics anyway, it makes more sense to retain all 25 topics and not lose any further information. You will also see shortly that there is some interesting information in the tail of the topics.</p>
 
 </div>
 </div>
@@ -14172,7 +14171,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Topics">Topics<a class="anchor-link" href="#Topics">&#182;</a></h2><p>Now we will take a look at the produced topics, in descending order of the total correlation they explain, to see how coherent they are. The features in topics are ranked in descending order of their <em>mutual information</em> with the topic. So features with higher values of mutual information are more associated with the topic than features with low values. Do not be alarmed by the negative values of mutual information. As Gallagher explains in the <a href="https://github.com/gregversteeg/corex_topic/blob/master/corextopic/example/corex_topic_example.ipynb">notebook example</a>, "Theoretically, mutual information is always positive. If the CorEx output returns a negative mutual information from <code>get_topics()</code>, then the absolute value of that quantity is the mutual information between the topic and the absence of that word." I add labels to the topics to aid with their interpretability.</p>
+<h2 id="Topics">Topics<a class="anchor-link" href="#Topics">&#182;</a></h2><p>Now we will take a look at the produced topics, in descending order of the total correlation they explain, to see how coherent they are. The features in topics are ranked in descending order of their <a href="https://en.wikipedia.org/wiki/Mutual_information">mutual information</a> with the topic. So features with higher values of mutual information are more associated with the topic than features with lower values. Do not be alarmed by the negative values of mutual information. As Gallagher explains in the <a href="https://github.com/gregversteeg/corex_topic/blob/master/corextopic/example/corex_topic_example.ipynb">notebook example</a>, "Theoretically, mutual information is always positive. If the CorEx output returns a negative mutual information from <code>get_topics()</code>, then the absolute value of that quantity is the mutual information between the topic and the absence of that word." We add labels to the topics to aid with their interpretability.</p>
 
 </div>
 </div>
@@ -14222,6 +14221,7 @@ Total correlation =  16.8
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_topics</span><span class="p">(</span><span class="n">topic_model</span><span class="p">,</span> <span class="n">topic_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_features_per_topic</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
                 <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plotting_context</span><span class="o">=</span><span class="s1">&#39;notebook&#39;</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;Plot the topics of a CorEx topic model.</span>
 
 <span class="sd">    Args:</span>
@@ -14303,7 +14303,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As you can see, the topic labels are self-explanatory and correspond mainly with the dominant features of each topic as measured by the mutual information. As I said, the features with very low mutual information are not really informative about the topic. The fact I could put a name to every topic shows just how discriminative the topic modeling is. It's impressive how coherent some of the topics are. The <em>North American Workers</em>, <em>North American Alumni</em>, <em>Workhorses</em>, <em>Studyholics</em> and <em>French Citizens</em> topics are exemplerary examples of such topics. The <em>Born</em> topic is definitely the least coherent topic and maybe suggests that the features in this topic were probably not so useful to begin with.</p>
+<p>As you can see, the topic labels are self-explanatory and correspond mainly with the dominant features of each topic, as measured by the mutual information. As explained before, the features with very low mutual information are not really informative about the topic. The fact we could put a name to every topic shows just how discriminative the topic modeling is. It's impressive how coherent some of the topics are. The <em>North American Workers</em>, <em>North American Alumni</em>, <em>Workhorses</em>, <em>Studyholics</em> and <em>French Citizens</em> topics are exemplerary examples of such topics. The <em>Born</em> topic is definitely the least coherent topic and maybe suggests that the features in this topic were probably not so useful to begin with.</p>
 
 </div>
 </div>
@@ -14311,7 +14311,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Physicist-Topic-Labels">Physicist Topic Labels<a class="anchor-link" href="#Physicist-Topic-Labels">&#182;</a></h2><p>As with the topic features, the most probable documents (physicists) per topic can also be easily accessed, and it is interesting to take a look at a few of these. As Gallagher says, they "are sorted according to log probabilities which is why the highest probability documents have a score of 0 ($e^0 = 1$) and other documents have negative scores (for example, $e^{-0.5} \approx 0.6$)."</p>
+<h2 id="Top-Documents-Per-Topic">Top Documents Per Topic<a class="anchor-link" href="#Top-Documents-Per-Topic">&#182;</a></h2><p>As with the topic features, the most probable documents (physicists) per topic can also be easily accessed, and it is interesting to take a look at a few of these. As Gallagher says, they "are sorted according to log probabilities which is why the highest probability documents have a score of 0 ($e^0 = 1$) and other documents have negative scores (for example, $e^{-0.5} \approx 0.6$)."</p>
 <p>OK let's take a look at the top physicists in the <em>European Workers</em> (topic 0), <em>Workhorses</em> (topic 13) and <em>Physics Laureate Teachers</em> (topic 22).</p>
 
 </div>
@@ -14463,7 +14463,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Below we see the real workhorses of physics. The probabilites here seem to discriminate the physicists a lot better. If you examine the Wikipedia Infobox <em>Institutions</em> field of some of these physicists, you will see the breadth of workplaces corroborates this list.</p>
+<p>Below we see the real workhorses of physics. The probabilites here seem to discriminate the physicists a lot better. If you examine the Wikipedia Infobox <code>Institutions</code> field of some of these physicists, you will see the breadth of workplaces corroborates this list.</p>
 
 </div>
 </div>
@@ -14533,7 +14533,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Below we see the great teachers and influencers of physics laureates, many of whom are laureates themselves. Likewise, if you take a look at the Wikipedia Infobox <em>Doctoral students</em> and <em>Other notable students</em> fields of some of these physicists, you will see the number of laureates they have had an impact on. Interestingly, the first paragraph of <a href="https://en.wikipedia.org/wiki/Arnold_Sommerfeld">Arnold Sommerfeld's Wikipedia article</a> focuses on this aspect of his career and compares him to J. J. Thomson.</p>
+<p>Below we see the great teachers and influencers of physics laureates, many of whom are laureates themselves. Likewise, if you take a look at the Wikipedia Infobox <code>Doctoral students</code> and <code>Other notable students</code> fields of some of these physicists, you will see the number of laureates they have had an impact on. Interestingly, the first paragraph of <a href="https://en.wikipedia.org/wiki/Arnold_Sommerfeld">Arnold Sommerfeld's Wikipedia article</a> focuses on this aspect of his career and compares him to <em>J. J. Thomson</em>.</p>
 
 </div>
 </div>
@@ -14603,7 +14603,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Projecting-Features-to-the-Topic-Space">Projecting Features to the Topic Space<a class="anchor-link" href="#Projecting-Features-to-the-Topic-Space">&#182;</a></h2><p>CorEx is a discriminative model which means that it estimates the probability a document (physicist) belongs to a topic given that document's words (features). The estimated probabilities of topics for each document can be obtained through the topic model's properties <code>log_p_y_given_x</code> or <code>p_y_given_x</code> or function <code>predict_proba</code>. A binary determination of which documents belong to each topic is obtained using a softmax and can be accessed through the topic model's <code>labels</code> property or function <code>transform</code> (or <code>predict</code>). I will now use the latter to reduce the dimensionality of the original binary features by projecting them into the latent space spanned by the binary topics of the topic model.</p>
+<h2 id="Projecting-Features-to-the-Topic-Space">Projecting Features to the Topic Space<a class="anchor-link" href="#Projecting-Features-to-the-Topic-Space">&#182;</a></h2><p>CorEx is a discriminative model which means that it estimates the probability a document (i.e. physicist) belongs to a topic given that document's words (i.e. features). The estimated probabilities of topics for each document can be obtained through the topic model's properties <code>log_p_y_given_x</code> or <code>p_y_given_x</code> or function <code>predict_proba</code>. A binary determination of which documents belong to each topic is obtained using a softmax and can be accessed through the topic model's <code>labels</code> property or function <code>transform</code> (or <code>predict</code>). We will now use the latter to reduce the dimensionality of the original binary features by projecting them into the latent space spanned by the binary topics of the topic model.</p>
 
 </div>
 </div>
@@ -14614,6 +14614,7 @@ Total correlation =  16.8
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">project_features_to_topic_space</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;Project the binary features to the latent space spanned by the binary</span>
 <span class="sd">    topics of the topic model.</span>
 
@@ -14645,8 +14646,8 @@ Total correlation =  16.8
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span>
-                                                        <span class="nb">list</span><span class="p">(</span><span class="n">latent_factors</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">latent_factors</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 <span class="n">train_features_topics</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -14868,8 +14869,8 @@ Total correlation =  16.8
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span><span class="n">validation_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span>
-                                                             <span class="nb">list</span><span class="p">(</span><span class="n">latent_factors</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validation_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span>
+    <span class="n">validation_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">latent_factors</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 <span class="n">validation_features_topics</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -15091,8 +15092,8 @@ Total correlation =  16.8
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span><span class="n">test_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span>
-                                                       <span class="nb">list</span><span class="p">(</span><span class="n">latent_factors</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_features_topics</span> <span class="o">=</span> <span class="n">project_features_to_topic_space</span><span class="p">(</span>
+    <span class="n">test_features</span><span class="p">,</span> <span class="n">topic_model</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">latent_factors</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 <span class="n">test_features_topics</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -15312,8 +15313,8 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You may be wondering why I did not just use the estimated probabilities as my reduced dimension features. Mostly likely a model built from those features would be more accurate than one built from the binary features. Interpretability is the answer. For example, it does not make much sense to talk about the probability of a physicist being a <em>European Worker</em> or not. S/he is either a <em>European Worker</em> or not. It is more natural to say for instance that a physicist is a Nobel Laureate because s/he is a <em>European Worker</em>, a <em>North American Citizen</em> and a <em>Physics Laureate Teacher</em> etc.</p>
-<p>The <em>European Alumni</em> and <em>Astronomer</em> topics are interesting as they both consist of only one feature. Therefore, you would expect a one-to-one correspondence between the labels in the topic and the label in the original feature. I noticed that this is not always the case as the topic has actually "flipped" the label for some of the physicists. I am not sure exactly why it happens. Clearly it is a quirk of the topic modeling.</p>
+<p>You may be wondering why we did not just use the estimated probabilities as the reduced dimension features. Most likely a model built from those features would be more accurate than one built from the binary features. Interpretability is the answer. For example, it does not make much sense to talk about the probability of a physicist being a <em>European Worker</em> or not. S/he is either a <em>European Worker</em> or not. It is more natural to say, for instance, that a physicist is a Nobel Laureate because s/he is a <em>European Worker</em>, a <em>North American Citizen</em> and a <em>Physics Laureate Teacher</em>, etc.</p>
+<p>The <em>European Alumni</em> and <em>Astronomer</em> topics are interesting as they both consist of only one feature. Therefore, you would expect a one-to-one correspondence between the labels in the topic and the label in the original feature. However, this is not always the case as the topic has actually "flipped" the label for some of the physicists. We are not exactly sure why it happens. Clearly it is a quirk of the topic modeling.</p>
 
 </div>
 </div>
@@ -15389,7 +15390,7 @@ Total correlation =  16.8
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now I have the training, validation and test features dataframes in the topic model space, I'll persist them for future use.</p>
+<h2 id="Persisting-the-Data">Persisting the Data<a class="anchor-link" href="#Persisting-the-Data">&#182;</a></h2><p>Now we have the training, validation and test features dataframes in the topic model space, we will persist them for future use.</p>
 
 </div>
 </div>
