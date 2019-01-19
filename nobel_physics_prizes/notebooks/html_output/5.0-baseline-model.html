@@ -13116,7 +13116,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Baseline-Model">Baseline Model<a class="anchor-link" href="#Baseline-Model">&#182;</a></h1><p>Prior to any machine learning, it is prudent to establish a baseline model with which to compare any trained models against. If none of the trained models can beat this "naive" model, then the conclusion is either that machine learning is not suitable for the predictive task or a different learning approach is needed. My goal here is to create a rules-based baseline classifier that can be used as a benchmark to compare against machine learning classifiers.</p>
+<h1 id="Baseline-Model">Baseline Model<a class="anchor-link" href="#Baseline-Model">&#182;</a></h1><p>Prior to any machine learning, it is prudent to establish a baseline model with which to compare any trained models against. If none of the trained models can beat this "naive" model, then the conclusion is that either machine learning is not suitable for the predictive task or a different learning approach is needed. Our goal here is to create a <em>rules-based classifier</em> that can be used as a baseline to compare against machine learning classifiers.</p>
 
 </div>
 </div>
@@ -13150,7 +13150,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in the training and validation features and target and convert the categorical fields to a numerical form that is suitable for building machine learning models.</p>
+<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in the training and validation features and target. Also, let's convert the categorical fields to a numerical form that is suitable for performance evaluation.</p>
 
 </div>
 </div>
@@ -13687,8 +13687,8 @@ Name: physics_laureate, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Performance-Measure">Performance Measure<a class="anchor-link" href="#Performance-Measure">&#182;</a></h2><p>Before building a baseline classifier, I first need to address the issue of how to compare and assess the quality of different classifiers. A <em>performance measure</em> is clearly needed. But which one? <a href="https://en.wikipedia.org/wiki/Accuracy_and_precision">Accuracy</a> is affected by the probability of class membership of the target and therefore it is not a suitable metric for this problem as there are many more non-laureates than laureates. In situations such as this accuracy can be very misleading.</p>
-<p>The <a href="https://en.wikipedia.org/wiki/Matthews_correlation_coefficient">Matthews Correlation Coefficient</a> (MCC), also known as the <a href="https://en.wikipedia.org/wiki/Phi_coefficient">phi coefficient</a>, is a suitable performance measure, as it is regarded as a balanced measure of binary classification performance that can be used when there is a class imbalance. <a href="https://www.researchgate.net/publication/259354929_Predicting_Protein-Protein_Interaction_by_the_Mirrortree_Method_Possibilities_and_Limitations">Predicting Protein-Protein Interaction by the Mirrortree Method Possibilities and Limitations</a> says that "MCC is a more robust measure of effectiveness of binary classification methods than such measures as precision, recall, and F-measure because it takes into account in a balanced way of all four factors contributing to the effectiveness; true positives, false positives, true negatives and false negatives". The MCC can be calculated directly from the <a href="https://en.wikipedia.org/wiki/Confusion_matrix">confusion matrix</a> using the formula:</p>
+<h2 id="Performance-Measure">Performance Measure<a class="anchor-link" href="#Performance-Measure">&#182;</a></h2><p>Before building a baseline classifier, we first need to address the issue of how to compare and assess the quality of different classifiers. A <strong>performance measure</strong> is clearly needed. But which one? <a href="https://en.wikipedia.org/wiki/Accuracy_and_precision">Accuracy</a> is affected by the probability of class membership of the target and therefore it is not a suitable metric for this problem, as there are many more non-laureates than laureates. In such situations accuracy can be very misleading.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Matthews_correlation_coefficient">Matthews Correlation Coefficient</a> (MCC) (also known as the <a href="https://en.wikipedia.org/wiki/Phi_coefficient">phi coefficient</a>) is a suitable performance measure that can be used when there is a class imbalance. It is widely regarded as a balanced measure of binary classification performance. <a href="https://www.researchgate.net/publication/259354929_Predicting_Protein-Protein_Interaction_by_the_Mirrortree_Method_Possibilities_and_Limitations">Predicting Protein-Protein Interaction by the Mirrortree Method Possibilities and Limitations</a> says that "MCC is a more robust measure of effectiveness of binary classification methods than such measures as precision, recall, and F-measure because it takes into account in a balanced way of all four factors contributing to the effectiveness; true positives, false positives, true negatives and false negatives". The MCC can be calculated directly from the <a href="https://en.wikipedia.org/wiki/Confusion_matrix">confusion matrix</a> using the formula:</p>
 \begin{equation}
 MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}}
 \end{equation}<p>where TP is the number of <a href="https://en.wikipedia.org/wiki/True_positive">true positives</a>, TN the number of true <a href="https://en.wikipedia.org/wiki/True_negative">negatives</a>, FP the number of <a href="https://en.wikipedia.org/wiki/False_positive">false positives</a> and FN the number of <a href="https://en.wikipedia.org/wiki/False_negative">false negatives</a>. If any of the four sums in the denominator is zero, the denominator can be arbitrarily set to one; this results in a Matthews correlation coefficient of zero, which can be shown to be the correct limiting value.</p>
@@ -13700,7 +13700,7 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Baseline-Classifier">Baseline Classifier<a class="anchor-link" href="#Baseline-Classifier">&#182;</a></h2><p>How should I go about creating this baseline classifier? Well my first idea is a classifier that always predicts the majority class. Let's go ahead and look at the MCC and confusion matrix for such a classifier on the training and validation data.</p>
+<h2 id="Baseline-Classifier">Baseline Classifier<a class="anchor-link" href="#Baseline-Classifier">&#182;</a></h2><p>How should we go about creating this baseline classifier? One idea is a classifier that always predicts the majority class. Let's go ahead and look at the MCC and confusion matrix for such a classifier on the training and validation data.</p>
 
 </div>
 </div>
@@ -13911,7 +13911,7 @@ MCC = \frac{TP \times TN - FP \times FN}{{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN +
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see that a classifier which always predicts the negative class is equivalent to random guessing and therefore is completely useless. The runtime warning is screaming this out loud as the sum of TP and FP is zero. Note that if I had instead used accuracy as the performance measure I would have been completely misled into believing that this was a reasonable good classifier!</p>
+<p>We can see that a classifier which always predicts the negative class is equivalent to random guessing and therefore is completely useless. The runtime warning is screaming this out loud as the sum of TP and FP is zero. Note that if we had instead used accuracy as the performance measure we would have been completely misled into believing that this is a reasonable good classifier!</p>
 
 </div>
 </div>
@@ -13955,7 +13955,7 @@ Majority class classifier accuracy (validation): 0.79
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Surely we can do better than this classifier. Let's do a brute force approach to create a baseline classifier by finding the best predictor on the validation set.</p>
+<p>Surely we can do better than this classifier. The function below is a brute force approach to creating a baseline classifier. It fits a model for each of the predictors in turn and returns the best model, as judged by MCC on the validation set.</p>
 
 </div>
 </div>
@@ -13965,8 +13965,8 @@ Majority class classifier accuracy (validation): 0.79
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">find_feature_with_highest_mcc</span><span class="p">(</span>
-    <span class="n">train_features</span><span class="p">,</span> <span class="n">train_target</span><span class="p">,</span> <span class="n">validation_features</span><span class="p">,</span> <span class="n">validation_target</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">find_feature_with_highest_mcc</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_target</span><span class="p">,</span> <span class="n">validation_features</span><span class="p">,</span> <span class="n">validation_target</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;Find the feature with the highest Matthews Correlation Coefficient (MCC)</span>
 <span class="sd">    on the validation set.</span>
 <span class="sd">    </span>
@@ -14165,7 +14165,7 @@ Majority class classifier accuracy (validation): 0.79
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This classifier is not great, but it's much better than the previous one. The MCC's are low for the training and validation sets, however, they are definitely better than chance level performance. Examination of the confusion matrices illustrates that this classifier is slightly better than 50-50 at identifying the positive class and is good at identifying the negative class. This is also confirmed looking at the precision, recall and f1-score of the classes.</p>
+<p>This classifier is not great, but it's much better than the previous one. The MCC's are low for the training and validation sets, however, they are definitely better than chance level performance. Examination of the confusion matrices illustrates that this classifier is slightly better than 50-50 at identifying the positive class and is quite good at identifying the negative class. This is also confirmed looking at the precision, recall and f1-score of the classes.</p>
 
 </div>
 </div>
