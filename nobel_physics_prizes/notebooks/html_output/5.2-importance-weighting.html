@@ -13116,18 +13116,18 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Importance-Weighting">Importance Weighting<a class="anchor-link" href="#Importance-Weighting">&#182;</a></h1><p>Last time we detected that there was a <a href="5.1-covariate-shift.ipynb">covariate shift</a> between the training and validation sets. Recall, that we are using the validation set as a proxy for the test set. Here we will try and correct for the covariate shift by reweighting training samples according to their importance, which is the ratio of test to training densities. Tsuboi et al. explain in <a href="https://pdfs.semanticscholar.org/6b0b/12fbd2455c37131ac1cedc5137a9fd7c3e53.pdf">Direct density ratio estimation for large-scale covariate shift adaptation</a> that "Under covariate shift, standard learning methods such as maximum likelihood estimation are no longer consistent, i.e., they do not produce the optimal solution even when the number of training samples tends to infinity. Thus, there exists an estimation bias induced by covariate shift. It has been shown that the bias can be asymptotically canceled by weighting the log likelihood terms according to the <em>importance</em>:</p>
+<h1 id="Importance-Weighting">Importance Weighting<a class="anchor-link" href="#Importance-Weighting">&#182;</a></h1><p>Last time out we detected that there was a <a href="5.1-covariate-shift.ipynb">covariate shift</a> between the training and validation sets. Recall, that we are using the validation set as a proxy for the test set. Here we will try and correct for the covariate shift by reweighting training samples according to their <strong>importance</strong>, which is the ratio of test to training densities. <em>Tsuboi et al.</em> explain in <a href="https://pdfs.semanticscholar.org/6b0b/12fbd2455c37131ac1cedc5137a9fd7c3e53.pdf">Direct density ratio estimation for large-scale covariate shift adaptation</a> that "Under covariate shift, standard learning methods such as maximum likelihood estimation are no longer consistent, i.e., they do not produce the optimal solution even when the number of training samples tends to infinity. Thus, there exists an estimation bias induced by covariate shift. It has been shown that the bias can be asymptotically canceled by weighting the log likelihood terms according to the <strong>importance</strong>:</p>
 \begin{equation}
 w(x) = \frac{p_{test}(x)}{p_{train}(x)}
 \end{equation}<p>where $p_{test}(x)$ and $p_{train}(x)$ are test and training input densities."</p>
 <p>Technically, there is a more rigorous definition of importance that accounts for class imbalance between the training and test sets, which multiplies the above ratio by the ratio of number of training samples to the number of test samples. For a derivation, see section 2.2.1 of <a href="https://www.ism.ac.jp/editsec/aism/pdf/10463_2011_Article_343.pdf">Density-ratio matching under the Bregman divergence:
-a unified framework of density-ratio estimation</a> by Sugiyama et al. Or alternatively have a read of the <a href="http://blog.shakirm.com/2018/01/machine-learning-trick-of-the-day-7-density-ratio-trick/">density ratio trick</a> on <em>Shakir's machine learning blog</em>.</p>
-<p>Importance weighting may still not be clear to you, it certainly wasn't to me, until I read the blog of <a href="https://srome.github.io/Covariate-Shift,-i.e.-Why-Prediction-Quality-Can-Degrade-In-Production-and-How-To-Fix-It/">Scott Rome, Math Ph.D. who works in machine learning</a>. He elucidates exactly what importance weighting does from a mathematical perspective. Essentially the sample weights applied to each training example, change the distribution with respect to which the expected training loss is taken, from the training distribution to the test distribution:</p>
+a unified framework of density-ratio estimation</a> by <em>Sugiyama et al</em>. Or alternatively, read the <a href="http://blog.shakirm.com/2018/01/machine-learning-trick-of-the-day-7-density-ratio-trick/">density ratio trick</a> on <strong>The Spectator: Shakir's machine learning blog</strong>.</p>
+<p>Importance weighting may still not be clear to you. <em>Scott Rome</em>, Math Ph.D. who works in machine learning, <a href="https://srome.github.io/Covariate-Shift,-i.e.-Why-Prediction-Quality-Can-Degrade-In-Production-and-How-To-Fix-It/">elucidates exactly what importance weighting does from a mathematical perspective</a>. Essentially the sample weights applied to each training example, change the distribution with respect to which the expected training loss is taken, from the training distribution to the test distribution:</p>
 \begin{equation}
 \DeclareMathOperator{\E}{\mathbb{E}}
 \E_{x \sim w(x)p_{train}(x)}loss(x) = \int loss(x)w(x)p_{train}(x)dx = \int loss(x)p_{test}(x)dx = \E_{x \sim p_{test}(x)}loss(x)
 \end{equation}<p>As he puts it, we can see that the expected loss on the test distribution $p_{test}(x)$ is the same as using the sample weights $w(x)$ on the training set! (Notice, this is trivially the case when $p_{train}(x)=p_{test}(x)$.) Once these sample weights are known, they can be supplied during the training phase via the <code>sample_weight</code> parameter in the <code>fit()</code> method of an <em>sklearn</em> learn estimator.</p>
-<p>The <em>importance</em> is rarely known in practice, so the central question becomes, how to accurately estimate it from the training and test samples? It is a difficult problem that we will answer shortly. If you are still unconvinced as to why estimating the <em>importance</em> is critical when covariate shift occurs, read the excellent <em>bias-variance tradeoff</em> argument given in the footnote of page 1, in the paper by Tsuboi et al.</p>
+<p>The importance is rarely known in practice, so the central question becomes, how to accurately estimate it from the training and test samples? It is a difficult problem that we will answer shortly. If you are still unconvinced as to why estimating the importance is critical when covariate shift occurs, read the excellent <em>bias-variance tradeoff</em> argument given in the footnote of page 1, in the paper by <em>Tsuboi et al</em>.</p>
 
 </div>
 </div>
@@ -13141,8 +13141,8 @@ a unified framework of density-ratio estimation</a> by Sugiyama et al. Or altern
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">src.features.features_utils</span> <span class="k">import</span> <span class="n">convert_categoricals_to_numerical</span>
 <span class="kn">from</span> <span class="nn">src.externals.pykliep.pykliep</span> <span class="k">import</span> <span class="n">DensityRatioEstimator</span>
+<span class="kn">from</span> <span class="nn">src.features.features_utils</span> <span class="k">import</span> <span class="n">convert_categoricals_to_numerical</span>
 
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
@@ -13155,7 +13155,7 @@ a unified framework of density-ratio estimation</a> by Sugiyama et al. Or altern
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in both sets of training and validation features and convert the categorical fields to a numerical form that is suitable for building machine learning models. I'll also read in the target for the training data as it will be useful for visualization purposes.</p>
+<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in both sets of training and validation features and convert the categorical fields to a numerical form that is suitable for building machine learning models. We will also read in the target for the training data as it will be useful for visualization purposes.</p>
 
 </div>
 </div>
@@ -14138,21 +14138,21 @@ a unified framework of density-ratio estimation</a> by Sugiyama et al. Or altern
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Kullback-Leibler-Importance-Estimation-Procedure-(KLIEP)">Kullback-Leibler Importance Estimation Procedure (KLIEP)<a class="anchor-link" href="#Kullback-Leibler-Importance-Estimation-Procedure-(KLIEP)">&#182;</a></h2><p>The importance can be estimated by estimating the test and training densities separately and taking their ratio. However, this does not work well in practice as the ratio is sensitive. Sugiyama et al. developed a more stable method known as <a href="https://www.ism.ac.jp/editsec/aism/pdf/060_4_0699.pdf">Kullback-Leibler Importance Estimation Procedure (KLIEP)</a> that directly estimates the importance without the need of density estimation. They find an importance estimate $\hat{w}(x)$ such that the <a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback–Leibler divergence</a> from the true test input density $p_{test}(x)$ to its estimate $\hat{p}_{test}(x) = \hat{w}(x)p_{train}(x)$ is minimized. The optimization problem involved in KLIEP is convex and so the unique global solution can be obtained.</p>
-<p>Technical details of the KLIEP method are described in full in section 2 of the Sugiyama et al. paper. A succint summary, that I will paraphrase here, is given by <a href="https://srome.github.io/Covariate-Shift,-i.e.-Why-Prediction-Quality-Can-Degrade-In-Production-and-How-To-Fix-It/">Scott Rome, Math Ph.D. who works in machine learning</a>. The KLIEP algorithm defines an estimator of the importance as:</p>
+<h2 id="Kullback-Leibler-Importance-Estimation-Procedure-(KLIEP)">Kullback-Leibler Importance Estimation Procedure (KLIEP)<a class="anchor-link" href="#Kullback-Leibler-Importance-Estimation-Procedure-(KLIEP)">&#182;</a></h2><p>The importance can be estimated by estimating the test and training densities separately and taking their ratio. However, this does not work well in practice as the ratio is sensitive. <em>Sugiyama et al.</em> developed a more stable method known as <a href="https://www.ism.ac.jp/editsec/aism/pdf/060_4_0699.pdf">Kullback-Leibler Importance Estimation Procedure (KLIEP)</a> that directly estimates the importance without the need of density estimation. They find an importance estimate $\hat{w}(x)$ such that the <a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback–Leibler divergence</a> from the true test input density $p_{test}(x)$ to its estimate $\hat{p}_{test}(x) = \hat{w}(x)p_{train}(x)$ is minimized. The optimization problem involved in KLIEP is convex and so the unique global solution can be obtained.</p>
+<p>Technical details of the KLIEP method are described in full in section 2 of the <em>Sugiyama et al.</em> paper. A succint summary, that we will paraphrase here, is given by <em>Scott Rome</em>, Math Ph.D. who works in machine learning. The KLIEP algorithm defines an estimator of the importance as:</p>
 \begin{equation}
 \hat{w}(x) = \sum_{x_{i} \in D_{test}} \alpha_i K(x, x_i, \sigma)
-\end{equation}<p>where the $\alpha_i \in \mathbb{R}$ are parameters to be learned from data samples and $D_{test} \subset X_{test}$ is a random sample of test set vectors $X_{test}$. Sugiyama et al. chose $K$ to be the <em>Gaussian kernel</em>:</p>
+\end{equation}<p>where the $\alpha_i \in \mathbb{R}$ are parameters to be learned from data samples and $D_{test} \subset X_{test}$ is a random sample of test set vectors $X_{test}$. <em>Sugiyama et al.</em> choose $K$ to be the <strong>Gaussian kernel</strong>:</p>
 \begin{equation}
 K(x, x_i, \sigma) = \exp \bigg( -\frac{|x-x_i|^2}{2 \sigma^{2}} \bigg)
-\end{equation}<p>where the hyperparameter $\sigma \in \mathbb{R}$ is called the <em>width</em> of the kernel. The authors then define the score:</p>
+\end{equation}<p>where the hyperparameter $\sigma \in \mathbb{R}$ is called the <strong>width</strong> of the <strong>kernel</strong>. The authors then define the score:</p>
 \begin{equation}
 J = \frac{1}{|X_{test}|} \sum_{x \in X_{test}} \log \hat{w}(x)
-\end{equation}<p>and prove that maximizing this value is equivalent to minimizing the Kullback-Leibler divergence between $p_{test}(x)$ and $\hat{w}(x)p_{train}(x)$. Basically, maximizing $J$ leads to the optimal sample weights for training. The KLIEP algorithm uses gradient descent to find the $\alpha_i$ that maximize $J$ given $D_{test}$ and $\sigma$ subject to the following constraints:</p>
+\end{equation}<p>and prove that maximizing this value is equivalent to minimizing the Kullback-Leibler divergence between $p_{test}(x)$ and $\hat{w}(x)p_{train}(x)$. Basically, maximizing $J$ leads to the optimal sample weights for training. The KLIEP algorithm uses <a href="https://en.wikipedia.org/wiki/Gradient_descent">gradient descent</a> to find the $\alpha_i$ that maximize $J$ given $D_{test}$ and $\sigma$ subject to the following constraints:</p>
 \begin{equation}
 \alpha_i \ge 0 \\
 \int \hat{w}(x)p_{train}(x)dx = 1
-\end{equation}<p>The first constraint arises from the fact that the sample weights must be non-negative and the second contraint from the definition of $\hat{w}(x)p_{train}(x)$ as a probability density function.</p>
+\end{equation}<p>The first constraint arises from the fact that the sample weights must be non-negative and the second constraint from the definition of $\hat{w}(x)p_{train}(x)$ as a <a href="https://en.wikipedia.org/wiki/Probability_density_function">probability density function</a>.</p>
 
 </div>
 </div>
@@ -14160,7 +14160,7 @@ J = \frac{1}{|X_{test}|} \sum_{x \in X_{test}} \log \hat{w}(x)
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Model-Selection">Model Selection<a class="anchor-link" href="#Model-Selection">&#182;</a></h2><p>There are essentially two hyperparameters that need to be chosen in the KLIEP algorithm, the <em>kernel width</em> $\sigma$ and the ratio $\frac{D_{test}}{X_{test}}$. Model selection can be carried out in a principled manner through the <em>likelihood cross-validation</em> (LCV) procedure that is described by Sugiyama et al. It is very similar to grid-search cross-validation that we are familiar with, except for a few notable differences:</p>
+<h2 id="Model-Selection">Model Selection<a class="anchor-link" href="#Model-Selection">&#182;</a></h2><p>There are essentially two hyperparameters that need to be chosen in the KLIEP algorithm, the <strong>kernel width</strong> $\sigma$ and the <strong>ratio</strong> $\frac{D_{test}}{X_{test}}$. Model selection can be carried out in a principled manner through the <strong>likelihood cross-validation</strong> (LCV) procedure that is described by <em>Sugiyama et al</em>. It is very similar to the grid-search cross-validation that most of us are familiar with, except for a few notable differences:</p>
 <ol>
 <li>Split the test set $D_{test}$ into $k$-folds.</li>
 <li>For each test fold, train a model on the union of the training set and $k$-1 test folds. Evaluate the score $J$ on the $k$-th test fold.</li>
@@ -14432,6 +14432,7 @@ J = \frac{1}{|X_{test}|} \sum_{x \in X_{test}} \log \hat{w}(x)
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_sample_weights</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">weights_topics</span><span class="p">,</span> <span class="n">train_target</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;Plot bar charts of the sample weights of original features and topic features</span>
 <span class="sd">    for the training data.</span>
 
@@ -14525,7 +14526,7 @@ J = \frac{1}{|X_{test}|} \sum_{x \in X_{test}} \log \hat{w}(x)
 <p>We can make the following observations about the two figures:</p>
 <ol>
 <li>The sample weights, on average, are higher for the original features than the topics features. This is not surprising as the covariate shift was much larger for the original features.</li>
-<li>For the original features, most of the weights are very low for the laureates. The laureates are not given much importance. This is worrying as I suspect that using these weights during learning may actually lead to a worse performing machine learning model! We will see what happends during model building. I'm not sure, but I suspect this bevahior may be caused by overfitting during the LCV in KLIEP.</li>
+<li>For the original features, most of the weights are very low for the laureates. The laureates are not given much importance. This is worrying as we suspect that using these weights during learning may actually lead to a worse performing machine learning model! We will see what happens during model building. We suspect that this bevahior may be caused by overfitting during the LCV in KLIEP.</li>
 <li>For the topics features, the weights for laureates are far more comparable to those of non-laureates. They are certainly given importance that is of significance.</li>
 <li>In both charts, the highest weights are for non-laureate. This is most likely caused by the class imbalance in the data. There are far more non-laureates than laureates. </li>
 </ol>
