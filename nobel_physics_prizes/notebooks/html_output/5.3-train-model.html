@@ -13116,14 +13116,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Train-Model">Train Model<a class="anchor-link" href="#Train-Model">&#182;</a></h1><p>It is finally time to use the features we have created to train some classifiers to predict <em>Physics Nobel Laureates</em>. We will be training the following classifiers:</p>
+<h1 id="Train-Model">Train Model<a class="anchor-link" href="#Train-Model">&#182;</a></h1><p>It is finally time to use the features we have created to train some classifiers to predict Physics Nobel Laureates. We will be training the following classifiers:</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Logistic_regression">Logistic Regression</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Support_vector_machine">Support Vector Machine</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Random_forest">Random Forest</a></li>
 </ul>
 <p>These classifiers are chosen due to their simplicity, appropriateness for the input features and target data types, ease of interpretability and their well-established performance on a range of classification tasks.</p>
-<p>We will be selecting hyperparameters and evaluating the performance of the models on the validation set. This will be done in a principled manner using a couple of performance measures. The first of these, the <a href="https://en.wikipedia.org/wiki/Matthews_correlation_coefficient">Matthews Correlation Coefficient (MCC)</a>, you have already seen when we created the <a href="5.0-baseline-model.ipynb">baseline model</a>. We will discuss the second measure in detail, and explain why it is needed, when we get to that point. OK let's get going!</p>
+<p>We will be selecting <a href="https://en.wikipedia.org/wiki/Hyperparameter">hyperparameters</a> by evaluating the performance of the models on the validation set. This will be done in a principled manner using a couple of performance measures. The first of these, the <a href="https://en.wikipedia.org/wiki/Matthews_correlation_coefficient">Matthews Correlation Coefficient (MCC)</a>, you have already seen during the creation of our <a href="5.0-baseline-model.ipynb">baseline model</a>. We will discuss the second measure in detail, and explain why it is needed, when we get to that point. OK let's get going!</p>
 
 </div>
 </div>
@@ -13168,7 +13168,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in both sets of training and validation features and targets as well as the sample weights we created for covariate shift adaptation. We make sure to convert the categorical fields to a numerical form that is suitable for building machine learning models.</p>
+<h2 id="Reading-in-the-Data">Reading in the Data<a class="anchor-link" href="#Reading-in-the-Data">&#182;</a></h2><p>First let's read in both sets of training and validation features and targets. We will also read in the sample weights that we created for covariate shift adaptation. Also let's convert the categorical fields to a numerical form that is suitable for building machine learning models.</p>
 
 </div>
 </div>
@@ -14317,7 +14317,7 @@ Name: physics_laureate, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Hyperparameter-Selection">Hyperparameter Selection<a class="anchor-link" href="#Hyperparameter-Selection">&#182;</a></h2><p>The hyperparameters of the models that we will be fitting are critical to their predictive performance. We will use an exhaustive grid search to select them in a principled manner. The optimal hyperparameter values will be chosen according to the set of values that maximize the Matthews Correlation Coefficient (MCC) on the validation set. The function below will be used to accomplish this task.</p>
+<h2 id="Hyperparameter-Selection">Hyperparameter Selection<a class="anchor-link" href="#Hyperparameter-Selection">&#182;</a></h2><p>The hyperparameters of the models that we will be fitting are critical to their predictive performance. We will use <a href="https://en.wikipedia.org/wiki/Hyperparameter_optimization#Grid_search">grid search</a> to select them in a principled manner. The optimal hyperparameter values will be chosen according to the set of values that maximize the MCC on the validation set. The function below will be used to accomplish this task.</p>
 
 </div>
 </div>
@@ -14473,7 +14473,7 @@ Name: physics_laureate, dtype: int64</pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Logistic-Regression-(LR)">Logistic Regression (LR)<a class="anchor-link" href="#Logistic-Regression-(LR)">&#182;</a></h3><p>The hyperparameters to be selected for the logistic regression model are:</p>
 <ul>
-<li>The <code>penalty</code> which is used to specify whether the $L1$ or $L2$ norms are used in the regularization. The latter favors sparse solutions and naturally performs feature selection. </li>
+<li>The <code>penalty</code>, which is used to specify whether the $L1$ or $L2$ norms are used in the <a href="https://en.wikipedia.org/wiki/Regularization_(mathematics">regularization</a>). The latter favors sparse solutions and naturally performs feature selection. </li>
 <li><code>C</code>, the inverse of regularization strength. Smaller values specify stronger regularization.</li>
 <li><code>class_weight</code>, the weights associated with the classes. It penalizes mistakes in samples of a class with its associated class_weight. So a higher value indicates more emphasis is put on a class.</li>
 </ul>
@@ -14528,7 +14528,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:42 Time:  0:00:42
+<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:44 Time:  0:00:44
 </pre>
 </div>
 </div>
@@ -14576,7 +14576,7 @@ Validation score:  0.494
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:25 Time:  0:00:25</pre>
+<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:26 Time:  0:00:26</pre>
 </div>
 </div>
 
@@ -14602,7 +14602,7 @@ Validation score:  0.522
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>From the warning message it is clear that the odds ratio is impractically large and consequently we cannot trust the model. This appears to be caused by some combination of <code>sample_weight</code>, <code>class_weight</code>. Note that the above warning appears for all values of the <code>class_weight</code> parameter when $L1$ regularization is used and does not appear at all when $L2$ regularization is used. Furthermore, the performance of the model is independent of the <code>class_weight</code> under $L2$ regularization. So let's try again excluding these parameters from the grid search ($L2$ regularization is used by default).</p>
+<p>From the warning message it is clear that the odds ratio is impractically large and consequently we cannot trust the model. This appears to be caused by some combination of <code>sample_weight</code> and <code>class_weight</code>. Note that the above warning appears for all values of the <code>class_weight</code> parameter when $L1$ regularization is used. It does not appear when $L2$ regularization is used. Furthermore, the performance of the model is independent of the <code>class_weight</code> under $L2$ regularization. So let's try again excluding these parameters from the grid search ($L2$ regularization is used by default).</p>
 
 </div>
 </div>
@@ -14763,7 +14763,7 @@ Validation score:  0.472
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can make the following observations about the results:</p>
 <ul>
-<li>All of the models selected a much larger class weight for the positive class than the negative class (except for the model where we excluded this hyperparameter from the grid search). It seems like the choice of this hyperparamter is important.</li>
+<li>All of the models selected a much larger <code>class_weight</code> for the positive class than the negative class (except for the model where we excluded this hyperparameter from the grid search). It seems like the choice of this hyperparamter is important.</li>
 <li>Models fitted with the original features are overfitting and those with the topics features are underfitting (the validation MCC's are higher than the training MCCs).</li>
 <li>Applying strong regularization does not improve performance for the original features.</li>
 </ul>
@@ -14878,7 +14878,7 @@ Validation score:  0.518
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 368 / 368 param sets |█████| 100% Elapsed Time: 0:00:22 Time:  0:00:22</pre>
+<pre>Running: 368 / 368 param sets |█████| 100% Elapsed Time: 0:00:23 Time:  0:00:23</pre>
 </div>
 </div>
 
@@ -15000,9 +15000,9 @@ Validation score:  0.366
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can make the following observations about the results:</p>
 <ul>
-<li>Once again, since all of the models selected a larger class weight for the positive class than the negative class, we can see that the choice of this hyperparameter is very important. Interestingly, the balanced class weight is chosen for the topics features.</li>
+<li>Once again, since all of the models selected a larger <code>class_weight</code> for the positive class than the negative class, we can see that the choice of this hyperparameter is very important. Interestingly, the balanced <code>class_weight</code> is chosen for the topics features.</li>
 <li>Again we see overfitting and underfitting of the models. However, for the classifiers fitted with the sample weights, the effect is far less pronounced than for the logistic regression models.</li>
-<li>The sample-weighted classifiers seem to favor larger values of C (smaller margin) whereas the unweighted ones facvor smaller values of C (larger margin). </li>
+<li>The sample-weighted classifiers seem to favor larger values of C (i.e. smaller margin) whereas the unweighted ones facvor smaller values of C (i.e larger margin). </li>
 </ul>
 
 </div>
@@ -15011,15 +15011,15 @@ Validation score:  0.366
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Random-Forest-(RF)">Random Forest (RF)<a class="anchor-link" href="#Random-Forest-(RF)">&#182;</a></h3><p>There are a multitude of hyperparameters that can be selected for a random forest model. The hyperparameters control the randomness of the forest. The aim is to set them such that reasonable predictive power of individual trees is achieved without excessive correlation between the trees (bias-variance trade-off). Based on the advice of Probst et al. in <a href="https://arxiv.org/pdf/1804.03515.pdf">Hyperparameters and Tuning Strategies for Random Forest</a>, we will restrict ourselves to the following most influential hyperparameters:</p>
+<h3 id="Random-Forest-(RF)">Random Forest (RF)<a class="anchor-link" href="#Random-Forest-(RF)">&#182;</a></h3><p>There are a multitude of hyperparameters that can be selected for a random forest model. The hyperparameters control the randomness of the forest. The aim is to set them such that reasonable predictive power of individual trees is achieved without excessive correlation between the trees (i.e. bias-variance trade-off). Based on the advice of <em>Probst et al.</em> in <a href="https://arxiv.org/pdf/1804.03515.pdf">Hyperparameters and Tuning Strategies for Random Forest</a>, we will restrict ourselves to the following most influential hyperparameters:</p>
 <ul>
 <li>The number of features <code>max_features</code> to consider when looking for the best split. Lower values lead to more diverse and less correlated trees, which results in more stable aggregation of predictions. However, lower values also lead to the individual trees being weaker predictors of the target variable.</li>
 <li>The minimum number of samples required to be at a leaf node <code>min_samples_leaf</code>. Lower values lead to
 trees of larger depth, which means that more splits are performed until the terminal nodes. More splits means the model is more complex and this can potentially lead to overfitting.</li>
 <li><code>class_weight</code>, as defined above for logistic regression.</li>
 </ul>
-<p>Note that the number of trees in the forest <code>n_estimators</code> will be fixed at 500. Following the recommendations of Probst et al., "the number of trees should be set high: the higher the number of trees, the better the results in terms of performance and precision of variable importances. However, the improvement obtained by adding trees diminishes as more and more trees are added." 500 trees in the forest seems like a reasonable compromise based on the stability of the solution and computational resources available.</p>
-<p>Let's perform the grid search now. Note that this takes a considerable amount of time due to the number of trees in the forest and the large hyperparameter space being searched. To reduce the computation time, we will perform a <em>random search</em> over one-quarter of the values in the hyperparameter space, by drawing randomly from a uniform distribution. Bergstra and Bengio show in <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">Random Search for Hyper-Parameter Optimization</a> that for neural networks random search is more efficient in searching good hyperparameter specifications than grid search.</p>
+<p>Note that the number of trees in the forest <code>n_estimators</code> will be fixed at 500. Following the recommendations of <em>Probst et al.</em>, "the number of trees should be set high: the higher the number of trees, the better the results in terms of performance and precision of variable importances. However, the improvement obtained by adding trees diminishes as more and more trees are added." 500 trees in the forest seems like a reasonable compromise based on the stability of the solution and computational resources available.</p>
+<p>Let's perform the grid search now. Note that this takes a considerable amount of time due to the number of trees in the forest and the large hyperparameter space being searched. To reduce the computation time, we will perform a <strong>random search</strong> over one-quarter of the values in the hyperparameter space, by drawing randomly from a uniform distribution. <em>Bergstra and Bengio</em> show in <a href="http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">Random Search for Hyper-Parameter Optimization</a> that for neural networks, random search is more efficient in searching good hyperparameter specifications than grid search.</p>
 
 </div>
 </div>
@@ -15075,7 +15075,7 @@ trees of larger depth, which means that more splits are performed until the term
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:04:55 Time:  0:04:55
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:02:41 Time:  0:02:41
 </pre>
 </div>
 </div>
@@ -15124,7 +15124,7 @@ Validation score:  0.521
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:05:05 Time:  0:05:05</pre>
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:02:41 Time:  0:02:41</pre>
 </div>
 </div>
 
@@ -15171,7 +15171,7 @@ Validation score:  0.544
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:04:56 Time:  0:04:56</pre>
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:02:37 Time:  0:02:37</pre>
 </div>
 </div>
 
@@ -15219,7 +15219,7 @@ Validation score:  0.387
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:05:05 Time:  0:05:05</pre>
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:02:35 Time:  0:02:35</pre>
 </div>
 </div>
 
@@ -15246,8 +15246,8 @@ Validation score:  0.388
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can make the following observations about the results:</p>
 <ul>
-<li>Once again, since all of the models selected a much larger class weight for the positive class than the negative class, we can see that the choice of this hyperparameter is very important.</li>
-<li>The original features classifiers seem to favor lower values of <code>min_samples_leaf</code> (deeper trees) and are overfitting considerably.</li>
+<li>Once again, since all of the models selected a much larger <code>class_weight</code> for the positive class than the negative class, we can see that the choice of this hyperparameter is very important.</li>
+<li>The original features classifiers seem to favor lower values of <code>min_samples_leaf</code> (i.e. deeper trees) and are overfitting considerably.</li>
 <li>The <code>max_features</code> is low for the majority of the classifiers, which means the individual trees are diverse, but weak predictors.</li>
 </ul>
 
@@ -15257,18 +15257,18 @@ Validation score:  0.388
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Model-Selection">Model Selection<a class="anchor-link" href="#Model-Selection">&#182;</a></h2><p>Despite the Matthews Correlation Coefficient (MCC) being a balanced measure, which is computed using the entire confusion matrix, it is not a suitable metric for choosing between classifiers. The reason is that its value depends on the <em>threshold</em>, $T$, that is used for separating the positive from the negative class. As such, it is quite possible that two classifiers can be made to perform identically by simply adjusting one of their thresholds. To avoid such artifacts a nonparametric performance measure such as a <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">Receiver Operator Characteristic</a> (ROC) curve is generally applied.</p>
+<h2 id="Model-Selection">Model Selection<a class="anchor-link" href="#Model-Selection">&#182;</a></h2><p>Despite the Matthews Correlation Coefficient (MCC) being a balanced measure, which is computed using the entire confusion matrix, it is not a suitable metric for choosing between classifiers. The reason is that its value depends on the <strong>threshold</strong>, $T$, that is used for separating the positive from the negative class. As such, it is quite possible that two classifiers can be made to perform identically by simply adjusting one of their thresholds. To avoid such artifacts, a nonparametric performance measure such as a <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">Receiver Operator Characteristic</a> (ROC) curve is generally applied.</p>
 <p>The ROC curve is constructed by using different values of the threshold, $T$, 
 to plot the <a href="https://en.wikipedia.org/wiki/False_positive_rate">false positive rate</a> (FPR) (or alternatively the <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">true negative rate</a>) (TNR = 1 - FPR) on the x-axis against the <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">true positive rate</a> (TPR) on the y-axis. The <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve">area under the ROC curve</a> is typically used as a measure of the predictive performance of a classifier. An alternative, is to construct the <a href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html">precision-recall</a> (PR) curve by using different values of the threshold, $T$, to plot the <a href="https://en.wikipedia.org/wiki/Precision_and_recall">recall</a> on the x-axis against the <a href="https://en.wikipedia.org/wiki/Precision_and_recall">precision</a> on the y-axis. In this case, the <a href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html">average precision</a> is typically used as a measure of the predictive performance of a classifier. For <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/">imbalanced datasets the PR curve is more informative</a>.</p>
-<p>I'd prefer not to resort to new measures and would like to continue working directly with the MCC. I'll follow the methodology of Zhou and Jakobsson in <a href="https://www.researchgate.net/publication/259354929_Predicting_Protein-Protein_Interaction_by_the_Mirrortree_Method_Possibilities_and_Limitations">Predicting Protein-Protein Interaction by the MirrortreeMethod: Possibilities and Limitations</a> by constructing the MCC curve. This curve plots different values of the threshold, $T$, on the x-axis against the <a href="https://en.wikipedia.org/wiki/Matthews_correlation_coefficient">Matthews Correlation Coefficient</a> (MCC) on the y-axis. The area under the MCC curve seems like an intuitive measure of the predictive performance of a classifier and is defined by:</p>
+<p>We would prefer not to resort to new measures and would like to continue working directly with the MCC. Following the methodology of <em>Zhou and Jakobsson</em> in <a href="https://www.researchgate.net/publication/259354929_Predicting_Protein-Protein_Interaction_by_the_Mirrortree_Method_Possibilities_and_Limitations">Predicting Protein-Protein Interaction by the MirrortreeMethod: Possibilities and Limitations</a> we can construct an MCC curve. This curve plots different values of the threshold, $T$, on the x-axis against the <a href="https://en.wikipedia.org/wiki/Matthews_correlation_coefficient">Matthews Correlation Coefficient</a> (MCC) on the y-axis. The area under the MCC curve seems like an intuitive measure of the predictive performance of a classifier and is defined by:</p>
 \begin{equation}
 AUC_{MCC} = \int_{-\infty}^{\infty} MCC(T) dT
-\end{equation}<p>However, the problem with this measure is that it is not easy to discern good performance versus bad performance. So let's normalize by the area under the MCC curve assuming $MCC \equiv 1$ for <em>all</em> thresholds, $T$. Thus we define the <strong>normalized area under the MCC curve</strong> as:</p>
+\end{equation}<p>However, the problem with this measure is that it is not easy to discern good performance versus bad performance. So let's normalize by the area under the MCC curve assuming $MCC \equiv 1$ for <em>all</em> thresholds, $T$. We can now define a new measure known as the <strong>normalized area under the MCC curve</strong>:</p>
 \begin{equation}
 NAUC_{MCC} = \frac{AUC_{MCC}}{AUC_{MCC \equiv 1}}
-\end{equation}<p>As a result, the interpretation of the $NAUC_{MCC}$ is analogous to that of the MCC. It has an upper limit of +1 indicating a perfect prediction, a lower limit of -1 indicating total disagreement between prediction and observation and a mid value of 0 representing a random prediction. To the best of my knowledge this is the first time the normalized area under the MCC curve has been defined and used in a study.</p>
+\end{equation}<p>As a result, the interpretation of the $NAUC_{MCC}$ is analogous to that of the MCC. It has an upper limit of +1 indicating a perfect prediction, a lower limit of -1 indicating total disagreement between prediction and observation and a mid value of 0 representing a random prediction. To the best of our knowledge this is the first time the normalized area under the MCC curve has been defined and used in a study.</p>
 <p>An interesting case is the case of a probabilistic classfier where $T \in [0, 1]$. By definition, for such a classifier, $AUC_{MCC \equiv 1} = 1$ and $NAUC_{MCC} = AUC_{MCC} = \int_{0}^{1} MCC(T) dT$. So we see that the AUC is already normalized. For all other classifiers we should perform the normalization by integrating over the finite range of thresholds.</p>
-<p>Now let's proceed and plot the MCC curves for each of the classifiers, evaluate their normalized AUC and see how they performance compared to our <a href="5.0-baseline-model.ipynb">baseline classifier</a>. Note that for the support vector machine (SVM) classifiers, I have normalized the thresholds $T \in [0, 1]$ so that their performance can be visualized on the same scale as the logistic regression (LR) and random forest (RF) classifiers.</p>
+<p>Now let's proceed and plot the MCC curves for each of the classifiers, evaluate their normalized AUC and see how they perform compared to our <a href="5.0-baseline-model.ipynb">baseline classifier</a>. Note that for the support vector machine (SVM) classifiers, we will normalize the thresholds $T \in [0, 1]$ so that their performance can be visualized on the same scale as the logistic regression (LR) and random forest (RF) classifiers.</p>
 
 </div>
 </div>
@@ -15411,7 +15411,7 @@ NAUC_{MCC} = \frac{AUC_{MCC}}{AUC_{MCC \equiv 1}}
 <li>All $NAUC_{MCC}$'s are significantly greater than zero. This lends further support to the first point. It looks like there is some signal in the data for predicting the target. However, the low values indicate that the majority of the classifiers are weak.</li>
 <li>The logistic regression classifiers perform better than the random forest classifiers, which in turn, perform better than the support vector machine classifiers.</li>
 <li>Performance of the classifiers trained with the topics features are worse than those trained with the original features. It seems like some important information was lost during topic modeling.</li>
-<li>The effect of the sample weights varies with classifier type and feature type. Using sample weights improves the performance of the support vector machine classifier when using the original features. However, sample weights worsen the performance when the topics features are used or the classifier is a logistic regression or random forest. Although, the difference is very small for the original features.</li>
+<li>The effect of the sample weights varies with classifier type and feature type. Using sample weights improves the performance of the SVM classifier when using the original features. However, sample weights worsen the performance when topics features are used or the classifier is a logistic regression or random forest. Although, the difference is very small for the original features.</li>
 </ol>
 <p>Clearly we should select the logistic regression classifier as it is the best performer based on $NAUC_{MCC}$.</p>
 
@@ -15421,7 +15421,7 @@ NAUC_{MCC} = \frac{AUC_{MCC}}{AUC_{MCC \equiv 1}}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Optimal-Classification-Threshold">Optimal Classification Threshold<a class="anchor-link" href="#Optimal-Classification-Threshold">&#182;</a></h2><p>Our work is not quite done yet as we still have to choose an optimal classification threshold for the LR + sample weights classifier. Below we plot the classification threshold against the Matthews Correlation Coefficient (MCC), true positive rate (TPR) and true negative rate (TNR) to help us with this selection. Naturally, there is a tradeoff between the TPR and the TNR. Minimizing false positives (i.e. maximizing the TNR) is more important than minimizing false negatives (i.e. maximizing the TPR) when classifying the physicists as laureates and non-laureates. This is because we are trying to gain insight into any kinds of biases that may involved when a physicist is awarded the Nobel Prize. So any threshold to the right of the intersection of the TPR and TNR would satisfy this criteria. However, we must also ensure that we retrieve as many of the true positives as possible so that the conclusions we draw are based on an as large as possible sample of <em>actual</em> laureates. So intuitively, the threshold corresponding to the maximum value of the MCC, seems to be a good choice for the optimal classification threshold.</p>
+<h2 id="Optimal-Classification-Threshold">Optimal Classification Threshold<a class="anchor-link" href="#Optimal-Classification-Threshold">&#182;</a></h2><p>Our work is not quite done yet as we still have to choose an optimal classification threshold for the <strong>LR + sample weights</strong> classifier. Below we plot the classification threshold against the Matthews Correlation Coefficient (MCC), true positive rate (TPR) and true negative rate (TNR) to help us with this selection. Naturally, there is a tradeoff between the TPR and the TNR. Minimizing false positives (i.e. maximizing the TNR) is more important than minimizing false negatives (i.e. maximizing the TPR) when classifying the physicists as laureates and non-laureates. This is because we are trying to gain insight into any kinds of biases that may involved when a physicist is awarded the Nobel Prize. So any threshold to the right of the intersection of the TPR and TNR would satisfy this criteria. However, we must also ensure that we retrieve as many of the true positives as possible so that the conclusions we draw are based on a large as possible sample of <em>actual</em> laureates. So intuitively, the threshold corresponding to the maximum value of the MCC, seems to be a good choice for the optimal classification threshold.</p>
 
 </div>
 </div>
@@ -15432,8 +15432,8 @@ NAUC_{MCC} = \frac{AUC_{MCC}}{AUC_{MCC \equiv 1}}
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_mcc_tpr_tnr</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot the Matthew Correlation Coefficients (MCC), true positive rate (TPR) and true negative rate (TNR) </span>
-<span class="sd">        as a function of the classification threshold for a classifier. </span>
+    <span class="sd">&quot;&quot;&quot;Plot the Matthew Correlation Coefficients (MCC), true positive rate (TPR) and true negative rate</span>
+<span class="sd">        (TNR) as a function of the classification threshold for a classifier. </span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
 <span class="sd">        clf ([type]): [description]</span>
@@ -15527,14 +15527,14 @@ NAUC_{MCC} = \frac{AUC_{MCC}}{AUC_{MCC \equiv 1}}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Or alternatively, if you prefer, the confusion matrix and the classification report of this classifier tell a similar story to what I've described above.</p>
+<p>Or alternatively, if you prefer, the confusion matrix and the classification report of this classifier tell a similar story to that described above.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">best_classifier</span> <span class="o">=</span> <span class="n">logit_results</span><span class="p">[</span><span class="s1">&#39;best_classifier&#39;</span><span class="p">]</span>
@@ -15633,14 +15633,14 @@ weighted avg       0.83      0.79      0.80       192
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Persisting-the-Best-Classifier-Parameters">Persisting the Best Classifier Parameters<a class="anchor-link" href="#Persisting-the-Best-Classifier-Parameters">&#182;</a></h2><p>Now we have the best classifier, let's persist it's parameters and associated metadata, which will allow us to reconstruct the classifier at any point in the future. Note that I am not persisting the actual sklearn estimator using <a href="https://pypi.org/project/joblib/">joblib</a> or <a href="https://docs.python.org/3/library/pickle.html">pickle</a> as I'd like to avoid any <a href="https://stackabuse.com/scikit-learn-save-and-restore-models/#compatibilityissues">compatibility or security issues</a>.</p>
+<h2 id="Persisting-the-Best-Classifier-Parameters">Persisting the Best Classifier Parameters<a class="anchor-link" href="#Persisting-the-Best-Classifier-Parameters">&#182;</a></h2><p>Now we have the best classifier, let's persist it's parameters and associated metadata, which will allow us to reconstruct the classifier at any point in the future. Note that we are not persisting the actual sklearn estimator using <a href="https://pypi.org/project/joblib/">joblib</a> or <a href="https://docs.python.org/3/library/pickle.html">pickle</a> as we would like to avoid any <a href="https://stackabuse.com/scikit-learn-save-and-restore-models/#compatibilityissues">compatibility or security issues</a>.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">best_classifier_params</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
@@ -15660,7 +15660,7 @@ weighted avg       0.83      0.79      0.80       192
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[34]:</div>
+    <div class="prompt output_prompt">Out[33]:</div>
 
 
 
@@ -15680,7 +15680,7 @@ Name: LR, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">best_classifier_params</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../models/&#39;</span> <span class="o">+</span> <span class="n">best_classifier_params</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -15694,14 +15694,14 @@ Name: LR, dtype: object</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As a sanity check let's recreate the estimator and make sure that we get the same results as before.</p>
+<p>As a sanity check, let's recreate the estimator and make sure that we get the same results as before.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">best_classifier_params_check</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../models/&#39;</span> <span class="o">+</span> <span class="n">best_classifier_params</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span><span class="p">,</span>
@@ -15719,7 +15719,7 @@ Name: LR, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[36]:</div>
+    <div class="prompt output_prompt">Out[35]:</div>
 
 
 
@@ -15739,7 +15739,7 @@ Name: LR, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">best_classifier_check</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="o">**</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">best_classifier_params_check</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
@@ -15756,7 +15756,7 @@ Name: LR, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[38]:</div>
+    <div class="prompt output_prompt">Out[36]:</div>
 
 
 
@@ -15776,7 +15776,7 @@ Name: LR, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">best_classifier_check</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_validation</span><span class="p">),</span> <span class="n">best_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_validation</span><span class="p">)))</span>
