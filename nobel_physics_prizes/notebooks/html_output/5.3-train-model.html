@@ -14528,7 +14528,7 @@ Name: physics_laureate, dtype: int64</pre>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:44 Time:  0:00:44
+<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:43 Time:  0:00:43
 </pre>
 </div>
 </div>
@@ -14576,7 +14576,7 @@ Validation score:  0.494
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:26 Time:  0:00:26</pre>
+<pre>Running: 966 / 966 param sets |█████| 100% Elapsed Time: 0:00:25 Time:  0:00:25</pre>
 </div>
 </div>
 
@@ -15171,7 +15171,7 @@ Validation score:  0.544
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:02:37 Time:  0:02:37</pre>
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:02:33 Time:  0:02:33</pre>
 </div>
 </div>
 
@@ -15219,7 +15219,7 @@ Validation score:  0.387
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:02:35 Time:  0:02:35</pre>
+<pre>Running: 245 / 245 param sets |█████| 100% Elapsed Time: 0:02:32 Time:  0:02:32</pre>
 </div>
 </div>
 
@@ -15421,7 +15421,7 @@ NAUC_{MCC} = \frac{AUC_{MCC}}{AUC_{MCC \equiv 1}}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Optimal-Classification-Threshold">Optimal Classification Threshold<a class="anchor-link" href="#Optimal-Classification-Threshold">&#182;</a></h2><p>Our work is not quite done yet as we still have to choose an optimal classification threshold for the <strong>LR + sample weights</strong> classifier. Below we plot the classification threshold against the Matthews Correlation Coefficient (MCC), true positive rate (TPR) and true negative rate (TNR) to help us with this selection. Naturally, there is a tradeoff between the TPR and the TNR. Minimizing false positives (i.e. maximizing the TNR) is more important than minimizing false negatives (i.e. maximizing the TPR) when classifying the physicists as laureates and non-laureates. This is because we are trying to gain insight into any kinds of biases that may involved when a physicist is awarded the Nobel Prize. So any threshold to the right of the intersection of the TPR and TNR would satisfy this criteria. However, we must also ensure that we retrieve as many of the true positives as possible so that the conclusions we draw are based on a large as possible sample of <em>actual</em> laureates. So intuitively, the threshold corresponding to the maximum value of the MCC, seems to be a good choice for the optimal classification threshold.</p>
+<h2 id="Optimal-Classification-Threshold">Optimal Classification Threshold<a class="anchor-link" href="#Optimal-Classification-Threshold">&#182;</a></h2><p>Our work is not quite done yet as we still have to choose an optimal classification threshold for the <strong>LR classifier</strong>. Below we plot the classification threshold against the Matthews Correlation Coefficient (MCC), true positive rate (TPR) and true negative rate (TNR) to help us with this selection. Naturally, there is a tradeoff between the TPR and the TNR. Minimizing false positives (i.e. maximizing the TNR) is more important than minimizing false negatives (i.e. maximizing the TPR) when classifying the physicists as laureates and non-laureates. This is because we are trying to gain insight into any kinds of biases that may involved when a physicist is awarded the Nobel Prize. So any threshold to the right of the intersection of the TPR and TNR would satisfy this criteria. However, we must also ensure that we retrieve as many of the true positives as possible so that the conclusions we draw are based on a large as possible sample of <em>actual</em> laureates. So intuitively, the threshold corresponding to the maximum value of the MCC, seems to be a good choice for the optimal classification threshold.</p>
 
 </div>
 </div>
