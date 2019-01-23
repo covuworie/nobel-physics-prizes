@@ -4,6 +4,7 @@ from concurrent.futures import as_completed
 from random import random
 from urllib import parse
 
+import pandas as pd
 import progressbar
 import requests
 from bs4 import BeautifulSoup
@@ -26,31 +27,6 @@ BLACKLIST_LINKS = [
     'Ricardo Carezani',  # not found in DBpedia (misspelt there?)
     'Twersky#Twersky'  # a group of people of this name
 ]
-
-"""dict: Forced redirects.
-
-Force the following redirects as DBpedia is not in sync with
-Wikipedia for these names.
-"""
-FORCED_REDIRECTS = {
-    'Ea Ea': 'Craige Schensted',
-    'Ernest Mouchez': 'Amédée Mouchez',
-    'Gian Carlo Wick': 'Gian-Carlo Wick',
-    'Hans Adolf Buchdahl': 'Hans Adolph Buchdahl',
-    'Hans Ziegler (physicist)': 'Hans Ziegler',
-    'James Jeans': 'James Hopwood Jeans',
-    'Kenneth Young (physicist)': 'Kenneth Young',
-    'Lawrence Bragg': 'William Lawrence Bragg',
-    'Maria Goeppert Mayer': 'Maria Goeppert-Mayer',
-    'Raúl Rabadán': 'Raúl Rabadan',
-    "Shin'ichirō Tomonaga": "Sin'ichirō Tomonaga",
-    'Thales of Miletus': 'Thales',
-    'William Fuller Brown Jr.': 'William Fuller Brown, Jr.',
-    'Yakov Alpert': 'Yakov Lvovich Alpert',
-    'Yakov Zeldovich': "Yakov Borisovich Zel'dovich",
-    'Yang Chen-Ning': 'Chen-Ning Yang',
-    'Yulii Khariton': 'Yulii Borisovich Khariton'
-}
 
 """list of `str`: Section titles.
 
@@ -123,15 +99,14 @@ def get_linked_article_titles(url, section_titles, blacklist_links=None):
 
 
 def get_redirected_titles(
-        titles, forced_redirects=None, max_workers=2, timeout=10,
+        titles_to_check, title_cache_path=None, max_workers=2, timeout=10,
         progress_bar=None):
     """Get a list of redirected links from a list of Wikipedia articles.
 
     Args:
-        titles (list of `str`): List of titles to fetch.
-        forced_redirects (dict, optional): Defaults to None. A mapping
-            of titles to force. The key is the retrieved Wikipedia title
-            and the value is its know DBpedia title.
+        titles_to_check (list of `str`): List of titles to request.
+        title_cache_path (str, optional): Defaults to None. Path of the csv file
+            where the title cache of known mappings is located.
         max_workers (int, optional): Defaults to 2. Number of workers to
             use in the thread pool.
         timeout (int, optional): Defaults to 10. Maximum timeout to allow
@@ -147,6 +122,16 @@ def get_redirected_titles(
 
         """
 
+    titles = titles_to_check.copy()
+    redirected_titles = {}
+    if title_cache_path:
+        cache = pd.read_csv(title_cache_path)
+        redirected_titles = dict(zip(cache.name, cache.redirect_name))
+    titles = (
+        list({parse.unquote(name) for name in titles_to_check if isinstance(name, str)} -
+        set(redirected_titles.keys()))
+        )
+
     futures = {}
     with FuturesSession(max_workers=max_workers) as session:
         if progress_bar:
@@ -159,7 +144,6 @@ def get_redirected_titles(
                 future = session.get(url, timeout=timeout)
                 futures[future] = title
 
-        redirected_titles = {}
         num_iters = 0
         for future in as_completed(futures):
             try:
@@ -183,7 +167,6 @@ def get_redirected_titles(
         if progress_bar:
             progress_bar.finish()
 
-    redirected_titles = _force_redirects(redirected_titles, forced_redirects)
     return redirected_titles
 
 
@@ -205,13 +188,3 @@ def _parse_javascript(response):
                 return redirected_title
 
     return None
-
-
-def _force_redirects(redirected_titles, forced_redirects):
-    redirects = copy.deepcopy(redirected_titles)
-
-    for key, value in redirected_titles.items():
-        if value in forced_redirects:
-            redirects[key] = forced_redirects[value]
-
-    return redirects

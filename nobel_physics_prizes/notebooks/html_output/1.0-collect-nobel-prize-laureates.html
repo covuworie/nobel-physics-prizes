@@ -13176,7 +13176,6 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">wikitextparser</span> <span class="k">as</span> <span class="nn">wtp</span>
 
 <span class="kn">from</span> <span class="nn">src.data.url_utils</span> <span class="k">import</span> <span class="n">urls_progress_bar</span>
-<span class="kn">from</span> <span class="nn">src.data.wiki_utils</span> <span class="k">import</span> <span class="n">FORCED_REDIRECTS</span>
 <span class="kn">from</span> <span class="nn">src.data.wiki_utils</span> <span class="k">import</span> <span class="n">get_redirected_titles</span>
 </pre></div>
 
@@ -13208,7 +13207,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Scraping-the-Nobel-Physics-Laureates">Scraping the Nobel Physics Laureates<a class="anchor-link" href="#Scraping-the-Nobel-Physics-Laureates">&#182;</a></h2><p>We will use a combination of <a href="https://github.com/wikimedia/pywikibot">pywikibot</a> and <a href="https://github.com/5j9/wikitextparser">wikitextparser</a> to scrape the laureates data from the tables in the Wikipedia pages above and store it in a <a href="https://pandas.pydata.org/">pandas</a> dataframe. In the future we will need to fetch data about the physicists from <a href="https://wiki.dbpedia.org/about">DBpedia</a> using the links in the table, so <a href="http://docs.python-requests.org/en/master/">requests</a> and <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">beautifulsoup</a> will be used to obtain these. An important point to note is that we will actually need to send HTTP requests to fetch the linked pages as some of them redirect to different URLs. The tricky part is that the redirects are done via javascript, so they are not detected by requests. As a result, we will have to parse the javascript to find the redirect link. Even after all of this, some of the redirected Wikipedia links do not match the DBpedia links, resulting in the wrong resource being retrieved. To avoid this, we manually force the correct redirects now.</p>
+<h2 id="Scraping-the-Nobel-Physics-Laureates">Scraping the Nobel Physics Laureates<a class="anchor-link" href="#Scraping-the-Nobel-Physics-Laureates">&#182;</a></h2><p>We will use a combination of <a href="https://github.com/wikimedia/pywikibot">pywikibot</a> and <a href="https://github.com/5j9/wikitextparser">wikitextparser</a> to scrape the laureates data from the tables in the Wikipedia pages above and store it in a <a href="https://pandas.pydata.org/">pandas</a> dataframe. In the future we will need to fetch data about the physicists from <a href="https://wiki.dbpedia.org/about">DBpedia</a> using the links in the table, so <a href="http://docs.python-requests.org/en/master/">requests</a> and <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">beautifulsoup</a> will be used to obtain these. An important point to note is that we will actually need to send HTTP requests to fetch the linked pages as some of them redirect to different URLs. The tricky part is that the redirects are done via javascript, so they are not detected by requests. As a result, we will have to parse the javascript to find the redirect link. Even after all of this, some of the redirected Wikipedia links do not match the DBpedia links, resulting in the wrong resource being retrieved. To avoid this, we manually force the correct redirects using a <a href="../data/raw/wikipedia-redirects.csv">wikipedia redirects cache</a>.</p>
 <p>Let's start with the physics laureates.</p>
 
 </div>
@@ -13599,7 +13598,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This table is extremely messy containing lots of wiki markup so let's clean it up.</p>
+<p>This table is extremely messy, containing lots of wiki markup, so let's clean it up.</p>
 
 </div>
 </div>
@@ -13609,12 +13608,14 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">clean_laureates_dataframe</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">clean_laureates_dataframe</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">title_cache_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Cleanup a table of Nobel Laureates from Wikipedia.</span>
 
 <span class="sd">     Args:</span>
 <span class="sd">        table (pandas.Dataframe): Pandas dataframe containing table</span>
 <span class="sd">            information.</span>
+<span class="sd">        title_cache_path (str, optional): Defaults to None. Path of the csv file</span>
+<span class="sd">            where the title cache of known mappings is located.</span>
 <span class="sd">        progress_bar (progressbar.ProgressBar): Progress bar.</span>
 
 <span class="sd">    Returns:</span>
@@ -13642,10 +13643,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
     <span class="c1"># get the redirect title (if any) from a HTTP request</span>
     <span class="n">laureates</span> <span class="o">=</span> <span class="n">cleaned_table</span><span class="o">.</span><span class="n">Laureate</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
     <span class="n">redirected_titles</span> <span class="o">=</span> <span class="n">get_redirected_titles</span><span class="p">(</span>
-        <span class="n">laureates</span><span class="p">,</span>
-        <span class="n">forced_redirects</span><span class="o">=</span><span class="n">FORCED_REDIRECTS</span><span class="p">,</span>
-        <span class="n">max_workers</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-        <span class="n">progress_bar</span><span class="o">=</span><span class="n">progress_bar</span><span class="p">)</span>
+        <span class="n">laureates</span><span class="p">,</span> <span class="n">title_cache_path</span> <span class="o">=</span> <span class="n">title_cache_path</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="n">progress_bar</span><span class="p">)</span>
     <span class="n">cleaned_table</span><span class="p">[</span><span class="s1">&#39;Laureate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cleaned_table</span><span class="o">.</span><span class="n">Laureate</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">title</span><span class="p">:</span> <span class="n">redirected_titles</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">title</span><span class="p">)</span>
     
@@ -13710,7 +13708,9 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">NUM_URLS</span> <span class="o">=</span> <span class="mi">213</span>
-<span class="n">physics_laureates</span> <span class="o">=</span> <span class="n">clean_laureates_dataframe</span><span class="p">(</span><span class="n">physics_laureates</span><span class="p">,</span> <span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
+<span class="n">title_cache_path</span> <span class="o">=</span> <span class="s1">&#39;../data/raw/wikipedia-redirects.csv&#39;</span>
+<span class="n">physics_laureates</span> <span class="o">=</span> <span class="n">clean_laureates_dataframe</span><span class="p">(</span><span class="n">physics_laureates</span><span class="p">,</span> <span class="n">title_cache_path</span><span class="o">=</span><span class="n">title_cache_path</span><span class="p">,</span>
+                                              <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -13727,7 +13727,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 213 / 213 urls |██████████| 100% Elapsed Time: 0:00:15 Time:  0:00:15
+<pre>Fetching: 213 / 213 urls |██████████| 100% Elapsed Time: 0:00:12 Time:  0:00:12
 </pre>
 </div>
 </div>
@@ -15686,7 +15686,8 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">NUM_URLS</span> <span class="o">=</span> <span class="mi">186</span>
-<span class="n">chemistry_laureates</span> <span class="o">=</span> <span class="n">clean_laureates_dataframe</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="p">,</span> <span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
+<span class="n">chemistry_laureates</span> <span class="o">=</span> <span class="n">clean_laureates_dataframe</span><span class="p">(</span><span class="n">chemistry_laureates</span><span class="p">,</span>
+                                                <span class="n">progress_bar</span><span class="o">=</span><span class="n">urls_progress_bar</span><span class="p">(</span><span class="n">NUM_URLS</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -15703,7 +15704,7 @@ Defaulting to family=&#39;test&#39; and mylang=&#39;test&#39;.
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Fetching: 186 / 186 urls |██████████| 100% Elapsed Time: 0:00:12 Time:  0:00:12
+<pre>Fetching: 186 / 186 urls |██████████| 100% Elapsed Time: 0:00:10 Time:  0:00:10
 </pre>
 </div>
 </div>
