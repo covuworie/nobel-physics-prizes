@@ -106,3 +106,7 @@ Script tests use [pytest](https://docs.pytest.org/en/latest/) and can be run fro
 ```
 pytest
 ```
+
+## Report
+
+A full report of this project is available under the *docs* directory and can be viewed using any web browser. For convenience, the [report will launch in Github HTML Preview](https://htmlpreview.github.io/?https://github.com/covuworie/nobel-physics-prizes/blob/master/nobel_physics_prizes/docs/report.html).
