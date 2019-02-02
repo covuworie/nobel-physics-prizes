@@ -14,9 +14,9 @@ The [Nobel Prize in Physics](https://www.nobelprize.org/prizes/physics/) is wide
 
 The **Nobel Prize in Physics** is awarded by *The Royal Swedish Academy of Sciences*, Stockholm, Sweden. The [nomination and selection process](https://www.nobelprize.org/nomination/physics/) is a lengthy and complex process taking just over a year. Three of the key stages are:
 
-- September - Nomination forms are sent out. The *Nobel Committee* sends out confidential forms to around 3,000 people – selected professors at universities around the world, Nobel Laureates in Physics and Chemistry, and members of the *Royal Swedish Academy of Sciences*, among others.
+- September - Nomination forms are sent out. The *Nobel Committee* sends out confidential forms to around 3,000 people - selected professors at universities around the world, Nobel Laureates in Physics and Chemistry, and members of the *Royal Swedish Academy of Sciences*, among others.
 
-- March-May - Consultation with experts. The Nobel Committee sends the names of the preliminary candidates to specially appointed experts for their assessment of the candidates’ work.
+- March-May - Consultation with experts. The Nobel Committee sends the names of the preliminary candidates to specially appointed experts for their assessment of the candidates' work.
 
 - October - Nobel Laureates are chosen. In early October, the Academy selects the Nobel Laureates in Physics through a majority vote. The decision is final and without appeal. The names of the Nobel Laureates are then announced.
 
@@ -30,7 +30,7 @@ Furthermore, [details of the nominations](https://www.nobelprize.org/nomination/
 - Theorist or experimentalist
 - Astronomer or physicist
 
-The **Physics Today** article claims that "We’ll probably never know for sure why some physicists win Nobel glory and others come up short; the Nobel committee is notoriously secretive about their deliberations." However, the data in the article suggests that there may exist underlying patterns that in general enhance a physicist's chance of winning a Nobel prize.
+The **Physics Today** article claims that "We'll probably never know for sure why some physicists win Nobel glory and others come up short; the Nobel committee is notoriously secretive about their deliberations." However, the data in the article suggests that there may exist underlying patterns that in general enhance a physicist's chance of winning a Nobel prize.
 
 ## Project Goals
 
@@ -94,6 +94,27 @@ pipenv install --dev
 ```
 jupyter lab
 ```
+
+## Notebooks
+
+Notebooks are located under the *notebooks* directory. The individual notebooks of the projects can be run interactively in *JupyterLab*. Or if you prefer, there is the [run-all notebook](nobel_physics_prizes/notebooks/run-all.ipynb), which allows one to run all the notebooks sequentially in a non-interactive manner. This is useful for reproducing the output results of the entire study without having to interact with the individual notebooks.
+
+The outputs of the individual notebooks are located in HTML files under the *notebooks/html_output* directory and can be viewed in a web browser. They are produced after a notebook has been run by issuing the following command in a terminal from the *notebooks* directory:
+
+```
+jupyter nbconvert --to html --output-dir=html mynotebook.ipynb
+```
+
+The actual notebooks only contain source code and markdown narrative as the output is cleaned after running them by issuing the following commands in a terminal from the *notebooks* directory:
+
+```
+jupyter nbconvert --to notebook --ClearOutputPreprocessor.enabled=True mynotebook.ipynb
+
+mv mynotebook.nbconvert.ipynb nbconvert.ipynb
+```
+
+Cleaning the output allows for better source control of notebooks as the diff outputs only contain code and markdown narrative changes. If output diffs are desired then the diffs between the versions of html files can be examined.
+
 
 ## Tests
 

@@ -13143,9 +13143,9 @@ Illustration: Niklas Elmehad/Nobel Media (<a href="https://spectrum.ieee.org/tec
 <h2 id="Background">Background<a class="anchor-link" href="#Background">&#182;</a></h2><p>The <a href="https://www.nobelprize.org/prizes/physics/">Nobel Prize in Physics</a> is widely regarded as the most prestigious award in Physics. It has been awarded to 207 Nobel Laureates between 1901 and 2017. <em>John Bardeen</em> is the only double Nobel Laureate meaning that 206 physicists have actually won the prize. The will of <em>Alfred Nobel</em> states that that the prize should be awarded to the "person who shall have made the most important discovery or invention within the field of physics". In fact, the prize can actually be awarded to a maximum of 3 people in any year and can be split for a maximum of 2 inventions or discoveries. The prize is not awarded posthumously; however, if a person is awarded a prize and dies before receiving it, the prize may still be presented.</p>
 <h2 id="Problem-Statement">Problem Statement<a class="anchor-link" href="#Problem-Statement">&#182;</a></h2><p>The <strong>Nobel Prize in Physics</strong> is awarded by <em>The Royal Swedish Academy of Sciences</em>, Stockholm, Sweden. The <a href="https://www.nobelprize.org/nomination/physics/">nomination and selection process</a> is a lengthy and complex process taking just over a year. Three of the key stages are:</p>
 <ul>
-<li><p>September - Nomination forms are sent out. The <em>Nobel Committee</em> sends out confidential forms to around 3,000 people â€“ selected professors at universities around the world, Nobel Laureates in Physics and Chemistry, and members of the <em>Royal Swedish Academy of Sciences</em>, among others.</p>
+<li><p>September - Nomination forms are sent out. The <em>Nobel Committee</em> sends out confidential forms to around 3,000 people - selected professors at universities around the world, Nobel Laureates in Physics and Chemistry, and members of the <em>Royal Swedish Academy of Sciences</em>, among others.</p>
 </li>
-<li><p>March-May - Consultation with experts. The Nobel Committee sends the names of the preliminary candidates to specially appointed experts for their assessment of the candidatesâ€™ work.</p>
+<li><p>March-May - Consultation with experts. The Nobel Committee sends the names of the preliminary candidates to specially appointed experts for their assessment of the candidates' work.</p>
 </li>
 <li><p>October - Nobel Laureates are chosen. In early October, the Academy selects the Nobel Laureates in Physics through a majority vote. The decision is final and without appeal. The names of the Nobel Laureates are then announced.</p>
 </li>
@@ -13160,7 +13160,7 @@ Illustration: Niklas Elmehad/Nobel Media (<a href="https://spectrum.ieee.org/tec
 <li>Theorist or experimentalist</li>
 <li>Astronomer or physicist</li>
 </ul>
-<p>The <strong>Physics Today</strong> article claims that "Weâ€™ll probably never know for sure why some physicists win Nobel glory and others come up short; the Nobel committee is notoriously secretive about their deliberations." However, the data in the article suggests that there may exist underlying patterns that in general enhance a physicist's chance of winning a Nobel prize.</p>
+<p>The <strong>Physics Today</strong> article claims that "We'll probably never know for sure why some physicists win Nobel glory and others come up short; the Nobel committee is notoriously secretive about their deliberations." However, the data in the article suggests that there may exist underlying patterns that in general enhance a physicist's chance of winning a Nobel prize.</p>
 <h2 id="Project-Goals">Project Goals<a class="anchor-link" href="#Project-Goals">&#182;</a></h2><p>The goals of the project are to answer the following questions:</p>
 <ol>
 <li>Do demographics play a major role in selecting the winner of the Nobel Prize in Physics?</li>
@@ -13214,11 +13214,22 @@ Make sure to check the option "Add python 3.6 to PATH" during installation.</p>
 </ol>
 
 <pre><code>jupyter lab</code></pre>
+<h2 id="Notebooks">Notebooks<a class="anchor-link" href="#Notebooks">&#182;</a></h2><p>Notebooks are located under the <em>notebooks</em> directory. The individual notebooks of the projects can be run interactively in <em>JupyterLab</em>. Or if you prefer, there is the <a href="nobel_physics_prizes/notebooks/run-all.ipynb">run-all notebook</a>, which allows one to run all the notebooks sequentially in a non-interactive manner. This is useful for reproducing the output results of the entire study without having to interact with the individual notebooks.</p>
+<p>The outputs of the individual notebooks are located in HTML files under the <em>notebooks/html_output</em> directory and can be viewed in a web browser. They are produced after a notebook has been run by issuing the following command in a terminal from the <em>notebooks</em> directory:</p>
+
+<pre><code>jupyter nbconvert --to html --output-dir=html mynotebook.ipynb</code></pre>
+<p>The actual notebooks only contain source code and markdown narrative as the output is cleaned after running them by issuing the following commands in a terminal from the <em>notebooks</em> directory:</p>
+
+<pre><code>jupyter nbconvert --to notebook --ClearOutputPreprocessor.enabled=True mynotebook.ipynb
+
+mv mynotebook.nbconvert.ipynb nbconvert.ipynb</code></pre>
+<p>Cleaning the output allows for better source control of notebooks as the diff outputs only contain code and markdown narrative changes. If output diffs are desired then the diffs between the versions of html files can be examined.</p>
 <h2 id="Tests">Tests<a class="anchor-link" href="#Tests">&#182;</a></h2><p>Tests are located under the <em>tests</em> directory. There are two sets of tests, tests for the notebooks located at <em>tests/notebooks</em> and tests for the scripts located at <em>tests/src</em>.</p>
 <p>Notebook tests use <a href="https://github.com/chmp/ipytest">ipytest</a>. The functions in the notebook they are testing need to loaded into the same <a href="https://ipython.org/">IPython</a> interactive namespace. There are a few different ways of doing this. However, the simplest way to do this is to use <em>JupyterLab</em> to connect both notebooks to the same <a href="http://jupyter.readthedocs.io/en/latest/architecture/how_jupyter_ipython_work.html#the-ipython-kernel">kernel</a>. This can be achieved through the <code>Kernel &gt; Change Kernel</code> option in the <em>JupyterLab</em> user interface. Please see the <a href="http://jupyterlab.readthedocs.io/en/stable/">JupyterLab documentation</a> for more information on <a href="http://jupyterlab.readthedocs.io/en/stable/user/running.html">managing kernels</a>.</p>
 <p>Script tests use <a href="https://docs.pytest.org/en/latest/">pytest</a> and can be run from within the <em>virtualenv</em> with the command:</p>
 
 <pre><code>pytest</code></pre>
+<h2 id="Report">Report<a class="anchor-link" href="#Report">&#182;</a></h2><p>A full report of this project is available under the <em>docs</em> directory and can be viewed using any web browser. For convenience, you can <a href="https://htmlpreview.github.io/?https://github.com/covuworie/nobel-physics-prizes/blob/master/docs/report.html">launch the report in GitHub &amp; BitBucket HTML Preview</a>.</p>
 
 </div>
 
