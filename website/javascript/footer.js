@@ -1,6 +1,6 @@
 document.write('\
 \
-    <footer>\
+    <footer class="footer">\
     <nav>\
         <ul>\
             <li><a href="techniques.html">Techniques</a></li>\
@@ -8,5 +8,6 @@ document.write('\
             <li><a href="2018-physics-nobel-laureates.html">Physics Nobel Laureates</a></li>\
         </ul>\
     </nav>\
+    <p>Copyright © Chuk Ovuworie 2019</p>\
     </footer>\
 ');

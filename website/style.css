@@ -3,3 +3,26 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    font-weight: bold;
+    color: #D9B99E;
+}
+
+.footer {
+    background-color: #F4F2F0;
+    padding: 20px 10px;
+}
+
+.footer ul {
+    list-style: none;
+    padding-bottom: 10px;
+}
+
+.footer li {
+    padding-bottom: 10px;
+}
