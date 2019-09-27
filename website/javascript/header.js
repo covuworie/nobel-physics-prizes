@@ -1,12 +1,15 @@
 document.write('\
-\
     <header>\
+        <h1>Predicting Nobel Physics Prize Winners</h1>\
+        <h2>Final Project for Harvard CS109a 2017 Edition</h2>\
         <nav>\
-            <ul>\
-                <li><a href="index.html">Home</a></li>\
-                    <ul>\
-                        <li><span>Notebooks ▾</span></li>\
-                        <li><a href="../nobel_physics_prizes/notebooks/html_output/0.0-introduction.html">Introduction</a></li>\
+            <ul class="menu">\
+                <li class="logo"><a href="index.html">Home</a></li>\
+                <li><a href="demographics.html">Demographics</a></li>\
+                <li><a href="data-sources.html">Data Sources</a></li>\
+                <li><a href="2018-physics-nobel-laureates.html">2018 Laureates</a></li>\
+                <li class="dropdown"><span>Notebooks ▾</span>\
+                    <ul class="notebooks-menu"><li><a href="../nobel_physics_prizes/notebooks/html_output/0.0-introduction.html">Introduction</a></li>\
                         <li><a href="../nobel_physics_prizes/notebooks/html_output/1.0-collect-nobel-prize-laureates.html">Collect Nobel Prize Laureates</a></li>\
                         <li><a href="../nobel_physics_prizes/notebooks/html_output/1.1-collect-physicists.html">Collect Physicists</a></li>\
                         <li><a href="../nobel_physics_prizes/notebooks/html_output/1.2-collect-physicists-raw-data.html">Collect Physicists Raw Data</a></li>\
@@ -28,11 +31,7 @@ document.write('\
                         <li><a href="../nobel_physics_prizes/notebooks/html_output/6.0-conclusion.html">Conclusion</a></li>\
                     </ul>\
                 </li>\
-                <li><a href="demographics.html">Demographics</a></li>\
-                <li><a href="data-sources.html">Data Sources</a></li>\
-                <li><a href="2018-physics-nobel-laureates.html">2018 Physics Nobel Laureates</a></li>\
             </ul>\
         </nav>\
     </header>\
-\
 ');

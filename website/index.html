@@ -8,121 +8,134 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <!-- Using Javascript hack here to avoid duplication of header and footer information at top and bottom of every page. It is recommended to do this with a server side language as user may have Javascript disabled. I can start doing this once I understand server-side web languages. -->
-        <script type="text/javascript" src="javascript/header.js"></script>
-        <h1>Predicting Nobel Physics Prize Winners</h1>
-        <h2>Final Project for Harvard CS109a 2017 Edition</h2>
-        <article>
-            <header>
-                <h2>Nobel Prize in Physics Shrouded by Claims of Demographic Bias</h2>
-                <figure>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Solvay_conference_1927.jpg" alt="Solvay Conference of 1927, with prominent physicists such as Albert Einstein, Werner Heisenberg, Max Planck, Hendrik Lorentz, Niels Bohr, Marie Curie, Erwin Schrödinger and Paul Dirac">
-                    <figcaption>Illustration: <a href="https://en.wikipedia.org/wiki/Physics" target="_blank">Wikipedia</a></figcaption>  
-                </figure>
-                <p>Have you ever wondered why some physicists win Nobel glory and others come up short?</h2>
-            </header>
-            <p>The <a href="https://www.nobelprize.org/prizes/physics/" target="_blank">Nobel Prize in Physics</a> is widely regarded as the most prestigious award in Physics. The prize is awarded by The Royal Swedish Academy of Sciences, Stockholm, Sweden. The will of Alfred Nobel states that that the prize should be awarded to the "person [or persons] who shall have made the most important discovery or invention within the field of physics".</p>
-            <p>The <a href="https://www.nobelprize.org/nomination/physics/" target="_blank"></a> nomination and selection process is a lengthy and complex process taking just over a year. Three of the key stages are:
-            <ul>
-                <li>September - Nomination forms are sent out. The Nobel Committee sends out confidential forms to around 3,000 people - selected professors at universities around the world, Nobel Laureates in Physics and Chemistry, and members of the Royal Swedish Academy of Sciences, among others.</li>
-                <li>March-May - Consultation with experts. The Nobel Committee sends the names of the preliminary candidates to specially appointed experts for their assessment of the candidates' work.</li>
-                <li>October - Nobel Laureates are chosen. In early October, the Academy selects the Nobel Laureates in Physics through a majority vote. The decision is final and without appeal. The names of the Nobel Laureates are then announced.</li>
-            </ul></p>
-            <p>Most controversially, <a href="https://www.nobelprize.org/nomination/redirector/?redir=archive/list.php" target="_blank"></a> details of the nominations are not made public until fifty years after. The secretive nature of the selection process has led to claims of demographic bias in the selection process. Some of these claims have even been acknowledged by the Nobel Committee itself, especially concerned with how <a href="https://www.nature.com/articles/d41586-018-06879-z" target="_blank">few women have been awarded Nobel Prizes</a> in any science. They have even gone as far as <a href="https://qz.com/1097888/the-nobel-prize-committee-explains-why-women-win-so-few-prizes/" target="_blank">requesting more women are nominated</a> for awards in order to address this gender bias.</p>
-            <p>Physics Today has performed an extensive data examination of <a href="https://physicstoday.scitation.org/do/10.1063/PT.6.4.20170925a/full/" target="_blank">physicists nominated for the Nobel Prize</a>. They see certain patterns in the data related to demographics of physicists such as:
-                <ul>
-                    <li>Gender</li>
-                    <li>Age / years lived</li>
-                    <li>Nationality</li>
-                    <li>Institutions studied at and affiliated with</li>
-                    <li>Connected to past winners of the Nobel Prize in Physics or Chemistry through progreny or academics</li>
-                    <li>Theorist or experimentalist</li>
-                    <li>Astronomer of physicist</li>
-                </ul>
-            If this bias were widespread it would certainly call into question the integrity and value of the prize.</p>
-            <footer>
-                <p>Is it really true that underlying <strong>demographic patterns</strong> exist that enhance a physicists chance of winning a Nobel prize?</h2>
-            </footer>
-        </article>
-        <section>
-            <h2>Project Goals</h2>
-            <p>The goals of the project were to answer the following questions<p>
-            <ol>
-                <li>Do demographics play a major role in selecting the winner of the Nobel Prize in Physics?</li>
-                <li>Which demographic factors have the biggest influence on the outcome?</li>
-                <li>Who are the most likely winners of The Nobel Prize in Physics 2018?</li>
-            </ol>
-        </section>
-        <section>
-            <h2>Methods</h2>
-            <p>In an attempt to answer these questions the following was done:<p>
-            <ol>
-                <li>Collect demographic data on a list of almost a thousand world-renowned physicists from <a href="https://wiki.dbpedia.org/about" target="_blank"></a> DBPedia.</li>
-                <li>Collect a list of Nobel Laureates in both <a href="https://en.wikipedia.org/w/index.php?title=List_of_Nobel_laureates_in_Physics&oldid=862097595" target="_blank">Physics</a> and <a href="https://en.wikipedia.org/w/index.php?title=List_of_Nobel_laureates_in_Chemistry&oldid=860639110">Chemistry</a> from 1901-2017.</li>
-                <li>Build a machine learning model, based on demographic data alone, that predicts whether a physicist has won or will win the Nobel Prize.</li>
-            </ol>
-        </section>
-        <section>
-            <h2>Findings</h2>
-            <h3>Significant underlying patterns in the demographic data correlate with being a Physics Nobel Laureate</h3>
-            <p>The logistic regression model achieved a Matthews Correlation Coefficient (MCC) of 0.36 when evaluated on the test data, which indicates that it performs much better than both random chance (MCC = 0) and a "naive" baseline classifier (MCC = 0.19). The conclusion is that there are significant underlying patterns in the demographic data that correlate with being a Physics Nobel Laureate. However, the number of false postives was too high to make any substantial claims about biases that may be present when deciding Nobel Physics Prize Winners.</p>
-            <h3>Top seven demographic factors with the biggest influence on the classifying a physicist as a laureate.</h3>
-            <p>
-                <ol>
-                    <li>Being an experimental physicist was by far the biggest factor resulting in a change in odds ratio of 5 times more than the next most influential factor.</li>
-                    <li>Having at least one physics laureate doctoral student.
-                    </li>
-                    <li>Living for at least 65-79 years.</li>
-                    <li>Being an alumnus in Asia.</li>
-                    <li>Being a citizen of France.</li>
-                    <li>Working at Bell Labs.</li>
-                    <li>Being a citizen of Switzerland.</li>
-                </ol>
-            </p>
-            <h3>Top seven most likely winners of the 2018 Nobel Prize in Physics
-            </h3>
-            <p>The top ten most likely winners of the 2018 Nobel Prize in Physics as predicted by the logistic regression model are show below along with their win probabilities in parenthesis.</p>
-            <figure>  
-                <img src="http://faculty.washington.edu/jcramer/JGC_pics_files/John_1.gif">
-                <figcaption>Illustration of John G. Cramer (93.3%): <a href="http://faculty.washington.edu/jcramer/JGC_pics.html" target="_blank">University of Washington</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="https://www.pnas.org/content/pnas/114/9/2099/F1.large.jpg?width=800&height=600&carousel=1">
-                <figcaption>Illustration of Vera Rubin (90.6%): <a href="https://www.pnas.org/content/114/9/2099" target="_blank">PNAS</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="http://www.pa.ucla.edu/sites/default/files/images/bhaumik-preferred.jpg">
-                <figcaption>Illustration of Mani Lal Bhaumik (90.5%): <a href="http://www.pa.ucla.edu/content/mani-l-bhaumik-institute-theoretical-physics" target="_blank">UCLA</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="https://alchetron.com/cdn/jean-zinn-justin-985f51f6-75ef-4db0-be2e-9498998f691-resize-750.jpg">
-                <figcaption>Illustration of Jean Zinn-Justin (89.7%): <a href="https://alchetron.com/Jean-Zinn-Justin" target="_blank">Alchetron</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="https://news.stanford.edu/wp-content/uploads/sites/2/2016/10/Bjorken.jpg">
-                <figcaption>Illustration of James Bjorken (89.7%): <a href="https://news.stanford.edu/thedish/2016/10/30/theoretical-physicist-james-bjorken-shares-the-2017-robert-r-wilson-prize/" target="_blank">Stanford University</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="https://www.nobelprize.org/images/eigen-13192-portrait-mini-2x.jpg">
-                <figcaption>Illustration of Manfred Eigen (88.5%): <a href="https://www.nobelprize.org/prizes/chemistry/1967/eigen/biographical/" target="_blank">NobelPrize.org</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="https://api2.royalsociety.org/images/fellows/BEL00005-Jocelyn-Bell%20Burnell.jpg?width=275">
-                <figcaption>Illustration of Jocelyn Bell Burnell (88.1%): <a href="https://royalsociety.org/people/jocelyn-bell-burnell-11066/" target="_blank">The Royal Society</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="http://www.greatthoughtstreasury.com/sites/default/files/henry-p-stapp-beyond-the-mind-body-problem%5B1%5D.jpg">
-                <figcaption>Illustration of Henry Stapp (86.2%): <a href="http://www.greatthoughtstreasury.com/index.php/author/henry-p-stapp" target="_blank">Great Thoughts Treasury</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="https://www.iter.org/img/resize-900-90/www/content/com/Lists/Stories/Attachments/2326/velikhov_2.jpg">
-                <figcaption>Illustration of Evgeny Velikhov (85.4%): <a href="https://www.iter.org/newsline/-/2326" target="_blank">ITER</a></figcaption>
-            </figure>
-            <figure>  
-                <img src="https://www.nobelprize.org/images/mansfield-13687-content-portrait-mobile-tiny.jpg">
-                <figcaption>Illustration of Peter Mansfield (85.4%): <a href="https://www.nobelprize.org/prizes/medicine/2003/mansfield/biographical/" target="_blank">NobelPrize.org</a></figcaption>
-            </figure>
-        </section>
-        <script type="text/javascript" src="javascript/footer.js"></script>
+        <div class="grid">
+            <!-- Using Javascript hack here to avoid duplication of header and footer information at top and bottom of every page. It is recommended to do this with a server side language as user may have Javascript disabled. I can start doing this once I understand server-side web languages. -->
+            <div class="header">
+                <script type="text/javascript" src="javascript/header.js"></script>
+            </div>
+            <div class="article">
+                <article>
+                    <header>
+                        <h2>Nobel Prize in Physics Shrouded by Claims of Demographic Bias</h2>
+                        <figure>
+                            <img class="banner" src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Solvay_conference_1927.jpg" alt="Solvay Conference of 1927, with prominent physicists such as Albert Einstein, Werner Heisenberg, Max Planck, Hendrik Lorentz, Niels Bohr, Marie Curie, Erwin Schrödinger and Paul Dirac">
+                            <figcaption>Illustration: <a href="https://en.wikipedia.org/wiki/Physics" target="_blank">Wikipedia</a></figcaption>  
+                        </figure>
+                        <p>Have you ever wondered why some physicists win Nobel glory and others come up short?</h2>
+                    </header>
+                    <p>The <a href="https://www.nobelprize.org/prizes/physics/" target="_blank">Nobel Prize in Physics</a> is widely regarded as the most prestigious award in Physics. The prize is awarded by The Royal Swedish Academy of Sciences, Stockholm, Sweden. The will of Alfred Nobel states that that the prize should be awarded to the "person [or persons] who shall have made the most important discovery or invention within the field of physics".</p>
+                    <p>The <a href="https://www.nobelprize.org/nomination/physics/" target="_blank"></a> nomination and selection process is a lengthy and complex process taking just over a year. Three of the key stages are:
+                    <ul>
+                        <li>September - Nomination forms are sent out. The Nobel Committee sends out confidential forms to around 3,000 people - selected professors at universities around the world, Nobel Laureates in Physics and Chemistry, and members of the Royal Swedish Academy of Sciences, among others.</li>
+                        <li>March-May - Consultation with experts. The Nobel Committee sends the names of the preliminary candidates to specially appointed experts for their assessment of the candidates' work.</li>
+                        <li>October - Nobel Laureates are chosen. In early October, the Academy selects the Nobel Laureates in Physics through a majority vote. The decision is final and without appeal. The names of the Nobel Laureates are then announced.</li>
+                    </ul></p>
+                    <p>Most controversially, <a href="https://www.nobelprize.org/nomination/redirector/?redir=archive/list.php" target="_blank"></a> details of the nominations are not made public until fifty years after. The secretive nature of the selection process has led to claims of demographic bias in the selection process. Some of these claims have even been acknowledged by the Nobel Committee itself, especially concerned with how <a href="https://www.nature.com/articles/d41586-018-06879-z" target="_blank">few women have been awarded Nobel Prizes</a> in any science. They have even gone as far as <a href="https://qz.com/1097888/the-nobel-prize-committee-explains-why-women-win-so-few-prizes/" target="_blank">requesting more women are nominated</a> for awards in order to address this gender bias.</p>
+                    <p>Physics Today has performed an extensive data examination of <a href="https://physicstoday.scitation.org/do/10.1063/PT.6.4.20170925a/full/" target="_blank">physicists nominated for the Nobel Prize</a>. They see certain patterns in the data related to demographics of physicists such as:
+                        <ul>
+                            <li>Gender</li>
+                            <li>Age / years lived</li>
+                            <li>Nationality</li>
+                            <li>Institutions studied at and affiliated with</li>
+                            <li>Connected to past winners of the Nobel Prize in Physics or Chemistry through progreny or academics</li>
+                            <li>Theorist or experimentalist</li>
+                            <li>Astronomer of physicist</li>
+                        </ul>
+                    If this bias were widespread it would certainly call into question the integrity and value of the prize.</p>
+                    <footer>
+                        <p>Is it really true that underlying <strong>demographic patterns</strong> exist that enhance a physicists chance of winning a Nobel prize?</h2>
+                    </footer>
+                </article>
+            </div>
+            <div class="goals">
+                <section>
+                    <h2>Project Goals</h2>
+                    <p>The goals of the project were to answer the following questions:
+                    <ol>
+                        <li>Do demographics play a major role in selecting the winner of the Nobel Prize in Physics?</li>
+                        <li>Which demographic factors have the biggest influence on the outcome?</li>
+                        <li>Who are the most likely winners of The Nobel Prize in Physics 2018?</li>
+                    </ol></p>
+                </section>
+            </div>
+            
+            <div class="methods">
+                <section>
+                    <h2>Methods</h2>
+                    <p>In an attempt to answer these questions the following was done:
+                    <ol>
+                        <li>Collect demographic data on a list of almost a thousand world-renowned physicists from <a href="https://wiki.dbpedia.org/about" target="_blank"></a> DBPedia.</li>
+                        <li>Collect a list of Nobel Laureates in both <a href="https://en.wikipedia.org/w/index.php?title=List_of_Nobel_laureates_in_Physics&oldid=862097595" target="_blank">Physics</a> and <a href="https://en.wikipedia.org/w/index.php?title=List_of_Nobel_laureates_in_Chemistry&oldid=860639110">Chemistry</a> from 1901-2017.</li>
+                        <li>Build a machine learning model, based on demographic data alone, that predicts whether a physicist has won or will win the Nobel Prize.</li>
+                    </ol></p>
+                </section>
+            </div>
+            <div class="findings">
+                <section>
+                    <h2>Findings</h2>
+                    <h3>Significant underlying patterns in the demographic data correlate with being a Physics Nobel Laureate</h3>
+                    <p>The logistic regression model achieved a Matthews Correlation Coefficient (MCC) of 0.36 when evaluated on the test data, which indicates that it performs much better than both random chance (MCC = 0) and a "naive" baseline classifier (MCC = 0.19). The conclusion is that there are significant underlying patterns in the demographic data that correlate with being a Physics Nobel Laureate. However, the number of false postives was too high to make any substantial claims about biases that may be present when deciding Nobel Physics Prize Winners.</p>
+                    <h3>Top seven demographic factors with the biggest influence on the classifying a physicist as a laureate.</h3>
+                    <p>
+                        <ol>
+                            <li>Being an experimental physicist was by far the biggest factor resulting in a change in odds ratio of 5 times more than the next most influential factor.</li>
+                            <li>Having at least one physics laureate doctoral student.
+                            </li>
+                            <li>Living for at least 65-79 years.</li>
+                            <li>Being an alumnus in Asia.</li>
+                            <li>Being a citizen of France.</li>
+                            <li>Working at Bell Labs.</li>
+                            <li>Being a citizen of Switzerland.</li>
+                        </ol>
+                    </p>
+                    <h3>Top seven most likely winners of the 2018 Nobel Prize in Physics
+                    </h3>
+                    <p>The top ten most likely winners of the 2018 Nobel Prize in Physics as predicted by the logistic regression model are show below along with their win probabilities in parenthesis.</p>
+                    <figure>  
+                        <img src="http://faculty.washington.edu/jcramer/JGC_pics_files/John_1.gif">
+                        <figcaption>Illustration of John G. Cramer (93.3%): <a href="http://faculty.washington.edu/jcramer/JGC_pics.html" target="_blank">University of Washington</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="https://www.pnas.org/content/pnas/114/9/2099/F1.large.jpg?width=800&height=600&carousel=1">
+                        <figcaption>Illustration of Vera Rubin (90.6%): <a href="https://www.pnas.org/content/114/9/2099" target="_blank">PNAS</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="http://www.pa.ucla.edu/sites/default/files/images/bhaumik-preferred.jpg">
+                        <figcaption>Illustration of Mani Lal Bhaumik (90.5%): <a href="http://www.pa.ucla.edu/content/mani-l-bhaumik-institute-theoretical-physics" target="_blank">UCLA</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="https://alchetron.com/cdn/jean-zinn-justin-985f51f6-75ef-4db0-be2e-9498998f691-resize-750.jpg">
+                        <figcaption>Illustration of Jean Zinn-Justin (89.7%): <a href="https://alchetron.com/Jean-Zinn-Justin" target="_blank">Alchetron</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="https://news.stanford.edu/wp-content/uploads/sites/2/2016/10/Bjorken.jpg">
+                        <figcaption>Illustration of James Bjorken (89.7%): <a href="https://news.stanford.edu/thedish/2016/10/30/theoretical-physicist-james-bjorken-shares-the-2017-robert-r-wilson-prize/" target="_blank">Stanford University</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="https://www.nobelprize.org/images/eigen-13192-portrait-mini-2x.jpg">
+                        <figcaption>Illustration of Manfred Eigen (88.5%): <a href="https://www.nobelprize.org/prizes/chemistry/1967/eigen/biographical/" target="_blank">NobelPrize.org</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="https://api2.royalsociety.org/images/fellows/BEL00005-Jocelyn-Bell%20Burnell.jpg?width=275">
+                        <figcaption>Illustration of Jocelyn Bell Burnell (88.1%): <a href="https://royalsociety.org/people/jocelyn-bell-burnell-11066/" target="_blank">The Royal Society</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="http://www.greatthoughtstreasury.com/sites/default/files/henry-p-stapp-beyond-the-mind-body-problem%5B1%5D.jpg">
+                        <figcaption>Illustration of Henry Stapp (86.2%): <a href="http://www.greatthoughtstreasury.com/index.php/author/henry-p-stapp" target="_blank">Great Thoughts Treasury</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="https://www.iter.org/img/resize-900-90/www/content/com/Lists/Stories/Attachments/2326/velikhov_2.jpg">
+                        <figcaption>Illustration of Evgeny Velikhov (85.4%): <a href="https://www.iter.org/newsline/-/2326" target="_blank">ITER</a></figcaption>
+                    </figure>
+                    <figure>  
+                        <img src="https://www.nobelprize.org/images/mansfield-13687-content-portrait-mobile-tiny.jpg">
+                        <figcaption>Illustration of Peter Mansfield (85.4%): <a href="https://www.nobelprize.org/prizes/medicine/2003/mansfield/biographical/" target="_blank">NobelPrize.org</a></figcaption>
+                    </figure>
+                </section>
+            </div>
+            <div class="footer">
+                <script type="text/javascript" src="javascript/footer.js"></script>
+            </div>
+        </div>
     </body>
 </html>
