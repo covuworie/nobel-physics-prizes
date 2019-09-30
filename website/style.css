@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 a {
@@ -25,6 +26,12 @@ a:hover {
         "footer";
 }
 
+main {
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
 .header {
     grid-area: header;
     display: flex;
@@ -45,15 +52,35 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
     text-align: center;
+    padding-bottom: 20px;
 }
 
-h1, h2 {
-    padding-bottom: 20px
+p:first-of-type {
+    text-indent: 0;
+}
+
+p {
+    text-indent: 1em;
+    margin-bottom: 20px;
+}
+
+ol li,
+ul li {
+    padding-bottom: 15px;
 }
 
 figcaption {
     margin: 20px 0 20px;
+    text-align: center;
+}
+
+figure img {
+    display: block;
+    width: 100%;
+    margin: auto;
 }
 
 .article {
@@ -150,5 +177,14 @@ figcaption {
 
     .dropdown:hover .notebooks-menu {
         right: -270px;
+    }
+
+    .wrapper {
+        width: 700px;
+        margin: auto;
+    }
+
+    figure img {
+        width: 60%;    
     }
 }
