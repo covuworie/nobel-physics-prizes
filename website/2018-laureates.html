@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="2018 Physics Nobel Laureates and their demographics as related to the project to predict Nobel Physics Prize Winners.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>2018 Nobel Laureates | Predicting Nobel Physics Prize Winners</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!-- Using Javascript hack here to avoid duplication of header and footer information at top and bottom of every page. It is recommended to do this with a server side language as user may have Javascript disabled. I can start doing this once I understand server-side web languages. -->
+        <div class="header">
+            <script type="text/javascript" src="javascript/header.js"></script>
+        </div>
+        <main class="wrapper">
+            <h1>2018 Physics Nobel Laureates</h1>
+            <figure>
+                <img src="https://spectrum.ieee.org/image/MzE0MzA3NA.jpeg" alt="">
+                <figcaption>Illustration: Niklas Elmehad/Nobel Media (<a href="https://spectrum.ieee.org/tech-talk/semiconductors/optoelectronics/2018-nobel-physics-prize-for-laser-work" target="_blank">IEEE Spectrum</a>)<br>Winners of the Nobel Prize in Physics 2018 are Arthur Ashkin (left), Gérard Mourou (center), and Donna Strickland (right).</figcaption>
+            </figure>
+            <section>
+                <header>
+                    <h2>Model Predictions</h2>
+                    <p>Our logistic regression model had zero chance of correctly predicting the 2018 Physics Nobel Laureates as they were never in the original <a href="../nobel-physics-prizes/nobel_physics_prizes/data/raw/physicists.txt" target="_blank">list of physicists</a> scraped from Wikipedia. Obviously they are now deemed famous enough to have their own Wikipedia entries. So should we declare this part of the study as an epic failure as we were unable to identify the winners? No not quite. Closer inspection reveals many interesting characteristics of the three winners that are related to the top features in our predictive model.</p>
+                    <figure>
+                        <img src="img/top-15-features.PNG" alt="">
+                        <figcaption>Top 15 most important features in the prediction of Physics Nobel Laureates</figcaption>
+                    </figure>
+                </header>
+                <div class="laureate">
+                    <section>
+                        <h2>Gérard Mourou</h2>
+                        <figure>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/G%C3%A9rard_Mourou_Ecole_polytechnique_%28cropped%29.jpg" alt="">
+                            <figcaption>Illustration of Gérard Mourou: <a href="https://en.wikipedia.org/wiki/G%C3%A9rard_Mourou" target="_blank">Wikipedia</a></figcaption>
+                        </figure>
+                        <ul>
+                            <li>Is an experimental physicist</li>
+                            <li>Citizen of France</li>
+                            <li>74 years of age (age group 65-79)</li>
+                            <li>Has at least 1 physics laureate doctoral student (Donna Strickland)</li>
+                            <li>Number of physics and chemistry laureate doctoral students</li>
+                            <li>Has 3 alma mater</li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="laureate">
+                    <section>
+                        <h2>Arthur Ashkin</h2>
+                        <figure>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Arthur_Ashkin_EM1B5678_%2844417135450%29.jpg/800px-Arthur_Ashkin_EM1B5678_%2844417135450%29.jpg" alt="">
+                            <figcaption>Illustration of Arthur Ashkin: <a href="https://en.wikipedia.org/wiki/Arthur_Ashkin" target="_blank">Wikipedia</a></figcaption>
+                        </figure>
+                        <ul>
+                            <li>Is an experimental physicist</li>
+                            <li>Worked at Bell Labs</li>
+                            <li>Has 2 alma mater</li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="laureate">
+                    <section>
+                        <h2>Donna Strickland</h2>
+                        <figure>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Donna_Strickland_EM1B5760_%2846183560632%29_%28cropped%29.jpg/800px-Donna_Strickland_EM1B5760_%2846183560632%29_%28cropped%29.jpg" alt="">
+                            <figcaption>Illustration of Donna Strickland: <a href="https://en.wikipedia.org/wiki/Donna_Strickland" target="_blank">Wikipedia</a></figcaption>
+                        </figure>
+                        <ul>
+                            <li>Is an experimental physicist</li>
+                            <li>Has 2 alma mater</li>
+                        </ul>
+                    </section>
+                </div>
+                <footer>
+                    <p>Maybe this is a pure coincidence, but more likely, there are patterns in the data that the model has found. Whether or not these characteristics can be attributed to biases in the Nobel Physics Prize nomination and selection process is another matter, as correlation does not necessarily imply causation.</p>
+                </footer>
+            </section>
+        </main>
+        <div class="footer">
+            <script type="text/javascript" src="javascript/footer.js"></script>
+        </div>
+    </body>
+</html>

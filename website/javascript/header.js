@@ -7,7 +7,7 @@ document.write('\
                 <li class="logo"><a href="index.html">Home</a></li>\
                 <li><a href="demographics.html">Demographics</a></li>\
                 <li><a href="data-sources.html">Data Sources</a></li>\
-                <li><a href="2018-physics-nobel-laureates.html">2018 Laureates</a></li>\
+                <li><a href="2018-laureates.html">2018 Laureates</a></li>\
                 <li class="dropdown"><span>Notebooks ▾</span>\
                     <ul class="notebooks-menu"><li><a href="../nobel_physics_prizes/notebooks/html_output/0.0-introduction.html">Introduction</a></li>\
                         <li><a href="../nobel_physics_prizes/notebooks/html_output/1.0-collect-nobel-prize-laureates.html">Collect Nobel Prize Laureates</a></li>\
