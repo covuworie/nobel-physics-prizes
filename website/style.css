@@ -153,6 +153,20 @@ figure img {
     cursor: pointer;
 }
 
+.demographics {
+    margin-bottom: 50px;
+    border: 1px solid gray;
+    text-align: center;
+}
+
+.demographics li {
+    list-style: none;
+}
+
+.demographics img {
+    width: 90%;
+}
+
 .footer {
     grid-area: footer;
     background-color: #F4F2F0;
