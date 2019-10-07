@@ -4,7 +4,6 @@ document.write('\
         <ul>\
             <li><a href="techniques.html">Techniques</a></li>\
             <li><a href="technology-stack.html">Technology Stack</a></li>\
-            <li><a href="2018-physics-nobel-laureates.html">Physics Nobel Laureates</a></li>\
         </ul>\
     </nav>\
     <p>Copyright © Chuk Ovuworie 2019. All rights reserved.</p>\
