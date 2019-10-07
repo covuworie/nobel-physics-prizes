@@ -57,6 +57,10 @@ h1, h2, h3, h4, h5, h6 {
     padding-bottom: 20px;
 }
 
+.footer p {
+    text-align: center;
+}
+
 p:first-of-type {
     text-indent: 0;
 }
