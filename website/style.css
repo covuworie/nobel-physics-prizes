@@ -153,7 +153,8 @@ figure img {
 }
 
 .demographics,
-.technology {
+.technology,
+.techniques {
     display: flex;
     flex-direction: column;
 }
@@ -211,7 +212,8 @@ figure img {
     }
 
     .demographics,
-    .technology {
+    .technology,
+    .techniques {
         flex-direction: row;
         justify-content: center;
     }
