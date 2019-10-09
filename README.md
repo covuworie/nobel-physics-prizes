@@ -130,4 +130,4 @@ pytest
 
 ## Website
 
-A website describing the findings of this project is available under the *website* directory and can be viewed using any web browser. For convenience, you can [launch the report in GitHub & BitBucket HTML Preview](https://htmlpreview.github.io/?https://github.com/covuworie/nobel-physics-prizes/blob/master/website/index.html).
+A website describing the findings of this project is available under the *website* directory and can be viewed using any web browser. Once you have cloned the repository, just open the *index.html* file to view the contents of the website offline.
