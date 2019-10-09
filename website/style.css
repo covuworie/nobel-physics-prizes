@@ -186,12 +186,17 @@ figure img {
     padding: 20px 10px;
 }
 
-.footer ul {
+.footer-nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-nav ul {
     list-style: none;
     padding-bottom: 10px;
 }
 
-.footer li {
+.footer-nav li {
     padding-bottom: 10px;
 }
 
@@ -220,5 +225,13 @@ figure img {
     .techniques {
         flex-direction: row;
         justify-content: center;
+    }
+
+    .footer-nav {
+        flex-direction: row;
+    }
+
+    .footer-section {
+        width: 33%;
     }
 }
