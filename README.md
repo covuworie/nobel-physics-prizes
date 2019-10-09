@@ -46,8 +46,8 @@ The questions will be answered by building a machine learning model, based on *d
 
 A list of physicists notable for their achievements will be created by scraping the following [Wikipedia](https://en.wikipedia.org/wiki/Wikipedia) articles:
 
-- [List of physicists](https://en.wikipedia.org/wiki/List_of_physicists&oldid=861832841)
-- [List of theoretical physicists](https://en.wikipedia.org/wiki/List_of_theoretical_physicists&oldid=855745137)
+- [List of physicists](https://en.wikipedia.org/w/index.php?title=List_of_physicists&oldid=864677795)
+- [List of theoretical physicists](https://en.wikipedia.org/w/index.php?title=List_of_theoretical_physicists&oldid=855745137)
 
 Lists of Nobel Prize Winners in both Physics and Chemistry from 1901-2017 will be obtained by scraping the following *Wikipedia* articles:
 
