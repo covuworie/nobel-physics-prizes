@@ -5,7 +5,7 @@ document.write('\
             <h4>Methods & Technology<\h4>\
             <ul>\
                 <li><a href="techniques.html">Techniques</a></li>\
-                <li><a href"technology-stack.html">Technology Stack</a></li>\
+                <li><a href="technology-stack.html">Technology Stack</a></li>\
             </ul>\
         </div>\
         <div class="footer-section">\
